@@ -39,3 +39,7 @@ executable(
   dependencies: [dep_gles2, idep_eglut_wayland, idep_util],
   install: true
 )
+executable(
+  'texture_from_pixmap_glesv2', files('texture_from_pixmap_glesv2.c'),
+  dependencies: [_deps_x11, idep_util],
+)

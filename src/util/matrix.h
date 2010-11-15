@@ -89,4 +89,17 @@ mat4_frustum_gl(float *m, float l, float r, float b, float t, float n, float f);
 void
 mat4_frustum_vk(float *m, float l, float r, float b, float t, float n, float f);
 
+/**
+ * Calculate a perspective projection transformation.
+ *
+ * @param m the matrix to save the transformation in
+ * @param fovy the field of view in the y direction
+ * @param aspect the view aspect ratio
+ * @param zNear the near clipping plane
+ * @param zFar the far clipping plane
+ */
+void
+mat4_perspective_gl(float *m, float fovy, float aspect,
+                    float zNear, float zFar);
+
 #endif /* MATRIX_H */

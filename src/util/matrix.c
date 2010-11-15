@@ -145,3 +145,32 @@ mat4_frustum_vk(float *m, float l, float r, float b, float t, float n, float f)
 
    memcpy(m, tmp, sizeof(tmp));
 }
+
+void
+mat4_perspective_gl(float *m, float fovy, float aspect,
+                    float zNear, float zFar)
+{
+   float tmp[16];
+   mat4_identity(tmp);
+
+   double sine, cosine, cotangent, deltaZ;
+   float radians = fovy / 2 * M_PI / 180;
+
+   deltaZ = zFar - zNear;
+   sine = sin(radians);
+   cosine = cos(radians);
+
+   if ((deltaZ == 0) || (sine == 0) || (aspect == 0))
+      return;
+
+   cotangent = cosine / sine;
+
+   tmp[0] = cotangent / aspect;
+   tmp[5] = cotangent;
+   tmp[10] = -(zFar + zNear) / deltaZ;
+   tmp[11] = -1;
+   tmp[14] = -2 * zNear * zFar / deltaZ;
+   tmp[15] = 0;
+
+   memcpy(m, tmp, sizeof(tmp));
+}
