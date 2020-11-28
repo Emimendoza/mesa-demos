@@ -22,8 +22,12 @@ if (PKG_CONFIG_FOUND AND NOT WIN32)
 		set (CMAKE_MODULE_PATH ${ECM_FIND_MODULE_DIR})
 
 		find_package (Wayland)
-	else ()
-		message (WARNING "KDE Extra CMake Modules are required to detect Wayland")
+		find_package (WaylandProtocols)
+		find_package (WaylandScanner)
+
+		if (Wayland_FOUND AND WaylandProtocols_FOUND AND WaylandScanner_FOUND)
+			set(BUILD_WAYLAND ON)
+		endif ()
 	endif ()
 
 	pkg_check_modules (EGL egl)

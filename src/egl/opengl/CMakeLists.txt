@@ -29,11 +29,11 @@ foreach (target ${targets})
 		install (TARGETS ${target}_x11 DESTINATION ${subdir})
 	endif ()
 
-	if (Wayland_FOUND)
+	if (BUILD_WAYLAND)
 		add_executable (${target}_wayland ${target}.c)
 		target_link_libraries (${target}_wayland eglut_wayland)
 		install (TARGETS ${target}_wayland DESTINATION ${subdir})
-	endif ()
+	endif (BUILD_WAYLAND)
 endforeach (target)
 
 

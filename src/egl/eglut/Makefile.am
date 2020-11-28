@@ -44,12 +44,30 @@ libeglut_x11_la_SOURCES = \
 libeglut_x11_la_CFLAGS = $(X11_CFLAGS) $(EGL_CFLAGS)
 libeglut_x11_la_LIBADD = $(X11_LIBS) $(EGL_LIBS)
 
+XDG_SHELL_XML = $(WAYLAND_PROTOCOLS_DATADIR)/stable/xdg-shell/xdg-shell.xml
+
+wayland-xdg-shell-protocol.c: $(XDG_SHELL_XML)
+	$(MKDIR_GEN)
+	$(AM_V_GEN)$(WAYLAND_SCANNER) code < $< > $@
+
+wayland-xdg-shell-client-protocol.h: $(XDG_SHELL_XML)
+	$(MKDIR_GEN)
+	$(AM_V_GEN)$(WAYLAND_SCANNER) client-header < $< > $@
+
+if HAVE_WAYLAND
+BUILT_SOURCES = \
+	wayland-xdg-shell-protocol.c \
+	wayland-xdg-shell-client-protocol.h
+endif
 
 libeglut_wayland_la_SOURCES = \
 	eglut.c \
 	eglut.h \
 	eglutint.h \
 	eglut_wayland.c
+nodist_libeglut_wayland_la_SOURCES = \
+	wayland-xdg-shell-protocol.c \
+	wayland-xdg-shell-client-protocol.h
 
 libeglut_wayland_la_CFLAGS = $(WAYLAND_CFLAGS) $(EGL_CFLAGS)
 libeglut_wayland_la_LIBADD = $(WAYLAND_LIBS) $(EGL_LIBS)

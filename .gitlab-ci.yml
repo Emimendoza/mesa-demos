@@ -47,6 +47,7 @@ x86_build:
       ninja-build
       mingw-w64
 
+      extra-cmake-modules
       freeglut3-dev
       libdrm-dev
       libegl-dev
@@ -57,6 +58,7 @@ x86_build:
       libwayland-dev
       libx11-dev
       libxcb1-dev
+      wayland-protocols
 
 .use-x86_build:
   variables:

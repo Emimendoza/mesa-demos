@@ -200,8 +200,18 @@ AC_ARG_ENABLE([wayland],
     [wayland_enabled=auto])
 
 if test "x$wayland_enabled" != "xno"; then
-    PKG_CHECK_MODULES(WAYLAND, [wayland-client wayland-egl], [wayland_enabled=yes], [wayland_enabled=no])
+    PKG_CHECK_MODULES(WAYLAND,
+	[wayland-client wayland-egl wayland-protocols],
+	[wayland_enabled=yes],
+	[wayland_enabled=no])
 fi
+
+if test "x$wayland_enabled" != "xno"; then
+    ac_wayland_scanner=`"$PKG_CONFIG" --variable=wayland_scanner wayland-scanner`
+    ac_wayland_protocols_pkgdatadir=`"$PKG_CONFIG" --variable=pkgdatadir wayland-protocols`
+fi
+AC_SUBST(WAYLAND_PROTOCOLS_DATADIR, $ac_wayland_protocols_pkgdatadir)
+AC_SUBST(WAYLAND_SCANNER, $ac_wayland_scanner)
 
 dnl GBM is needed for EGL on KMS
 AC_ARG_ENABLE([gbm],

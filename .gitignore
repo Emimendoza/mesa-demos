@@ -49,3 +49,5 @@ ltsugar.m4
 ltversion.m4
 lt~obsolete.m4
 missing
+wayland-xdg-shell-client-protocol.h
+wayland-xdg-shell-protocol.c
