@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 2.8)
+cmake_minimum_required (VERSION 2.8.12)
 
 project (mesademos)
 
@@ -17,6 +17,15 @@ endif ()
 set (GLAD_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/src/glad/include)
 
 if (PKG_CONFIG_FOUND AND NOT WIN32)
+	find_package (ECM NO_MODULE)
+	if (ECM_FOUND)
+		set (CMAKE_MODULE_PATH ${ECM_FIND_MODULE_DIR})
+
+		find_package (Wayland)
+	else ()
+		message (WARNING "KDE Extra CMake Modules are required to detect Wayland")
+	endif ()
+
 	pkg_check_modules (EGL egl)
 	pkg_check_modules (GLESV1 glesv1_cm)
 	pkg_check_modules (GLESV2 glesv2)
