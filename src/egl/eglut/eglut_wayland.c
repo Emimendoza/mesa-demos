@@ -127,6 +127,44 @@ _eglutNativeFiniDisplay(void)
 }
 
 static void
+xdg_toplevel_configure(void *data, struct xdg_toplevel *xdg_toplevel,
+                       int32_t width, int32_t height,
+                       struct wl_array *states)
+{
+   struct eglut_window *win = data;
+
+   if (width == 0 || height == 0) {
+      /* Client should decide its own window dimensions.
+       * Keep whatever we have. */
+      return;
+   }
+
+   wl_egl_window_resize(win->native.u.window, width, height, 0, 0);
+   win->native.width = width;
+   win->native.height = height;
+   if (win->reshape_cb)
+      win->reshape_cb(win->native.width, win->native.height);
+}
+
+static void
+xdg_toplevel_close(void *data, struct xdg_toplevel *toplevel)
+{
+   struct eglut_window *win = data;
+   eglutDestroyWindow(win->index);
+
+   // FIXME: eglut does not terminate when all windows are closed.
+   // eglut_x11 dies due to "X connection to $DISPLAY broken".
+   // Since wl_display works fine with all windows closed, terminate ourselves.
+   eglTerminate(_eglut->dpy);
+   _eglutNativeFiniDisplay();
+}
+
+static const struct xdg_toplevel_listener xdg_toplevel_listener = {
+   xdg_toplevel_configure,
+   xdg_toplevel_close
+};
+
+static void
 xdg_surface_configure(void *data, struct xdg_surface *xdg_surface,
                       uint32_t serial)
 {
@@ -158,6 +196,7 @@ _eglutNativeInitWindow(struct eglut_window *win, const char *title,
    xdg_surface_add_listener(window.xdg_surface, &xdg_surface_listener, &window);
 
    window.xdg_toplevel = xdg_surface_get_toplevel(window.xdg_surface);
+   xdg_toplevel_add_listener(window.xdg_toplevel, &xdg_toplevel_listener, win);
    xdg_toplevel_set_title(window.xdg_toplevel, title);
    xdg_toplevel_set_app_id(window.xdg_toplevel, title);
    wl_surface_commit(window.surface);
