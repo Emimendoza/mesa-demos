@@ -222,7 +222,7 @@ _eglutNativeEventLoop(void)
       if (poll(&pollfd, 1, -1) == -1)
          break;
 
-      if (pollfd.revents & (POLLERR | POLLHUP))
+      if (pollfd.revents & (POLLERR | POLLHUP | POLLNVAL))
          break;
 
       if (pollfd.events & POLLOUT) {
