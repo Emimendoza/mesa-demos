@@ -105,6 +105,7 @@ _eglutNativeInitDisplay(void)
 void
 _eglutNativeFiniDisplay(void)
 {
+   wl_compositor_destroy(display.compositor);
    wl_display_flush(_eglut->native_dpy);
    wl_display_disconnect(_eglut->native_dpy);
 }
