@@ -393,13 +393,13 @@ dotest0param(benchmark * bmark)
 
    stime = glutGet(GLUT_ELAPSED_TIME);
 
-   dtime = 0.0;
+   dtime = 0.0f;
    calibnum = 0;
-   while (dtime < 2.0) {
+   while (dtime < 2.0f) {
       bmark->run(0, 1);
       glFinish();
       etime = glutGet(GLUT_ELAPSED_TIME);
-      dtime = (etime - stime) / 1000.0;
+      dtime = (etime - stime) / 1000.0f;
       calibnum++;
    }
    glPopAttrib();
@@ -417,7 +417,7 @@ dotest0param(benchmark * bmark)
    mintime = HUGE_VAL;
    maxtime = -HUGE_VAL;
 
-   for (tottime = 0.0, j = 0; j < 5; j++) {
+   for (tottime = 0.0f, j = 0; j < 5; j++) {
       glPushAttrib(GL_ALL_ATTRIB_BITS);
       bmark->init();
 
@@ -428,7 +428,7 @@ dotest0param(benchmark * bmark)
 
       glPopAttrib();
 
-      dtime = (etime - stime) / 1000.0;
+      dtime = (etime - stime) / 1000.0f;
       tottime += dtime;
 
       fprintf(stderr, "Elapsed time for run %d: %f\n", j, dtime);
@@ -441,13 +441,13 @@ dotest0param(benchmark * bmark)
 
    tottime -= mintime + maxtime;
 
-   fprintf(stdout, "%s\n%f %s/sec", bmark->name, numelem / (tottime / 3.0),
-	   bmark->unit);
+   fprintf(stdout, "%s\n%f %s/sec", bmark->name,
+      (float) numelem / (tottime / 3.0f), bmark->unit);
 
    if (bmark->type == 3)
       fprintf(stdout, ", MPixel Fill/sec: %f\n\n",
-	      (numelem * bmark->size[0] * (float) bmark->size[0]) /
-	      (1000000.0 * tottime / 3.0));
+	      ((float) numelem * bmark->size[0] * bmark->size[0]) /
+	      (1000000.0f * tottime / 3.0f));
    else
       fprintf(stdout, "\n\n");
 }
@@ -470,13 +470,13 @@ dotest1param(benchmark * bmark)
 
       stime = glutGet(GLUT_ELAPSED_TIME);
 
-      dtime = 0.0;
+      dtime = 0.0f;
       calibnum = 0;
-      while (dtime < 2.0) {
+      while (dtime < 2.0f) {
 	 bmark->run(bmark->size[j], 1);
 	 glFinish();
 	 etime = glutGet(GLUT_ELAPSED_TIME);
-	 dtime = (etime - stime) / 1000.0;
+	 dtime = (etime - stime) / 1000.0f;
 	 calibnum++;
       }
       glPopAttrib();
@@ -505,7 +505,7 @@ dotest1param(benchmark * bmark)
 
 	 glPopAttrib();
 
-	 dtime = (etime - stime) / 1000.0;
+	 dtime = (etime - stime) / 1000.0f;
 	 tottime += dtime;
 
 	 fprintf(stderr, "Elapsed time for run %d: %f\n", k, dtime);
@@ -519,11 +519,11 @@ dotest1param(benchmark * bmark)
       tottime -= mintime + maxtime;
 
       fprintf(stdout, "SIZE=%03d => %f %s/sec", bmark->size[j],
-	      numelem / (tottime / 3.0), bmark->unit);
+	      (float) numelem / (tottime / 3.0f), bmark->unit);
       if (bmark->type == 2)
 	 fprintf(stdout, ", MPixel Fill/sec: %f\n",
-		 (numelem * bmark->size[j] * bmark->size[j] / 2) /
-		 (1000000.0 * tottime / 3.0));
+		 ((float) numelem * bmark->size[j] * bmark->size[j] / 2.0f) /
+		 (1000000.0f * tottime / 3.0f));
       else
 	 fprintf(stdout, "\n");
    }
