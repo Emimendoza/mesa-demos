@@ -7,8 +7,12 @@ include (CheckCCompilerFlag)
 include (CheckSymbolExists)
 
 find_package (OpenGL REQUIRED)
-find_package (GLUT REQUIRED)
+find_package (GLUT)
 find_package (X11)
+
+if (NOT GLUT_FOUND)
+	message (WARNING "GLUT was not found, only platform specific demos will be built")
+endif ()
 
 set (GLAD_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/src/glad/include)
 
