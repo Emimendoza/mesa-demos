@@ -93,11 +93,15 @@ info(EGLDisplay egl_dpy)
 
 const char *glGetString (int name);
 
+#define GL_VENDOR                         0x1F00
 #define GL_RENDERER                       0x1F01
 #define GL_VERSION                        0x1F02
 #define GL_EXTENSIONS                     0x1F03
+#define GL_SHADING_LANGUAGE_VERSION       0x8B8C
 
+   printf("GL_VENDOR: %s\n", (char *) glGetString(GL_VENDOR));
    printf("GL_VERSION: %s\n", (char *) glGetString(GL_VERSION));
+   printf("GL_SHADING_LANGUAGE_VERSION: %s\n", (char *) glGetString(GL_SHADING_LANGUAGE_VERSION));
    printf("GL_RENDERER: %s\n", (char *) glGetString(GL_RENDERER));
    printf("GL_EXTENSIONS:\n");
    print_extension_list((char *) glGetString(GL_EXTENSIONS));
