@@ -39,8 +39,8 @@ QuadLine(const GLfloat *v0, const GLfloat *v1, GLfloat width)
    GLfloat dx = v1[0] - v0[0];
    GLfloat dy = v1[1] - v0[1];
    GLfloat len = sqrt(dx*dx + dy*dy);
-   float dx0, dx1, dx2, dx3, dx4, dx5, dx6, dx7;
-   float dy0, dy1, dy2, dy3, dy4, dy5, dy6, dy7;
+   float dx0, dx1, dx24, dx35, dx6, dx7;
+   float dy0, dy1, dy24, dy35, dy6, dy7;
 
    dx /= len;
    dy /= len;
@@ -52,11 +52,8 @@ QuadLine(const GLfloat *v0, const GLfloat *v1, GLfloat width)
    dx0 = -dx+dy;  dy0 = -dy-dx;
    dx1 = -dx-dy;  dy1 = -dy+dx;
 
-   dx2 =   0+dy;  dy2 = -dx+0;
-   dx3 =   0-dy;  dy3 = +dx+0;
-
-   dx4 =   0+dy;  dy4 = -dx+0;
-   dx5 =   0-dy;  dy5 = +dx+0;
+   dx24 =  0+dy;  dy24 = -dx+0;
+   dx35 =  0-dy;  dy35 = +dx+0;
 
    dx6 =  dx+dy;  dy6 =  dy-dx;
    dx7 =  dx-dy;  dy7 =  dy+dx;
@@ -76,14 +73,14 @@ QuadLine(const GLfloat *v0, const GLfloat *v1, GLfloat width)
    glVertex2f(v0[0] + dx1, v0[1] + dy1);
 
    glTexCoord2f(0.5, 0);
-   glVertex2f(v0[0] + dx2, v0[1] + dy2);
+   glVertex2f(v0[0] + dx24, v0[1] + dy24);
    glTexCoord2f(0.5, 1);
-   glVertex2f(v0[0] + dx3, v0[1] + dy3);
+   glVertex2f(v0[0] + dx35, v0[1] + dy35);
 
    glTexCoord2f(0.5, 0);
-   glVertex2f(v1[0] + dx2, v1[1] + dy2);
+   glVertex2f(v1[0] + dx24, v1[1] + dy24);
    glTexCoord2f(0.5, 1);
-   glVertex2f(v1[0] + dx3, v1[1] + dy3);
+   glVertex2f(v1[0] + dx35, v1[1] + dy35);
 
    glTexCoord2f(1, 0);
    glVertex2f(v1[0] + dx6, v1[1] + dy6);
