@@ -377,7 +377,7 @@ event_loop(Display *dpy, Window win,
       case KeyPress:
          {
             char buffer[10];
-            int r, code;
+            int code;
             code = XLookupKeysym(&event.xkey, 0);
             if (code == XK_Left) {
                view_roty += 5.0;
@@ -392,8 +392,8 @@ event_loop(Display *dpy, Window win,
                view_rotx -= 5.0;
             }
             else {
-               r = XLookupString(&event.xkey, buffer, sizeof(buffer),
-                                 NULL, NULL);
+               XLookupString(&event.xkey, buffer, sizeof(buffer),
+                             NULL, NULL);
                if (buffer[0] == 27) {
                   /* escape */
                   return;
