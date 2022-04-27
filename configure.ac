@@ -169,8 +169,7 @@ esac
 dnl Set up C warning flags.  Copy of XORG_CWARNFLAGS.
 if  test "x$GCC" = xyes ; then
     CWARNFLAGS="-Wall -Wpointer-arith -Wmissing-prototypes \
--Wmissing-declarations -Wnested-externs -fno-strict-aliasing \
--Wbad-function-cast"
+-Wmissing-declarations -Wnested-externs -fno-strict-aliasing"
     case `$CC -dumpversion` in
     3.4.* | 4.*)
 	CWARNFLAGS="$CWARNFLAGS -Wold-style-definition -Wdeclaration-after-statement"
