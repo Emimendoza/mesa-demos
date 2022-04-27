@@ -657,26 +657,6 @@ static void SetDefaultSettings(void)
     autoRotate = GL_TRUE;
 }
 
-static unsigned char *AlphaPadImage(int bufSize, unsigned char *inData, int alpha)
-{
-    unsigned char *outData, *out_ptr, *in_ptr;
-    int i;
-
-    outData = (unsigned char *) malloc(bufSize * 4);
-    out_ptr = outData;
-    in_ptr = inData;
-
-    for (i = 0; i < bufSize; i++) {
-	*out_ptr++ = *in_ptr++;
-	*out_ptr++ = *in_ptr++;
-	*out_ptr++ = *in_ptr++;
-	*out_ptr++ = alpha;
-    }
-
-    free (inData);
-    return outData;
-}
-
 static void Init(void)
 {
     float ambient[] = {0.0, 0.0, 0.0, 1.0};
