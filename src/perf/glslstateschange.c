@@ -92,7 +92,7 @@ DrawPolygonArray(GLint VertCoord_attr,
                  GLint TexCoord0_attr,
                  GLint TexCoord1_attr)
 {
-   void *vertPtr, *tex0Ptr, *tex1Ptr;
+   const void *vertPtr, *tex0Ptr, *tex1Ptr;
 
    vertPtr = VertCoords;
    tex0Ptr = Tex0Coords;
