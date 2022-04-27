@@ -213,8 +213,6 @@ create_shaders(void)
 static void
 init(void)
 {
-   typedef void (*proc)();
-
    glClearColor(0.4, 0.4, 0.4, 0.0);
 
    create_shaders();
