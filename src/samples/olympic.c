@@ -208,8 +208,6 @@ static void ReInit(void)
 
 static void Init(void)
 {
-    float base, height;
-    float aspect, x, y;
     int i;
 
     float top_y = 1.0;
@@ -266,16 +264,11 @@ static void Init(void)
     dests[GREENRING][1] = bottom_y;
     dests[GREENRING][2] = bottom_z;
 
-    base = 2.0;
-    height = 2.0;
     theTorus = glGenLists(1);
     glNewList(theTorus, GL_COMPILE);
     FillTorus(0.1, 8, 1.0, 25);
     glEndList();
 
-    x = (float)XSIZE;
-    y = (float)YSIZE;
-    aspect = x / y;
     glEnable(GL_CULL_FACE);
     glCullFace(GL_BACK);
     glEnable(GL_DEPTH_TEST);
