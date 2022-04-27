@@ -200,17 +200,19 @@ static void GLAPIENTRY combineCallback(GLdouble coords[3], GLdouble *data[4],
    *dataOut = vertex;
 }
 
+typedef void (GLAPIENTRY *tess_fn)(void);
+
 static void init(void) 
 {
    glClearColor(0.0, 0.0, 0.0, 0.0);
    glShadeModel(GL_FLAT);    
 
    tobj = gluNewTess();
-   gluTessCallback(tobj, GLU_TESS_VERTEX, &glVertex3dv);
-   gluTessCallback(tobj, GLU_TESS_BEGIN, &beginCallback);
-   gluTessCallback(tobj, GLU_TESS_END, &endCallback);
-   gluTessCallback(tobj, GLU_TESS_ERROR, &errorCallback);
-   gluTessCallback(tobj, GLU_TESS_COMBINE, &combineCallback);
+   gluTessCallback(tobj, GLU_TESS_VERTEX, (tess_fn)glVertex3dv);
+   gluTessCallback(tobj, GLU_TESS_BEGIN, (tess_fn)beginCallback);
+   gluTessCallback(tobj, GLU_TESS_END, (tess_fn)endCallback);
+   gluTessCallback(tobj, GLU_TESS_ERROR, (tess_fn)errorCallback);
+   gluTessCallback(tobj, GLU_TESS_COMBINE, (tess_fn)combineCallback);
 
    list = glGenLists(4);
    makeNewLists();
