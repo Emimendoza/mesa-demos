@@ -140,11 +140,9 @@ ComputeFPS(void)
 static void
 init_model(void)
 {
-   float objScale;
-
    /* read in the model */
    Model = glmReadOBJ(Model_file);
-   objScale = glmUnitize(Model);
+   glmUnitize(Model);
    glmFacetNormals(Model);
    if (Model->numnormals == 0) {
       GLfloat smoothing_angle = 90.0;
