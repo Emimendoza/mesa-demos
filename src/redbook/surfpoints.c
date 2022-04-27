@@ -150,7 +150,9 @@ static void GLAPIENTRY normalCallback(GLfloat *normal)
    printf ("glNormal3f (%5.3f, %5.3f, %5.3f)\n", 
            normal[0], normal[1], normal[2]);
 }
-			
+
+typedef void (GLAPIENTRY *nurbs_fn)(void);
+
 /*  Initialize material property and depth buffer.
  */
 static void init(void)
@@ -177,11 +179,11 @@ static void init(void)
 		    GLU_NURBS_TESSELLATOR);
    gluNurbsProperty(theNurb, GLU_SAMPLING_TOLERANCE, 25.0);
    gluNurbsProperty(theNurb, GLU_DISPLAY_MODE, GLU_FILL);
-   gluNurbsCallback(theNurb, GLU_ERROR, nurbsError);
-   gluNurbsCallback(theNurb, GLU_NURBS_BEGIN, beginCallback);
-   gluNurbsCallback(theNurb, GLU_NURBS_VERTEX, vertexCallback);
-   gluNurbsCallback(theNurb, GLU_NURBS_NORMAL, normalCallback);
-   gluNurbsCallback(theNurb, GLU_NURBS_END, endCallback);
+   gluNurbsCallback(theNurb, GLU_ERROR, (nurbs_fn)nurbsError);
+   gluNurbsCallback(theNurb, GLU_NURBS_BEGIN, (nurbs_fn)beginCallback);
+   gluNurbsCallback(theNurb, GLU_NURBS_VERTEX, (nurbs_fn)vertexCallback);
+   gluNurbsCallback(theNurb, GLU_NURBS_NORMAL, (nurbs_fn)normalCallback);
+   gluNurbsCallback(theNurb, GLU_NURBS_END, (nurbs_fn)endCallback);
 
 }
 
