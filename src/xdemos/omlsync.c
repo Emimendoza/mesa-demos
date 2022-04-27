@@ -96,7 +96,6 @@ static void usage(char *name)
 	printf("\t-r<remainder> - remainder for OML swap\n");
 	printf("\t-n<interval> - wait interval for OML WaitMSC\n");
 	printf("\t-i<swap interval> - swap at most once every n frames\n");
-	printf("\t-v: verbose (print count)\n");
 	exit(-1);
 }
 
@@ -110,7 +109,7 @@ int main(int argc, char *argv[])
 	int dummy;
 	Atom wmDelete;
 	int64_t ust, msc, sbc;
-	int width = 500, height = 500, verbose = 0, divisor = 0, remainder = 0,
+	int width = 500, height = 500, divisor = 0, remainder = 0,
 		wait_interval = 0, swap_interval = 1;
 	int c, i = 1;
 	int ret;
@@ -131,9 +130,6 @@ int main(int argc, char *argv[])
 			break;
 		case 'h':
 			height = atoi(optarg);
-			break;
-		case 'v':
-			verbose = 1;
 			break;
 		case 'd':
 			divisor = atoi(optarg);
