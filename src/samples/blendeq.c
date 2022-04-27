@@ -122,7 +122,7 @@ static void PrintColorStrings( void )
 static void Draw(void)
 {
     int stringOffset = 5, stringx = 8;
-    int x1, x2, xleft, xright;
+    int x1, x2;
     int i, k;
 
     (dithering) ? glEnable(GL_DITHER) : glDisable(GL_DITHER);
@@ -165,8 +165,6 @@ static void Draw(void)
     i = windH - deltaY;
     x1 = windW/4;
     x2 = 3 * windW/4;
-    xleft = 5 + windW/4;
-    xright = 5 + windW/2;
 
     /* Draw foreground color for comparison */
     glColor3f(0.9, 0.2, 0.8);
