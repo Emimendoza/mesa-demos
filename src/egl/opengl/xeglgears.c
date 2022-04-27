@@ -916,7 +916,7 @@ main(int argc, char *argv[])
 #ifdef EGL_KHR_image
       eman->image = eglCreateImageKHR_func(eman->dpy, eman->ctx,
 					   EGL_GL_RENDERBUFFER_KHR,
-					   (EGLClientBuffer) color_rb, NULL);
+					   (EGLClientBuffer)(uintptr_t)color_rb, NULL);
 #else
       fprintf(stderr, "EGL_KHR_image not found at compile time.\n");
 #endif
