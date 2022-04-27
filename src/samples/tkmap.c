@@ -22,7 +22,7 @@ static float RGBMap[9][3] = {
     {0.5, 0.5, 0.5}
 };
 
-static void SetColor(int c)
+static inline void SetColor(int c)
 {
     if (glutGet(GLUT_WINDOW_RGBA))
         glColor3fv(RGBMap[c]);
@@ -41,7 +41,7 @@ static void InitMap(void)
 	    glutSetColor(i, RGBMap[i][0], RGBMap[i][1], RGBMap[i][2]);
 }
 
-static void SetFogRamp(int density, int startIndex)
+static inline void SetFogRamp(int density, int startIndex)
 {
     int fogValues, colorValues;
     int i, j, k;
@@ -58,7 +58,7 @@ static void SetFogRamp(int density, int startIndex)
     }
 }
 
-static void SetGreyRamp(void)
+static inline void SetGreyRamp(void)
 {
     int i;
     float intensity;
