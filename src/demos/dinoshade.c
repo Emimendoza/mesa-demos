@@ -224,6 +224,8 @@ findPlane(GLfloat plane[4],
   plane[D] = -(plane[A] * v0[X] + plane[B] * v0[Y] + plane[C] * v0[Z]);
 }
 
+typedef void (GLAPIENTRY *tess_fn)(void);
+
 static void
 extrudeSolidFromPolygon(GLfloat data[][2], unsigned int dataSize,
   GLdouble thickness, GLuint side, GLuint edge, GLuint whole)
@@ -236,9 +238,9 @@ extrudeSolidFromPolygon(GLfloat data[][2], unsigned int dataSize,
   if (tobj == NULL) {
     tobj = gluNewTess();  /* create and initialize a GLU
                              polygon tesselation object */
-    gluTessCallback(tobj, GLU_BEGIN, glBegin);
-    gluTessCallback(tobj, GLU_VERTEX, glVertex2fv);  /* semi-tricky */
-    gluTessCallback(tobj, GLU_END, glEnd);
+    gluTessCallback(tobj, GLU_BEGIN, (tess_fn)glBegin);
+    gluTessCallback(tobj, GLU_VERTEX, (tess_fn)glVertex2fv);  /* semi-tricky */
+    gluTessCallback(tobj, GLU_END, (tess_fn)glEnd);
   }
   glNewList(side, GL_COMPILE);
   glShadeModel(GL_SMOOTH);  /* smooth minimizes seeing
