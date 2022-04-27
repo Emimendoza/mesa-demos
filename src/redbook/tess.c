@@ -117,6 +117,8 @@ static void GLAPIENTRY combineCallback(GLdouble coords[3],
    *dataOut = vertex;
 }
 
+typedef void (GLAPIENTRY *tess_fn)(void);
+
 static void init (void)
 {
    GLUtesselator *tobj;
@@ -138,10 +140,10 @@ static void init (void)
    startList = glGenLists(2);
 
    tobj = gluNewTess();
-   gluTessCallback(tobj, GLU_TESS_VERTEX, &glVertex3dv);
-   gluTessCallback(tobj, GLU_TESS_BEGIN, &beginCallback);
-   gluTessCallback(tobj, GLU_TESS_END, &endCallback);
-   gluTessCallback(tobj, GLU_TESS_ERROR, &errorCallback);
+   gluTessCallback(tobj, GLU_TESS_VERTEX, (tess_fn)glVertex3dv);
+   gluTessCallback(tobj, GLU_TESS_BEGIN, (tess_fn)beginCallback);
+   gluTessCallback(tobj, GLU_TESS_END, (tess_fn)endCallback);
+   gluTessCallback(tobj, GLU_TESS_ERROR, (tess_fn)errorCallback);
 
    /*  rectangle with triangular hole inside  */
    glNewList(startList, GL_COMPILE);
@@ -161,11 +163,11 @@ static void init (void)
    gluTessEndPolygon(tobj);
    glEndList();
 
-   gluTessCallback(tobj, GLU_TESS_VERTEX, &vertexCallback);
-   gluTessCallback(tobj, GLU_TESS_BEGIN, &beginCallback);
-   gluTessCallback(tobj, GLU_TESS_END, &endCallback);
-   gluTessCallback(tobj, GLU_TESS_ERROR, &errorCallback);
-   gluTessCallback(tobj, GLU_TESS_COMBINE, &combineCallback);
+   gluTessCallback(tobj, GLU_TESS_VERTEX, (tess_fn)vertexCallback);
+   gluTessCallback(tobj, GLU_TESS_BEGIN, (tess_fn)beginCallback);
+   gluTessCallback(tobj, GLU_TESS_END, (tess_fn)endCallback);
+   gluTessCallback(tobj, GLU_TESS_ERROR, (tess_fn)errorCallback);
+   gluTessCallback(tobj, GLU_TESS_COMBINE, (tess_fn)combineCallback);
 
    /*  smooth shaded, self-intersecting star  */
    glNewList(startList + 1, GL_COMPILE);
