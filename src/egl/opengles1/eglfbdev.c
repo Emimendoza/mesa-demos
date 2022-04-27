@@ -198,7 +198,7 @@ egl_init_for_fbdev(int fd, EGLBoolean verbose)
    /* make Mesa/EGL happy */
    setenv("EGL_PLATFORM", "fbdev", 0);
 
-   egl_dpy = eglGetDisplay((EGLNativeDisplayType) fd);
+   egl_dpy = eglGetDisplay((EGLNativeDisplayType)(uintptr_t)fd);
    if (egl_dpy == EGL_NO_DISPLAY)
       egl_fatal("failed to get a display");
    if (!eglInitialize(egl_dpy, &major, &minor))
