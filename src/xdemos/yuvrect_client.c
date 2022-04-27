@@ -255,10 +255,9 @@ event_loop(Display *dpy, Window win)
          case KeyPress:
             {
                char buffer[10];
-               int r, code;
-               code = XLookupKeysym(&event.xkey, 0);
-               r = XLookupString(&event.xkey, buffer, sizeof(buffer),
-                                 NULL, NULL);
+               XLookupKeysym(&event.xkey, 0);
+               XLookupString(&event.xkey, buffer, sizeof(buffer),
+                             NULL, NULL);
                if (buffer[0] == 27) {
                   /* escape */
                   return;
