@@ -85,7 +85,7 @@ static void init(void)
  */
    startList = glGenLists(4);
    qobj = gluNewQuadric();
-   gluQuadricCallback(qobj, GLU_ERROR, errorCallback);
+   gluQuadricCallback(qobj, GLU_ERROR, (void (GLAPIENTRY *)(void))errorCallback);
 
    gluQuadricDrawStyle(qobj, GLU_FILL); /* smooth shaded */
    gluQuadricNormals(qobj, GLU_SMOOTH);
