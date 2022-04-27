@@ -61,7 +61,7 @@ draw_torus(GLfloat r, GLfloat R, GLint nsides, GLint rings)
    GLfloat cosTheta, sinTheta;
    GLfloat cosTheta1, sinTheta1;
    GLfloat ringDelta, sideDelta;
-   GLfloat varray[100][3], narray[100][3], tarray[100][2];
+   GLfloat varray[100][3] = {}, narray[100][3] = {}, tarray[100][2] = {};
    int vcount;
 
    glVertexPointer(3, GL_FLOAT, 0, varray);
