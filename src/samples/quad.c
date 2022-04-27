@@ -158,7 +158,8 @@ static void Init(void)
     }
 
     quadObj = gluNewQuadric();
-    gluQuadricCallback(quadObj, GLU_ERROR, ErrorHandler);
+    gluQuadricCallback(quadObj, GLU_ERROR,
+                       (void (GLAPIENTRY *)(void))ErrorHandler);
 
     radius1 = 10;
     radius2 = 5;
