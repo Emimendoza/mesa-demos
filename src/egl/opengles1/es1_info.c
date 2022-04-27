@@ -85,7 +85,7 @@ info(EGLDisplay egl_dpy)
    printf("EGL_VENDOR: %s\n", s);
 
    s = eglQueryString(egl_dpy, EGL_EXTENSIONS);
-   printf("EGL_EXTENSIONS:\n", s);
+   printf("EGL_EXTENSIONS:\n");
    print_extension_list((char *) s);
 
    s = eglQueryString(egl_dpy, EGL_CLIENT_APIS);
