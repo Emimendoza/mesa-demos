@@ -178,15 +178,15 @@ static void tesse( void )
       gluBeginPolygon( tobj );
 
       for ( j = 0 ; j <= contour_cnt ; j++ ) {
-	 point_cnt = contours[j].point_cnt;
-	 gluNextContour( tobj, GLU_UNKNOWN );
+         point_cnt = contours[j].point_cnt;
+         gluNextContour( tobj, GLU_UNKNOWN );
 
-	 for ( i = 0 ; i < point_cnt ; i++ ) {
-	    data[0] = (GLdouble)( contours[j].p[i][0] );
-	    data[1] = (GLdouble)( contours[j].p[i][1] );
-	    data[2] = 0.0;
-	    gluTessVertex( tobj, data, contours[j].p[i] );
-	 }
+         for ( i = 0 ; i < point_cnt ; i++ ) {
+            data[0] = (GLdouble)( contours[j].p[i][0] );
+            data[1] = (GLdouble)( contours[j].p[i][1] );
+            data[2] = 0.0;
+            gluTessVertex( tobj, data, contours[j].p[i] );
+         }
       }
 
       gluEndPolygon( tobj );
