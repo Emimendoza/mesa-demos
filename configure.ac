@@ -240,12 +240,6 @@ AC_ARG_WITH([mesa-source],
 	[mesa_source_enabled="no"])
 MESA_GLAPI="$mesa_source_dir/src/mapi/glapi/gen"
 
-AC_ARG_ENABLE([rbug],
-    [AS_HELP_STRING([--enable-rbug],
-        [enable support for rbug @<:@default=no@:>@])],
-    [rbug_enabled="yes"],
-    [rbug_enabled="no"])
-
 use_system_data=no
 AC_ARG_WITH([system-data-files],
 	    [AS_HELP_STRING([--with-system-data-files],
@@ -310,7 +304,6 @@ AM_CONDITIONAL(HAVE_OSMESA, test "x$osmesa_enabled" = "xyes")
 AM_CONDITIONAL(HAVE_DRM, test "x$drm_enabled" = "xyes")
 AM_CONDITIONAL(HAVE_MESA_SOURCE, test "x$mesa_source_enabled" = "xyes")
 AM_CONDITIONAL(HAVE_WAYLAND, test "x$wayland_enabled" = "xyes")
-AM_CONDITIONAL(HAVE_RBUG, test "x$rbug_enabled" = "xyes")
 
 AC_OUTPUT([
 	Makefile
@@ -333,7 +326,6 @@ AC_OUTPUT([
 	src/objviewer/Makefile
 	src/osdemos/Makefile
 	src/perf/Makefile
-	src/rbug/Makefile
 	src/redbook/Makefile
 	src/samples/Makefile
 	src/tests/Makefile

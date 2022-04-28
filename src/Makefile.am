@@ -35,7 +35,6 @@ SUBDIRS = \
 	objviewer \
 	osdemos \
 	perf \
-	rbug \
 	redbook \
 	samples \
 	tests \
