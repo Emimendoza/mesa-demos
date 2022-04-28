@@ -1,6 +1,10 @@
 #ifndef GL_WRAP_H
 #define GL_WRAP_H
 
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
 #ifdef __APPLE__
 #  include <OpenGL/gl.h>
 #  include <OpenGL/glu.h>
