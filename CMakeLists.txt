@@ -2,6 +2,16 @@ cmake_minimum_required (VERSION 3.16.0)
 
 project (mesademos)
 
+option(ENABLE_CMAKE, "Enable the use of this cmake based build configuration" OFF)
+if(NOT ENABLE_CMAKE)
+	message(FATAL_ERROR
+	        "The cmake build system has been deprecated in favour of "
+	        "meson, and will be removed eventually. For instructions on "
+	        "how to use meson, see index.html.\n"
+	        "If you still want to use the autotools build, then add "
+	        "-DENABLE_CMAKE=ON to the cmake command line.")
+endif()
+
 include (FindPkgConfig)
 include (CheckCCompilerFlag)
 include (CheckSymbolExists)

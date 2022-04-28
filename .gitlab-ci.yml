@@ -86,6 +86,7 @@ x86_build:
     - cmake -S . -B _build
       -DCMAKE_INSTALL_PREFIX=$PWD/install
       -DCMAKE_BUILD_TYPE=Debug
+      -DENABLE_CMAKE=ON
       ${EXTRA_OPTION}
       -G Ninja
     - ninja -C _build -j4
@@ -95,7 +96,7 @@ x86_build:
   extends:
     - .build
   script:
-    - ./autogen.sh
+    - ./autogen.sh --enable-autotools
     - make -j4
     - make check
     - DESTDIR=$PWD/install make install

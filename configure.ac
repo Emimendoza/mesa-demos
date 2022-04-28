@@ -40,6 +40,20 @@ AM_PROG_CC_C_O
 
 AC_CONFIG_MACRO_DIR([m4])
 
+AC_ARG_ENABLE(autotools,
+   [AS_HELP_STRING([--enable-autotools],
+                   [Enable the use of this autotools based build configuration])],
+   [enable_autotools=$enableval], [enable_autotools=no])
+
+if test "x$enable_autotools" != "xyes" ; then
+    AC_MSG_ERROR([the autotools build system has been deprecated in favour
+    of meson, and will be removed eventually. For instructions on how to
+    use meson, see index.html.
+
+    If you still want to use the autotools build, then add --enable-autotools
+    to the configure command line.])
+fi
+
 # Enable quiet compiles on automake 1.11.
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
