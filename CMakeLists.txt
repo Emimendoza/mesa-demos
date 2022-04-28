@@ -75,21 +75,6 @@ if (CMAKE_COMPILER_IS_GNUCC)
 endif ()
 
 if (WIN32)
-	# Nobody likes to include windows.h:
-	# - Microsoft's GL/gl.h header depends on windows.h but doesn't include it;
-	# - certain GLUT distributions don't include it;
-	# - most of our programs are meant to be portable so don't include it.
-	#
-	# We could try to replicate the windows.h definitions required by
-	# GL/gl.h, but the build time savings don't compensate the constant
-	# headaches that brings, so instead we force windows.h to be included
-	# on every file.
-	if (MSVC)
-		add_definitions (-FIwindows.h)
-	else (MSVC)
-		add_definitions (--include windows.h)
-	endif (MSVC)
-
 	# Don't define min/max macros
 	add_definitions (-DNOMINMAX)
 
