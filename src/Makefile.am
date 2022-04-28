@@ -38,7 +38,6 @@ SUBDIRS = \
 	rbug \
 	redbook \
 	samples \
-	slang \
 	tests \
 	tools \
 	trivial \

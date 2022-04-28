@@ -336,7 +336,6 @@ AC_OUTPUT([
 	src/rbug/Makefile
 	src/redbook/Makefile
 	src/samples/Makefile
-	src/slang/Makefile
 	src/tests/Makefile
 	src/tools/Makefile
 	src/trivial/Makefile
