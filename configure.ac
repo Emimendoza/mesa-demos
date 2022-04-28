@@ -131,14 +131,6 @@ AC_ARG_ENABLE([gles2],
 if test "x$glesv2_enabled" != "xno"; then
     PKG_CHECK_MODULES(GLESV2, [glesv2], [glesv2_enabled=yes], [glesv2_enabled=no])
 fi
-AC_ARG_ENABLE([vg],
-    [AS_HELP_STRING([--enable-vg],
-        [enable support for OpenVG API @<:@default=auto@:>@])],
-    [vg_enabled="$enableval"],
-    [vg_enabled=auto])
-if test "x$vg_enabled" != "xno"; then
-    PKG_CHECK_MODULES(VG, [vg], [vg_enabled=yes], [vg_enabled=no])
-fi
 AC_ARG_ENABLE([osmesa],
     [AS_HELP_STRING([--enable-osmesa],
         [enable OSMesa library @<:@default=auto@:>@])],
@@ -221,16 +213,6 @@ if test "x$gbm_enabled" != "xno"; then
     PKG_CHECK_MODULES(GBM, [gbm], [gbm_enabled=yes], [gbm_enabled=no])
 fi
 
-dnl FreeType2 is needed by an OpenVG demo
-AC_ARG_ENABLE([freetype2],
-    [AS_HELP_STRING([--enable-freetype2],
-        [enable support for FreeType2 @<:@default=auto@:>@])],
-    [freetype2_enabled="$enableval"],
-    [freetype2_enabled=auto])
-if test "x$freetype2_enabled" != "xno"; then
-    PKG_CHECK_MODULES(FREETYPE2, [freetype2], [freetype2_enabled=yes], [freetype2_enabled=no])
-fi
-
 mesa_source_enabled=no
 AC_ARG_WITH([mesa-source],
 	[AS_HELP_STRING([--with-mesa-source=DIR],
@@ -295,11 +277,9 @@ AC_SUBST([WAYLAND_LIBS])
 AM_CONDITIONAL(HAVE_EGL, test "x$egl_enabled" = "xyes")
 AM_CONDITIONAL(HAVE_GLESV1, test "x$glesv1_enabled" = "xyes")
 AM_CONDITIONAL(HAVE_GLESV2, test "x$glesv2_enabled" = "xyes")
-AM_CONDITIONAL(HAVE_VG, test "x$vg_enabled" = "xyes")
 AM_CONDITIONAL(HAVE_GLUT, test "x$glut_enabled" = "xyes")
 AM_CONDITIONAL(HAVE_X11, test "x$x11_enabled" = "xyes")
 AM_CONDITIONAL(HAVE_GBM, test "x$gbm_enabled" = "xyes")
-AM_CONDITIONAL(HAVE_FREETYPE2, test "x$freetype2_enabled" = "xyes")
 AM_CONDITIONAL(HAVE_OSMESA, test "x$osmesa_enabled" = "xyes")
 AM_CONDITIONAL(HAVE_DRM, test "x$drm_enabled" = "xyes")
 AM_CONDITIONAL(HAVE_MESA_SOURCE, test "x$mesa_source_enabled" = "xyes")
@@ -314,9 +294,6 @@ AC_OUTPUT([
 	src/egl/opengl/Makefile
 	src/egl/opengles1/Makefile
 	src/egl/opengles2/Makefile
-	src/egl/openvg/Makefile
-	src/egl/openvg/trivial/Makefile
-	src/egl/oes_vg/Makefile
 	src/fp/Makefile
 	src/fpglsl/Makefile
 	src/glad/Makefile

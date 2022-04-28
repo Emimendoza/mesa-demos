@@ -31,7 +31,6 @@ enum {
    EGLUT_OPENGL_BIT     = 0x1,
    EGLUT_OPENGL_ES1_BIT = 0x2,
    EGLUT_OPENGL_ES2_BIT = 0x4,
-   EGLUT_OPENVG_BIT     = 0x8
 };
 
 /* used by EGLUTspecialCB */

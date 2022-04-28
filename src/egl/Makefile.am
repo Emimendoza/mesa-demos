@@ -25,7 +25,5 @@
 SUBDIRS = \
 	eglut \
 	opengl \
-	openvg \
 	opengles1 \
-	opengles2 \
-	oes_vg
+	opengles2

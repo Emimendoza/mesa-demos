@@ -112,8 +112,6 @@ _eglutChooseConfig(void)
       renderable_type |= EGL_OPENGL_ES_BIT;
    if (_eglut->api_mask & EGLUT_OPENGL_ES2_BIT)
       renderable_type |= EGL_OPENGL_ES2_BIT;
-   if (_eglut->api_mask & EGLUT_OPENVG_BIT)
-      renderable_type |= EGL_OPENVG_BIT;
    config_attribs[i++] = renderable_type;
 
    config_attribs[i] = EGL_NONE;
@@ -146,9 +144,6 @@ _eglutCreateWindow(const char *title, int x, int y, int w, int h)
    api = EGL_OPENGL_ES_API;
    if (_eglut->api_mask & EGLUT_OPENGL_BIT) {
       api = EGL_OPENGL_API;
-   }
-   else if (_eglut->api_mask & EGLUT_OPENVG_BIT) {
-      api = EGL_OPENVG_API;
    }
    else if (_eglut->api_mask & EGLUT_OPENGL_ES2_BIT) {
       context_attribs[i++] = EGL_CONTEXT_CLIENT_VERSION;

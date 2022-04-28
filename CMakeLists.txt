@@ -16,7 +16,6 @@ if (PKG_CONFIG_FOUND AND NOT WIN32)
 	pkg_check_modules (EGL egl)
 	pkg_check_modules (GLESV1 glesv1_cm)
 	pkg_check_modules (GLESV2 glesv2)
-	pkg_check_modules (VG vg)
 	pkg_check_modules (OSMESA osmesa)
 endif ()
 
