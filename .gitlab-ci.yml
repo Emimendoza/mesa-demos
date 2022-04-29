@@ -48,13 +48,16 @@ x86_build:
       mingw-w64
 
       freeglut3-dev
+      libdrm-dev
       libegl1-mesa-dev
       libgbm-dev
       libgl1-mesa-dev
+      libgles2-mesa-dev
       libudev-dev
       libwayland-dev
       libx11-dev
       libxcb1-dev
+
 .use-x86_build:
   variables:
     TAG: *x86_build
