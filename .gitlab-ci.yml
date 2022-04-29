@@ -35,17 +35,19 @@ x86_build:
     # No need to pull the whole repo to build the container image
     GIT_STRATEGY: none
     # /!\ Bump the TAG when modifying the DEBS
-    FDO_DISTRIBUTION_TAG: &x86_build "2022-05-07"
+    FDO_DISTRIBUTION_TAG: &x86_build "2022-05-09"
     FDO_DISTRIBUTION_PACKAGES: >-
       build-essential
       autoconf
       automake
       libtool
       make
+      meson
       pkg-config
       cmake
       ninja-build
       mingw-w64
+      wine
 
       extra-cmake-modules
       freeglut3-dev
@@ -98,6 +100,17 @@ x86_build:
     - make check
     - DESTDIR=$PWD/install make install
 
+.meson-build:
+  extends:
+    - .build
+  script:
+    - meson _build
+      --prefix $PWD/install
+      --buildtype debug
+      ${EXTRA_OPTION}
+    - ninja -C _build -j4
+    - ninja -C _build install
+
 cmake:
   extends:
     - .use-x86_build
@@ -122,3 +135,19 @@ autotools:
   extends:
     - .use-x86_build
     - .autotools-build
+
+meson:
+  extends:
+    - .use-x86_build
+    - .meson-build
+
+meson-mingw:
+  extends:
+    - .use-x86_build
+    - .meson-build
+  before_script:
+    - .gitlab-ci/prepare-glut-mingw.sh
+  variables:
+    EXTRA_OPTION: >
+      --cross-file=.gitlab-ci/x86_64-w64-mingw32
+      -Dwith-glut=/tmp/freeglut-mingw
