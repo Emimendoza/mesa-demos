@@ -34,21 +34,6 @@ AM_LDFLAGS = \
 	$(DEMO_LIBS) \
 	$(GLUT_LIBS)
 
-if HAVE_MESA_SOURCE
-GETPROCADDRESS=getprocaddress
-
-getprocaddress_SOURCES = \
-	getprocaddress.c
-nodist_getprocaddress_SOURCES = \
-	getproclist.h
-
-getproclist.h: $(MESA_GLAPI)/gl_API.xml getprocaddress.c getprocaddress.py
-	python getprocaddress.py $(MESA_GLAPI) > getproclist.h
-
-BUILT_SOURCES = \
-	getproclist.h
-endif
-
 if HAVE_GLUT
 noinst_PROGRAMS = \
 	afsmultiarb \
@@ -97,7 +82,6 @@ noinst_PROGRAMS = \
 	fptest1 \
 	fptexture \
 	front-back-modes \
-	$(GETPROCADDRESS) \
 	getteximage \
 	glutfx \
 	interleave \
@@ -190,6 +174,5 @@ texrect_LDADD = ../util/libutil.la ../glad/libglad.la
 
 EXTRA_DIST = \
 	Makefile.am \
-	getprocaddress.py \
 	texcomp_image.h \
 	tkmap.c

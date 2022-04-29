@@ -213,15 +213,6 @@ if test "x$gbm_enabled" != "xno"; then
     PKG_CHECK_MODULES(GBM, [gbm], [gbm_enabled=yes], [gbm_enabled=no])
 fi
 
-mesa_source_enabled=no
-AC_ARG_WITH([mesa-source],
-	[AS_HELP_STRING([--with-mesa-source=DIR],
-			[Mesa source directory for finding gl_API.xml])],
-	[mesa_source_enabled="yes"
-	 mesa_source_dir="$withval"],
-	[mesa_source_enabled="no"])
-MESA_GLAPI="$mesa_source_dir/src/mapi/glapi/gen"
-
 use_system_data=no
 AC_ARG_WITH([system-data-files],
 	    [AS_HELP_STRING([--with-system-data-files],
@@ -269,7 +260,6 @@ AC_SUBST([OSMESA_CFLAGS])
 AC_SUBST([OSMESA_LIBS])
 AC_SUBST([OSMESA16_LIBS])
 AC_SUBST([OSMESA32_LIBS])
-AC_SUBST([MESA_GLAPI])
 AC_SUBST([WAYLAND_CFLAGS])
 AC_SUBST([WAYLAND_LIBS])
 
@@ -282,7 +272,6 @@ AM_CONDITIONAL(HAVE_X11, test "x$x11_enabled" = "xyes")
 AM_CONDITIONAL(HAVE_GBM, test "x$gbm_enabled" = "xyes")
 AM_CONDITIONAL(HAVE_OSMESA, test "x$osmesa_enabled" = "xyes")
 AM_CONDITIONAL(HAVE_DRM, test "x$drm_enabled" = "xyes")
-AM_CONDITIONAL(HAVE_MESA_SOURCE, test "x$mesa_source_enabled" = "xyes")
 AM_CONDITIONAL(HAVE_WAYLAND, test "x$wayland_enabled" = "xyes")
 
 AC_OUTPUT([

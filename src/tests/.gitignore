@@ -48,8 +48,6 @@ fogcoord
 fptest1
 fptexture
 front-back-modes
-getprocaddress
-getproclist.h
 getteximage
 glutfx
 gremedy

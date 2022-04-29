@@ -65,8 +65,6 @@ set (targets
 	fptest1
 	fptexture
 	front-back-modes
-	# XXX: Requires Mesa source
-	#getprocaddress
 	getteximage
 	glutfx
 	gremedy
