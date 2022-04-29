@@ -23,19 +23,19 @@ stages:
 
 # CONTAINERS
 
-# Debian 10 based x86 build image
+# Debian 11 based x86 build image
 x86_build:
   stage: container
   extends:
     - .fdo.container-build@debian
     - .ci-run-policy
   variables:
-    FDO_DISTRIBUTION_VERSION: buster-slim
+    FDO_DISTRIBUTION_VERSION: bullseye-slim
     FDO_REPO_SUFFIX: "debian/$CI_JOB_NAME"
     # No need to pull the whole repo to build the container image
     GIT_STRATEGY: none
     # /!\ Bump the TAG when modifying the DEBS
-    FDO_DISTRIBUTION_TAG: &x86_build "2021-03-23"
+    FDO_DISTRIBUTION_TAG: &x86_build "2022-04-30"
     FDO_DISTRIBUTION_PACKAGES: >-
       build-essential
       autoconf
@@ -49,10 +49,10 @@ x86_build:
 
       freeglut3-dev
       libdrm-dev
-      libegl1-mesa-dev
+      libegl-dev
       libgbm-dev
-      libgl1-mesa-dev
-      libgles2-mesa-dev
+      libgl-dev
+      libgles-dev
       libudev-dev
       libwayland-dev
       libx11-dev
