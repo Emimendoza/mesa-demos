@@ -1,9 +1,9 @@
 variables:
-  UPSTREAM_REPO: mesa/demos
+  FDO_UPSTREAM_REPO: mesa/demos
 
 include:
-  - project: 'wayland/ci-templates'
-    ref: f69acac60d5dde0410124fd5674764600821b7a6
+  - project: 'freedesktop/ci-templates'
+    ref: 3f37cc0e461f5b0c815409bf6f55759f26a74e9c
     file: '/templates/debian.yml'
 
 stages:
@@ -27,16 +27,16 @@ stages:
 x86_build:
   stage: container
   extends:
-    - .debian@container-ifnot-exists
+    - .fdo.container-build@debian
     - .ci-run-policy
   variables:
-    DEBIAN_VERSION: buster-slim
-    REPO_SUFFIX: $CI_JOB_NAME
+    FDO_DISTRIBUTION_VERSION: buster-slim
+    FDO_REPO_SUFFIX: "debian/$CI_JOB_NAME"
     # No need to pull the whole repo to build the container image
     GIT_STRATEGY: none
     # /!\ Bump the TAG when modifying the DEBS
-    DEBIAN_TAG: &x86_build "2021-03-23"
-    DEBIAN_DEBS: >-
+    FDO_DISTRIBUTION_TAG: &x86_build "2021-03-23"
+    FDO_DISTRIBUTION_PACKAGES: >-
       build-essential
       autoconf
       automake
