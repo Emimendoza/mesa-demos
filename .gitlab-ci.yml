@@ -38,18 +38,12 @@ x86_build:
     FDO_DISTRIBUTION_TAG: &x86_build "2022-05-16"
     FDO_DISTRIBUTION_PACKAGES: >-
       build-essential
-      autoconf
-      automake
-      libtool
-      make
       meson
       pkg-config
-      cmake
       ninja-build
       mingw-w64
       wine
 
-      extra-cmake-modules
       freeglut3-dev
       libdrm-dev
       libegl-dev
@@ -73,38 +67,12 @@ x86_build:
 
 # BUILD
 
-.build:
+.meson-build:
   stage: build
   extends:
     - .ci-run-policy
   variables:
     GIT_DEPTH: 10
-
-.cmake-build:
-  extends:
-    - .build
-  script:
-    - cmake -S . -B _build
-      -DCMAKE_INSTALL_PREFIX=$PWD/install
-      -DCMAKE_BUILD_TYPE=Debug
-      -DENABLE_CMAKE=ON
-      ${EXTRA_OPTION}
-      -G Ninja
-    - ninja -C _build -j4
-    - ninja -C _build install
-
-.autotools-build:
-  extends:
-    - .build
-  script:
-    - ./autogen.sh --enable-autotools
-    - make -j4
-    - make check
-    - DESTDIR=$PWD/install make install
-
-.meson-build:
-  extends:
-    - .build
   script:
     - meson _build
       --prefix $PWD/install
@@ -112,31 +80,6 @@ x86_build:
       ${EXTRA_OPTION}
     - ninja -C _build -j4
     - ninja -C _build install
-
-cmake:
-  extends:
-    - .use-x86_build
-    - .cmake-build
-
-cmake-mingw:
-  extends:
-    - .use-x86_build
-    - .cmake-build
-  before_script:
-    - .gitlab-ci/prepare-glut-mingw.sh
-  variables:
-    EXTRA_OPTION: >
-      -DCMAKE_TOOLCHAIN_FILE=.gitlab-ci/mingw32.cmake
-      -DGLUT_INCLUDE_DIR=/tmp/freeglut-mingw/include
-      -DGLUT_glut_LIBRARY=/tmp/freeglut-mingw/lib/libglut.a
-      -DGLUT_glut_LIBRARY_DEBUG=/tmp/freeglut-mingw/lib/libglut.a
-      -DGLUT_glut_LIBRARY_RELEASE=/tmp/freeglut-mingw/lib/libglut.a
-
-
-autotools:
-  extends:
-    - .use-x86_build
-    - .autotools-build
 
 meson:
   extends:

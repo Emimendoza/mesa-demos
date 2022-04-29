@@ -61,8 +61,6 @@ For `Wayland <https://wayland.freedesktop.org/>`_ support,
 `wayland-protocols <https://gitlab.freedesktop.org/wayland/wayland-protocols>`_
 and
 `wayland-scanner <https://gitlab.freedesktop.org/wayland/wayland>`_
-must be available.  Additionally, to build for Wayland using CMake,
-`Extra CMake Modules <https://invent.kde.org/frameworks/extra-cmake-modules>`_
 must be available.
 
 Meson
