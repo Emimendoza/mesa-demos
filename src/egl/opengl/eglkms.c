@@ -49,8 +49,8 @@ static EGLBoolean
 setup_kms(int fd, struct kms *kms)
 {
    drmModeRes *resources;
-   drmModeConnector *connector;
-   drmModeEncoder *encoder;
+   drmModeConnector *connector = NULL;
+   drmModeEncoder *encoder = NULL;
    int i;
 
    resources = drmModeGetResources(fd);
