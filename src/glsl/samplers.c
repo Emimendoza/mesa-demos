@@ -317,6 +317,7 @@ InitProgram(void)
       char uname[10];
       GLint loc;
 
+      assert(s <= MAX_SAMPLERS);
 #ifndef SAMPLERS_ARRAY
       sprintf(uname, "tex%d", s);
 #else
