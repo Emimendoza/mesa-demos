@@ -112,7 +112,8 @@ int main(int argc, char *argv[])
 	Atom wmDelete;
 	enum sync_type waitforsync = none;
 	int width = 500, height = 500, verbose = 0, interval = 1;
-	int c, i = 1;
+	int c;
+	unsigned i = 1;
 	int ret;
 	int attribs[] = { GLX_RGBA,
                      GLX_RED_SIZE, 1,
