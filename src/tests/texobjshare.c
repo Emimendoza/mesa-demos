@@ -34,15 +34,15 @@ static int NumContexts = 0;
 
 
 static void
-Error(const char *display, const char *msg)
+Error(const char *msg)
 {
-   fprintf(stderr, "Error on display %s - %s\n", display, msg);
+   fprintf(stderr, "Error - %s\n", msg);
    exit(1);
 }
 
 
 static struct context *
-CreateContext(const char *displayName, const char *name)
+CreateContext(const char *name)
 {
    Display *dpy;
    Window win;
@@ -64,9 +64,9 @@ CreateContext(const char *displayName, const char *name)
    if (NumContexts >= MAX_CONTEXTS)
       return NULL;
 
-   dpy = XOpenDisplay(displayName);
+   dpy = XOpenDisplay(NULL);
    if (!dpy) {
-      Error(displayName, "Unable to open display");
+      Error("Unable to open display");
       return NULL;
    }
 
@@ -75,7 +75,7 @@ CreateContext(const char *displayName, const char *name)
 
    visinfo = glXChooseVisual(dpy, scrnum, attrib);
    if (!visinfo) {
-      Error(displayName, "Unable to find RGB, double-buffered visual");
+      Error("Unable to find RGB, double-buffered visual");
       return NULL;
    }
 
@@ -92,7 +92,7 @@ CreateContext(const char *displayName, const char *name)
 		        0, visinfo->depth, InputOutput,
 		        visinfo->visual, mask, &attr);
    if (!win) {
-      Error(displayName, "Couldn't create window");
+      Error("Couldn't create window");
       return NULL;
    }
 
@@ -116,14 +116,14 @@ CreateContext(const char *displayName, const char *name)
       ctx = glXCreateContext(dpy, visinfo, Contexts[0].Context, True);
    }
    if (!ctx) {
-      Error(displayName, "Couldn't create GLX context");
+      Error("Couldn't create GLX context");
       return NULL;
    }
 
    XMapWindow(dpy, win);
 
    if (!glXMakeCurrent(dpy, win, ctx)) {
-      Error(displayName, "glXMakeCurrent failed");
+      Error("glXMakeCurrent failed");
       return NULL;
    }
 
@@ -166,13 +166,12 @@ DestroyContext(int i)
 int
 main(int argc, char *argv[])
 {
-   char *dpyName = NULL;
    int i;
    GLuint t;
    GLint tb;
 
    for (i = 0; i < 2; i++) {
-      CreateContext(dpyName, "context");
+      CreateContext("context");
    }
 
    /* Create texture and bind it in context 0 */
