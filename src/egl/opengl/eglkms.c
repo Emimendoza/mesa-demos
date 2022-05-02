@@ -212,6 +212,7 @@ int main(int argc, char *argv[])
 
    if (!eglChooseConfig(dpy, attribs, &config, 1, &n) || n != 1) {
       fprintf(stderr, "failed to choose argb config\n");
+      ret = -1;
       goto egl_terminate;
    }
    
