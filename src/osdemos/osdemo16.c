@@ -150,6 +150,7 @@ static void render_image( void )
 }
 
 
+#ifdef SAVE_TARGA
 
 static void
 write_targa(const char *filename, const GLushort *buffer, int width, int height)
@@ -191,6 +192,7 @@ write_targa(const char *filename, const GLushort *buffer, int width, int height)
    }
 }
 
+#else
 
 static void
 write_ppm(const char *filename, const GLushort *buffer, int width, int height)
@@ -239,6 +241,7 @@ write_ppm(const char *filename, const GLushort *buffer, int width, int height)
    }
 }
 
+#endif
 
 
 int main( int argc, char *argv[] )
