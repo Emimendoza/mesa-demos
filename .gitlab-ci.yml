@@ -84,6 +84,7 @@ x86_build:
     - cmake -S . -B _build
       -DCMAKE_INSTALL_PREFIX=$PWD/install
       -DCMAKE_BUILD_TYPE=Debug
+      ${EXTRA_OPTION}
       -G Ninja
     - ninja -C _build -j4
     - ninja -C _build install
@@ -105,9 +106,17 @@ cmake:
 cmake-mingw:
   extends:
     - .use-x86_build
-    - .build
-  script:
-    - .gitlab-ci/build-mingw.sh
+    - .cmake-build
+  before_script:
+    - .gitlab-ci/prepare-glut-mingw.sh
+  variables:
+    EXTRA_OPTION: >
+      -DCMAKE_TOOLCHAIN_FILE=.gitlab-ci/mingw32.cmake
+      -DGLUT_INCLUDE_DIR=/tmp/freeglut-mingw/include
+      -DGLUT_glut_LIBRARY=/tmp/freeglut-mingw/lib/libglut.a
+      -DGLUT_glut_LIBRARY_DEBUG=/tmp/freeglut-mingw/lib/libglut.a
+      -DGLUT_glut_LIBRARY_RELEASE=/tmp/freeglut-mingw/lib/libglut.a
+
 
 autotools:
   extends:
