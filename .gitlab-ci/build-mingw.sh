@@ -7,8 +7,8 @@ fi
 
 set -e -x -u
 
-GLUT_INCLUDE_DIR="$PWD/external/freeglut/include"
-GLUT_LIBRARY="$PWD/external/freeglut/lib/libglut.a"
+GLUT_INCLUDE_DIR="/tmp/freeglut-mingw/include"
+GLUT_LIBRARY="/tmp/freeglut-mingw/lib/libglut.a"
 if [ ! -f "$GLUT_INCLUDE_DIR/GL/glut.h" ]
 then
 	mkdir -p "$GLUT_INCLUDE_DIR/GL"
