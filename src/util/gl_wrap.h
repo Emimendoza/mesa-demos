@@ -14,7 +14,11 @@
 #endif
 
 #ifndef GLAPIENTRY
+#ifdef _WIN32
+#define GLAPIENTRY __stdcall
+#else
 #define GLAPIENTRY
+#endif
 #endif
 
 

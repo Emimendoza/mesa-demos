@@ -81,9 +81,6 @@ if (WIN32)
 	# Don't define min/max macros
 	add_definitions (-DNOMINMAX)
 
-	# MSVC & MinGW only define & use APIENTRY
-	add_definitions (-DGLAPIENTRY=__stdcall)
-
 	link_libraries (winmm)
 endif (WIN32)
 
