@@ -4,6 +4,7 @@
 #include <poll.h>
 #include <errno.h>
 #include <string.h>
+#include <stdbool.h>
 
 #include "eglutint.h"
 
@@ -18,6 +19,7 @@ struct window {
    struct wl_surface *surface;
    struct wl_shell_surface *shell_surface;
    struct wl_callback *callback;
+   bool opaque;
 };
 
 static struct display display = {0, };
@@ -119,14 +121,7 @@ _eglutNativeInitWindow(struct eglut_window *win, const char *title,
    if (!eglGetConfigAttrib(_eglut->dpy,
             win->config, EGL_ALPHA_SIZE, &alpha_size))
       _eglutFatal("failed to get alpha size");
-
-   if (!alpha_size) {
-      struct wl_region *region =
-         wl_compositor_create_region(display.compositor);
-      wl_region_add(region, 0, 0, w, h);
-      wl_surface_set_opaque_region(window.surface, region);
-      wl_region_destroy(region);
-   }
+   window.opaque = !alpha_size;
 
    window.shell_surface = wl_shell_get_shell_surface(display.shell,
          window.surface);
@@ -179,6 +174,14 @@ draw(void *data, struct wl_callback *callback, uint32_t time)
 
    window->callback = wl_surface_frame(window->surface);
    wl_callback_add_listener(window->callback, &frame_listener, window);
+
+   if (window->opaque) {
+      struct wl_region *region =
+         wl_compositor_create_region(display.compositor);
+      wl_region_add(region, 0, 0, win->native.width, win->native.height);
+      wl_surface_set_opaque_region(window->surface, region);
+      wl_region_destroy(region);
+   }
 
    eglSwapBuffers(_eglut->dpy, win->surface);
 }
