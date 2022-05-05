@@ -20,7 +20,6 @@ struct window {
    struct wl_surface *surface;
    struct xdg_surface *xdg_surface;
    struct xdg_toplevel *xdg_toplevel;
-   struct wl_callback *callback;
    bool opaque;
    bool configured;
 };
@@ -215,28 +214,12 @@ _eglutNativeFiniWindow(struct eglut_window *win)
 
    xdg_toplevel_destroy(window.xdg_toplevel);
    xdg_surface_destroy(window.xdg_surface);
-
-   if (window.callback)
-      wl_callback_destroy(window.callback);
 }
 
 static void
-draw(void *data, struct wl_callback *callback, uint32_t time);
-
-static const struct wl_callback_listener frame_listener = {
-   draw
-};
-
-static void
-draw(void *data, struct wl_callback *callback, uint32_t time)
+draw(struct window *window)
 {
-   struct window *window = (struct window *)data;
    struct eglut_window *win = _eglut->current;
-
-   if (callback) {
-      wl_callback_destroy(callback);
-      window->callback = NULL;
-   }
 
    /* Our client doesn't want to push another frame; go back to sleep. */
    if (!_eglut->redisplay)
@@ -245,9 +228,6 @@ draw(void *data, struct wl_callback *callback, uint32_t time)
 
    if (win->display_cb)
       win->display_cb();
-
-   window->callback = wl_surface_frame(window->surface);
-   wl_callback_add_listener(window->callback, &frame_listener, window);
 
    if (window->opaque) {
       struct wl_region *region =
@@ -284,8 +264,8 @@ _eglutNativeEventLoop(void)
 
          /* Client wants to redraw, but we have no frame event to trigger the
           * redraw; kickstart it by redrawing immediately. */
-         if (_eglut->redisplay && !window.callback)
-            draw(&window, NULL, 0);
+         if (_eglut->redisplay)
+            draw(&window);
       }
 
       ret = wl_display_flush(display.display);
