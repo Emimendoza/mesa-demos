@@ -93,6 +93,9 @@ _eglutNativeInitDisplay(void)
    wayland_roundtrip(_eglut->native_dpy);
    wl_registry_destroy(registry);
 
+   if (!display.shell)
+      _eglutFatal("wl-shell not supported");
+
    _eglut->surface_type = EGL_WINDOW_BIT;
    _eglut->redisplay = 1;
 }
