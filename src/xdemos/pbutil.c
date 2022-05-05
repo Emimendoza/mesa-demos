@@ -89,7 +89,11 @@ ChooseFBConfig(Display *dpy, int screen, const int attribs[], int *nConfigs)
 #endif
 #if defined(GLX_SGIX_fbconfig) && defined(GLX_SGIX_pbuffer)
    if (fbcSupport == 2) {
-      return glXChooseFBConfigSGIX(dpy, screen, (int *) attribs, nConfigs);
+      PFNGLXCHOOSEFBCONFIGSGIXPROC glXChooseFBConfigSGIX_func =
+         (PFNGLXCHOOSEFBCONFIGSGIXPROC)
+         glXGetProcAddress((const GLubyte *)"glXChooseFBConfigSGIX");
+
+      return glXChooseFBConfigSGIX_func(dpy, screen, (int *) attribs, nConfigs);
    }
 #endif
    return NULL;
@@ -110,7 +114,11 @@ GetAllFBConfigs(Display *dpy, int screen, int *nConfigs)
       /* The GLX_SGIX_fbconfig extensions says to pass NULL to get list
        * of all available configurations.
        */
-      return glXChooseFBConfigSGIX(dpy, screen, NULL, nConfigs);
+      PFNGLXCHOOSEFBCONFIGSGIXPROC glXChooseFBConfigSGIX_func =
+         (PFNGLXCHOOSEFBCONFIGSGIXPROC)
+         glXGetProcAddress((const GLubyte *)"glXChooseFBConfigSGIX");
+
+      return glXChooseFBConfigSGIX_func(dpy, screen, NULL, nConfigs);
    }
 #endif
    return NULL;
@@ -128,7 +136,11 @@ GetVisualFromFBConfig(Display *dpy, int screen, FBCONFIG config)
 #endif
 #if defined(GLX_SGIX_fbconfig) && defined(GLX_SGIX_pbuffer)
    if (fbcSupport == 2) {
-      return glXGetVisualFromFBConfigSGIX(dpy, config);
+      PFNGLXGETVISUALFROMFBCONFIGSGIXPROC glXGetVisualFromFBConfigSGIX_func =
+         (PFNGLXGETVISUALFROMFBCONFIGSGIXPROC)
+         glXGetProcAddress((const GLubyte *)"glXGetVisualFromFBConfigSGIX");
+
+      return glXGetVisualFromFBConfigSGIX_func(dpy, config);
    }
 #endif
    return NULL;
@@ -165,7 +177,11 @@ GetFBConfigAttrib(Display *dpy, int screen,
 
 #if defined(GLX_SGIX_fbconfig) && defined(GLX_SGIX_pbuffer)
    if (fbcSupport == 2) {
-      if (glXGetFBConfigAttribSGIX(dpy, config, attrib, &value) != 0) {
+      PFNGLXGETFBCONFIGATTRIBSGIXPROC glXGetFBConfigAttribSGIX_func =
+         (PFNGLXGETFBCONFIGATTRIBSGIXPROC)
+         glXGetProcAddress((const GLubyte *)"glXGetFBConfigAttribSGIX");
+
+      if (glXGetFBConfigAttribSGIX_func(dpy, config, attrib, &value) != 0) {
          value = 0;
       }
       return value;
@@ -330,9 +346,14 @@ CreateContext(Display *dpy, int screen, FBCONFIG config)
 #if defined(GLX_SGIX_fbconfig) && defined(GLX_SGIX_pbuffer)
    if (fbcSupport == 2) {
       GLXContext c;
-      c = glXCreateContextWithConfigSGIX(dpy, config, GLX_RGBA_TYPE_SGIX, NULL, True);
+
+      PFNGLXCREATECONTEXTWITHCONFIGSGIXPROC glXCreateContextWithConfigSGIX_func =
+         (PFNGLXCREATECONTEXTWITHCONFIGSGIXPROC)
+         glXGetProcAddress((const GLubyte *)"glXCreateContextWithConfigSGIX");
+
+      c = glXCreateContextWithConfigSGIX_func(dpy, config, GLX_RGBA_TYPE_SGIX, NULL, True);
       if (!c) {
-         c = glXCreateContextWithConfigSGIX(dpy, config, GLX_RGBA_TYPE_SGIX, NULL, False);
+         c = glXCreateContextWithConfigSGIX_func(dpy, config, GLX_RGBA_TYPE_SGIX, NULL, False);
       }
       return c;
    }
@@ -404,7 +425,12 @@ CreatePbuffer(Display *dpy, int screen, FBCONFIG config,
       attribs[i++] = GLX_LARGEST_PBUFFER;
       attribs[i++] = largest;
       attribs[i++] = 0;
-      pBuffer = glXCreateGLXPbufferSGIX(dpy, config, width, height, attribs);
+
+      PFNGLXCREATEGLXPBUFFERSGIXPROC glXCreateGLXPbufferSGIX_func =
+         (PFNGLXCREATEGLXPBUFFERSGIXPROC)
+         glXGetProcAddress((const GLubyte *)"glXCreateGLXPbufferSGIX");
+
+      pBuffer = glXCreateGLXPbufferSGIX_func(dpy, config, width, height, attribs);
    }
    else
 #endif
@@ -439,7 +465,11 @@ DestroyPbuffer(Display *dpy, int screen, PBUFFER pbuffer)
 #endif
 #if defined(GLX_SGIX_fbconfig) && defined(GLX_SGIX_pbuffer)
    if (pbSupport == 2) {
-      glXDestroyGLXPbufferSGIX(dpy, pbuffer);
+      PFNGLXDESTROYGLXPBUFFERSGIXPROC glXDestroyGLXPbufferSGIX_func =
+         (PFNGLXDESTROYGLXPBUFFERSGIXPROC)
+         glXGetProcAddress((const GLubyte *)"glXDestroyGLXPbufferSGIX");
+
+      glXDestroyGLXPbufferSGIX_func(dpy, pbuffer);
       return;
    }
 #endif
