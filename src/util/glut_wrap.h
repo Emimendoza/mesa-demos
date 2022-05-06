@@ -5,6 +5,7 @@
 #  include <GL/freeglut.h>
 #elif defined __APPLE__
 #  include <GLUT/glut.h>
+#  define APIENTRY
 #else
 #  include <GL/glut.h>
 #endif
