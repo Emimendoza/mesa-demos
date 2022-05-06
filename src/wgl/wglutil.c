@@ -209,7 +209,7 @@ wglExtSwapBuffers(HWND hWnd)
 {
 	HDC hDC;
 
-	if ((hDC = (HDC)(INT_PTR)GetWindowLongPtr(hWnd, GWLP_USERDATA)) != NULL);
+	if ((hDC = (HDC)(INT_PTR)GetWindowLongPtr(hWnd, GWLP_USERDATA)) != NULL)
 		return wglSwapLayerBuffers(hDC, WGL_SWAP_MAIN_PLANE);
 	return FALSE;
 }
