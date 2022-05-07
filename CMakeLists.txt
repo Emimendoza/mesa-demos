@@ -6,6 +6,8 @@ include (FindPkgConfig)
 include (CheckCCompilerFlag)
 include (CheckSymbolExists)
 
+set(OpenGL_GL_PREFERENCE "LEGACY")
+
 find_package (OpenGL REQUIRED)
 find_package (GLUT)
 find_package (X11)
