@@ -20,7 +20,8 @@ if (BUILD_WAYLAND)
 		eglutint.h eglut_wayland.c
 		${eglut_wayland_proto_SOURCES})
 	target_compile_options (eglut_wayland PRIVATE ${Wayland_DEFINITIONS})
-	target_include_directories (eglut_wayland PRIVATE ${Wayland_INCLUDE_DIRS})
+	target_include_directories (eglut_wayland PRIVATE
+		${Wayland_INCLUDE_DIRS} ${CMAKE_CURRENT_BINARY_DIR})
 	target_link_libraries (eglut_wayland ${EGL_LIBRARIES} ${Wayland_LIBRARIES})
 	if (BUILD_SHARED_LIBS)
 		install (TARGETS eglut_wayland DESTINATION ${LIBDIR})
