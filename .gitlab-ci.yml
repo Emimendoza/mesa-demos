@@ -35,7 +35,7 @@ x86_build:
     # No need to pull the whole repo to build the container image
     GIT_STRATEGY: none
     # /!\ Bump the TAG when modifying the DEBS
-    FDO_DISTRIBUTION_TAG: &x86_build "2022-04-30"
+    FDO_DISTRIBUTION_TAG: &x86_build "2022-05-07"
     FDO_DISTRIBUTION_PACKAGES: >-
       build-essential
       autoconf
