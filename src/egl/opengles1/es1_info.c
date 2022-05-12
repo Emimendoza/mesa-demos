@@ -286,6 +286,7 @@ main(int argc, char *argv[])
 
    info(egl_dpy);
 
+   eglMakeCurrent(egl_dpy, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
    eglDestroyContext(egl_dpy, egl_ctx);
    eglDestroySurface(egl_dpy, egl_surf);
    eglTerminate(egl_dpy);
