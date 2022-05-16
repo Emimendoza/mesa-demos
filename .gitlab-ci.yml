@@ -142,6 +142,9 @@ meson:
   extends:
     - .use-x86_build
     - .meson-build
+  variables:
+    EXTRA_OPTION: >
+      -Dauto_features=enabled
 
 meson-mingw:
   extends:
