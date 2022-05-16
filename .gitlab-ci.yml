@@ -35,7 +35,7 @@ x86_build:
     # No need to pull the whole repo to build the container image
     GIT_STRATEGY: none
     # /!\ Bump the TAG when modifying the DEBS
-    FDO_DISTRIBUTION_TAG: &x86_build "2022-05-09"
+    FDO_DISTRIBUTION_TAG: &x86_build "2022-05-16"
     FDO_DISTRIBUTION_PACKAGES: >-
       build-essential
       autoconf
@@ -61,6 +61,7 @@ x86_build:
       libx11-dev
       libxcb1-dev
       wayland-protocols
+      libosmesa6-dev
 
 .use-x86_build:
   variables:
