@@ -252,7 +252,7 @@ print_extension_list(const char *ext, GLboolean singleLine)
    width = indent;
    printf("%s", indentString);
    for (k = 0; k < num_extensions; ++k) {
-      const int len = strlen(extensions[k]);
+      const int len = (int)strlen(extensions[k]);
       if ((!singleLine) && (width + len > max)) {
          /* start a new line */
          printf("\n");
@@ -302,7 +302,7 @@ build_core_profile_extension_list(const struct ext_functions *extfuncs)
    for (i = 0; i < n; i++) {
       const char *ext = (const char *) extfuncs->GetStringi(GL_EXTENSIONS, i);
       if (ext)
-          totalLen += strlen(ext) + 1; /* plus a space */
+          totalLen += (int)strlen(ext) + 1; /* plus a space */
    }
 
    if (!totalLen)
@@ -314,7 +314,7 @@ build_core_profile_extension_list(const struct ext_functions *extfuncs)
       for (i = 0; i < n; i++) {
          const char *ext = (const char *) extfuncs->GetStringi(GL_EXTENSIONS, i);
          strcpy(buffer + pos, ext);
-         pos += strlen(ext);
+         pos += (int)strlen(ext);
          buffer[pos++] = ' ';
       }
       buffer[pos] = '\0';
@@ -331,7 +331,7 @@ extension_supported(const char *ext, const char *extensionsList)
       const char *p = strstr(extensionsList, ext);
       if (p) {
          /* check that next char is a space or end of string */
-         int extLen = strlen(ext);
+         int extLen = (int)strlen(ext);
          if (p[extLen] == 0 || p[extLen] == ' ') {
             return 1;
          }
