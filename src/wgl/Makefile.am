@@ -23,7 +23,13 @@
 #    Eric Anholt <eric@anholt.net>
 
 EXTRA_DIST = \
+	sharedtex_mt.c \
+	wglcontext.c \
+	wglfontbitmaps.c \
+	wglfontoutlines.c \
+	wglgears.c \
 	wglinfo.c \
 	wglthreads.c \
-	sharedtex_mt.c
-
+	wglutil.c \
+	wglutil.h \
+	wincopy.c

@@ -85,5 +85,6 @@ pbinfo_LDADD = libpbutil.la
 sharedtex_mt_LDADD = -lpthread
 
 EXTRA_DIST = \
+	glinfo_common.c \
 	yuvrect_client.c \
 	xdemo.c
