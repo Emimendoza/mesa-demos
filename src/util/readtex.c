@@ -434,11 +434,11 @@ static void ConvertRGBtoYUV(GLint w, GLint h, GLint texel_bytes,
 
          if (j & 1) {
             /* odd */
-            *dest = (iy << 8) | icr;
+            *dest = (GLushort)((iy << 8) | icr);
          }
          else {
             /* even */
-            *dest = (iy << 8) | icb;
+            *dest = (GLushort)((iy << 8) | icb);
          }
          dest++;
 	 src += texel_bytes;
