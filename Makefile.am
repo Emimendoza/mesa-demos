@@ -25,4 +25,6 @@
 AUTOMAKE_OPTIONS = foreign
 ACLOCAL_AMFLAGS = -I m4
 
+AM_DISTCHECK_CONFIGURE_FLAGS = --enable-autotools
+
 SUBDIRS = src
