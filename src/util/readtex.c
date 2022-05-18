@@ -418,15 +418,15 @@ static void ConvertRGBtoYUV(GLint w, GLint h, GLint texel_bytes,
 
    for (i = 0; i < h; i++) {
       for (j = 0; j < w; j++) {
-         const GLfloat r = (src[0]) / 255.0;
-         const GLfloat g = (src[1]) / 255.0;
-         const GLfloat b = (src[2]) / 255.0;
+         const GLfloat r = src[0] / 255.0f;
+         const GLfloat g = src[1] / 255.0f;
+         const GLfloat b = src[2] / 255.0f;
          GLfloat y, cr, cb;
          GLint iy, icr, icb;
 
-         y  = r * 65.481 + g * 128.553 + b * 24.966 + 16;
-         cb = r * -37.797 + g * -74.203 + b * 112.0 + 128;
-         cr = r * 112.0 + g * -93.786 + b * -18.214 + 128;
+         y  = r * 65.481f + g * 128.553f + b * 24.966f + 16;
+         cb = r * -37.797f + g * -74.203f + b * 112.0f + 128;
+         cr = r * 112.0f + g * -93.786f + b * -18.214f + 128;
          /*printf("%f %f %f -> %f %f %f\n", r, g, b, y, cb, cr);*/
          iy  = (GLint) CLAMP(y,  0, 254);
          icb = (GLint) CLAMP(cb, 0, 254);
