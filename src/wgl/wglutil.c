@@ -72,9 +72,10 @@ getFormat(HDC hDC, PIXELFORMATDESCRIPTOR *pfd)
 {
 	int format;
 
-	int size = sizeof(PIXELFORMATDESCRIPTOR);
+	size_t size = sizeof(PIXELFORMATDESCRIPTOR);
 	memset(pfd, 0, size);
-	pfd->nSize = size;
+	assert(size <= 65535);
+	pfd->nSize = (WORD)size;
 	pfd->nVersion = 1;
 	pfd->dwFlags = PFD_DRAW_TO_WINDOW|PFD_SUPPORT_OPENGL;
 	pfd->iLayerType = PFD_MAIN_PLANE;
