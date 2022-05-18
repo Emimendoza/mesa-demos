@@ -294,7 +294,7 @@ print_visual_attribs_verbose(int iPixelFormat, const struct format_info *info)
           info->gdi_drawing);
    printf("    bufferSize=%d level=%d renderType=%s doubleBuffer=%d stereo=%d\n",
           0 /* info->pfd.bufferSize */, 0 /* info->pfd.level */,
-	  visual_render_type_name(info->pfd.iPixelType),
+          visual_render_type_name(info->pfd.iPixelType),
           info->pfd.dwFlags & PFD_DOUBLEBUFFER ? 1 : 0, 
           info->pfd.dwFlags & PFD_STEREO ? 1 : 0);
    printf("    rgba: cRedBits=%d cGreenBits=%d cBlueBits=%d cAlphaBits=%d float=%c sRGB=%c\n",
@@ -524,7 +524,7 @@ print_visual_info(HDC hdc, InfoMode mode)
    numWglVisuals = 0;
    for (i = 0; i < numVisuals; i++) {
       if(!DescribePixelFormat(hdc, i, sizeof(PIXELFORMATDESCRIPTOR), &info.pfd))
-	 continue;
+         continue;
 
       //if(!(info.pfd.dwFlags & PFD_SUPPORT_OPENGL))
       //   continue;
@@ -543,7 +543,7 @@ print_visual_info(HDC hdc, InfoMode mode)
       get_format_info(hdc, i, &info);
 
       if (mode == Verbose)
-	 print_visual_attribs_verbose(i, &info);
+         print_visual_attribs_verbose(i, &info);
       else if (mode == Normal)
          print_visual_attribs_short(i, &info);
       else if (mode == Wide) 
