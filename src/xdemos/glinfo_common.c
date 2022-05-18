@@ -728,28 +728,28 @@ print_limits(const char *extensions, const char *oglstring, int version,
    }
 
    if (extension_supported("GL_ARB_texture_compression", extensions)) {
-      GLint i, n;
+      GLint j, n;
       GLint *formats;
       printf("  GL_ARB_texture_compression:\n");
       glGetIntegerv(GL_NUM_COMPRESSED_TEXTURE_FORMATS, &n);
       printf("    GL_NUM_COMPRESSED_TEXTURE_FORMATS = %d\n", n);
       formats = (GLint *) malloc(n * sizeof(GLint));
       glGetIntegerv(GL_COMPRESSED_TEXTURE_FORMATS, formats);
-      for (i = 0; i < n; i++) {
-         printf("      %s\n", enum_name(formats[i]));
+      for (j = 0; j < n; j++) {
+         printf("      %s\n", enum_name(formats[j]));
       }
       free(formats);
    }
 
 #if defined(GL_VERSION_4_3)
    if (version >= 43) {
-      GLint i, n = 0;
+      GLint j, n = 0;
       printf("  4.3:\n");
       glGetIntegerv(GL_NUM_SHADING_LANGUAGE_VERSIONS, &n);
       printf("    GL_NUM_SHADING_LANGUAGE_VERSIONS = %d\n", n);
-      for (i = 0; i < n; i++) {
+      for (j = 0; j < n; j++) {
          const char *lang = (const char *)
-            extfuncs->GetStringi(GL_SHADING_LANGUAGE_VERSION, i);
+            extfuncs->GetStringi(GL_SHADING_LANGUAGE_VERSION, j);
          if (lang[0] == 0) {
             /* The empty string is really GLSL 1.10.  Instead of
              * printing an empty line, print (110).  For more info,
