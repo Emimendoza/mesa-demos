@@ -76,3 +76,6 @@ drawtex_x11_LDADD = ../eglut/libeglut_x11.la
 gears_x11_LDADD = ../eglut/libeglut_x11.la
 torus_x11_LDADD = ../eglut/libeglut_x11.la
 tri_x11_LDADD = ../eglut/libeglut_x11.la
+
+EXTRA_DIST = \
+	meson.build

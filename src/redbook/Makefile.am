@@ -115,4 +115,5 @@ LDADD = ../glad/libglad.la
 
 EXTRA_DIST = \
 	README \
+	meson.build \
 	jitter.h

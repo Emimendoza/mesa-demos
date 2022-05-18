@@ -86,5 +86,6 @@ sharedtex_mt_LDADD = -lpthread
 
 EXTRA_DIST = \
 	glinfo_common.c \
+	meson.build \
 	yuvrect_client.c \
 	xdemo.c

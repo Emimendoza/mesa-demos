@@ -135,6 +135,7 @@ EXTRA_DIST = \
 	convolution.vert \
 	cubemap.frag \
 	mandelbrot.shtest \
+	meson.build \
 	multitex.frag \
 	multitex.shtest \
 	multitex.vert \

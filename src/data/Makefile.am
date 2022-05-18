@@ -38,3 +38,6 @@ dist_demosdata_DATA= \
 	geartrain.dat \
 	isosurf.dat \
 	terrain.dat
+
+EXTRA_DIST = \
+	meson.build

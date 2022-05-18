@@ -57,3 +57,6 @@ es2gears_x11_LDADD = ../eglut/libeglut_x11.la
 
 es2gears_wayland_SOURCES = es2gears.c
 es2gears_wayland_LDADD = ../eglut/libeglut_wayland.la
+
+EXTRA_DIST = \
+	meson.build

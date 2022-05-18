@@ -62,6 +62,7 @@ EXTRA_DIST = \
 	log.txt \
 	mad.txt \
 	max.txt \
+	meson.build \
 	min.txt \
 	mov.txt \
 	msk.txt \

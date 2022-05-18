@@ -71,3 +71,6 @@ nodist_libeglut_wayland_la_SOURCES = \
 
 libeglut_wayland_la_CFLAGS = $(WAYLAND_CFLAGS) $(EGL_CFLAGS)
 libeglut_wayland_la_LIBADD = $(WAYLAND_LIBS) $(EGL_LIBS)
+
+EXTRA_DIST = \
+	meson.build

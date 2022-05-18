@@ -46,6 +46,7 @@ EXTRA_DIST = \
 	dowhile.glsl \
 	forbreak.glsl \
 	for.glsl \
+	meson.build \
 	mov.glsl \
 	mov-imm.glsl \
 	simpleif.glsl \

@@ -45,6 +45,7 @@ EXTRA_DIST = \
 	func2.glsl \
 	ifelse.glsl \
 	if.glsl \
+	meson.build \
 	mov.glsl \
 	nestedifs.glsl \
 	nestedswizzle.glsl \

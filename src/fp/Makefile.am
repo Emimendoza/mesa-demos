@@ -71,6 +71,7 @@ EXTRA_DIST = \
 	lrp.txt \
 	mad.txt \
 	max.txt \
+	meson.build \
 	min.txt \
 	mov-alias.txt \
 	mov.txt \

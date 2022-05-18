@@ -27,3 +27,6 @@ SUBDIRS = \
 	opengl \
 	opengles1 \
 	opengles2
+
+EXTRA_DIST = \
+	meson.build

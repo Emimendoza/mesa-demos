@@ -86,3 +86,6 @@ egltri_wayland_LDADD = ../eglut/libeglut_wayland.la
 eglkms_SOURCES = eglkms.c
 eglkms_CFLAGS = $(AM_CFLAGS) $(DRM_CFLAGS) $(GBM_CFLAGS)
 eglkms_LDADD = $(AM_LDFLAGS) $(DRM_LIBS) $(GBM_LIBS)
+
+EXTRA_DIST = \
+	meson.build

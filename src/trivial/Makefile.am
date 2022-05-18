@@ -212,3 +212,6 @@ bin_PROGRAMS = \
 endif
 
 LDADD = ../glad/libglad.la
+
+EXTRA_DIST = \
+	meson.build

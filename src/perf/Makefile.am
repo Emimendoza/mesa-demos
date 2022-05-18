@@ -60,3 +60,6 @@ endif
 
 glslstateschange_LDADD = libperf.la ../util/libutil.la ../glad/libglad.la
 glsl_compile_time_LDADD = ../util/libutil.la ../glad/libglad.la
+
+EXTRA_DIST = \
+	meson.build

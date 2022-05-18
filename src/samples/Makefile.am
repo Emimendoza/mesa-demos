@@ -69,4 +69,5 @@ sphere_LDADD = ../util/libutil.la ../glad/libglad.la
 EXTRA_DIST = \
 	README \
 	loadppm.c \
+	meson.build \
 	tkmap.c

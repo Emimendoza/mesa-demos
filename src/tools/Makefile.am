@@ -22,3 +22,6 @@
 # Authors:
 #    Eric Anholt <eric@anholt.net>
 
+EXTRA_DIST = \
+	dds.c \
+	meson.build

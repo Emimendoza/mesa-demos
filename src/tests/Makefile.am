@@ -174,5 +174,6 @@ texrect_LDADD = ../util/libutil.la ../glad/libglad.la
 
 EXTRA_DIST = \
 	Makefile.am \
+	meson.build \
 	texcomp_image.h \
 	tkmap.c

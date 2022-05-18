@@ -50,5 +50,5 @@ EXTRA_DIST = \
 	buddha.obj \
 	bunny.obj \
 	GreatLakesBiplaneHP.obj \
+	meson.build \
 	README.txt
-

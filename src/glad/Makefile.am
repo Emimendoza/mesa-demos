@@ -40,4 +40,5 @@ EXTRA_DIST = \
 	include/glad/glad.h \
 	include/KHR/khrplatform.h \
 	src/glad_wgl.c \
+	meson.build \
 	README.md

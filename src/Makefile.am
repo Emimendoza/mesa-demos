@@ -44,3 +44,6 @@ SUBDIRS = \
 	vpglsl \
 	wgl \
 	xdemos
+
+EXTRA_DIST = \
+	meson.build

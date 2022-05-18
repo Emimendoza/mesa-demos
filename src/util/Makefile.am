@@ -52,4 +52,5 @@ libutil_la_SOURCES = \
 	$(SHADERUTIL_SRC)
 
 EXTRA_DIST = \
+	meson.build \
 	README

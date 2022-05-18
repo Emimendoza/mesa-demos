@@ -119,4 +119,5 @@ tunnel2_LDADD = ../util/libutil.la ../glad/libglad.la
 winpos_LDADD = ../util/libutil.la ../glad/libglad.la
 
 EXTRA_DIST = \
-	README
+	README \
+	meson.build

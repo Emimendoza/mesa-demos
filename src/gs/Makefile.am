@@ -15,4 +15,5 @@ endif
 LDADD = ../glad/libglad.la
 
 EXTRA_DIST = \
-	basic.glsl
+	basic.glsl \
+	meson.build
