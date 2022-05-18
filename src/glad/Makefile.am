@@ -36,4 +36,6 @@ libglad_la_SOURCES = \
 libglad_la_LIBADD = -ldl
 
 EXTRA_DIST = \
+	include/glad/glad.h \
+	include/KHR/khrplatform.h \
 	README.md
