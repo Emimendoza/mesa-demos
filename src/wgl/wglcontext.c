@@ -83,7 +83,7 @@ context_flags_to_string(GLint flags)
    if (flags & GL_CONTEXT_FLAG_NO_ERROR_BIT_KHR)
       strcat(buf, "GL_CONTEXT_FLAG_NO_ERROR_BIT_KHR | ");
 
-   int n = strlen(buf);
+   int n = (int)strlen(buf);
    if (n >= 3) {
       /* rm the trailing " | " */
       buf[n-3] = 0;
