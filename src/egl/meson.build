@@ -21,7 +21,7 @@
 subdir('eglut')
 subdir('opengl')
 
-if dep_gles1.found() and dep_x11.found()
+if dep_gles1.found()
   subdir('opengles1')
 endif
 
