@@ -48,7 +48,7 @@ AC_ARG_ENABLE(autotools,
 if test "x$enable_autotools" != "xyes" ; then
     AC_MSG_ERROR([the autotools build system has been deprecated in favour
     of meson, and will be removed eventually. For instructions on how to
-    use meson, see index.html.
+    use meson, see README.rst.
 
     If you still want to use the autotools build, then add --enable-autotools
     to the configure command line.])

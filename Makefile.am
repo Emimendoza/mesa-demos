@@ -30,6 +30,6 @@ AM_DISTCHECK_CONFIGURE_FLAGS = --enable-autotools
 SUBDIRS = src
 
 EXTRA_DIST = \
-	index.html \
+	README.rst \
 	meson_options.txt \
 	meson.build

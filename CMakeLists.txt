@@ -7,7 +7,7 @@ if(NOT ENABLE_CMAKE)
 	message(FATAL_ERROR
 	        "The cmake build system has been deprecated in favour of "
 	        "meson, and will be removed eventually. For instructions on "
-	        "how to use meson, see index.html.\n"
+	        "how to use meson, see README.rst.\n"
 	        "If you still want to use the autotools build, then add "
 	        "-DENABLE_CMAKE=ON to the cmake command line.")
 endif()
@@ -165,7 +165,7 @@ endif (BUILD_SHARED_LIBS AND NOT DEFINED LIBDIR)
 add_subdirectory (src)
 
 
-install (FILES index.html DESTINATION doc)
+install (FILES README.rst DESTINATION doc)
 
 set (CPACK_PACKAGE_NAME "mesa-demos")
 set (CPACK_PACKAGE_VERSION_MAJOR "8")
