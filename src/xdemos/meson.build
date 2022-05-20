@@ -63,7 +63,11 @@ executable(
   install: true
 )
 
-_libpbutil = static_library('pbutil', files('pbutil.c'))
+_libpbutil = static_library(
+  'pbutil',
+  files('pbutil.c'),
+  dependencies: glx_deps
+)
 
 pbutil_progs = [
   'glxgears_fbconfig',
