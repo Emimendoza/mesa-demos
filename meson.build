@@ -127,4 +127,8 @@ if host_machine.system() == 'darwin'
   add_project_arguments('-DGL_SILENCE_DEPRECATION', language: 'c')
 endif
 
+if cc.get_id() == 'msvc'
+  add_project_arguments('-D_CRT_SECURE_NO_WARNINGS', language: 'c')
+endif
+
 subdir('src')
