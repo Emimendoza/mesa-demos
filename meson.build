@@ -123,4 +123,8 @@ if dep_glut.found() and cc.has_function('glutInitContextProfile',
   add_project_arguments('-DHAVE_FREEGLUT', language : ['c', 'cpp'])
 endif
 
+if host_machine.system() == 'darwin'
+  add_project_arguments('-DGL_SILENCE_DEPRECATION', language: 'c')
+endif
+
 subdir('src')
