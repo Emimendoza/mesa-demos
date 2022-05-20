@@ -202,7 +202,7 @@ AddWindow(int xpos, int ypos, HGLRC sCtx)
                              NULL,
                              NULL,
                              wc.hInstance,
-                             (LPVOID) win->Id);
+                             (LPVOID)(uintptr_t)win->Id);
    if (!win->Win) {
       Error("Couldn't create window");
    }
