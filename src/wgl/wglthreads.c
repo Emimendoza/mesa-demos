@@ -110,7 +110,7 @@ signal_redraw(void)
 
 
 static void
-MakeNewTexture(struct winthread *wt)
+MakeNewTexture()
 {
 #define TEX_SIZE 128
    static float step = 0.0f;
@@ -314,7 +314,7 @@ draw_loop(struct winthread *wt)
       }
 
       if (wt->MakeNewTexture) {
-         MakeNewTexture(wt);
+         MakeNewTexture();
          wt->MakeNewTexture = GL_FALSE;
       }
 
