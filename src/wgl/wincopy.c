@@ -223,9 +223,10 @@ WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nCmdShow)
 			if ((Context = wglCreateContext(hDC)) != NULL) {
 				BOOL rval;
 
-				while ((ret = GetMessage(&msg, NULL, 0, 0)) != 0) {
+				while (GetMessage(&msg, NULL, 0, 0) != 0) {
 					TranslateMessage(&msg);
 					DispatchMessage(&msg);
+					ret = (int)msg.wParam;
 				}
 				if (Win[0] != NULL) {
 					rval = DestroyWindow(Win[0]);
@@ -240,7 +241,6 @@ WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nCmdShow)
 			}
 		}
 		wglExtDispose(hInst);
-		ret = (int)msg.wParam;
     }
 	if (Context != NULL)
 		wglDeleteContext(Context);
