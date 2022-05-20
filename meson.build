@@ -128,7 +128,12 @@ if host_machine.system() == 'darwin'
 endif
 
 if cc.get_id() == 'msvc'
-  add_project_arguments('-D_CRT_SECURE_NO_WARNINGS', language: 'c')
+  c_args = [ '-D_CRT_SECURE_NO_WARNINGS' ]
+  c_args += cc.get_supported_arguments([
+    '/wd4244', # conversion from 'type1' to 'type2', possible loss of data
+    '/wd4305', # trancation from 'type1' to 'type2'
+  ])
+  add_project_arguments(c_args, language: 'c')
 endif
 
 subdir('src')
