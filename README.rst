@@ -112,20 +112,20 @@ The Demos
 
 Look in the **src/** directory for these sub-directories, among others:
 
-- demos - the original Mesa demos, such as gears, gloss, etc.
-- redbook - the OpenGL Programming Guide demos
-- samples- original SGI OpenGL demos
-- glsl - OpenGL Shading Language demos
-- gs - Geometry shader demos
-- xdemos - GLX-based demos
-- egl - EGL-based demos
-- wgl - WGL-based demos
-- fp - fragment program tests
-- vp - vertex program tests
-- data - data files used by the demos
-- perf - performance tests
-- tests - assorted test programs
-- objviewer - program to view .obj modes with a skybox
+- **demos**: the original Mesa demos, such as gears, gloss, etc.
+- **redbook**: the OpenGL Programming Guide demos
+- **samples**: original SGI OpenGL demos
+- **glsl**: OpenGL Shading Language demos
+- **gs**: Geometry shader demos
+- **xdemos**: GLX-based demos
+- **egl**: EGL-based demos
+- **wgl**: WGL-based demos
+- **fp**: fragment program tests
+- **vp**: vertex program tests
+- **data**: data files used by the demos
+- **perf**: performance tests
+- **tests**: assorted test programs
+- **objviewer**: program to view .obj modes with a skybox
 
 
 Getting Help
