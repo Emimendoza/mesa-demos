@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008  Tunsgten Graphics,Inc.   All Rights Reserved.
+ * Copyright (C) 2008  Tungsten Graphics,Inc.   All Rights Reserved.
  */
 
 /*
