@@ -40,7 +40,7 @@ The Mesa demos can be built with `Meson <https://mesonbuild.com/>`_.
 Prerequisites
 ^^^^^^^^^^^^^
 
-You'll need glut or `freeglut <http://freeglut.sourceforge.net/>`_
+You'll need GLUT or `FreeGLUT <http://freeglut.sourceforge.net/>`_
 (runtime libraries and header files).
 
 If you're using an RPM-based Linux distro you can install these items
