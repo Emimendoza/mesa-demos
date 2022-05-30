@@ -15,8 +15,8 @@ aren't tied to a particular version of Mesa.
 Note that the Mesa demos should be usable with any OpenGL implementation;
 not just Mesa.
 
-FTP site
---------
+Latest Release
+--------------
 
 The latest version of the Mesa demos can be found on the `mesa3d.org
 archives <https://archive.mesa3d.org/demos/>`_ site.
