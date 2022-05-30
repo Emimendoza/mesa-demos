@@ -1,5 +1,5 @@
-Mesa Demos Distribution
-=======================
+Mesa Demos
+==========
 
 Introduction
 ------------
