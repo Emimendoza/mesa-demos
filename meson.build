@@ -19,7 +19,7 @@
 # SOFTWARE.
 
 project('mesa-demos', 'c', 'cpp',
-  version : '8.4.0',
+  version : '8.5.0',
   meson_version : '>= 0.53')
 
 cc = meson.get_compiler('c')
