@@ -26,7 +26,7 @@ files_libutil = files(
   'trackball.c',
 )
 
-_deps = []
+_deps = [dep_glu]
 if dep_glut.found()
   files_libutil += files('shaderutil.c')
   _deps += dep_glut
