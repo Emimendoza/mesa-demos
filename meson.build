@@ -29,7 +29,7 @@ null_dep = dependency('', required : false)
 
 demos_data_dir = '../data/'
 if get_option('with-system-data-files')
-  demos_data_dir = get_option('datadir') / 'mesa-demos'
+  demos_data_dir = get_option('prefix') / get_option('datadir') / 'mesa-demos/'
 endif
 add_project_arguments(
   '-DDEMOS_DATA_DIR="@0@"'.format(demos_data_dir),
