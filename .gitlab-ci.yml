@@ -67,7 +67,7 @@ x86_build:
 
 # BUILD
 
-.meson-build:
+.build:
   stage: build
   extends:
     - .ci-run-policy
@@ -81,18 +81,18 @@ x86_build:
     - ninja -C _build -j4
     - ninja -C _build install
 
-meson:
+build:
   extends:
     - .use-x86_build
-    - .meson-build
+    - .build
   variables:
     EXTRA_OPTION: >
       -Dauto_features=enabled
 
-meson-mingw:
+build-mingw:
   extends:
     - .use-x86_build
-    - .meson-build
+    - .build
   before_script:
     - .gitlab-ci/prepare-glut-mingw.sh
   variables:
