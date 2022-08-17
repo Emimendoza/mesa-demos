@@ -37,6 +37,10 @@
 #define MAX_CONFIGS 1000
 #define MAX_MODES 1000
 #define MAX_SCREENS 10
+#define MAX_COLUMN 70
+
+typedef const char *(*GETSTRINGPROC)(GLenum);
+typedef void (*GETINTEGERVPROC)(GLenum, int*);
 
 /* These are X visual types, so if you're running eglinfo under
  * something not X, they probably don't make sense. */
@@ -149,7 +153,7 @@ PrintExtensions(const char *extensions)
       if (next == NULL)
          next = end;
 
-      if (column > 0 && column + next - p + 1 > 70) {
+      if (column > 0 && column + next - p + 1 > MAX_COLUMN) {
          printf("\n");
          column = 0;
       }
@@ -214,6 +218,154 @@ PrintDeviceExtensions(EGLDeviceEXT d)
 }
 
 
+/* Note that this function has a different return type than the other Print*
+ * functions.
+ */
+static int
+PrintContextExtensions(const char *api_name, GETINTEGERVPROC GetIntegerv)
+{
+   GETSTRINGIPROC GetStringi =
+      (GETSTRINGIPROC) eglGetProcAddress("glGetStringi");
+
+   if (!GetStringi)
+      return 0;
+
+   int num_extensions;
+   GetIntegerv(GL_NUM_EXTENSIONS, &num_extensions);
+
+   printf("%s extensions:\n", api_name);
+
+   unsigned column = 0;
+
+   for (int i = 0; i < num_extensions; i++) {
+      const char *extension = (const char *) GetStringi(GL_EXTENSIONS, i);
+      unsigned extension_len = strlen(extension);
+      if (column > 0 && column + extension_len > MAX_COLUMN) {
+         printf("\n");
+         column = 0;
+      }
+
+      if (column == 0)
+         printf("    ");
+      else
+         printf(" ");
+
+      printf("%s", extension);
+
+      column += extension_len;
+   }
+
+   if (column > 0)
+      printf("\n");
+
+   return 1;
+}
+
+
+static EGLConfig
+chooseEGLConfig(EGLDisplay d, int api_bitmask)
+{
+   const int attribs[] = {
+      EGL_CONFORMANT,      api_bitmask,
+      EGL_RED_SIZE,        1,
+      EGL_GREEN_SIZE,      1,
+      EGL_BLUE_SIZE,       1,
+      EGL_ALPHA_SIZE,      1,
+      EGL_RENDERABLE_TYPE, api_bitmask,
+      EGL_NONE
+   };
+
+   int num_configs = 0;
+   EGLConfig configs[MAX_CONFIGS];
+   eglChooseConfig(d, attribs, configs, MAX_CONFIGS, &num_configs);
+
+   if (num_configs == 0) {
+      return NULL;
+   } else {
+      return configs[0];
+   }
+}
+
+static EGLContext
+createEGLContext(EGLDisplay d, EGLConfig conf, int api,
+                 EGLBoolean core_profile)
+{
+   EGLContext ctx;
+
+   if (api == EGL_OPENGL_API) {
+      for (int i = 0; gl_versions[i].major > 0; i++) {
+         /* if requesting for core profile, don't bother below GL 3.0 */
+         if (core_profile &&
+             gl_versions[i].major == 3 &&
+             gl_versions[i].minor == 0)
+            return NULL;
+
+         const int attribs[] = {
+            EGL_CONTEXT_MAJOR_VERSION, gl_versions[i].major,
+            EGL_CONTEXT_MINOR_VERSION, gl_versions[i].minor,
+            EGL_CONTEXT_OPENGL_PROFILE_MASK,
+            core_profile ? EGL_CONTEXT_OPENGL_CORE_PROFILE_BIT :
+                           EGL_CONTEXT_OPENGL_COMPATIBILITY_PROFILE_BIT,
+            EGL_NONE,
+         };
+
+         ctx = eglCreateContext(d, conf, EGL_NO_CONTEXT, attribs);
+
+         if (ctx)
+            return ctx;
+      }
+      /* couldn't get core profile context */
+      return NULL;
+   }
+
+   if (api == EGL_OPENGL_ES_API) {
+      /* start from GLES3, then try to create context until we succeed
+       * or reach GLES1
+       */
+      for (int i = 3; i > 0; i--) {
+         const int attribs[] = {
+            EGL_CONTEXT_MAJOR_VERSION, i,
+            EGL_NONE,
+         };
+
+         ctx = eglCreateContext(d, conf, EGL_NO_CONTEXT, attribs);
+
+         if (ctx)
+            return ctx;
+      }
+   }
+
+   return NULL;
+}
+
+static int
+doOneContext(EGLDisplay d, EGLContext ctx, const char *api_name)
+{
+   if (!eglMakeCurrent(d, EGL_NO_SURFACE, EGL_NO_SURFACE, ctx))
+      return 1;
+
+   GETSTRINGPROC GetString =
+      (GETSTRINGPROC) eglGetProcAddress("glGetString");
+   GETINTEGERVPROC GetIntegerv =
+      (GETINTEGERVPROC) eglGetProcAddress("glGetIntegerv");
+
+   if (!GetString || !GetIntegerv)
+      return 1;
+
+   printf("%s vendor: %s\n", api_name, GetString(GL_VENDOR));
+   printf("%s renderer: %s\n", api_name, GetString(GL_RENDERER));
+   printf("%s version: %s\n", api_name, GetString(GL_VERSION));
+   printf("%s shading language version: %s\n", api_name,
+          GetString(GL_SHADING_LANGUAGE_VERSION));
+
+   if (!PrintContextExtensions(api_name, GetIntegerv))
+      return 1;
+
+   eglMakeCurrent(d, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
+   return 0;
+}
+
+
 static int
 doOneDisplay(EGLDisplay d, const char *name)
 {
@@ -229,12 +381,73 @@ doOneDisplay(EGLDisplay d, const char *name)
    printf("EGL vendor string: %s\n", eglQueryString(d, EGL_VENDOR));
    printf("EGL version string: %s\n", eglQueryString(d, EGL_VERSION));
 #ifdef EGL_VERSION_1_2
-   printf("EGL client APIs: %s\n", eglQueryString(d, EGL_CLIENT_APIS));
+   const char *client_apis = eglQueryString(d, EGL_CLIENT_APIS);
+   printf("EGL client APIs: %s\n", client_apis);
 #endif
 
-   PrintDisplayExtensions(d);
+   const char *display_exts = PrintDisplayExtensions(d);
+
+#ifdef EGL_VERSION_1_4
+   int khr_create_context = (maj == 1 && min >= 4) &&
+      strstr(display_exts, "EGL_KHR_create_context") != 0;
+
+   const char *has_opengl = strstr(client_apis, "OpenGL");
+   const char *has_opengl_es = strstr(client_apis, "OpenGL_ES");
+   const char *has_openvg = strstr(client_apis, "OpenVG");
+
+   if (has_opengl == has_opengl_es) {
+      int offset = strlen("OpenGL_ES");
+      has_opengl = strstr(has_opengl_es + offset, "OpenGL");
+   }
+
+   if (has_opengl) {
+      EGLBoolean api_result = eglBindAPI(EGL_OPENGL_API);
+      if (api_result) {
+         EGLConfig config = chooseEGLConfig(d, EGL_OPENGL_BIT);
+         EGLContext ctx;
+
+         if (khr_create_context) {
+            ctx = createEGLContext(d, config, EGL_OPENGL_API, EGL_TRUE);
+
+            if (ctx) {
+               if (doOneContext(d, ctx, "OpenGL core profile") == 0)
+                  if (!eglDestroyContext(d, ctx))
+                     return 1;
+            }
+         }
+
+         ctx = createEGLContext(d, config, EGL_OPENGL_API, EGL_FALSE);
+
+         if (ctx) {
+            if (doOneContext(d, ctx, "OpenGL compatibility profile") == 0)
+               if (!eglDestroyContext(d, ctx))
+                  return 1;
+         }
+      }
+   }
+   if (has_opengl_es) {
+      EGLBoolean api_result = eglBindAPI(EGL_OPENGL_ES_API);
+      if (api_result) {
+         EGLConfig config = chooseEGLConfig(d, EGL_OPENGL_ES_BIT);
+         EGLContext ctx = createEGLContext(d,
+                                           config,
+                                           EGL_OPENGL_ES_API,
+                                           EGL_FALSE);
+
+         if (ctx) {
+            if (doOneContext(d, ctx, "OpenGL ES profile") == 0)
+               if (!eglDestroyContext(d, ctx))
+                  return 1;
+         }
+      }
+   }
+   if (has_openvg) {
+      /* TODO: support OpenVG? */
+   }
+#endif
 
    PrintConfigs(d);
+
    eglTerminate(d);
    printf("\n");
    return 0;
