@@ -34,6 +34,7 @@ executable(
 executable(
   'eglinfo', 'eglinfo.c',
   dependencies: [dep_egl],
+  include_directories: ['../../xdemos'],
   install: true
 )
 

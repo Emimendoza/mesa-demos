@@ -32,6 +32,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "glinfo_common.h"
 
 #define MAX_CONFIGS 1000
 #define MAX_MODES 1000
