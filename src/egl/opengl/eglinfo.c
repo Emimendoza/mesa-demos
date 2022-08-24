@@ -149,13 +149,13 @@ PrintExtensions(const char *extensions)
          next = end;
 
       if (column > 0 && column + next - p + 1 > 70) {
-	 printf("\n");
-	 column = 0;
+         printf("\n");
+         column = 0;
       }
       if (column == 0)
-	 printf("    ");
+         printf("    ");
       else
-	 printf(" ");
+         printf(" ");
       column += next - p + 1;
 
       printf("%.*s", (int) (next - p), p);
