@@ -667,7 +667,7 @@ event_loop(struct egl_manager *eman, EGLint surface_type, EGLint w, EGLint h)
          case ConfigureNotify:
             window_w = event.xconfigure.width;
             window_h = event.xconfigure.height;
-            if (surface_type == EGL_WINDOW_BIT)
+            if (surface_type == GEARS_WINDOW)
                reshape(window_w, window_h);
             break;
          case KeyPress:
