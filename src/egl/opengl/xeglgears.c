@@ -486,8 +486,7 @@ egl_manager_create_window(struct egl_manager *eman, const char *name,
    attrs.border_pixel = 0;
    attrs.colormap = XCreateColormap(eman->xdpy, root, vinfo->visual, AllocNone);
    attrs.event_mask = StructureNotifyMask | ExposureMask | KeyPressMask;
-   attrs.override_redirect = fullscreen;
-   mask = CWBackPixel | CWBorderPixel | CWColormap | CWEventMask | CWOverrideRedirect;
+   mask = CWBackPixel | CWBorderPixel | CWColormap | CWEventMask;
 
    eman->xwin = XCreateWindow(eman->xdpy, root, x, y, w, h,
                               0, vinfo->depth, InputOutput,
