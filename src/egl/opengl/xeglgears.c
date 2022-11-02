@@ -39,6 +39,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <X11/Xatom.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include <X11/keysym.h>
@@ -423,6 +424,21 @@ egl_manager_new(EGLNativeDisplayType xdpy, const EGLint *attrib_list,
    return eman;
 }
 
+static void
+make_fullscreen(Display *dpy, Window w)
+{
+   Atom NET_WM_STATE, NET_WM_STATE_FULLSCREEN;
+
+   NET_WM_STATE = XInternAtom(dpy, "_NET_WM_STATE", False);
+   NET_WM_STATE_FULLSCREEN = XInternAtom(dpy, "_NET_WM_STATE_FULLSCREEN", False);
+   if (NET_WM_STATE == None || NET_WM_STATE_FULLSCREEN == None)
+      return;
+
+   XChangeProperty(dpy, w, NET_WM_STATE,
+		   XA_ATOM, 32, PropModeReplace,
+		   (unsigned char *)&NET_WM_STATE_FULLSCREEN, 1);
+}
+
 static EGLBoolean
 egl_manager_create_window(struct egl_manager *eman, const char *name,
                           EGLint w, EGLint h, EGLBoolean need_surface,
@@ -490,6 +506,9 @@ egl_manager_create_window(struct egl_manager *eman, const char *name,
       XSetStandardProperties(eman->xdpy, eman->xwin, name, name,
                              None, (char **)NULL, 0, &sizehints);
    }
+
+   if (fullscreen)
+      make_fullscreen(eman->xdpy, eman->xwin);
 
    if (need_surface) {
       eman->win = eglCreateWindowSurface(eman->dpy, eman->conf,
