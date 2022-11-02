@@ -31,6 +31,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <X11/Xatom.h>
 #include <X11/Xlib.h>
 #include <X11/keysym.h>
 #include <GL/gl.h>
@@ -487,6 +488,20 @@ no_border( Display *dpy, Window w)
                   );
 }
 
+static void
+make_fullscreen(Display *dpy, Window w)
+{
+   Atom NET_WM_STATE, NET_WM_STATE_FULLSCREEN;
+
+   NET_WM_STATE = XInternAtom(dpy, "_NET_WM_STATE", False);
+   NET_WM_STATE_FULLSCREEN = XInternAtom(dpy, "_NET_WM_STATE_FULLSCREEN", False);
+   if (NET_WM_STATE == None || NET_WM_STATE_FULLSCREEN == None)
+      return;
+
+   XChangeProperty(dpy, w, NET_WM_STATE,
+		   XA_ATOM, 32, PropModeReplace,
+		   (unsigned char *)&NET_WM_STATE_FULLSCREEN, 1);
+}
 
 /*
  * Create an RGB, double-buffered window.
@@ -564,8 +579,10 @@ make_window( Display *dpy, const char *name,
 		        0, visinfo->depth, InputOutput,
 		        visinfo->visual, mask, &attr );
 
-   if (fullscreen)
+   if (fullscreen) {
       no_border(dpy, win);
+      make_fullscreen(dpy, win);
+   }
 
    /* set hints and properties */
    {
