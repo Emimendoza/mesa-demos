@@ -441,7 +441,7 @@ make_fullscreen(Display *dpy, Window w)
 
 static EGLBoolean
 egl_manager_create_window(struct egl_manager *eman, const char *name,
-                          EGLint w, EGLint h, EGLBoolean need_surface,
+                          EGLint *w, EGLint *h, EGLBoolean need_surface,
                           EGLBoolean fullscreen, const EGLint *attrib_list)
 {
    XVisualInfo vinfo_template, *vinfo = NULL;
@@ -477,8 +477,8 @@ egl_manager_create_window(struct egl_manager *eman, const char *name,
    root = DefaultRootWindow(eman->xdpy);
    if (fullscreen) {
       x = y = 0;
-      w = DisplayWidth(eman->xdpy, DefaultScreen(eman->xdpy));
-      h = DisplayHeight(eman->xdpy, DefaultScreen(eman->xdpy));
+      *w = DisplayWidth(eman->xdpy, DefaultScreen(eman->xdpy));
+      *h = DisplayHeight(eman->xdpy, DefaultScreen(eman->xdpy));
    }
 
    /* window attributes */
@@ -488,7 +488,7 @@ egl_manager_create_window(struct egl_manager *eman, const char *name,
    attrs.event_mask = StructureNotifyMask | ExposureMask | KeyPressMask;
    mask = CWBackPixel | CWBorderPixel | CWColormap | CWEventMask;
 
-   eman->xwin = XCreateWindow(eman->xdpy, root, x, y, w, h,
+   eman->xwin = XCreateWindow(eman->xdpy, root, x, y, *w, *h,
                               0, vinfo->depth, InputOutput,
                               vinfo->visual, mask, &attrs);
    XFree(vinfo);
@@ -498,8 +498,8 @@ egl_manager_create_window(struct egl_manager *eman, const char *name,
       XSizeHints sizehints;
       sizehints.x = x;
       sizehints.y = y;
-      sizehints.width  = w;
-      sizehints.height = h;
+      sizehints.width  = *w;
+      sizehints.height = *h;
       sizehints.flags = USSize | USPosition;
       XSetNormalHints(eman->xdpy, eman->xwin, &sizehints);
       XSetStandardProperties(eman->xdpy, eman->xwin, name, name,
@@ -794,7 +794,7 @@ static const char *names[] = {
 int
 main(int argc, char *argv[])
 {
-   const int winWidth = 300, winHeight = 300;
+   EGLint winWidth = 300, winHeight = 300;
    Display *x_dpy;
    char *dpyName = NULL;
    struct egl_manager *eman;
@@ -869,7 +869,7 @@ main(int argc, char *argv[])
    snprintf(win_title, sizeof(win_title),
 	    "xeglgears (%s)", names[surface_type]);
 
-   ret = egl_manager_create_window(eman, win_title, winWidth, winHeight,
+   ret = egl_manager_create_window(eman, win_title, &winWidth, &winHeight,
 				   EGL_TRUE, fullscreen, NULL);
    if (!ret)
       return -1;
