@@ -845,10 +845,6 @@ texture(void)
 
   texture++;
   texture %= 3;
-  if (texture == 1 && texFilename == NULL) {
-    /* Skip file texture if not loaded. */
-    texture++;
-  }
   switch (texture) {
   case 0:
     loadTexture = nop;
