@@ -35,12 +35,13 @@ x86_build:
     # No need to pull the whole repo to build the container image
     GIT_STRATEGY: none
     # /!\ Bump the TAG when modifying the DEBS
-    FDO_DISTRIBUTION_TAG: &x86_build "2023-01-27-mingw-w64-tools"
+    FDO_DISTRIBUTION_TAG: &x86_build "2023-01-12-vkgears"
     FDO_DISTRIBUTION_PACKAGES: >-
       build-essential
       python3-pip
       pkg-config
       ninja-build
+      glslang-tools
       mingw-w64
       mingw-w64-tools
       wine
@@ -51,6 +52,7 @@ x86_build:
       libgbm-dev
       libgl-dev
       libgles-dev
+      libvulkan-dev
       libudev-dev
       libwayland-dev
       libx11-dev

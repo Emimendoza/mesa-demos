@@ -44,6 +44,7 @@ dep_gles1 = dependency('glesv1_cm', required : get_option('gles1'))
 dep_gles2 = dependency('glesv2', required : get_option('gles2'))
 dep_osmesa = dependency('osmesa', required : get_option('osmesa'))
 dep_egl = dependency('egl', required : get_option('egl'))
+dep_vulkan = dependency('vulkan', required : get_option('vulkan'))
 
 dep_drm = dependency('libdrm',
   required : get_option('libdrm'),
@@ -125,6 +126,10 @@ if dep_glut.found() and cc.has_function('glutInitContextProfile',
                                         dependencies: [dep_glut],
                                         prefix : '#include <GL/freeglut.h>')
   add_project_arguments('-DHAVE_FREEGLUT', language : ['c', 'cpp'])
+endif
+
+if get_option('vulkan').enabled()
+  prog_glslang = find_program('glslangValidator')
 endif
 
 if host_machine.system() == 'darwin'

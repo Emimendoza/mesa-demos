@@ -18,46 +18,41 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-subdir('glad')
+glsl_shaders = files(
+	'gear.frag',
+	'gear.vert',
+)
 
-subdir('util')
+_gen = generator(
+  prog_glslang,
+  output : '@PLAINNAME@.spv.h',
+  arguments : [ '@INPUT@', '-V', '-x', '-o', '@OUTPUT@' ]
+)
 
-if dep_glut.found()
-  subdir('demos')
-  subdir('tests')
-  subdir('trivial')
-  subdir('redbook')
-  subdir('samples')
-  subdir('perf')
-  subdir('objviewer')
+spirv_shaders = _gen.process(glsl_shaders)
 
-  subdir('glsl')
-  subdir('fp')
-  subdir('fpglsl')
-  subdir('vp')
-  subdir('vpglsl')
-  subdir('gs')
-  subdir('tools')
+sources = files('vkgears.c')
+
+if dep_wayland.found()
+  sources += files('wayland.c')
+  sources += [
+    custom_target(
+      'wayland-xdg-shell-protocol.c',
+      input : wayland_xdg_shell_xml,
+      output : 'wayland-xdg-shell-protocol.c',
+      command : [prog_wl_scanner, wl_scanner_arg, '@INPUT@', '@OUTPUT@'],
+    ),
+    custom_target(
+      'wayland-xdg-shell-client-protocol.h',
+      input : wayland_xdg_shell_xml,
+      output : 'wayland-xdg-shell-client-protocol.h',
+      command : [prog_wl_scanner, 'client-header', '@INPUT@', '@OUTPUT@'],
+    )
+  ]
 endif
 
-if dep_egl.found()
-  subdir('egl')
-endif
-
-if dep_x11.found()
-  subdir('xdemos')
-endif
-
-if dep_osmesa.found()
-  subdir('osdemos')
-endif
-
-if get_option('vulkan').enabled()
-  subdir('vulkan')
-endif
-
-if host_machine.system() == 'windows'
-  subdir('wgl')
-endif
-
-subdir('data')
+executable(
+  'vkgears', files('vkgears.c'), sources,
+  spirv_shaders,
+  dependencies: [dep_vulkan, dep_wayland, idep_util]
+)
