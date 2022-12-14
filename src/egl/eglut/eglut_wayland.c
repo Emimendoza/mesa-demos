@@ -7,6 +7,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <sys/mman.h>
+#include <sys/timerfd.h>
 #include <unistd.h>
 #include <xkbcommon/xkbcommon.h>
 
@@ -25,6 +26,11 @@ struct display {
       struct xkb_state *xkb_state;
       struct xkb_context *xkb_context;
       struct xkb_keymap *xkb_keymap;
+
+      int key_repeat_fd;
+      xkb_keycode_t repeat_keycode;
+
+      int32_t rate, delay;
    } seat;
 };
 
@@ -135,6 +141,21 @@ static void
 handle_key(struct display *d, xkb_keycode_t keycode,
            enum wl_keyboard_key_state state)
 {
+   struct itimerspec timer = {0};
+   if (d->seat.rate != 0 &&
+       xkb_keymap_key_repeats(d->seat.xkb_keymap, keycode) &&
+       state == WL_KEYBOARD_KEY_STATE_PRESSED) {
+      d->seat.repeat_keycode = keycode;
+      if (d->seat.rate > 1)
+         timer.it_interval.tv_nsec = 1000000000 /  d->seat.rate;
+      else
+         timer.it_interval.tv_sec = 1;
+
+      timer.it_value.tv_sec =  d->seat.delay / 1000;
+      timer.it_value.tv_nsec = ( d->seat.delay % 1000) * 1000000;
+   }
+   timerfd_settime(d->seat.key_repeat_fd, 0, &timer, NULL);
+
    if (state == WL_KEYBOARD_KEY_STATE_PRESSED)
       emit_keypress(d, keycode);
 }
@@ -154,6 +175,9 @@ static void
 leave_callback(void *data, struct wl_keyboard *wl_keyboard,
                uint32_t serial, struct wl_surface *surface)
 {
+   struct display *d = data;
+   struct itimerspec timer = {0};
+   timerfd_settime(d->seat.key_repeat_fd, 0, &timer, NULL);
 }
 
 static void
@@ -176,12 +200,22 @@ modifiers_callback(void *data, struct wl_keyboard *wl_keyboard,
                          mods_locked, 0, 0, group);
 }
 
+static void
+repeat_info_callback(void *data, struct wl_keyboard *wl_keyboard,
+                        int32_t rate, int32_t delay)
+{
+   struct display *d = data;
+   d->seat.rate = rate;
+   d->seat.delay = delay;
+}
+
 static const struct wl_keyboard_listener keyboard_listener = {
    keymap_callback,
    enter_callback,
    leave_callback,
    key_callback,
    modifiers_callback,
+   repeat_info_callback,
 };
 
 static void
@@ -192,14 +226,22 @@ seat_capabilities(void *data, struct wl_seat *seat,
    if (caps & WL_SEAT_CAPABILITY_KEYBOARD) {
       d->seat.keyboard = wl_seat_get_keyboard(seat);
       wl_keyboard_add_listener(d->seat.keyboard, &keyboard_listener, data);
+      d->seat.key_repeat_fd = timerfd_create(CLOCK_MONOTONIC, TFD_CLOEXEC | TFD_NONBLOCK);
    } else if (!(caps & WL_SEAT_CAPABILITY_KEYBOARD)) {
       wl_keyboard_destroy(d->seat.keyboard);
       d->seat.keyboard = NULL;
    }
 }
 
+static void
+seat_name(void* data, struct wl_seat* wl_seat,
+          const char* name)
+{
+}
+
 static const struct wl_seat_listener seat_listener = {
    seat_capabilities,
+   seat_name,
 };
 
 static void
@@ -217,7 +259,7 @@ registry_handle_global(void *data, struct wl_registry *registry, uint32_t id,
       xdg_wm_base_add_listener(d->xdg_wm_base, &xdg_wm_base_listener, d);
    } else if (strcmp(interface, wl_seat_interface.name) == 0) {
       d->wl_seat =
-         wl_registry_bind(registry, id, &wl_seat_interface, 1);
+         wl_registry_bind(registry, id, &wl_seat_interface, 4);
       wl_seat_add_listener(d->wl_seat, &seat_listener, d);
    }
 }
@@ -426,6 +468,9 @@ _eglutNativeEventLoop(void)
       {
          .fd = wl_display_get_fd(display.display),
          .events = POLLIN,
+      }, {
+         .fd = display.seat.key_repeat_fd,
+         .events = POLLIN,
       },
    };
 
@@ -452,10 +497,11 @@ _eglutNativeEventLoop(void)
       else
          pollfds[0].events &= ~POLLOUT; /* successfully flushed */
 
-      if (poll(pollfds, 1, -1) == -1)
+      if (poll(pollfds, display.seat.rate > 0 ? 2 : 1, -1) == -1)
          break;
 
-      if (pollfds[0].revents & (POLLERR | POLLHUP | POLLNVAL))
+      if ((pollfds[0].revents | pollfds[1].revents) &
+          (POLLERR | POLLHUP | POLLNVAL))
          break;
 
       if (pollfds[0].events & POLLOUT) {
@@ -477,5 +523,13 @@ _eglutNativeEventLoop(void)
          pollfds[0].events |= POLLOUT; /* need to wait until we can flush */
       else
          pollfds[0].events &= ~POLLOUT; /* successfully flushed */
+
+      if (pollfds[1].revents & POLLIN) {
+         uint64_t repeats;
+         if (read(display.seat.key_repeat_fd, &repeats, sizeof(repeats)) == 8) {
+            for (uint64_t i = 0; i < repeats; i++)
+               emit_keypress(&display, display.seat.repeat_keycode);
+         }
+      }
    }
 }
