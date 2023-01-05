@@ -19,6 +19,7 @@
 #include "glut_wrap.h"
 #include "shaderutil.h"
 #include "trackball.h"
+#include "matrix.h"
 
 static GLint WinWidth = 500, WinHeight = 500;
 static GLint Win = 0;
@@ -48,69 +49,6 @@ CheckError(int line)
 
 
 static void
-mat_identity(GLfloat mat[16])
-{
-   memset(mat, 0, 16*sizeof(GLfloat));
-   mat[0] = mat[5] = mat[10] = mat[15] = 1.0;
-}
-
-
-static void
-mat_translate(GLfloat mat[16], float tx, float ty, float tz)
-{
-   mat_identity(mat);
-   mat[12] = tx;
-   mat[13] = ty;
-   mat[14] = tx;
-}
-
-
-static void
-mat_frustum(GLfloat mat[16],
-              GLfloat left, GLfloat right,
-              GLfloat bottom, GLfloat top,
-              GLfloat nearval, GLfloat farval)
-{
-   GLfloat x, y, a, b, c, d;
-
-   x = (2.0F*nearval) / (right-left);
-   y = (2.0F*nearval) / (top-bottom);
-   a = (right+left) / (right-left);
-   b = (top+bottom) / (top-bottom);
-   c = -(farval+nearval) / ( farval-nearval);
-   d = -(2.0F*farval*nearval) / (farval-nearval);  /* error? */
-
-#define M(row,col)  mat[col*4+row]
-   M(0,0) = x;     M(0,1) = 0.0F;  M(0,2) = a;      M(0,3) = 0.0F;
-   M(1,0) = 0.0F;  M(1,1) = y;     M(1,2) = b;      M(1,3) = 0.0F;
-   M(2,0) = 0.0F;  M(2,1) = 0.0F;  M(2,2) = c;      M(2,3) = d;
-   M(3,0) = 0.0F;  M(3,1) = 0.0F;  M(3,2) = -1.0F;  M(3,3) = 0.0F;
-#undef M
-}
-
-
-static void
-mat_multiply(GLfloat product[16], const GLfloat a[16], const GLfloat b[16])
-{
-#define A(row,col)  a[(col<<2)+row]
-#define B(row,col)  b[(col<<2)+row]
-#define P(row,col)  product[(col<<2)+row]
-   GLint i;
-   for (i = 0; i < 4; i++) {
-      const GLfloat ai0=A(i,0),  ai1=A(i,1),  ai2=A(i,2),  ai3=A(i,3);
-      P(i,0) = ai0 * B(0,0) + ai1 * B(1,0) + ai2 * B(2,0) + ai3 * B(3,0);
-      P(i,1) = ai0 * B(0,1) + ai1 * B(1,1) + ai2 * B(2,1) + ai3 * B(3,1);
-      P(i,2) = ai0 * B(0,2) + ai1 * B(1,2) + ai2 * B(2,2) + ai3 * B(3,2);
-      P(i,3) = ai0 * B(0,3) + ai1 * B(1,3) + ai2 * B(2,3) + ai3 * B(3,3);
-   }
-#undef A
-#undef B
-#undef P
-}
-
-
-
-static void
 Redisplay(void)
 {
    GLfloat rot[4][4];
@@ -120,9 +58,11 @@ Redisplay(void)
 
    /* Build the modelview * projection matrix */
    build_rotmatrix(rot, CurQuat);
-   mat_translate(trans, 0, 0, -10);
-   mat_multiply(mvp, trans, (GLfloat *) rot);
-   mat_multiply(mvp, Projection, mvp);
+   mat4_identity(mvp);
+   mat4_multiply(mvp, Projection);
+   mat4_translate(mvp, 0, 0, -10);
+   mat4_multiply(mvp, (float *)rot);
+
    /* Set the MVP matrix */
    glUniformMatrix4fv(uModelViewProj, 1, GL_FALSE, (float *) mvp);
 
@@ -159,7 +99,7 @@ Reshape(int width, int height)
    WinWidth = width;
    WinHeight = height;
    glViewport(0, 0, width, height);
-   mat_frustum(Projection, -ar, ar, -1, 1, 3, 25);
+   mat4_frustum(Projection, -ar, ar, -1, 1, 3, 25);
 
    /* pass viewport dims to the shader */
    {
