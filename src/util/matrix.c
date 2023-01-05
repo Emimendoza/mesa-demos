@@ -123,3 +123,25 @@ mat4_frustum_gl(float *m, float l, float r, float b, float t, float n, float f)
 
    memcpy(m, tmp, sizeof(tmp));
 }
+
+void
+mat4_frustum_vk(float *m, float l, float r, float b, float t, float n, float f)
+{
+   float tmp[16];
+   mat4_identity(tmp);
+
+   float deltaX = r - l;
+   float deltaY = t - b;
+   float deltaZ = f - n;
+
+   tmp[0] = (2 * n) / deltaX;
+   tmp[5] = (-2 * n) / deltaY;
+   tmp[8] = (r + l) / deltaX;
+   tmp[9] = (t + b) / deltaY;
+   tmp[10] = f / (n - f);
+   tmp[11] = -1;
+   tmp[14] = -(f * n) / deltaZ;
+   tmp[15] = 0;
+
+   memcpy(m, tmp, sizeof(tmp));
+}

@@ -75,4 +75,18 @@ mat4_invert(float *m);
 void
 mat4_frustum_gl(float *m, float l, float r, float b, float t, float n, float f);
 
+/**
+ * Calculate a Vulkan frustum projection transformation.
+ *
+ * @param m the matrix to save the transformation in
+ * @param l the left plane distance
+ * @param r the right plane distance
+ * @param b the bottom plane distance
+ * @param t the top plane distance
+ * @param n the near plane distance
+ * @param f the far plane distance
+ */
+void
+mat4_frustum_vk(float *m, float l, float r, float b, float t, float n, float f);
+
 #endif /* MATRIX_H */
