@@ -45,6 +45,7 @@
 #include <stdlib.h>
 #include <glad/glad.h>
 #include "glut_wrap.h"
+#include "matrix.h"
 /*#include "helpers.h"*/
 
 #define SHADOW_MAP_WIDTH      256
@@ -179,20 +180,6 @@ keyboard( unsigned char key, int x, int y )
 }
 
 static void
-transposeMatrix( GLfloat m[16] )
-{
-    GLfloat  tmp;
-#define Swap( a, b )    tmp = a; a = b; b = tmp
-    Swap( m[1],  m[4]  );
-    Swap( m[2],  m[8]  );
-    Swap( m[3],  m[12] );
-    Swap( m[6],  m[9]  );
-    Swap( m[7],  m[13] );
-    Swap( m[11], m[14] );
-#undef Swap
-}
-
-static void
 drawObjects( GLboolean shadowRender )
 {
     GLboolean textureOn = glIsEnabled( GL_TEXTURE_2D );
@@ -298,7 +285,7 @@ generateTextureMatrix( void )
     glGetFloatv( GL_MODELVIEW_MATRIX, tmpMatrix );
     glPopMatrix();
 
-    transposeMatrix( tmpMatrix );
+    mat4_transpose( tmpMatrix );
 
     glTexGenfv( GL_S, GL_OBJECT_PLANE, &tmpMatrix[0] );
     glTexGenfv( GL_T, GL_OBJECT_PLANE, &tmpMatrix[4] );
