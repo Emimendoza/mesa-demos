@@ -6,7 +6,7 @@ executable(
 )
 executable(
   'es2gears_x11', files('es2gears.c'),
-  dependencies: [dep_gles2, idep_eglut_x11, dep_m],
+  dependencies: [dep_gles2, idep_eglut_x11, idep_util],
   install: true
 )
 executable(
@@ -16,6 +16,6 @@ executable(
 )
 executable(
   'es2gears_wayland', files('es2gears.c'),
-  dependencies: [dep_gles2, idep_eglut_wayland, dep_m],
+  dependencies: [dep_gles2, idep_eglut_wayland, idep_util],
   install: true
 )

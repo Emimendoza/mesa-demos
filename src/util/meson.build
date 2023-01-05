@@ -24,9 +24,10 @@ files_libutil = files(
   'readtex.c',
   'showbuffer.c',
   'trackball.c',
+  'matrix.c',
 )
 
-_deps = [dep_glu]
+_deps = [dep_glu, dep_m]
 if dep_glut.found()
   files_libutil += files('shaderutil.c')
   _deps += dep_glut

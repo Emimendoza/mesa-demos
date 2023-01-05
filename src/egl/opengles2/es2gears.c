@@ -51,6 +51,7 @@
 #include <EGL/egl.h>
 #include <EGL/eglext.h>
 #include "eglut.h"
+#include "matrix.h"
 
 #define STRIPS_PER_TOOTH 7
 #define VERTICES_PER_TOOTH 46
@@ -276,170 +277,6 @@ create_gear(GLfloat inner_radius, GLfloat outer_radius, GLfloat width,
    return gear;
 }
 
-/** 
- * Multiplies two 4x4 matrices.
- * 
- * The result is stored in matrix m.
- * 
- * @param m the first matrix to multiply
- * @param n the second matrix to multiply
- */
-static void
-multiply(GLfloat *m, const GLfloat *n)
-{
-   GLfloat tmp[16];
-   const GLfloat *row, *column;
-   div_t d;
-   int i, j;
-
-   for (i = 0; i < 16; i++) {
-      tmp[i] = 0;
-      d = div(i, 4);
-      row = n + d.quot * 4;
-      column = m + d.rem;
-      for (j = 0; j < 4; j++)
-         tmp[i] += row[j] * column[j * 4];
-   }
-   memcpy(m, &tmp, sizeof tmp);
-}
-
-/** 
- * Rotates a 4x4 matrix.
- * 
- * @param[in,out] m the matrix to rotate
- * @param angle the angle to rotate
- * @param x the x component of the direction to rotate to
- * @param y the y component of the direction to rotate to
- * @param z the z component of the direction to rotate to
- */
-static void
-rotate(GLfloat *m, GLfloat angle, GLfloat x, GLfloat y, GLfloat z)
-{
-   double s, c;
-
-   sincos(angle, &s, &c);
-   GLfloat r[16] = {
-      x * x * (1 - c) + c,     y * x * (1 - c) + z * s, x * z * (1 - c) - y * s, 0,
-      x * y * (1 - c) - z * s, y * y * (1 - c) + c,     y * z * (1 - c) + x * s, 0, 
-      x * z * (1 - c) + y * s, y * z * (1 - c) - x * s, z * z * (1 - c) + c,     0,
-      0, 0, 0, 1
-   };
-
-   multiply(m, r);
-}
-
-
-/** 
- * Translates a 4x4 matrix.
- * 
- * @param[in,out] m the matrix to translate
- * @param x the x component of the direction to translate to
- * @param y the y component of the direction to translate to
- * @param z the z component of the direction to translate to
- */
-static void
-translate(GLfloat *m, GLfloat x, GLfloat y, GLfloat z)
-{
-   GLfloat t[16] = { 1, 0, 0, 0,  0, 1, 0, 0,  0, 0, 1, 0,  x, y, z, 1 };
-
-   multiply(m, t);
-}
-
-/** 
- * Creates an identity 4x4 matrix.
- * 
- * @param m the matrix make an identity matrix
- */
-static void
-identity(GLfloat *m)
-{
-   GLfloat t[16] = {
-      1.0, 0.0, 0.0, 0.0,
-      0.0, 1.0, 0.0, 0.0,
-      0.0, 0.0, 1.0, 0.0,
-      0.0, 0.0, 0.0, 1.0,
-   };
-
-   memcpy(m, t, sizeof(t));
-}
-
-/** 
- * Transposes a 4x4 matrix.
- *
- * @param m the matrix to transpose
- */
-static void 
-transpose(GLfloat *m)
-{
-   GLfloat t[16] = {
-      m[0], m[4], m[8],  m[12],
-      m[1], m[5], m[9],  m[13],
-      m[2], m[6], m[10], m[14],
-      m[3], m[7], m[11], m[15]};
-
-   memcpy(m, t, sizeof(t));
-}
-
-/**
- * Inverts a 4x4 matrix.
- *
- * This function can currently handle only pure translation-rotation matrices.
- * Read http://www.gamedev.net/community/forums/topic.asp?topic_id=425118
- * for an explanation.
- */
-static void
-invert(GLfloat *m)
-{
-   GLfloat t[16];
-   identity(t);
-
-   // Extract and invert the translation part 't'. The inverse of a
-   // translation matrix can be calculated by negating the translation
-   // coordinates.
-   t[12] = -m[12]; t[13] = -m[13]; t[14] = -m[14];
-
-   // Invert the rotation part 'r'. The inverse of a rotation matrix is
-   // equal to its transpose.
-   m[12] = m[13] = m[14] = 0;
-   transpose(m);
-
-   // inv(m) = inv(r) * inv(t)
-   multiply(m, t);
-}
-
-/** 
- * Calculate a frustum projection transformation.
- * 
- * @param m the matrix to save the transformation in
- * @param l the left plane distance
- * @param r the right plane distance
- * @param b the bottom plane distance
- * @param t the top plane distance
- * @param n the near plane distance
- * @param f the far plane distance
- */
-static void
-frustum(GLfloat *m, GLfloat l, GLfloat r, GLfloat b, GLfloat t, GLfloat n, GLfloat f)
-{
-   GLfloat tmp[16];
-   identity(tmp);
-
-   GLfloat deltaX = r - l;
-   GLfloat deltaY = t - b;
-   GLfloat deltaZ = f - n;
-
-   tmp[0] = (2 * n) / deltaX;
-   tmp[5] = (2 * n) / deltaY;
-   tmp[8] = (r + l) / deltaX;
-   tmp[9] = (t + b) / deltaY;
-   tmp[10] = -(f + n) / deltaZ;
-   tmp[11] = -1;
-   tmp[14] = -(2 * f * n) / deltaZ;
-   tmp[15] = 0;
-
-   memcpy(m, tmp, sizeof(tmp));
-}
-
 /**
  * Draws a gear.
  *
@@ -460,12 +297,12 @@ draw_gear(struct gear *gear, GLfloat *transform,
 
    /* Translate and rotate the gear */
    memcpy(model_view, transform, sizeof (model_view));
-   translate(model_view, x, y, 0);
-   rotate(model_view, 2 * M_PI * angle / 360.0, 0, 0, 1);
+   mat4_translate(model_view, x, y, 0);
+   mat4_rotate(model_view, 2 * M_PI * angle / 360.0, 0, 0, 1);
 
    /* Create and set the ModelViewProjectionMatrix */
    memcpy(model_view_projection, ProjectionMatrix, sizeof(model_view_projection));
-   multiply(model_view_projection, model_view);
+   mat4_multiply(model_view_projection, model_view);
 
    glUniformMatrix4fv(ModelViewProjectionMatrix_location, 1, GL_FALSE,
                       model_view_projection);
@@ -475,8 +312,8 @@ draw_gear(struct gear *gear, GLfloat *transform,
     * ModelView matrix.
     */
    memcpy(normal_matrix, model_view, sizeof (normal_matrix));
-   invert(normal_matrix);
-   transpose(normal_matrix);
+   mat4_invert(normal_matrix);
+   mat4_transpose(normal_matrix);
    glUniformMatrix4fv(NormalMatrix_location, 1, GL_FALSE, normal_matrix);
 
    /* Set the gear color */
@@ -513,16 +350,16 @@ gears_draw(void)
    const static GLfloat green[4] = { 0.0, 0.8, 0.2, 1.0 };
    const static GLfloat blue[4] = { 0.2, 0.2, 1.0, 1.0 };
    GLfloat transform[16];
-   identity(transform);
+   mat4_identity(transform);
 
    glClearColor(0.0, 0.0, 0.0, 0.0);
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
    /* Translate and rotate the view */
-   translate(transform, 0, 0, -40);
-   rotate(transform, 2 * M_PI * view_rot[0] / 360.0, 1, 0, 0);
-   rotate(transform, 2 * M_PI * view_rot[1] / 360.0, 0, 1, 0);
-   rotate(transform, 2 * M_PI * view_rot[2] / 360.0, 0, 0, 1);
+   mat4_translate(transform, 0, 0, -40);
+   mat4_rotate(transform, 2 * M_PI * view_rot[0] / 360.0, 1, 0, 0);
+   mat4_rotate(transform, 2 * M_PI * view_rot[1] / 360.0, 0, 1, 0);
+   mat4_rotate(transform, 2 * M_PI * view_rot[2] / 360.0, 0, 0, 1);
 
    /* Draw the gears */
    draw_gear(gear1, transform, -3.0, -2.0, angle, red);
@@ -541,7 +378,7 @@ gears_reshape(int width, int height)
 {
    /* Update the projection matrix */
    GLfloat h = (GLfloat)height / (GLfloat)width;
-   frustum(ProjectionMatrix, -1.0, 1.0, -h, h, 5.0, 60.0);
+   mat4_frustum(ProjectionMatrix, -1.0, 1.0, -h, h, 5.0, 60.0);
 
    /* Set the viewport */
    glViewport(0, 0, (GLint) width, (GLint) height);
