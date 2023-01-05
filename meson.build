@@ -110,11 +110,14 @@ if with_glut != ''
     include_directories: glut_incdir
   )
 else
-  dep_glut = cc.find_library(
-    'glut',
-    has_headers: 'GL/glut.h',
-    required: false
-  )
+  dep_glut = dependency('glut', required: false)
+  if not dep_glut.found()
+    dep_glut = cc.find_library(
+      'glut',
+      has_headers: 'GL/glut.h',
+      required: false
+    )
+  endif
 endif
 
 if dep_glut.found() and cc.has_function('glutInitContextProfile',
