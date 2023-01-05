@@ -17,10 +17,12 @@
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <math.h>
 #include <glad/glad.h>
 #include "glut_wrap.h"
 #include "readtex.h"
+#include "matrix.h"
 
 
 /* Some <math.h> files do not define M_PI... */
@@ -69,53 +71,6 @@ ActiveTexture(int i)
    glActiveTextureARB(i);
 }
 
-
-/* matrix = identity */
-static void
-matrixIdentity(GLfloat matrix[16])
-{
-  matrix[0] = 1.0;
-  matrix[1] = 0.0;
-  matrix[2] = 0.0;
-  matrix[3] = 0.0;
-  matrix[4] = 0.0;
-  matrix[5] = 1.0;
-  matrix[6] = 0.0;
-  matrix[7] = 0.0;
-  matrix[8] = 0.0;
-  matrix[9] = 0.0;
-  matrix[10] = 1.0;
-  matrix[11] = 0.0;
-  matrix[12] = 0.0;
-  matrix[13] = 0.0;
-  matrix[14] = 0.0;
-  matrix[15] = 1.0;
-}
-
-/* matrix2 = transpose(matrix1) */
-static void
-matrixTranspose(GLfloat matrix2[16], GLfloat matrix1[16])
-{
-  matrix2[0] = matrix1[0];
-  matrix2[1] = matrix1[4];
-  matrix2[2] = matrix1[8];
-  matrix2[3] = matrix1[12];
-
-  matrix2[4] = matrix1[1];
-  matrix2[5] = matrix1[5];
-  matrix2[6] = matrix1[9];
-  matrix2[7] = matrix1[13];
-
-  matrix2[8] = matrix1[2];
-  matrix2[9] = matrix1[6];
-  matrix2[10] = matrix1[10];
-  matrix2[11] = matrix1[14];
-
-  matrix2[12] = matrix1[3];
-  matrix2[13] = matrix1[7];
-  matrix2[14] = matrix1[14];
-  matrix2[15] = matrix1[15];
-}
 
 /*****************************************************************/
 
@@ -499,7 +454,8 @@ loadTextureProjection(int texUnit, GLfloat m[16])
 
   /* Should use true inverse, but since m consists only of rotations, we can
      just use the transpose. */
-  matrixTranspose((GLfloat *) mInverse, m);
+  memcpy(mInverse, m, sizeof(GLfloat) * 4 * 4);
+  mat4_transpose((float *) mInverse);
 
   ActiveTexture(GL_TEXTURE0_ARB + texUnit);
   glMatrixMode(GL_TEXTURE);
@@ -611,9 +567,9 @@ initialize(void)
   glMatrixMode(GL_MODELVIEW);
   glTranslatef(0, 0, -2);
 
-  matrixIdentity((GLfloat *) objectXform);
+  mat4_identity((float *) objectXform);
   for (i = 0; i < NumTextures; i++) {
-     matrixIdentity((GLfloat *) textureXform[i]);
+     mat4_identity((float *) textureXform[i]);
   }
 
   glMatrixMode(GL_PROJECTION);
