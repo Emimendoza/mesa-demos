@@ -62,7 +62,7 @@ void
 mat4_invert(float *m);
 
 /**
- * Calculate a frustum projection transformation.
+ * Calculate an OpenGL frustum projection transformation.
  *
  * @param m the matrix to save the transformation in
  * @param l the left plane distance
@@ -73,6 +73,6 @@ mat4_invert(float *m);
  * @param f the far plane distance
  */
 void
-mat4_frustum(float *m, float l, float r, float b, float t, float n, float f);
+mat4_frustum_gl(float *m, float l, float r, float b, float t, float n, float f);
 
 #endif /* MATRIX_H */

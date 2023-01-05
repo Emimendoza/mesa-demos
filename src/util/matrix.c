@@ -103,7 +103,7 @@ mat4_invert(float *m)
 }
 
 void
-mat4_frustum(float *m, float l, float r, float b, float t, float n, float f)
+mat4_frustum_gl(float *m, float l, float r, float b, float t, float n, float f)
 {
    float tmp[16];
    mat4_identity(tmp);

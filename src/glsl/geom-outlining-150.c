@@ -99,7 +99,7 @@ Reshape(int width, int height)
    WinWidth = width;
    WinHeight = height;
    glViewport(0, 0, width, height);
-   mat4_frustum(Projection, -ar, ar, -1, 1, 3, 25);
+   mat4_frustum_gl(Projection, -ar, ar, -1, 1, 3, 25);
 
    /* pass viewport dims to the shader */
    {

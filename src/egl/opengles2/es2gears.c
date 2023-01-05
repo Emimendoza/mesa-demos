@@ -378,7 +378,7 @@ gears_reshape(int width, int height)
 {
    /* Update the projection matrix */
    GLfloat h = (GLfloat)height / (GLfloat)width;
-   mat4_frustum(ProjectionMatrix, -1.0, 1.0, -h, h, 5.0, 60.0);
+   mat4_frustum_gl(ProjectionMatrix, -1.0, 1.0, -h, h, 5.0, 60.0);
 
    /* Set the viewport */
    glViewport(0, 0, (GLint) width, (GLint) height);
