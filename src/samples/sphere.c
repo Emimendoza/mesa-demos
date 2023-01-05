@@ -437,14 +437,6 @@ float n[6][3] = {
     }
 };
 
-GLfloat identity[16] = {
-    1, 0, 0, 0,
-    0, 1, 0, 0,
-    0, 0, 1, 0,
-    0, 0, 0, 1,
-};
-
-
 static void BuildCylinder(int numEdges)
 {
     int i, top = 1.0, bottom = -1.0;
