@@ -33,7 +33,10 @@ spirv_shaders = _gen.process(glsl_shaders)
 
 sources = files('vkgears.c')
 
+args = []
+
 if dep_wayland.found()
+  args += ['-DWAYLAND_SUPPORT']
   sources += files('wayland.c')
   sources += [
     custom_target(
@@ -51,8 +54,14 @@ if dep_wayland.found()
   ]
 endif
 
+if dep_xcb.found()
+  args += ['-DXCB_SUPPORT']
+  sources += files('xcb.c')
+endif
+
 executable(
   'vkgears', files('vkgears.c'), sources,
   spirv_shaders,
-  dependencies: [dep_vulkan, dep_wayland, idep_util]
+  dependencies: [dep_vulkan, dep_wayland, dep_xcb, idep_util],
+  c_args: args
 )

@@ -54,6 +54,10 @@ dep_x11 = dependency('x11, xext',
   required : get_option('x11'),
   disabler : true
 )
+dep_xcb = dependency('xcb',
+  required : get_option('x11').enabled() and dep_vulkan.found(),
+  disabler : true
+)
 dep_wayland = dependency('wayland-client, wayland-egl',
   required : get_option('wayland'),
   disabler : true

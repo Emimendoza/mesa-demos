@@ -5,8 +5,15 @@
 
 #include<vulkan/vulkan.h>
 
+#ifdef WAYLAND_SUPPORT
 struct wsi_interface
 wayland_wsi_interface();
+#endif
+
+#ifdef XCB_SUPPORT
+struct wsi_interface
+xcb_wsi_interface();
+#endif
 
 struct wsi_interface {
    const char *required_extension_name;

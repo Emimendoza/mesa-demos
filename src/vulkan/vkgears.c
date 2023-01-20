@@ -1310,7 +1310,14 @@ main(int argc, char *argv[])
       }
    }
 
+#if defined(WAYLAND_SUPPORT) && defined(XCB_SUPPORT)
+   wsi = getenv("WAYLAND_DISPLAY") ? wayland_wsi_interface() :
+                                     xcb_wsi_interface();
+#elif defined(WAYLAND_SUPPORT)
    wsi = wayland_wsi_interface();
+#elif defined(X11_SUPPORT)
+   wsi = xcb_wsi_interface();
+#endif
 
    wsi.init_display();
    wsi.init_window("vkgears");
