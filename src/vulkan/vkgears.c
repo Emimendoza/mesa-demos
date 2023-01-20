@@ -39,6 +39,7 @@ static VkQueue queue;
 
 /* swap chain */
 static int width, height;
+static VkPresentModeKHR desidered_present_mode;
 static VkSampleCountFlagBits sample_count;
 static uint32_t image_count;
 static VkRenderPass render_pass;
@@ -396,8 +397,8 @@ create_swapchain()
    int i;
    VkPresentModeKHR present_mode = VK_PRESENT_MODE_FIFO_KHR;
    for (i = 0; i < count; i++) {
-      if (present_modes[i] == VK_PRESENT_MODE_MAILBOX_KHR) {
-         present_mode = VK_PRESENT_MODE_MAILBOX_KHR;
+      if (present_modes[i] == desidered_present_mode) {
+         present_mode = desidered_present_mode;
          break;
       }
    }
@@ -1216,6 +1217,7 @@ usage(void)
 {
    printf("Usage:\n");
    printf("  -samples N              run in multisample mode with N samples\n");
+   printf("  -present-mailbox        run with present mode mailbox\n");
    printf("  -info                   display Vulkan device info\n");
 }
 
@@ -1298,6 +1300,7 @@ main(int argc, char *argv[])
 {
    bool printInfo = false;
    sample_count = VK_SAMPLE_COUNT_1_BIT;
+   desidered_present_mode = VK_PRESENT_MODE_FIFO_KHR;
    for (int i = 1; i < argc; i++) {
       if (strcmp(argv[i], "-info") == 0) {
          printInfo = true;
@@ -1305,6 +1308,9 @@ main(int argc, char *argv[])
       else if (strcmp(argv[i], "-samples") == 0 && i + 1 < argc) {
          i++;
          sample_count = sample_count_flag(atoi(argv[i]));
+      }
+      else if (strcmp(argv[i], "-present-mailbox") == 0) {
+         desidered_present_mode = VK_PRESENT_MODE_MAILBOX_KHR;
       }
       else {
          usage();
