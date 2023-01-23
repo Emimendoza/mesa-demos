@@ -1,3 +1,5 @@
+#include <stdint.h>
+#include <wayland-client-protocol.h>
 #include <wayland-client.h>
 
 #include <assert.h>
@@ -12,12 +14,15 @@
 
 #include <vulkan/vulkan.h>
 #include <vulkan/vulkan_wayland.h>
+#include <wayland-util.h>
 
 #include "wsi.h"
 
 static struct wsi_callbacks wsi_callbacks;
 
 static struct wl_display *display;
+struct wl_seat *seat;
+struct wl_keyboard *keyboard;
 static struct wl_compositor *compositor;
 static struct xdg_wm_base *xdg_wm_base;
 
@@ -44,6 +49,9 @@ registry_handle_global(void *data, struct wl_registry *registry, uint32_t id,
       assert(!compositor);
       compositor =
          wl_registry_bind(registry, id, &wl_compositor_interface, 1);
+   } else if (strcmp(interface, wl_seat_interface.name) == 0) {
+      seat =
+         wl_registry_bind(registry, id, &wl_seat_interface, 1);
    } else if (strcmp(interface, xdg_wm_base_interface.name) == 0) {
       assert(!xdg_wm_base);
       xdg_wm_base =
@@ -63,6 +71,69 @@ static const struct wl_registry_listener registry_listener = {
    registry_handle_global_remove
 };
 
+static void
+key(void *data, struct wl_keyboard *keyboard, uint serial,
+    uint time, uint key, enum wl_keyboard_key_state state)
+{
+   enum wsi_key wsi_key = WSI_KEY_OTHER;
+   switch (key) {
+   case 1:
+      wsi_key = WSI_KEY_ESC;
+      break;
+   case 103:
+      wsi_key = WSI_KEY_UP;
+      break;
+   case 108:
+      wsi_key = WSI_KEY_DOWN;
+      break;
+   case 105:
+      wsi_key = WSI_KEY_LEFT;
+      break;
+   case 106:
+      wsi_key =WSI_KEY_RIGHT;
+      break;
+   case 30:
+      wsi_key = WSI_KEY_A;
+      break;
+   }
+   wsi_callbacks.key_press(state, wsi_key);
+}
+
+static void
+modifiers(void *data, struct wl_keyboard *keyboard, uint serial,
+    uint mods_depressed, uint mods_latched, uint mods_locked, uint group)
+{
+}
+
+static void
+keymap(void *data, struct wl_keyboard *keyboard,
+       enum wl_keyboard_keymap_format format, int32_t fd, uint32_t size)
+{
+
+}
+
+static void
+enter(void *data, struct wl_keyboard *keyboard, uint serial,
+      struct wl_surface *surface, struct wl_array *keys)
+{
+
+}
+
+static void
+leave(void *data, struct wl_keyboard *keyboard, uint serial,
+      struct wl_surface *surface)
+{
+
+}
+
+static const struct wl_keyboard_listener keyboard_listener = {
+   .key = key,
+   .modifiers = modifiers,
+   .keymap = keymap,
+   .enter = enter,
+   .leave = leave,
+};
+
 static void init_display()
 {
    assert(!display);
@@ -76,6 +147,10 @@ static void init_display()
    wl_registry_add_listener(registry, &registry_listener, NULL);
    wl_display_roundtrip(display);
    wl_registry_destroy(registry);
+
+   keyboard = wl_seat_get_keyboard(seat);
+
+   wl_keyboard_add_listener(keyboard, &keyboard_listener, NULL);
 
    if (!compositor) {
       fprintf(stderr, "failed to bind compositor");

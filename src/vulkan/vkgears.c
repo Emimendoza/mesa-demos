@@ -71,6 +71,8 @@ struct {
    uint32_t vertex_count;
 } gears[3];
 
+static float view_rot[3] = { 20.0, 30.0, 0.0 };
+static bool animate = true;
 
 static void
 errorv(const char *format, va_list args)
@@ -1299,6 +1301,33 @@ wsi_resize(int p_new_width, int p_new_height)
 }
 
 static void
+wsi_key_press(bool down, enum wsi_key key) {
+   if (!down)
+      return;
+   switch (key) {
+      case WSI_KEY_ESC:
+         exit(0);
+      case WSI_KEY_UP:
+         view_rot[0] += 5.0;
+         break;
+      case WSI_KEY_DOWN:
+         view_rot[0] -= 5.0;
+         break;
+      case WSI_KEY_LEFT:
+         view_rot[1] += 5.0;
+         break;
+      case WSI_KEY_RIGHT:
+         view_rot[1] -= 5.0;
+         break;
+      case WSI_KEY_A:
+         animate = !animate;
+         break;
+      default:
+         break;
+   }
+}
+
+static void
 wsi_exit()
 {
    exit(0);
@@ -1306,6 +1335,7 @@ wsi_exit()
 
 static struct wsi_callbacks wsi_callbacks = {
    .resize = wsi_resize,
+   .key_press = wsi_key_press,
    .exit = wsi_exit,
 };
 
@@ -1395,10 +1425,12 @@ main(int argc, char *argv[])
       dt = t - tRot0;
       tRot0 = t;
 
-      /* advance rotation for next frame */
-      angle += 70.0 * dt;  /* 70 degrees per second */
-      if (angle > 3600.0)
-         angle -= 3600.0;
+      if (animate) {
+         /* advance rotation for next frame */
+         angle += 70.0 * dt;  /* 70 degrees per second */
+         if (angle > 3600.0)
+            angle -= 3600.0;
+      }
 
       if (wsi.update_window()) {
          printf("update window failed\n");
@@ -1441,7 +1473,6 @@ main(int argc, char *argv[])
       float view[16];
       mat4_identity(view);
       mat4_translate(view, 0, 0, -40);
-      static float view_rot[3] = { 20.0, 30.0, 0.0 };
       mat4_rotate(view, 2 * M_PI * view_rot[0] / 360.0, 1, 0, 0);
       mat4_rotate(view, 2 * M_PI * view_rot[1] / 360.0, 0, 1, 0);
       mat4_rotate(view, 2 * M_PI * view_rot[2] / 360.0, 0, 0, 1);

@@ -102,6 +102,7 @@ init_window(const char *title, int width, int height, bool fullscreen)
    }
 
    xcb_map_window(connection, window);
+   xcb_flush(connection);
 }
 
 static bool
@@ -111,6 +112,7 @@ update_window()
       xcb_generic_event_t *generic;
       xcb_configure_notify_event_t *configure_event;
       xcb_client_message_event_t *client_message;
+      xcb_key_press_event_t *key_press;
    } event;
 
    event.generic = xcb_wait_for_event(connection);
@@ -125,9 +127,35 @@ update_window()
             event.client_message->type == wm_protocols_atom &&
             event.client_message->data.data32[0] == delete_atom)
          {
-             wsi_callbacks.exit();
+            wsi_callbacks.exit();
          }
          break;
+      case XCB_KEY_PRESS:
+      case XCB_KEY_RELEASE: {
+         enum wsi_key key = WSI_KEY_OTHER;
+         switch (event.key_press->detail) {
+         case 9:
+            key = WSI_KEY_ESC;
+            break;
+         case 111:
+            key = WSI_KEY_UP;
+            break;
+         case 116:
+            key = WSI_KEY_DOWN;
+            break;
+         case 113:
+            key = WSI_KEY_LEFT;
+            break;
+         case 114:
+            key =WSI_KEY_RIGHT;
+            break;
+         case 38:
+            key = WSI_KEY_A;
+            break;
+         }
+         wsi_callbacks.key_press(event.generic->response_type == XCB_KEY_PRESS, key);
+         break;
+      }
       }
 
       free(event.generic);
