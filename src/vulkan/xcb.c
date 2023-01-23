@@ -13,9 +13,13 @@
 
 #include "wsi.h"
 
+static struct wsi_callbacks wsi_callbacks;
+
 static xcb_connection_t *connection;
 static xcb_screen_iterator_t screen_iterator;
 static xcb_window_t window;
+
+static xcb_atom_t wm_protocols_atom, delete_atom;
 
 static xcb_atom_t
 get_atom(struct xcb_connection_t *conn, const char *name)
@@ -40,6 +44,9 @@ init_display()
 {
    connection = xcb_connect(NULL, NULL);
    screen_iterator = xcb_setup_roots_iterator(xcb_get_setup(connection));
+
+   wm_protocols_atom = get_atom(connection, "WM_PROTOCOLS");
+   delete_atom = get_atom(connection, "WM_DELETE_WINDOW");
 }
 
 static void
@@ -49,14 +56,14 @@ fini_display()
 }
 
 static void
-init_window(const char *title)
+init_window(const char *title, int width, int height, bool fullscreen)
 {
    window = xcb_generate_id(connection);
    xcb_create_window(connection,
                      XCB_COPY_FROM_PARENT,
                      window,
                      screen_iterator.data->root,
-                     0, 0, 300, 300,
+                     0, 0, width, height,
                      0,
                      XCB_WINDOW_CLASS_INPUT_OUTPUT,
                      screen_iterator.data->root_visual,
@@ -75,14 +82,60 @@ init_window(const char *title)
                        8,
                        strlen(title), title);
 
+   xcb_change_property(connection,
+                       XCB_PROP_MODE_REPLACE,
+                       window,
+                       wm_protocols_atom,
+                       XCB_ATOM_ATOM,
+                       sizeof(xcb_atom_t) * 8,
+                       1, &delete_atom);
+
+   if (fullscreen) {
+       xcb_atom_t fullscreen_atom = get_atom(connection, "_NET_WM_STATE_FULLSCREEN");
+       xcb_change_property(connection,
+                           XCB_PROP_MODE_REPLACE,
+                           window,
+                           get_atom(connection, "_NET_WM_STATE"),
+                           XCB_ATOM_ATOM,
+                           sizeof(xcb_atom_t) * 8,
+                           1, &fullscreen_atom);
+   }
+
    xcb_map_window(connection, window);
 }
 
 static bool
 update_window()
 {
-   xcb_generic_event_t *event;
-   event = xcb_wait_for_event(connection);
+   union {
+      xcb_generic_event_t *generic;
+      xcb_configure_notify_event_t *configure_event;
+      xcb_client_message_event_t *client_message;
+   } event;
+
+   event.generic = xcb_wait_for_event(connection);
+   while(event.generic) {
+      switch (event.generic->response_type & 0x7f) {
+      case XCB_CONFIGURE_NOTIFY:
+         wsi_callbacks.resize(event.configure_event->width, event.configure_event->height);
+         break;
+
+      case XCB_CLIENT_MESSAGE:
+         if(event.client_message->window == window &&
+            event.client_message->type == wm_protocols_atom &&
+            event.client_message->data.data32[0] == delete_atom)
+         {
+             wsi_callbacks.exit();
+         }
+         break;
+      }
+
+      free(event.generic);
+      event.generic = xcb_poll_for_event(connection);
+   }
+   if(event.generic) {
+      free(event.generic);
+   }
 
    xcb_client_message_event_t client_message;
 
@@ -103,6 +156,12 @@ static void
 fini_window()
 {
 
+}
+
+static void
+set_wsi_callbacks(struct wsi_callbacks callbacks)
+{
+   wsi_callbacks = callbacks;
 }
 
 #define GET_INSTANCE_PROC(name) \
@@ -153,6 +212,8 @@ xcb_wsi_interface() {
       .init_window = init_window,
       .update_window = update_window,
       .fini_window = fini_window,
+
+      .set_wsi_callbacks = set_wsi_callbacks,
 
       .create_surface = create_surface,
    };

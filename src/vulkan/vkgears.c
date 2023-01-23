@@ -30,7 +30,8 @@ static VkDevice device;
 static VkQueue queue;
 
 /* swap chain */
-static int width, height;
+static int width, height, new_width, new_height;
+static bool fullscreen;
 static VkPresentModeKHR desidered_present_mode;
 static VkSampleCountFlagBits sample_count;
 static uint32_t image_count;
@@ -590,6 +591,7 @@ recreate_swapchain()
 {
    free_swapchain_data();
    vkDestroySwapchainKHR(device, swap_chain, NULL);
+   width = new_width, height = new_height;
    create_swapchain();
 }
 
@@ -1210,7 +1212,9 @@ usage(void)
    printf("Usage:\n");
    printf("  -samples N              run in multisample mode with N samples\n");
    printf("  -present-mailbox        run with present mode mailbox\n");
+   printf("  -fullscreen             run in fullscreen mode\n");
    printf("  -info                   display Vulkan device info\n");
+   printf("  -size WxH               window size\n");
 }
 
 static void
@@ -1287,12 +1291,34 @@ check_sample_count_support(VkSampleCountFlagBits sample_count)
       (sample_count & properties.limits.framebufferDepthSampleCounts);
 }
 
+static void
+wsi_resize(int p_new_width, int p_new_height)
+{
+   new_width = p_new_width;
+   new_height = p_new_height;
+}
+
+static void
+wsi_exit()
+{
+   exit(0);
+}
+
+static struct wsi_callbacks wsi_callbacks = {
+   .resize = wsi_resize,
+   .exit = wsi_exit,
+};
+
 int
 main(int argc, char *argv[])
 {
    bool printInfo = false;
    sample_count = VK_SAMPLE_COUNT_1_BIT;
    desidered_present_mode = VK_PRESENT_MODE_FIFO_KHR;
+   width = 300;
+   height = 300;
+   fullscreen = false;
+
    for (int i = 1; i < argc; i++) {
       if (strcmp(argv[i], "-info") == 0) {
          printInfo = true;
@@ -1304,11 +1330,27 @@ main(int argc, char *argv[])
       else if (strcmp(argv[i], "-present-mailbox") == 0) {
          desidered_present_mode = VK_PRESENT_MODE_MAILBOX_KHR;
       }
+      else if (strcmp(argv[i], "-size") == 0 && i + 1 < argc) {
+         i++;
+         char * token;
+         token = strtok(argv[i], "x");
+         if (!token)
+            continue;
+         width = atoi(token);
+         if((token = strtok(NULL, "x"))) {
+            height = atoi(token);
+         }
+      }
+      else if (strcmp(argv[i], "-fullscreen") == 0) {
+         fullscreen = true;
+      }
       else {
          usage();
          return -1;
       }
    }
+
+   new_width = width, new_height = height;
 
 #if defined(WAYLAND_SUPPORT) && defined(XCB_SUPPORT)
    wsi = getenv("WAYLAND_DISPLAY") ? wayland_wsi_interface() :
@@ -1319,16 +1361,16 @@ main(int argc, char *argv[])
    wsi = xcb_wsi_interface();
 #endif
 
+   wsi.set_wsi_callbacks(wsi_callbacks);
+
    wsi.init_display();
-   wsi.init_window("vkgears");
+   wsi.init_window("vkgears", width, height, fullscreen);
 
    init_vk(wsi.required_extension_name);
 
    if (!check_sample_count_support(sample_count))
       error("Sample count not supported");
 
-   width = 300;
-   height = 300;
    image_format = VK_FORMAT_B8G8R8A8_SRGB;
 
    if (printInfo)
@@ -1368,7 +1410,10 @@ main(int argc, char *argv[])
          vkAcquireNextImageKHR(device, swap_chain, UINT64_MAX,
                                back_buffer_semaphore, VK_NULL_HANDLE,
                                &index);
-      if (result == VK_SUBOPTIMAL_KHR) {
+      if (result == VK_SUBOPTIMAL_KHR ||
+          width != new_width || height != new_height) {
+         for (uint32_t i = 0; i < image_count; i++)
+            vkWaitForFences(device, 1, &swap_chain_data[i].fence, VK_TRUE, UINT64_MAX);
          recreate_swapchain();
          continue;
       }

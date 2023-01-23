@@ -15,6 +15,8 @@
 
 #include "wsi.h"
 
+static struct wsi_callbacks wsi_callbacks;
+
 static struct wl_display *display;
 static struct wl_compositor *compositor;
 static struct xdg_wm_base *xdg_wm_base;
@@ -115,13 +117,15 @@ xdg_toplevel_configure(void *data, struct xdg_toplevel *xdg_toplevel,
       return;
    }
 
-   /* TODO: handle resize */
+   wsi_callbacks.resize(width, height);
+   xdg_surface_set_window_geometry(xdg_surface, 0, 0, width, height);
+   wl_surface_commit(surface);
 }
 
 static void
 xdg_toplevel_close(void *data, struct xdg_toplevel *toplevel)
 {
-   /* TODO: handle close event */
+   wsi_callbacks.exit();
 }
 
 static const struct xdg_toplevel_listener xdg_toplevel_listener = {
@@ -129,7 +133,7 @@ static const struct xdg_toplevel_listener xdg_toplevel_listener = {
    xdg_toplevel_close
 };
 
-static void init_window(const char *title)
+static void init_window(const char *title, int width, int height, bool fullscreen)
 {
    assert(xdg_wm_base && compositor);
 
@@ -142,6 +146,8 @@ static void init_window(const char *title)
    xdg_toplevel_add_listener(xdg_toplevel, &xdg_toplevel_listener, NULL);
    xdg_toplevel_set_title(xdg_toplevel, title);
    xdg_toplevel_set_app_id(xdg_toplevel, title);
+   if (fullscreen)
+      xdg_toplevel_set_fullscreen(xdg_toplevel, NULL);
    wl_surface_commit(surface);
 
    while (!configured)
@@ -211,6 +217,12 @@ static bool update_window()
    return true;
 }
 
+static void
+set_wsi_callbacks(struct wsi_callbacks callbacks)
+{
+   wsi_callbacks = callbacks;
+}
+
 #define GET_INSTANCE_PROC(name) \
    PFN_ ## name name = (PFN_ ## name)vkGetInstanceProcAddr(instance, #name);
 
@@ -255,6 +267,8 @@ wayland_wsi_interface() {
       .init_window = init_window,
       .update_window = update_window,
       .fini_window = fini_window,
+
+      .set_wsi_callbacks = set_wsi_callbacks,
 
       .create_surface = create_surface,
    };
