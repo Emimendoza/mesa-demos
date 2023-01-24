@@ -52,15 +52,15 @@ x86_build:
       libgbm-dev
       libgl-dev
       libgles-dev
-      libvulkan-dev
+      libosmesa6-dev
       libudev-dev
+      libvulkan-dev
       libwayland-dev
       libx11-dev
       libxcb1-dev
-      wayland-protocols
       libxkbcommon-dev
       libxkbcommon-x11-dev
-      libosmesa6-dev
+      wayland-protocols
     FDO_DISTRIBUTION_EXEC: pip3 install meson==0.59.4
 
 .use-x86_build:
