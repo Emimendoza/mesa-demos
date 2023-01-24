@@ -20,7 +20,7 @@
 
 project('mesa-demos', 'c', 'cpp',
   version : '8.5.0',
-  meson_version : '>= 0.53')
+  meson_version : '>= 0.59')
 
 cc = meson.get_compiler('c')
 cpp = meson.get_compiler('cpp')
