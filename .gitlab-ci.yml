@@ -35,7 +35,7 @@ x86_build:
     # No need to pull the whole repo to build the container image
     GIT_STRATEGY: none
     # /!\ Bump the TAG when modifying the DEBS
-    FDO_DISTRIBUTION_TAG: &x86_build "2023-01-12-vkgears"
+    FDO_DISTRIBUTION_TAG: &x86_build "2023-01-30-vkgears"
     FDO_DISTRIBUTION_PACKAGES: >-
       build-essential
       python3-pip
@@ -58,6 +58,8 @@ x86_build:
       libx11-dev
       libxcb1-dev
       wayland-protocols
+      libxkbcommon-dev
+      libxkbcommon-x11-dev
       libosmesa6-dev
     FDO_DISTRIBUTION_EXEC: pip3 install meson==0.59.4
 
