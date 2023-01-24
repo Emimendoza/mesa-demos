@@ -10,6 +10,9 @@ exe_wrapper = ['wine32']
 [properties]
 needs_exe_wrapper = True
 
+[built-in options]
+pkg_config_path = '/tmp/freeglut-mingw/share/pkgconfig'
+
 [host_machine]
 system = 'windows'
 cpu_family = 'x86'

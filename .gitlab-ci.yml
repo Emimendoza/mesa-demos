@@ -100,4 +100,3 @@ build-mingw:
   variables:
     EXTRA_OPTION: >
       --cross-file=.gitlab-ci/x86_64-w64-mingw32
-      -Dwith-glut=/tmp/freeglut-mingw
