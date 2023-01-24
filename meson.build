@@ -96,6 +96,7 @@ glut_libdir = []
 glut_incdir = []
 with_glut = get_option('with-glut')
 if with_glut != ''
+  warning('with-glut is deprecated, and will be removed in a future release')
   glut_libdir = with_glut / 'lib'
   glut_incdir = include_directories(with_glut / 'include', is_system: true)
 
