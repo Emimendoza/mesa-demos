@@ -417,20 +417,22 @@ draw(struct window *window)
 void
 _eglutNativeEventLoop(void)
 {
-   struct pollfd pollfd;
    int ret;
-
-   pollfd.fd = wl_display_get_fd(display.display);
-   pollfd.events = POLLIN;
-   pollfd.revents = 0;
 
    while (!window.configured)
       wl_display_dispatch(display.display);
 
+   struct pollfd pollfds[] = {
+      {
+         .fd = wl_display_get_fd(display.display),
+         .events = POLLIN,
+      },
+   };
+
    while (_eglut->native_dpy != NULL) {
       /* If we need to flush but can't, don't do anything at all which could
        * push further events into the socket. */
-      if (!(pollfd.events & POLLOUT)) {
+      if (!(pollfds[0].events & POLLOUT)) {
          wl_display_dispatch_pending(display.display);
 
          if (_eglut->idle_cb)
@@ -446,23 +448,23 @@ _eglutNativeEventLoop(void)
       if (ret < 0 && errno != EAGAIN)
          break; /* fatal error; socket is broken */
       else if (ret < 0 && errno == EAGAIN)
-         pollfd.events |= POLLOUT; /* need to wait until we can flush */
+         pollfds[0].events |= POLLOUT; /* need to wait until we can flush */
       else
-         pollfd.events &= ~POLLOUT; /* successfully flushed */
+         pollfds[0].events &= ~POLLOUT; /* successfully flushed */
 
-      if (poll(&pollfd, 1, -1) == -1)
+      if (poll(pollfds, 1, -1) == -1)
          break;
 
-      if (pollfd.revents & (POLLERR | POLLHUP | POLLNVAL))
+      if (pollfds[0].revents & (POLLERR | POLLHUP | POLLNVAL))
          break;
 
-      if (pollfd.events & POLLOUT) {
-	 if (!(pollfd.revents & POLLOUT))
+      if (pollfds[0].events & POLLOUT) {
+         if (!(pollfds[0].revents & POLLOUT))
             continue; /* block until we can flush */
-         pollfd.events &= ~POLLOUT;
+         pollfds[0].events &= ~POLLOUT;
       }
 
-      if (pollfd.revents & POLLIN) {
+      if (pollfds[0].revents & POLLIN) {
          ret = wl_display_dispatch(display.display);
          if (ret == -1)
             break;
@@ -472,8 +474,8 @@ _eglutNativeEventLoop(void)
       if (ret < 0 && errno != EAGAIN)
          break; /* fatal error; socket is broken */
       else if (ret < 0 && errno == EAGAIN)
-         pollfd.events |= POLLOUT; /* need to wait until we can flush */
+         pollfds[0].events |= POLLOUT; /* need to wait until we can flush */
       else
-         pollfd.events &= ~POLLOUT; /* successfully flushed */
+         pollfds[0].events &= ~POLLOUT; /* successfully flushed */
    }
 }
