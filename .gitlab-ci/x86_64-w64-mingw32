@@ -9,7 +9,6 @@ exe_wrapper = ['wine32']
 
 [properties]
 needs_exe_wrapper = True
-sys_root = '/usr/i686-w64-mingw32/'
 
 [host_machine]
 system = 'windows'
