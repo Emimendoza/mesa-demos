@@ -35,10 +35,10 @@ x86_build:
     # No need to pull the whole repo to build the container image
     GIT_STRATEGY: none
     # /!\ Bump the TAG when modifying the DEBS
-    FDO_DISTRIBUTION_TAG: &x86_build "2022-05-16"
+    FDO_DISTRIBUTION_TAG: &x86_build "2023-01-25-upgrade-meson"
     FDO_DISTRIBUTION_PACKAGES: >-
       build-essential
-      meson
+      python3-pip
       pkg-config
       ninja-build
       mingw-w64
@@ -56,6 +56,7 @@ x86_build:
       libxcb1-dev
       wayland-protocols
       libosmesa6-dev
+    FDO_DISTRIBUTION_EXEC: pip3 install meson==0.59.4
 
 .use-x86_build:
   variables:
