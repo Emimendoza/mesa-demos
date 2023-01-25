@@ -11,7 +11,8 @@
 #include <sys/time.h>
 
 #include <vulkan/vulkan.h>
-#include <vulkan/vulkan_wayland.h>
+
+#include "wsi.h"
 
 #ifndef VK_API_VERSION_MAJOR
 /* retain compatibility with old vulkan headers */
@@ -20,16 +21,7 @@
 #define VK_API_VERSION_PATCH VK_VERSION_PATCH
 #endif
 
-void init_display();
-void fini_display();
-
-void init_window(const char *title);
-bool update_window();
-void fini_window();
-
-bool
-create_surface(VkPhysicalDevice physical_device, VkInstance instance,
-               VkSurfaceKHR *surface);
+static struct wsi_interface wsi;
 
 static VkInstance instance;
 static VkPhysicalDevice physical_device;
@@ -1318,10 +1310,12 @@ main(int argc, char *argv[])
       }
    }
 
-   init_display();
-   init_window("vkgears");
+   wsi = wayland_wsi_interface();
 
-   init_vk(VK_KHR_WAYLAND_SURFACE_EXTENSION_NAME);
+   wsi.init_display();
+   wsi.init_window("vkgears");
+
+   init_vk(wsi.required_extension_name);
 
    if (!check_sample_count_support(sample_count))
       error("Sample count not supported");
@@ -1335,7 +1329,7 @@ main(int argc, char *argv[])
 
    depth_format = find_depth_format();
 
-   if (!create_surface(physical_device, instance, &surface))
+   if (!wsi.create_surface(physical_device, instance, &surface))
       error("Failed to create surface!");
 
    create_render_pass();
@@ -1357,7 +1351,7 @@ main(int argc, char *argv[])
       if (angle > 3600.0)
          angle -= 3600.0;
 
-      if (update_window()) {
+      if (wsi.update_window()) {
          printf("update window failed\n");
          break;
       }
@@ -1460,7 +1454,7 @@ main(int argc, char *argv[])
       }
    }
 
-   fini_window();
-   fini_display();
+   wsi.fini_window();
+   wsi.fini_display();
    return 0;
 }

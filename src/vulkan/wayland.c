@@ -13,6 +13,8 @@
 #include <vulkan/vulkan.h>
 #include <vulkan/vulkan_wayland.h>
 
+#include "wsi.h"
+
 static struct wl_display *display;
 static struct wl_compositor *compositor;
 static struct xdg_wm_base *xdg_wm_base;
@@ -59,7 +61,7 @@ static const struct wl_registry_listener registry_listener = {
    registry_handle_global_remove
 };
 
-void init_display()
+static void init_display()
 {
    assert(!display);
    display = wl_display_connect(NULL);
@@ -127,7 +129,7 @@ static const struct xdg_toplevel_listener xdg_toplevel_listener = {
    xdg_toplevel_close
 };
 
-void init_window(const char *title)
+static void init_window(const char *title)
 {
    assert(xdg_wm_base && compositor);
 
@@ -146,14 +148,14 @@ void init_window(const char *title)
       wl_display_dispatch(display);
 }
 
-void fini_window()
+static void fini_window()
 {
    xdg_toplevel_destroy(xdg_toplevel);
    xdg_surface_destroy(xdg_surface);
 }
 
 
-bool update_window()
+static bool update_window()
 {
    struct pollfd pollfd;
    int ret;
@@ -212,7 +214,7 @@ bool update_window()
 #define GET_INSTANCE_PROC(name) \
    PFN_ ## name name = (PFN_ ## name)vkGetInstanceProcAddr(instance, #name);
 
-bool
+static bool
 create_surface(VkPhysicalDevice physical_device, VkInstance instance,
                VkSurfaceKHR *psurface)
 {
@@ -240,4 +242,20 @@ create_surface(VkPhysicalDevice physical_device, VkInstance instance,
         }, NULL, psurface);
 
    return result == VK_SUCCESS;
+}
+
+struct wsi_interface
+wayland_wsi_interface() {
+   return (struct wsi_interface) {
+      .required_extension_name = VK_KHR_WAYLAND_SURFACE_EXTENSION_NAME,
+
+      .init_display = init_display,
+      .fini_display = fini_display,
+
+      .init_window = init_window,
+      .update_window = update_window,
+      .fini_window = fini_window,
+
+      .create_surface = create_surface,
+   };
 }
