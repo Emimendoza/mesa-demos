@@ -123,6 +123,7 @@ _eglutNativeFiniDisplay(void)
    wl_compositor_destroy(display.compositor);
    wl_display_flush(_eglut->native_dpy);
    wl_display_disconnect(_eglut->native_dpy);
+   _eglut->native_dpy = NULL;
 }
 
 static void
@@ -253,7 +254,7 @@ _eglutNativeEventLoop(void)
    while (!window.configured)
       wl_display_dispatch(display.display);
 
-   while (1) {
+   while (_eglut->native_dpy != NULL) {
       /* If we need to flush but can't, don't do anything at all which could
        * push further events into the socket. */
       if (!(pollfd.events & POLLOUT)) {
