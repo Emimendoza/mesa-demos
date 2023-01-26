@@ -169,6 +169,29 @@ init_vk(const char *extension)
          .queueIndex = 0,
       },
       &queue);
+
+   vkCreateCommandPool(device,
+      &(const VkCommandPoolCreateInfo) {
+         .sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO,
+         .queueFamilyIndex = 0,
+         .flags = VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT
+      },
+      NULL,
+      &cmd_pool);
+
+   vkCreateSemaphore(device,
+      &(VkSemaphoreCreateInfo) {
+         .sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO,
+      },
+      NULL,
+      &back_buffer_semaphore);
+
+   vkCreateSemaphore(device,
+      &(VkSemaphoreCreateInfo) {
+         .sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO,
+      },
+      NULL,
+      &present_semaphore);
 }
 
 static int
@@ -182,6 +205,62 @@ find_memory_type(const VkMemoryRequirements *reqs,
             return i;
     }
     return -1;
+}
+
+static void
+create_render_pass()
+{
+   vkCreateRenderPass(device,
+      &(VkRenderPassCreateInfo) {
+         .sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO,
+         .attachmentCount = 2,
+         .pAttachments = (VkAttachmentDescription[]) {
+            {
+               .format = image_format,
+               .samples = VK_SAMPLE_COUNT_1_BIT,
+               .loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR,
+               .storeOp = VK_ATTACHMENT_STORE_OP_STORE,
+               .initialLayout = VK_IMAGE_LAYOUT_UNDEFINED,
+               .finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR,
+            },
+            {
+               .format = depth_format,
+               .samples = VK_SAMPLE_COUNT_1_BIT,
+               .loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR,
+               .storeOp = VK_ATTACHMENT_STORE_OP_DONT_CARE,
+               .stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE,
+               .stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE,
+               .initialLayout = VK_IMAGE_LAYOUT_UNDEFINED,
+               .finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL,
+            },
+         },
+         .subpassCount = 1,
+         .pSubpasses = (VkSubpassDescription []) {
+            {
+               .pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS,
+               .inputAttachmentCount = 0,
+               .colorAttachmentCount = 1,
+               .pColorAttachments = (VkAttachmentReference []) {
+                  {
+                     .attachment = 0,
+                     .layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL
+                  }
+               },
+               .pDepthStencilAttachment = (VkAttachmentReference []) {
+                  {
+                     .attachment = 1,
+                     .layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL,
+                  }
+               },
+               .pResolveAttachments = NULL,
+               .preserveAttachmentCount = 0,
+               .pPreserveAttachments = NULL,
+            }
+         },
+         .dependencyCount = 0
+      },
+      NULL,
+      &render_pass);
 }
 
 static void
@@ -318,72 +397,6 @@ create_swapchain()
       NULL,
       &depth_view);
 
-   vkCreateRenderPass(device,
-      &(VkRenderPassCreateInfo) {
-         .sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO,
-         .attachmentCount = 2,
-         .pAttachments = (VkAttachmentDescription[]) {
-            {
-               .format = image_format,
-               .samples = VK_SAMPLE_COUNT_1_BIT,
-               .loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR,
-               .storeOp = VK_ATTACHMENT_STORE_OP_STORE,
-               .initialLayout = VK_IMAGE_LAYOUT_UNDEFINED,
-               .finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR,
-            },
-            {
-               .format = depth_format,
-               .samples = VK_SAMPLE_COUNT_1_BIT,
-               .loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR,
-               .storeOp = VK_ATTACHMENT_STORE_OP_DONT_CARE,
-               .stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE,
-               .stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE,
-               .initialLayout = VK_IMAGE_LAYOUT_UNDEFINED,
-               .finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL,
-            }
-         },
-         .subpassCount = 1,
-         .pSubpasses = (VkSubpassDescription []) {
-            {
-               .pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS,
-               .inputAttachmentCount = 0,
-               .colorAttachmentCount = 1,
-               .pColorAttachments = (VkAttachmentReference []) {
-                  {
-                     .attachment = 0,
-                     .layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL
-                  }
-               },
-               .pResolveAttachments = (VkAttachmentReference []) {
-                  {
-                     .attachment = VK_ATTACHMENT_UNUSED,
-                     .layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL
-                  }
-               },
-               .pDepthStencilAttachment = (VkAttachmentReference []) {
-                  {
-                     .attachment = 1,
-                     .layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL,
-                  }
-               },
-               .preserveAttachmentCount = 0,
-               .pPreserveAttachments = NULL,
-            }
-         },
-         .dependencyCount = 0
-      },
-      NULL,
-      &render_pass);
-
-   vkCreateCommandPool(device,
-      &(const VkCommandPoolCreateInfo) {
-         .sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO,
-         .queueFamilyIndex = 0,
-         .flags = VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT
-      },
-      NULL,
-      &cmd_pool);
-
    for (uint32_t i = 0; i < image_count; i++) {
       swap_chain_data[i].image = swap_chain_images[i];
       vkCreateImageView(device,
@@ -442,20 +455,6 @@ create_swapchain()
          },
          &swap_chain_data[i].cmd_buffer);
    }
-
-   vkCreateSemaphore(device,
-      &(VkSemaphoreCreateInfo) {
-         .sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO,
-      },
-      NULL,
-      &back_buffer_semaphore);
-
-   vkCreateSemaphore(device,
-      &(VkSemaphoreCreateInfo) {
-         .sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO,
-      },
-      NULL,
-      &present_semaphore);
 }
 
 static void
@@ -1166,6 +1165,7 @@ main(int argc, char *argv[])
    if (!create_surface(physical_device, instance, &surface))
       error("Failed to create surface!");
 
+   create_render_pass();
    create_swapchain();
    init_gears();
 
