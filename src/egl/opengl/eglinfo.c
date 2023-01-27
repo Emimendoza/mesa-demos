@@ -40,9 +40,45 @@
 #define MAX_SCREENS 10
 #define MAX_COLUMN 70
 
+#define ELEMENTS(array) (sizeof(array) / sizeof(array[0]))
+
 /* These are X visual types, so if you're running eglinfo under
  * something not X, they probably don't make sense. */
 static const char *vnames[] = { "SG", "GS", "SC", "PC", "TC", "DC" };
+
+struct platform {
+   const char *names[2];
+   const char *human_name;
+   EGLenum platform_enum;
+};
+
+static const struct platform platforms[] = {
+   {
+      .names = { "EGL_KHR_platform_android" },
+      .human_name = "Android",
+      .platform_enum = EGL_PLATFORM_ANDROID_KHR,
+   },
+   {
+      .names = { "EGL_MESA_platform_gbm", "EGL_KHR_platform_gbm" },
+      .human_name = "GBM",
+      .platform_enum = EGL_PLATFORM_GBM_MESA,
+   },
+   {
+      .names = { "EGL_EXT_platform_wayland", "EGL_KHR_platform_wayland" },
+      .human_name = "Wayland",
+      .platform_enum = EGL_PLATFORM_WAYLAND_EXT,
+   },
+   {
+      .names = { "EGL_EXT_platform_x11", "EGL_KHR_platform_x11" },
+      .human_name = "X11",
+      .platform_enum = EGL_PLATFORM_X11_EXT,
+   },
+   {
+      .names = { "EGL_MESA_platform_surfaceless" },
+      .human_name = "Surfaceless",
+      .platform_enum = EGL_PLATFORM_SURFACELESS_MESA,
+   },
+};
 
 /**
  * Print table of all available configurations.
@@ -373,7 +409,7 @@ doOneDisplay(EGLDisplay d, const char *name)
 {
    int maj, min;
 
-   printf("%s:\n", name);
+   printf("%s platform:\n", name);
    if (!eglInitialize(d, &maj, &min)) {
       printf("eglinfo: eglInitialize failed\n\n");
       return 1;
@@ -515,32 +551,27 @@ main(int argc, char *argv[])
        PFNEGLGETPLATFORMDISPLAYEXTPROC getPlatformDisplay =
            (PFNEGLGETPLATFORMDISPLAYEXTPROC)
            eglGetProcAddress("eglGetPlatformDisplayEXT");
-       if (strstr(clientext, "EGL_KHR_platform_android"))
-           ret += doOneDisplay(getPlatformDisplay(EGL_PLATFORM_ANDROID_KHR,
-                                                  EGL_DEFAULT_DISPLAY,
-                                                  NULL), "Android platform");
-       if (strstr(clientext, "EGL_MESA_platform_gbm") ||
-           strstr(clientext, "EGL_KHR_platform_gbm"))
-           ret += doOneDisplay(getPlatformDisplay(EGL_PLATFORM_GBM_MESA,
-                                                  EGL_DEFAULT_DISPLAY,
-                                                  NULL), "GBM platform");
-       if (strstr(clientext, "EGL_EXT_platform_wayland") ||
-           strstr(clientext, "EGL_KHR_platform_wayland"))
-           ret += doOneDisplay(getPlatformDisplay(EGL_PLATFORM_WAYLAND_EXT,
-                                                  EGL_DEFAULT_DISPLAY,
-                                                  NULL), "Wayland platform");
-       if (strstr(clientext, "EGL_EXT_platform_x11") ||
-           strstr(clientext, "EGL_KHR_platform_x11"))
-           ret += doOneDisplay(getPlatformDisplay(EGL_PLATFORM_X11_EXT,
-                                                  EGL_DEFAULT_DISPLAY,
-                                                  NULL), "X11 platform");
-       if (strstr(clientext, "EGL_MESA_platform_surfaceless"))
-           ret += doOneDisplay(getPlatformDisplay(EGL_PLATFORM_SURFACELESS_MESA,
-                                                  EGL_DEFAULT_DISPLAY,
-                                                  NULL), "Surfaceless platform");
-       if (strstr(clientext, "EGL_EXT_device_enumeration") &&
-           strstr(clientext, "EGL_EXT_platform_device"))
-           ret += doDevices("Device platform");
+
+      for (int i = 0; i < ELEMENTS(platforms); i++) {
+         for (int j = 0; j < ELEMENTS(platforms[i].names); j++) {
+            const char *name = platforms[i].names[j];
+
+            if (!name)
+               break;
+
+            if (strstr(clientext, name)) {
+               EGLDisplay d = getPlatformDisplay(platforms[i].platform_enum,
+                                                EGL_DEFAULT_DISPLAY,
+                                                NULL);
+               ret += doOneDisplay(d, platforms[i].human_name);
+               break;
+            }
+         }
+      }
+
+      if (strstr(clientext, "EGL_EXT_device_enumeration") &&
+          strstr(clientext, "EGL_EXT_platform_device"))
+         ret += doDevices("Device platform");
    }
    else {
       ret = doOneDisplay(eglGetDisplay(EGL_DEFAULT_DISPLAY), "Default display");
