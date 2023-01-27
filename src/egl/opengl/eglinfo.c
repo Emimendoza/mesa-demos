@@ -47,37 +47,65 @@
 static const char *vnames[] = { "SG", "GS", "SC", "PC", "TC", "DC" };
 
 struct platform {
+   /* names as defined in the EGL spec */
    const char *names[2];
+   /* used by parse_args */
+   const char *short_name;
+   /* a human-readable name */
    const char *human_name;
    EGLenum platform_enum;
+};
+
+enum api {
+   OPENGL = 0,
+   OPENGL_CORE = 1,
+   OPENGL_ES = 2,
+   /* OpenVG = 3, */
+};
+
+static const char *apis[3] = {
+   [OPENGL] = "gl",
+   [OPENGL_CORE] = "glcore",
+   [OPENGL_ES] = "gles",
+   /* [OpenVG] = "vg", */
 };
 
 static const struct platform platforms[] = {
    {
       .names = { "EGL_KHR_platform_android" },
+      .short_name = "android",
       .human_name = "Android",
       .platform_enum = EGL_PLATFORM_ANDROID_KHR,
    },
    {
       .names = { "EGL_MESA_platform_gbm", "EGL_KHR_platform_gbm" },
+      .short_name = "gbm",
       .human_name = "GBM",
       .platform_enum = EGL_PLATFORM_GBM_MESA,
    },
    {
       .names = { "EGL_EXT_platform_wayland", "EGL_KHR_platform_wayland" },
+      .short_name = "wayland",
       .human_name = "Wayland",
       .platform_enum = EGL_PLATFORM_WAYLAND_EXT,
    },
    {
       .names = { "EGL_EXT_platform_x11", "EGL_KHR_platform_x11" },
+      .short_name = "x11",
       .human_name = "X11",
       .platform_enum = EGL_PLATFORM_X11_EXT,
    },
    {
       .names = { "EGL_MESA_platform_surfaceless" },
+      .short_name = "surfaceless",
       .human_name = "Surfaceless",
       .platform_enum = EGL_PLATFORM_SURFACELESS_MESA,
    },
+};
+
+struct options {
+   unsigned platform;
+   unsigned api;
 };
 
 /**
@@ -538,9 +566,118 @@ doDevices(const char *name)
 }
 
 
+static void
+usage(void)
+{
+   /* 
+    * Usage portion of the help message
+    */
+
+   printf("Usage: eglinfo [-h]");
+
+#ifdef EGL_VERSION_1_2
+   printf(" [-a <api>]");
+#endif
+
+   printf(" [-p <platform>]\n");
+
+   /* 
+    * Detailed portion of the help message
+    */
+
+   printf("\t -h \t This message.\n");
+
+#ifdef EGL_VERSION_1_2
+   printf("\t -a \t Print information for a specific API, if supported.\n");
+   printf("\t\t (");
+   for (int i = 0; i < ELEMENTS(apis) - 1; i++) {
+      printf("%s, ", apis[i]);
+   }
+   printf("%s)\n", apis[ELEMENTS(apis) - 1]);
+#endif
+
+   printf("\t -p \t Print information for a specific platform, if supported.\n");
+   printf("\t\t (");
+   for (int i = 0; i < ELEMENTS(platforms) - 1; i++) {
+      printf("%s, ", platforms[i].short_name);
+   }
+   printf("%s)\n", platforms[ELEMENTS(platforms) - 1].short_name);
+}
+
+static void
+parse_args(int argc, char *argv[], struct options *opts)
+{
+   opts->api = ~0;
+   opts->platform = ~0;
+
+   if (argc <= 1)
+      return;
+
+   for (int i = 1; i < argc; i++) {
+      if (strcmp(argv[i], "-h") == 0) {
+         usage();
+         exit(0);
+      }
+   }
+
+#ifdef EGL_VERSION_1_2
+   for (int i = 1; i < argc; i++) {
+      /* parse -a */
+      if (strcmp(argv[i], "-a") == 0 && i + 1 < argc) {
+         const char *selected_api = argv[++i];
+
+         for (int j = 0; j < ELEMENTS(apis); j++) {
+            if (strcmp(selected_api, apis[j]) == 0) {
+               opts->api = j;
+               break;
+            }
+         }
+
+         if (opts->api == ~0) {
+            printf("Unknown API: %s\n", argv[i]);
+            goto fail;
+         }
+      }
+
+      /* parse -p */
+      else if (strcmp(argv[i], "-p") == 0 && i + 1 < argc) {
+         const char *selected_platform = argv[++i];
+
+         for (int j = 0; j < ELEMENTS(platforms); j++) {
+            if (strcmp(selected_platform, platforms[j].short_name) == 0) {
+               opts->platform = j;
+               break;
+            }
+         }
+
+         if (opts->platform == ~0) {
+            printf("Unknown platform: %s\n", argv[i]);
+            goto fail;
+         }
+      }
+
+      /* unknown */
+      else {
+         printf("Unknown option: %s\n", argv[i]);
+         goto fail;
+      }
+   }
+#endif
+
+   return;
+
+fail:
+   usage();
+   exit(1);
+}
+
+
 int
 main(int argc, char *argv[])
 {
+   struct options opts;
+   parse_args(argc, argv, &opts);
+
    int ret = 0;
    const char *clientext;
 
@@ -553,6 +690,9 @@ main(int argc, char *argv[])
            eglGetProcAddress("eglGetPlatformDisplayEXT");
 
       for (int i = 0; i < ELEMENTS(platforms); i++) {
+         if (opts.platform != ~0 && i != opts.platform)
+            continue;
+
          for (int j = 0; j < ELEMENTS(platforms[i].names); j++) {
             const char *name = platforms[i].names[j];
 
@@ -570,7 +710,8 @@ main(int argc, char *argv[])
       }
 
       if (strstr(clientext, "EGL_EXT_device_enumeration") &&
-          strstr(clientext, "EGL_EXT_platform_device"))
+          strstr(clientext, "EGL_EXT_platform_device") &&
+          opts.platform == ~0)
          ret += doDevices("Device platform");
    }
    else {
