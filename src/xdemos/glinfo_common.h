@@ -36,6 +36,8 @@
 #include <GL/glext.h>
 #endif
 
+#include "gl_versions.h"
+
 typedef void (APIENTRY * GETPROGRAMIVARBPROC) (GLenum target, GLenum pname, GLint *params);
 typedef const GLubyte *(APIENTRY * GETSTRINGIPROC) (GLenum name, GLuint index);
 typedef void (APIENTRY * GETCONVOLUTIONPARAMETERIVPROC) (GLenum target, GLenum pname, GLint *params);
@@ -82,36 +84,6 @@ struct options
    char *displayName;
    GLboolean allowDirect;
 };
-
-
-/** list of known OpenGL versions */
-static const struct { int major, minor; } gl_versions[] = {
-   {4, 6},
-   {4, 5},
-   {4, 4},
-   {4, 3},
-   {4, 2},
-   {4, 1},
-   {4, 0},
-
-   {3, 3},
-   {3, 2},
-   {3, 1},
-   {3, 0},
-
-   {2, 1},
-   {2, 0},
-
-   {1, 5},
-   {1, 4},
-   {1, 3},
-   {1, 2},
-   {1, 1},
-   {1, 0},
-
-   {0, 0} /* end of list */
-};
-
 
 void
 print_extension_list(const char *ext, GLboolean singleLine);
