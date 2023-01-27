@@ -61,6 +61,7 @@ enum api {
    OPENGL_CORE = 1,
    OPENGL_ES = 2,
    /* OpenVG = 3, */
+   ALL = ~0,
 };
 
 static const char *apis[3] = {
@@ -433,7 +434,7 @@ doOneContext(EGLDisplay d, EGLContext ctx, const char *api_name)
 
 
 static int
-doOneDisplay(EGLDisplay d, const char *name)
+doOneDisplay(EGLDisplay d, const char *name, struct options opts)
 {
    int maj, min;
 
@@ -466,13 +467,19 @@ doOneDisplay(EGLDisplay d, const char *name)
       has_opengl = strstr(has_opengl_es + offset, "OpenGL");
    }
 
-   if (has_opengl) {
+   EGLBoolean do_opengl_core =
+      (opts.api == OPENGL || opts.api == OPENGL_CORE || opts.api == ALL);
+   EGLBoolean do_opengl_compat = (opts.api == OPENGL || opts.api == ALL);
+   EGLBoolean do_opengl_es = (opts.api == OPENGL_ES || opts.api == ALL);
+
+   if (has_opengl && (do_opengl_core || do_opengl_compat)) 
+   {
       EGLBoolean api_result = eglBindAPI(EGL_OPENGL_API);
       if (api_result) {
          EGLConfig config = chooseEGLConfig(d, EGL_OPENGL_BIT);
-         EGLContext ctx;
+         EGLContext ctx = NULL;
 
-         if (khr_create_context) {
+         if (khr_create_context && do_opengl_core) {
             ctx = createEGLContext(d, config, EGL_OPENGL_API, EGL_TRUE);
 
             if (ctx) {
@@ -482,16 +489,18 @@ doOneDisplay(EGLDisplay d, const char *name)
             }
          }
 
-         ctx = createEGLContext(d, config, EGL_OPENGL_API, EGL_FALSE);
-
-         if (ctx) {
-            if (doOneContext(d, ctx, "OpenGL compatibility profile") == 0)
-               if (!eglDestroyContext(d, ctx))
-                  return 1;
+         if (do_opengl_compat) {
+            ctx = createEGLContext(d, config, EGL_OPENGL_API, EGL_FALSE);
+            if (ctx) {
+               if (doOneContext(d, ctx, "OpenGL compatibility profile") == 0)
+                  if (!eglDestroyContext(d, ctx))
+                     return 1;
+            }
          }
       }
    }
-   if (has_opengl_es) {
+
+   if (has_opengl_es && do_opengl_es) {
       EGLBoolean api_result = eglBindAPI(EGL_OPENGL_ES_API);
       if (api_result) {
          EGLConfig config = chooseEGLConfig(d, EGL_OPENGL_ES_BIT);
@@ -521,7 +530,7 @@ doOneDisplay(EGLDisplay d, const char *name)
 
 
 static int
-doOneDevice(EGLDeviceEXT d, int i)
+doOneDevice(EGLDeviceEXT d, int i, struct options opts)
 {
    PFNEGLGETPLATFORMDISPLAYEXTPROC getPlatformDisplay =
      (PFNEGLGETPLATFORMDISPLAYEXTPROC)
@@ -532,12 +541,12 @@ doOneDevice(EGLDeviceEXT d, int i)
    PrintDeviceExtensions(d);
 
    return doOneDisplay(getPlatformDisplay(EGL_PLATFORM_DEVICE_EXT, d, NULL),
-                       "Platform Device");
+                       "Platform Device", opts);
 }
 
 
 static int
-doDevices(const char *name)
+doDevices(const char *name, struct options opts)
 {
    PFNEGLQUERYDEVICESEXTPROC queryDevices =
      (PFNEGLQUERYDEVICESEXTPROC) eglGetProcAddress("eglQueryDevicesEXT");
@@ -557,7 +566,7 @@ doDevices(const char *name)
      num_devices = 0;
 
    for (i = 0; i < num_devices; ++i) {
-       ret += doOneDevice(devices[i], i);
+       ret += doOneDevice(devices[i], i, opts);
    }
 
    free(devices);
@@ -607,8 +616,8 @@ usage(void)
 static void
 parse_args(int argc, char *argv[], struct options *opts)
 {
-   opts->api = ~0;
-   opts->platform = ~0;
+   opts->api = ALL;
+   opts->platform = ALL; /* ALL == ~0 */
 
    if (argc <= 1)
       return;
@@ -633,7 +642,7 @@ parse_args(int argc, char *argv[], struct options *opts)
             }
          }
 
-         if (opts->api == ~0) {
+         if (opts->api == ALL) {
             printf("Unknown API: %s\n", argv[i]);
             goto fail;
          }
@@ -650,7 +659,7 @@ parse_args(int argc, char *argv[], struct options *opts)
             }
          }
 
-         if (opts->platform == ~0) {
+         if (opts->platform == ALL) {
             printf("Unknown platform: %s\n", argv[i]);
             goto fail;
          }
@@ -690,7 +699,7 @@ main(int argc, char *argv[])
            eglGetProcAddress("eglGetPlatformDisplayEXT");
 
       for (int i = 0; i < ELEMENTS(platforms); i++) {
-         if (opts.platform != ~0 && i != opts.platform)
+         if (opts.platform != ALL && i != opts.platform)
             continue;
 
          for (int j = 0; j < ELEMENTS(platforms[i].names); j++) {
@@ -703,7 +712,7 @@ main(int argc, char *argv[])
                EGLDisplay d = getPlatformDisplay(platforms[i].platform_enum,
                                                 EGL_DEFAULT_DISPLAY,
                                                 NULL);
-               ret += doOneDisplay(d, platforms[i].human_name);
+               ret += doOneDisplay(d, platforms[i].human_name, opts);
                break;
             }
          }
@@ -711,11 +720,11 @@ main(int argc, char *argv[])
 
       if (strstr(clientext, "EGL_EXT_device_enumeration") &&
           strstr(clientext, "EGL_EXT_platform_device") &&
-          opts.platform == ~0)
-         ret += doDevices("Device platform");
+          opts.platform == ALL)
+         ret += doDevices("Device platform", opts);
    }
    else {
-      ret = doOneDisplay(eglGetDisplay(EGL_DEFAULT_DISPLAY), "Default display");
+      ret = doOneDisplay(eglGetDisplay(EGL_DEFAULT_DISPLAY), "Default display", opts);
    }
 
    return ret;
