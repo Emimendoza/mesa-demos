@@ -92,8 +92,6 @@ if not cc.has_function('dlopen')
   dep_dl = cc.find_library('dl', required : host_machine.system() != 'windows')
 endif
 
-glut_libdir = []
-glut_incdir = []
 with_glut = get_option('with-glut')
 if with_glut != ''
   warning('with-glut is deprecated, and will be removed in a future release')
@@ -124,7 +122,7 @@ else
 endif
 
 if dep_glut.found() and cc.has_function('glutInitContextProfile',
-                                        include_directories: glut_incdir,
+                                        dependencies: [dep_glut],
                                         prefix : '#include <GL/freeglut.h>')
   add_project_arguments('-DHAVE_FREEGLUT', language : ['c', 'cpp'])
 endif
