@@ -33,8 +33,8 @@ executable(
 
 executable(
   'eglinfo', 'eglinfo.c',
-  dependencies: [dep_egl, dep_gl],
-  include_directories: ['../../xdemos'],
+  dependencies: [dep_egl, idep_glad],
+  include_directories: [inc_glad, '../../xdemos'],
   install: true
 )
 

@@ -32,15 +32,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "glinfo_common.h"
+#include "gl_versions.h"
+#include <glad/glad.h>
 
 #define MAX_CONFIGS 1000
 #define MAX_MODES 1000
 #define MAX_SCREENS 10
 #define MAX_COLUMN 70
-
-typedef const char *(*GETSTRINGPROC)(GLenum);
-typedef void (*GETINTEGERVPROC)(GLenum, int*);
 
 /* These are X visual types, so if you're running eglinfo under
  * something not X, they probably don't make sense. */
@@ -221,24 +219,21 @@ PrintDeviceExtensions(EGLDeviceEXT d)
 /* Note that this function has a different return type than the other Print*
  * functions.
  */
-static int
-PrintContextExtensions(const char *api_name, GETINTEGERVPROC GetIntegerv)
+static EGLBoolean
+PrintContextExtensions(const char *api_name)
 {
-   GETSTRINGIPROC GetStringi =
-      (GETSTRINGIPROC) eglGetProcAddress("glGetStringi");
-
-   if (!GetStringi)
+   if (!glGetStringi)
       return 0;
 
    int num_extensions;
-   GetIntegerv(GL_NUM_EXTENSIONS, &num_extensions);
+   glGetIntegerv(GL_NUM_EXTENSIONS, &num_extensions);
 
    printf("%s extensions:\n", api_name);
 
    unsigned column = 0;
 
    for (int i = 0; i < num_extensions; i++) {
-      const char *extension = (const char *) GetStringi(GL_EXTENSIONS, i);
+      const char *extension = (const char *) glGetStringi(GL_EXTENSIONS, i);
       unsigned extension_len = strlen(extension);
       if (column > 0 && column + extension_len > MAX_COLUMN) {
          printf("\n");
@@ -311,8 +306,14 @@ createEGLContext(EGLDisplay d, EGLConfig conf, int api,
 
          ctx = eglCreateContext(d, conf, EGL_NO_CONTEXT, attribs);
 
-         if (ctx)
+         if (ctx) {
+            if (!eglMakeCurrent(d, EGL_NO_SURFACE, EGL_NO_SURFACE, ctx)) {
+               eglDestroyContext(d, ctx);
+               continue;
+            }
+            gladLoadGLLoader((GLADloadproc) eglGetProcAddress);
             return ctx;
+         }
       }
       /* couldn't get core profile context */
       return NULL;
@@ -327,11 +328,20 @@ createEGLContext(EGLDisplay d, EGLConfig conf, int api,
             EGL_CONTEXT_MAJOR_VERSION, i,
             EGL_NONE,
          };
-
          ctx = eglCreateContext(d, conf, EGL_NO_CONTEXT, attribs);
 
-         if (ctx)
+         if (ctx) {
+            if (!eglMakeCurrent(d, EGL_NO_SURFACE, EGL_NO_SURFACE, ctx)) {
+               eglDestroyContext(d, ctx);
+               continue;
+            }
+
+            if (i >= 2)
+               gladLoadGLES2Loader((GLADloadproc) eglGetProcAddress);
+            else
+               gladLoadGLES1Loader((GLADloadproc) eglGetProcAddress);
             return ctx;
+         }
       }
    }
 
@@ -341,24 +351,16 @@ createEGLContext(EGLDisplay d, EGLConfig conf, int api,
 static int
 doOneContext(EGLDisplay d, EGLContext ctx, const char *api_name)
 {
-   if (!eglMakeCurrent(d, EGL_NO_SURFACE, EGL_NO_SURFACE, ctx))
+   if (!glGetString || !glGetIntegerv)
       return 1;
 
-   GETSTRINGPROC GetString =
-      (GETSTRINGPROC) eglGetProcAddress("glGetString");
-   GETINTEGERVPROC GetIntegerv =
-      (GETINTEGERVPROC) eglGetProcAddress("glGetIntegerv");
-
-   if (!GetString || !GetIntegerv)
-      return 1;
-
-   printf("%s vendor: %s\n", api_name, GetString(GL_VENDOR));
-   printf("%s renderer: %s\n", api_name, GetString(GL_RENDERER));
-   printf("%s version: %s\n", api_name, GetString(GL_VERSION));
+   printf("%s vendor: %s\n", api_name, glGetString(GL_VENDOR));
+   printf("%s renderer: %s\n", api_name, glGetString(GL_RENDERER));
+   printf("%s version: %s\n", api_name, glGetString(GL_VERSION));
    printf("%s shading language version: %s\n", api_name,
-          GetString(GL_SHADING_LANGUAGE_VERSION));
+          glGetString(GL_SHADING_LANGUAGE_VERSION));
 
-   if (!PrintContextExtensions(api_name, GetIntegerv))
+   if (!PrintContextExtensions(api_name))
       return 1;
 
    eglMakeCurrent(d, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
