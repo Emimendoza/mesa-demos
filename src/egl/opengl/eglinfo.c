@@ -107,6 +107,7 @@ static const struct platform platforms[] = {
 struct options {
    unsigned platform;
    unsigned api;
+   EGLBoolean brief;
 };
 
 /**
@@ -427,7 +428,10 @@ createEGLContext(EGLDisplay d, EGLConfig conf, int api,
 }
 
 static int
-doOneContext(EGLDisplay d, EGLContext ctx, const char *api_name)
+doOneContext(EGLDisplay d,
+             EGLContext ctx,
+             const char *api_name,
+             struct options opts)
 {
    if (!glGetString || !glGetIntegerv)
       return 1;
@@ -438,7 +442,7 @@ doOneContext(EGLDisplay d, EGLContext ctx, const char *api_name)
    printf("%s shading language version: %s\n", api_name,
           glGetString(GL_SHADING_LANGUAGE_VERSION));
 
-   if (!PrintContextExtensions(api_name))
+   if (!opts.brief && !PrintContextExtensions(api_name))
       return 1;
 
    eglMakeCurrent(d, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
@@ -465,7 +469,10 @@ doOneDisplay(EGLDisplay d, const char *name, struct options opts)
    printf("EGL client APIs: %s\n", client_apis);
 #endif
 
-   const char *display_exts = PrintDisplayExtensions(d);
+   const char *display_exts = eglQueryString(d, EGL_EXTENSIONS);
+   
+   if (!opts.brief)
+      PrintDisplayExtensions(d);
 
 #ifdef EGL_VERSION_1_4
    int khr_create_context = (maj == 1 && min >= 4) &&
@@ -500,7 +507,7 @@ doOneDisplay(EGLDisplay d, const char *name, struct options opts)
                                    EGL_TRUE);
 
             if (ctx)
-               if (doOneContext(d, ctx, "OpenGL core profile") == 0)
+               if (doOneContext(d, ctx, "OpenGL core profile", opts) == 0)
                   if (!eglDestroyContext(d, ctx))
                      return 1;
          }
@@ -512,7 +519,7 @@ doOneDisplay(EGLDisplay d, const char *name, struct options opts)
                                    khr_create_context,
                                    EGL_FALSE);
             if (ctx)
-               if (doOneContext(d, ctx, "OpenGL compatibility profile") == 0)
+               if (doOneContext(d, ctx, "OpenGL compatibility profile", opts) == 0)
                   if (!eglDestroyContext(d, ctx))
                      return 1;
          }
@@ -530,7 +537,7 @@ doOneDisplay(EGLDisplay d, const char *name, struct options opts)
                                            EGL_FALSE);
 
          if (ctx) {
-            if (doOneContext(d, ctx, "OpenGL ES profile") == 0)
+            if (doOneContext(d, ctx, "OpenGL ES profile", opts) == 0)
                if (!eglDestroyContext(d, ctx))
                   return 1;
          }
@@ -541,7 +548,8 @@ doOneDisplay(EGLDisplay d, const char *name, struct options opts)
    }
 #endif
 
-   PrintConfigs(d);
+   if (!opts.brief)
+      PrintConfigs(d);
 
    eglTerminate(d);
    printf("\n");
@@ -558,7 +566,8 @@ doOneDevice(EGLDeviceEXT d, int i, struct options opts)
 
    printf("Device #%d:\n\n", i);
 
-   PrintDeviceExtensions(d);
+   if (!opts.brief)
+      PrintDeviceExtensions(d);
 
    return doOneDisplay(getPlatformDisplay(EGL_PLATFORM_DEVICE_EXT, d, NULL),
                        "Platform Device", opts);
@@ -602,7 +611,7 @@ usage(void)
     * Usage portion of the help message
     */
 
-   printf("Usage: eglinfo [-h]");
+   printf("Usage: eglinfo [-h] [-B]");
 
 #ifdef EGL_VERSION_1_2
    printf(" [-a <api>]");
@@ -615,6 +624,7 @@ usage(void)
     */
 
    printf("\t -h \t This message.\n");
+   printf("\t -B \t Brief output, print only the basics.\n");
 
 #ifdef EGL_VERSION_1_2
    printf("\t -a \t Print information for a specific API, if supported.\n");
@@ -638,6 +648,7 @@ parse_args(int argc, char *argv[], struct options *opts)
 {
    opts->api = ALL;
    opts->platform = ALL; /* ALL == ~0 */
+   opts->brief = 0;
 
    if (argc <= 1)
       return;
@@ -685,6 +696,11 @@ parse_args(int argc, char *argv[], struct options *opts)
          }
       }
 
+      /* parse -B */
+      else if (strcmp(argv[i], "-B") == 0) {
+         opts->brief = 1;
+      }
+
       /* unknown */
       else {
          printf("Unknown option: %s\n", argv[i]);
@@ -710,8 +726,12 @@ main(int argc, char *argv[])
    int ret = 0;
    const char *clientext;
 
-   clientext = PrintDisplayExtensions(EGL_NO_DISPLAY);
-   printf("\n");
+   if (!opts.brief) {
+      clientext = PrintDisplayExtensions(EGL_NO_DISPLAY);
+      printf("\n");
+   } else {
+      clientext = eglQueryString(EGL_NO_DISPLAY, EGL_EXTENSIONS);
+   }
 
    if (strstr(clientext, "EGL_EXT_platform_base")) {
        PFNEGLGETPLATFORMDISPLAYEXTPROC getPlatformDisplay =
