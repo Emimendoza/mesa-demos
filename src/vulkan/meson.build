@@ -31,7 +31,7 @@ _gen = generator(
 
 spirv_shaders = _gen.process(glsl_shaders)
 
-sources = files('vkgears.c')
+sources = files('vkgears.c', 'wsi/wsi.c')
 
 args = []
 

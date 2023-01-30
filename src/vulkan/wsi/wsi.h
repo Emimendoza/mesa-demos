@@ -15,6 +15,9 @@ struct wsi_interface
 xcb_wsi_interface();
 #endif
 
+struct wsi_interface
+wsi_interface();
+
 enum wsi_key {
    WSI_KEY_UP,
    WSI_KEY_DOWN,

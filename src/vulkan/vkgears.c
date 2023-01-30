@@ -1382,15 +1382,7 @@ main(int argc, char *argv[])
 
    new_width = width, new_height = height;
 
-#if defined(WAYLAND_SUPPORT) && defined(XCB_SUPPORT)
-   wsi = getenv("WAYLAND_DISPLAY") ? wayland_wsi_interface() :
-                                     xcb_wsi_interface();
-#elif defined(WAYLAND_SUPPORT)
-   wsi = wayland_wsi_interface();
-#elif defined(X11_SUPPORT)
-   wsi = xcb_wsi_interface();
-#endif
-
+   wsi = wsi_interface();
    wsi.set_wsi_callbacks(wsi_callbacks);
 
    wsi.init_display();
