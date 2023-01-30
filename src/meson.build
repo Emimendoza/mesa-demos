@@ -28,7 +28,6 @@ if dep_glut.found()
   subdir('trivial')
   subdir('redbook')
   subdir('samples')
-  subdir('perf')
   subdir('objviewer')
 
   subdir('glsl')

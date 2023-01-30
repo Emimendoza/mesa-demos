@@ -120,7 +120,6 @@ Look in the **src/** directory for these sub-directories, among others:
 - **fp**: fragment program tests
 - **vp**: vertex program tests
 - **data**: data files used by the demos
-- **perf**: performance tests
 - **tests**: assorted test programs
 - **objviewer**: program to view .obj modes with a skybox
 - **vulkan**: Vulkan demos
