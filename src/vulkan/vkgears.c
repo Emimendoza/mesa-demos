@@ -12,7 +12,7 @@
 
 #include <vulkan/vulkan.h>
 
-#include "wsi.h"
+#include "wsi/wsi.h"
 
 #ifndef VK_API_VERSION_MAJOR
 /* retain compatibility with old vulkan headers */

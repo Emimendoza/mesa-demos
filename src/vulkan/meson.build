@@ -37,7 +37,7 @@ args = []
 
 if dep_wayland.found()
   args += ['-DWAYLAND_SUPPORT']
-  sources += files('wayland.c')
+  sources += files('wsi/wayland.c')
   sources += [
     custom_target(
       'wayland-xdg-shell-protocol.c',
@@ -56,7 +56,7 @@ endif
 
 if dep_xcb.found()
   args += ['-DXCB_SUPPORT']
-  sources += files('xcb.c')
+  sources += files('wsi/xcb.c')
 endif
 
 executable(
