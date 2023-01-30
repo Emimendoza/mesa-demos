@@ -123,6 +123,7 @@ Look in the **src/** directory for these sub-directories, among others:
 - **perf**: performance tests
 - **tests**: assorted test programs
 - **objviewer**: program to view .obj modes with a skybox
+- **vulkan**: Vulkan demos
 
 
 Getting Help
