@@ -114,7 +114,6 @@ Look in the **src/** directory for these sub-directories, among others:
 - **redbook**: the OpenGL Programming Guide demos
 - **samples**: original SGI OpenGL demos
 - **glsl**: OpenGL Shading Language demos
-- **gs**: Geometry shader demos
 - **xdemos**: GLX-based demos
 - **egl**: EGL-based demos
 - **wgl**: WGL-based demos

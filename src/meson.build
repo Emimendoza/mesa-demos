@@ -36,7 +36,6 @@ if dep_glut.found()
   subdir('fpglsl')
   subdir('vp')
   subdir('vpglsl')
-  subdir('gs')
   subdir('tools')
 endif
 
