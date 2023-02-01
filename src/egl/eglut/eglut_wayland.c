@@ -128,7 +128,7 @@ emit_keypress(struct display *d, xkb_keycode_t keycode)
 
    xkb_keysym_t sym = xkb_state_key_get_one_sym(d->seat.xkb_state, keycode);
    int special = lookup_keysym(sym);
-   if (special >= 0)
+   if (special >= 0 && win->special_cb)
       win->special_cb(special);
    else {
       uint32_t utf32 = xkb_keysym_to_utf32(sym);
