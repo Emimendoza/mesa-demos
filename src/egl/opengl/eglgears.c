@@ -242,6 +242,25 @@ reshape(int width, int height)
 }
    
 
+static void
+special(int special)
+{
+   switch (special) {
+      case EGLUT_KEY_LEFT:
+         view_roty += 5.0;
+         break;
+      case EGLUT_KEY_RIGHT:
+         view_roty -= 5.0;
+         break;
+      case EGLUT_KEY_UP:
+         view_rotx += 5.0;
+         break;
+      case EGLUT_KEY_DOWN:
+         view_rotx -= 5.0;
+         break;
+   }
+}
+
 
 static void
 init(void)
@@ -291,6 +310,7 @@ main(int argc, char *argv[])
    eglutIdleFunc(idle);
    eglutReshapeFunc(reshape);
    eglutDisplayFunc(draw);
+   eglutSpecialFunc(special);
 
    init();
    glDrawBuffer(GL_BACK);
