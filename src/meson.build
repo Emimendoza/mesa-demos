@@ -51,7 +51,7 @@ if dep_osmesa.found()
   subdir('osdemos')
 endif
 
-if get_option('vulkan').enabled()
+if dep_vulkan.found()
   subdir('vulkan')
 endif
 

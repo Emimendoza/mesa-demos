@@ -23,14 +23,6 @@ glsl_shaders = files(
 	'gear.vert',
 )
 
-_gen = generator(
-  prog_glslang,
-  output : '@PLAINNAME@.spv.h',
-  arguments : [ '@INPUT@', '-V', '-x', '-o', '@OUTPUT@' ]
-)
-
-spirv_shaders = _gen.process(glsl_shaders)
-
 sources = files('vkgears.c', 'wsi/wsi.c')
 
 args = []
@@ -59,9 +51,19 @@ if dep_xcb.found()
   sources += files('wsi/xcb.c')
 endif
 
-executable(
-  'vkgears', files('vkgears.c'), sources,
-  spirv_shaders,
-  dependencies: [dep_vulkan, dep_wayland, dep_xcb, idep_util],
-  c_args: args
-)
+if (dep_wayland.found() or dep_xcb.found()) and prog_glslang.found()
+  _gen = generator(
+    prog_glslang,
+    output : '@PLAINNAME@.spv.h',
+    arguments : [ '@INPUT@', '-V', '-x', '-o', '@OUTPUT@' ]
+  )
+
+  spirv_shaders = _gen.process(glsl_shaders)
+
+  executable(
+    'vkgears', files('vkgears.c'), sources,
+    spirv_shaders,
+    dependencies: [dep_vulkan, dep_wayland, dep_xcb, idep_util],
+    c_args: args
+  )
+endif

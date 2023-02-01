@@ -132,7 +132,7 @@ if dep_glut.found() and cc.has_function('glutInitContextProfile',
   add_project_arguments('-DHAVE_FREEGLUT', language : ['c', 'cpp'])
 endif
 
-if get_option('vulkan').enabled()
+if dep_vulkan.found()
   prog_glslang = find_program('glslangValidator')
 endif
 
