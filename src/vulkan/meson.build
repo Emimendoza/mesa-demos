@@ -64,6 +64,7 @@ if (dep_wayland.found() or dep_xcb.found()) and prog_glslang.found()
     'vkgears', files('vkgears.c'), sources,
     spirv_shaders,
     dependencies: [dep_vulkan, dep_wayland, dep_xcb, idep_util],
-    c_args: args
+    c_args: args,
+    install: true
   )
 endif
