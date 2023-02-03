@@ -35,27 +35,33 @@ x86_build:
     # No need to pull the whole repo to build the container image
     GIT_STRATEGY: none
     # /!\ Bump the TAG when modifying the DEBS
-    FDO_DISTRIBUTION_TAG: &x86_build "2023-01-30-vkgears"
+    FDO_DISTRIBUTION_TAG: &x86_build "2023-02-03-libdecor-1"
     FDO_DISTRIBUTION_PACKAGES: >-
       build-essential
       python3-pip
       pkg-config
       ninja-build
+      git
       glslang-tools
       mingw-w64
       mingw-w64-tools
       wine
 
       freeglut3-dev
+      libcairo2-dev
+      libdbus-1-dev
       libdrm-dev
       libegl-dev
       libgbm-dev
       libgl-dev
       libgles-dev
       libosmesa6-dev
+      libpango1.0-dev
+      libpangocairo-1.0-0
       libudev-dev
       libvulkan-dev
       libwayland-dev
+      libwayland-cursor0
       libx11-dev
       libxcb1-dev
       libxkbcommon-dev
