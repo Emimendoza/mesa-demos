@@ -100,6 +100,8 @@ build:
   variables:
     EXTRA_OPTION: >
       -Dauto_features=enabled
+      -Dlibdecor-0:gtk=disabled
+      -Dlibdecor-0:demo=false
 
 build-mingw:
   extends:

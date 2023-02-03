@@ -12,13 +12,12 @@
 #include <xkbcommon/xkbcommon.h>
 
 #include "eglutint.h"
-#include "wayland-xdg-shell-client-protocol.h"
+#include <libdecor.h>
 
 struct display {
    struct wl_display *display;
    struct wl_seat *wl_seat;
    struct wl_compositor *compositor;
-   struct xdg_wm_base *xdg_wm_base;
    uint32_t mask;
 
    struct {
@@ -36,24 +35,17 @@ struct display {
 
 struct window {
    struct wl_surface *surface;
-   struct xdg_surface *xdg_surface;
-   struct xdg_toplevel *xdg_toplevel;
+   struct libdecor *decor_context;
+   struct libdecor_frame *frame;
+   bool open;
    bool opaque;
    bool configured;
+   int floating_width;
+   int floating_height;
 };
 
 static struct display display = {0, };
 static struct window window = {0, };
-
-static void
-xdg_wm_base_ping(void *data, struct xdg_wm_base *xdg_wm_base, uint32_t serial)
-{
-   xdg_wm_base_pong(xdg_wm_base, serial);
-}
-
-static const struct xdg_wm_base_listener xdg_wm_base_listener = {
-   xdg_wm_base_ping
-};
 
 static void
 keymap_callback(void *data, struct wl_keyboard *wl_keyboard,
@@ -253,10 +245,6 @@ registry_handle_global(void *data, struct wl_registry *registry, uint32_t id,
    if (strcmp(interface, wl_compositor_interface.name) == 0) {
       d->compositor =
          wl_registry_bind(registry, id, &wl_compositor_interface, 1);
-   } else if (strcmp(interface, xdg_wm_base_interface.name) == 0) {
-      d->xdg_wm_base =
-         wl_registry_bind(registry, id, &xdg_wm_base_interface, 1);
-      xdg_wm_base_add_listener(d->xdg_wm_base, &xdg_wm_base_listener, d);
    } else if (strcmp(interface, wl_seat_interface.name) == 0) {
       d->wl_seat =
          wl_registry_bind(registry, id, &wl_seat_interface, 4);
@@ -322,9 +310,6 @@ _eglutNativeInitDisplay(void)
    wayland_roundtrip(_eglut->native_dpy);
    wl_registry_destroy(registry);
 
-   if (!display.xdg_wm_base)
-      _eglutFatal("xdg-shell not supported");
-
    _eglut->surface_type = EGL_WINDOW_BIT;
    _eglut->redisplay = 1;
 }
@@ -334,7 +319,6 @@ _eglutNativeFiniDisplay(void)
 {
    wl_seat_destroy(display.wl_seat);
    xkb_context_unref(display.seat.xkb_context);
-   xdg_wm_base_destroy(display.xdg_wm_base);
    wl_compositor_destroy(display.compositor);
    wl_display_flush(_eglut->native_dpy);
    wl_display_disconnect(_eglut->native_dpy);
@@ -342,29 +326,61 @@ _eglutNativeFiniDisplay(void)
 }
 
 static void
-xdg_toplevel_configure(void *data, struct xdg_toplevel *xdg_toplevel,
-                       int32_t width, int32_t height,
-                       struct wl_array *states)
+libdecor_error(struct libdecor *context,
+               enum libdecor_error error,
+               const char *message)
 {
-   struct eglut_window *win = data;
+   printf("EGLUT: libdecor error %d due to %s\n", error, message);
+}
 
-   if (width == 0 || height == 0) {
-      /* Client should decide its own window dimensions.
-       * Keep whatever we have. */
-      return;
+static struct libdecor_interface libdecor_interface = {
+   libdecor_error,
+};
+
+static void
+frame_configure(struct libdecor_frame *frame,
+                struct libdecor_configuration *configuration,
+                void *user_data)
+{
+   struct eglut_window *win = user_data;
+   struct libdecor_state *state;
+   int width, height;
+
+   if (!libdecor_configuration_get_content_size(configuration, frame,
+                                          &width, &height)) {
+      width = window.floating_width;
+      height = window.floating_height;
    }
 
-   wl_egl_window_resize(win->native.u.window, width, height, 0, 0);
    win->native.width = width;
    win->native.height = height;
+
+   wl_egl_window_resize(win->native.u.window,
+                        win->native.width,
+                        win->native.height,
+                        0,
+                        0);
+
    if (win->reshape_cb)
       win->reshape_cb(win->native.width, win->native.height);
+
+   state = libdecor_state_new(width, height);
+   libdecor_frame_commit(frame, state, configuration);
+   libdecor_state_free(state);
+
+   /* store floating dimensions */
+   if (libdecor_frame_is_floating(frame)) {
+      window.floating_width = width;
+      window.floating_height = height;
+   }
+
+   window.configured = true;
 }
 
 static void
-xdg_toplevel_close(void *data, struct xdg_toplevel *toplevel)
+frame_close(struct libdecor_frame *frame, void *user_data)
 {
-   struct eglut_window *win = data;
+   struct eglut_window *win = user_data;
    eglutDestroyWindow(win->index);
 
    // FIXME: eglut does not terminate when all windows are closed.
@@ -372,24 +388,23 @@ xdg_toplevel_close(void *data, struct xdg_toplevel *toplevel)
    // Since wl_display works fine with all windows closed, terminate ourselves.
    eglTerminate(_eglut->dpy);
    _eglutNativeFiniDisplay();
-}
 
-static const struct xdg_toplevel_listener xdg_toplevel_listener = {
-   xdg_toplevel_configure,
-   xdg_toplevel_close
-};
+   window.open = false;
+}
 
 static void
-xdg_surface_configure(void *data, struct xdg_surface *xdg_surface,
-                      uint32_t serial)
+frame_commit(struct libdecor_frame *frame, void *user_data)
 {
-   struct window *window = data;
-   xdg_surface_ack_configure(xdg_surface, serial);
-   window->configured = true;
+   struct eglut_window *window = user_data;
+
+   eglSwapBuffers(_eglut->dpy, window->surface);
 }
 
-static const struct xdg_surface_listener xdg_surface_listener = {
-   xdg_surface_configure
+
+static struct libdecor_frame_interface frame_interface = {
+   frame_configure,
+   frame_close,
+   frame_commit,
 };
 
 void
@@ -406,21 +421,23 @@ _eglutNativeInitWindow(struct eglut_window *win, const char *title,
       _eglutFatal("failed to get alpha size");
    window.opaque = !alpha_size;
 
-   window.xdg_surface =
-      xdg_wm_base_get_xdg_surface(display.xdg_wm_base, window.surface);
-   xdg_surface_add_listener(window.xdg_surface, &xdg_surface_listener, &window);
-
-   window.xdg_toplevel = xdg_surface_get_toplevel(window.xdg_surface);
-   xdg_toplevel_add_listener(window.xdg_toplevel, &xdg_toplevel_listener, win);
-   xdg_toplevel_set_title(window.xdg_toplevel, title);
-   xdg_toplevel_set_app_id(window.xdg_toplevel, title);
-   wl_surface_commit(window.surface);
-
    native = wl_egl_window_create(window.surface, w, h);
 
    win->native.u.window = native;
    win->native.width = w;
    win->native.height = h;
+
+   window.decor_context = libdecor_new(display.display,
+                                       &libdecor_interface);
+   window.frame = libdecor_decorate(window.decor_context,
+                                    window.surface,
+                                    &frame_interface,
+                                    win);
+   window.floating_width = w;
+   window.floating_height = h;
+   libdecor_frame_set_app_id(window.frame, title);
+   libdecor_frame_set_title(window.frame, title);
+   libdecor_frame_map(window.frame);
 }
 
 void
@@ -428,8 +445,8 @@ _eglutNativeFiniWindow(struct eglut_window *win)
 {
    wl_egl_window_destroy(win->native.u.window);
 
-   xdg_toplevel_destroy(window.xdg_toplevel);
-   xdg_surface_destroy(window.xdg_surface);
+   if (window.decor_context)
+      libdecor_unref(window.decor_context);
 }
 
 static void
@@ -461,12 +478,18 @@ _eglutNativeEventLoop(void)
 {
    int ret;
 
-   while (!window.configured)
-      wl_display_dispatch(display.display);
+   while (!window.configured) {
+      if (libdecor_dispatch(window.decor_context, 0) < 0)
+         return;
+   }
 
    struct pollfd pollfds[] = {
       {
          .fd = wl_display_get_fd(display.display),
+         .events = POLLIN,
+      },
+      {
+         .fd = libdecor_get_fd(window.decor_context),
          .events = POLLIN,
       }, {
          .fd = display.seat.key_repeat_fd,
@@ -497,7 +520,8 @@ _eglutNativeEventLoop(void)
       else
          pollfds[0].events &= ~POLLOUT; /* successfully flushed */
 
-      if (poll(pollfds, display.seat.rate > 0 ? 2 : 1, -1) == -1)
+      unsigned poll_count = 2 + (display.seat.rate > 0);
+      if (poll(pollfds, poll_count, -1) == -1)
          break;
 
       if ((pollfds[0].revents | pollfds[1].revents) &
@@ -525,6 +549,13 @@ _eglutNativeEventLoop(void)
          pollfds[0].events &= ~POLLOUT; /* successfully flushed */
 
       if (pollfds[1].revents & POLLIN) {
+         if (window.open && libdecor_dispatch(window.decor_context, 0) < 0) {
+            ret = 1;
+            break;
+         }
+      }
+
+      if (pollfds[2].revents & POLLIN) {
          uint64_t repeats;
          if (read(display.seat.key_repeat_fd, &repeats, sizeof(repeats)) == 8) {
             for (uint64_t i = 0; i < repeats; i++)

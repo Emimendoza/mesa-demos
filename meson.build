@@ -76,6 +76,7 @@ if dep_wayland.found()
     dep_wl_protocols.get_variable(pkgconfig : 'pkgdatadir'), 'stable',
     'xdg-shell', 'xdg-shell.xml'
   )
+  dep_libdecor = dependency('libdecor-0', version : '>= 0.1')
 endif
 
 dep_threads = dependency('threads')
