@@ -26,24 +26,12 @@ glsl_shaders = files(
 sources = files('vkgears.c', 'wsi/wsi.c')
 
 args = []
+wsi_deps = []
 
 if dep_wayland.found()
   args += ['-DWAYLAND_SUPPORT']
   sources += files('wsi/wayland.c')
-  sources += [
-    custom_target(
-      'wayland-xdg-shell-protocol.c',
-      input : wayland_xdg_shell_xml,
-      output : 'wayland-xdg-shell-protocol.c',
-      command : [prog_wl_scanner, wl_scanner_arg, '@INPUT@', '@OUTPUT@'],
-    ),
-    custom_target(
-      'wayland-xdg-shell-client-protocol.h',
-      input : wayland_xdg_shell_xml,
-      output : 'wayland-xdg-shell-client-protocol.h',
-      command : [prog_wl_scanner, 'client-header', '@INPUT@', '@OUTPUT@'],
-    )
-  ]
+  wsi_deps += dep_libdecor
 endif
 
 if dep_xcb.found()
@@ -63,7 +51,7 @@ if (dep_wayland.found() or dep_xcb.found()) and prog_glslang.found()
   executable(
     'vkgears', files('vkgears.c'), sources,
     spirv_shaders,
-    dependencies: [dep_vulkan, dep_wayland, dep_xcb, idep_util],
+    dependencies: [dep_vulkan, dep_wayland, dep_xcb, idep_util, wsi_deps],
     c_args: args,
     install: true
   )

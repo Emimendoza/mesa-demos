@@ -38,8 +38,9 @@
 #include <sys/timerfd.h>
 #include <unistd.h>
 
-#include "wayland-xdg-shell-client-protocol.h"
 #include <wayland-util.h>
+
+#include <libdecor.h>
 
 #include <vulkan/vulkan.h>
 #include <vulkan/vulkan_wayland.h>
@@ -63,22 +64,14 @@ static struct {
    xkb_keycode_t repeat_scancode;
 } keyboard_data;
 static struct wl_compositor *compositor;
-static struct xdg_wm_base *xdg_wm_base;
+static struct libdecor *decor_context;
+static struct libdecor_frame *frame;
 
 struct wl_surface *surface;
-struct xdg_surface *xdg_surface;
-struct xdg_toplevel *xdg_toplevel;
+bool window_open;
 bool configured;
-
-static void
-xdg_wm_base_ping(void *data, struct xdg_wm_base *xdg_wm_base, uint32_t serial)
-{
-   xdg_wm_base_pong(xdg_wm_base, serial);
-}
-
-static const struct xdg_wm_base_listener xdg_wm_base_listener = {
-   xdg_wm_base_ping
-};
+int floating_width;
+int floating_height;
 
 static void
 registry_handle_global(void *data, struct wl_registry *registry, uint32_t id,
@@ -91,11 +84,6 @@ registry_handle_global(void *data, struct wl_registry *registry, uint32_t id,
    } else if (strcmp(interface, wl_seat_interface.name) == 0) {
       keyboard_data.seat =
          wl_registry_bind(registry, id, &wl_seat_interface, 4);
-   } else if (strcmp(interface, xdg_wm_base_interface.name) == 0) {
-      assert(!xdg_wm_base);
-      xdg_wm_base =
-         wl_registry_bind(registry, id, &xdg_wm_base_interface, 1);
-      xdg_wm_base_add_listener(xdg_wm_base, &xdg_wm_base_listener, NULL);
    }
 }
 
@@ -255,11 +243,6 @@ static void init_display()
       abort();
    }
 
-   if (!xdg_wm_base) {
-      fprintf(stderr, "xdg-shell not supported");
-      abort();
-   }
-
    keyboard_data.xkb_context = xkb_context_new(XKB_CONTEXT_NO_FLAGS);
 }
 
@@ -267,74 +250,104 @@ void fini_display()
 {
    wl_seat_destroy(keyboard_data.seat);
    xkb_context_unref(keyboard_data.xkb_context);
-   xdg_wm_base_destroy(xdg_wm_base);
    wl_compositor_destroy(compositor);
    wl_display_flush(display);
    wl_display_disconnect(display);
 }
 
 static void
-xdg_surface_configure(void *data, struct xdg_surface *xdg_surface,
-                      uint32_t serial)
+libdecor_error(struct libdecor *context,
+               enum libdecor_error error,
+               const char *message)
 {
-   xdg_surface_ack_configure(xdg_surface, serial);
-   configured = true;
+   printf("EGLUT: libdecor error %d due to %s\n", error, message);
 }
 
-static const struct xdg_surface_listener xdg_surface_listener = {
-   xdg_surface_configure
+static struct libdecor_interface libdecor_interface = {
+   libdecor_error,
 };
 
 static void
-xdg_toplevel_configure(void *data, struct xdg_toplevel *xdg_toplevel,
-                       int32_t width, int32_t height,
-                       struct wl_array *states)
+frame_configure(struct libdecor_frame *frame,
+                struct libdecor_configuration *configuration,
+                void *user_data)
 {
-   if (width <= 0 || height <= 0) {
-      return;
+   struct libdecor_state *state;
+   int width, height;
+
+   if (!libdecor_configuration_get_content_size(configuration, frame,
+                                          &width, &height)) {
+      width = floating_width;
+      height = floating_height;
    }
 
    wsi_callbacks.resize(width, height);
-   xdg_surface_set_window_geometry(xdg_surface, 0, 0, width, height);
-   wl_surface_commit(surface);
+
+   state = libdecor_state_new(width, height);
+   libdecor_frame_commit(frame, state, configuration);
+   libdecor_state_free(state);
+
+   /* store floating dimensions */
+   if (libdecor_frame_is_floating(frame)) {
+      floating_width = width;
+      floating_height = height;
+   }
+
+   configured = true;
 }
 
 static void
-xdg_toplevel_close(void *data, struct xdg_toplevel *toplevel)
+frame_close(struct libdecor_frame *frame, void *user_data)
 {
    wsi_callbacks.exit();
+   window_open = false;
 }
 
-static const struct xdg_toplevel_listener xdg_toplevel_listener = {
-   xdg_toplevel_configure,
-   xdg_toplevel_close
+static void
+frame_commit(struct libdecor_frame *frame, void *user_data)
+{
+}
+
+static struct libdecor_frame_interface frame_interface = {
+   frame_configure,
+   frame_close,
+   frame_commit,
 };
 
 static void init_window(const char *title, int width, int height, bool fullscreen)
 {
-   assert(xdg_wm_base && compositor);
+   assert(compositor);
 
    surface = wl_compositor_create_surface(compositor);
-   xdg_surface =
-      xdg_wm_base_get_xdg_surface(xdg_wm_base, surface);
-   xdg_surface_add_listener(xdg_surface, &xdg_surface_listener, NULL);
 
-   xdg_toplevel = xdg_surface_get_toplevel(xdg_surface);
-   xdg_toplevel_add_listener(xdg_toplevel, &xdg_toplevel_listener, NULL);
-   xdg_toplevel_set_title(xdg_toplevel, title);
-   xdg_toplevel_set_app_id(xdg_toplevel, title);
-   if (fullscreen)
-      xdg_toplevel_set_fullscreen(xdg_toplevel, NULL);
+   decor_context = libdecor_new(display,
+                                &libdecor_interface);
+   frame = libdecor_decorate(decor_context,
+                             surface,
+                             &frame_interface,
+                             NULL);
+   floating_width = width;
+   floating_height = height;
+   libdecor_frame_set_app_id(frame, title);
+   libdecor_frame_set_title(frame, title);
+   libdecor_frame_map(frame);
+
    wl_surface_commit(surface);
 
-   while (!configured)
-      wl_display_dispatch(display);
+   while (!configured) {
+      if (libdecor_dispatch(decor_context, 0) < 0) {
+         printf("error: unable to initialize libdecor\n");
+      }
+   }
+
+   if (fullscreen)
+      libdecor_frame_set_fullscreen(frame, NULL);
 }
 
 static void fini_window()
 {
-   xdg_toplevel_destroy(xdg_toplevel);
-   xdg_surface_destroy(xdg_surface);
+   if (decor_context)
+      libdecor_unref(decor_context);
 }
 
 
@@ -346,6 +359,10 @@ static bool update_window()
       {
          .fd = wl_display_get_fd(display),
          .events = POLLIN
+      },
+      {
+         .fd = libdecor_get_fd(decor_context),
+         .events = POLLIN,
       },
       {
          .fd = keyboard_data.keyboard_timer_fd,
@@ -367,7 +384,8 @@ static bool update_window()
       else
          pollfds[0].events &= ~POLLOUT; /* successfully flushed */
 
-      if (poll(pollfds, keyboard_data.rate > 0 ? 2 : 1, 0.0) == -1)
+      unsigned poll_count = 2 + (keyboard_data.rate > 0);
+      if (poll(pollfds, poll_count, 0.0) == -1)
          break;
 
       if (pollfds[0].revents & (POLLERR | POLLHUP | POLLNVAL))
@@ -394,6 +412,13 @@ static bool update_window()
          pollfds[0].events &= ~POLLOUT; /* successfully flushed */
 
       if (pollfds[1].revents & POLLIN) {
+         if (window_open && libdecor_dispatch(decor_context, 0) < 0) {
+            ret = 1;
+            break;
+         }
+      }
+
+      if (pollfds[2].revents & POLLIN) {
          uint64_t repeats;
          if(read(keyboard_data.keyboard_timer_fd, &repeats, sizeof(repeats)) == 8) {
             for(uint64_t i = 0; i < repeats; i++) {
