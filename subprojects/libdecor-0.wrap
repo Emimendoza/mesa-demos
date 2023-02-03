@@ -1,0 +1,7 @@
+[wrap-git]
+url = https://gitlab.freedesktop.org/libdecor/libdecor.git
+revision = master
+depth = 1
+
+[provide]
+libdecor-0 = libdecor_dep
