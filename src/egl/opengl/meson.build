@@ -22,33 +22,40 @@ _deps = [dep_gl, dep_m, idep_util]
 
 executable(
   'eglgears_x11', files('eglgears.c'),
-  dependencies: [_deps, dep_glu, idep_eglut_x11]
+  dependencies: [_deps, dep_glu, idep_eglut_x11],
+  install: true
 )
 executable(
   'egltri_x11', files('egltri.c'),
-  dependencies: [_deps, dep_glu, idep_eglut_x11]
+  dependencies: [_deps, dep_glu, idep_eglut_x11],
+  install: true
 )
 executable(
   'xeglgears', files('xeglgears.c'),
-  dependencies: [_deps, dep_glu, dep_egl, dep_x11]
+  dependencies: [_deps, dep_glu, dep_egl, dep_x11],
+  install: true
 )
 executable(
   'xeglthreads', files('xeglthreads.c'),
-  dependencies: [_deps, dep_x11]
+  dependencies: [_deps, dep_x11],
+  install: true
 )
 
 executable(
   'eglgears_wayland', files('eglgears.c'),
-  dependencies: [_deps, dep_glu, idep_eglut_wayland]
+  dependencies: [_deps, dep_glu, idep_eglut_wayland],
+  install: true
 )
 executable(
   'egltri_wayland', files('egltri.c'),
-  dependencies: [_deps, dep_glu, idep_eglut_wayland]
+  dependencies: [_deps, dep_glu, idep_eglut_wayland],
+  install: true
 )
 
 executable(
   'eglkms', 'eglkms.c',
-  dependencies: [_deps, dep_drm, dep_gbm, dep_egl]
+  dependencies: [_deps, dep_drm, dep_gbm, dep_egl],
+  install: true
 )
 
 executable(
@@ -60,6 +67,7 @@ executable(
 
 executable(
   'peglgears', 'peglgears.c',
-  dependencies: [dep_gl, dep_glu, dep_egl, dep_m, idep_util]
+  dependencies: [dep_gl, dep_glu, dep_egl, dep_m, idep_util],
+  install: true
 )
 
