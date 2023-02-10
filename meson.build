@@ -78,6 +78,8 @@ if dep_wayland.found()
     'xdg-shell', 'xdg-shell.xml'
   )
   dep_libdecor = dependency('libdecor-0', version : '>= 0.1')
+else
+  dep_libdecor = dependency('', required : false)
 endif
 
 dep_threads = dependency('threads')
