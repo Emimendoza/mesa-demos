@@ -40,6 +40,7 @@ dep_winmm = cc.find_library('winmm', required : false)
 
 dep_gl = dependency('gl')
 
+dep_epoll = dependency('epoll-shim', required : false)
 dep_gles1 = dependency('glesv1_cm', required : get_option('gles1'))
 dep_gles2 = dependency('glesv2', required : get_option('gles2'))
 dep_osmesa = dependency('osmesa', required : get_option('osmesa'))

@@ -31,7 +31,7 @@ wsi_deps = []
 if dep_wayland.found()
   args += ['-DWAYLAND_SUPPORT']
   sources += files('wsi/wayland.c')
-  wsi_deps += dep_libdecor
+  wsi_deps += [dep_epoll, dep_libdecor]
 endif
 
 if dep_xcb.found()

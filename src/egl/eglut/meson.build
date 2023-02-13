@@ -33,7 +33,7 @@ _wayland_sources = files('eglut.c', 'eglut_wayland.c')
 
 _libeglut_wayland = static_library(
   'eglut_wayland', _wayland_sources,
-  dependencies: [dep_wayland, dep_egl, dep_libdecor]
+  dependencies: [dep_wayland, dep_egl, dep_epoll, dep_libdecor]
 )
 
 idep_eglut_wayland = declare_dependency(
