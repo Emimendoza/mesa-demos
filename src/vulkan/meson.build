@@ -31,12 +31,13 @@ wsi_deps = []
 if dep_wayland.found()
   args += ['-DWAYLAND_SUPPORT']
   sources += files('wsi/wayland.c')
-  wsi_deps += [dep_epoll, dep_libdecor]
+  wsi_deps += [dep_wayland, dep_epoll, dep_libdecor]
 endif
 
 if dep_xcb.found()
   args += ['-DXCB_SUPPORT']
   sources += files('wsi/xcb.c')
+  wsi_deps += dep_xcb
 endif
 
 if (dep_wayland.found() or dep_xcb.found()) and prog_glslang.found()
@@ -51,7 +52,7 @@ if (dep_wayland.found() or dep_xcb.found()) and prog_glslang.found()
   executable(
     'vkgears', files('vkgears.c'), sources,
     spirv_shaders,
-    dependencies: [dep_vulkan, dep_wayland, dep_xcb, idep_util, wsi_deps],
+    dependencies: [dep_vulkan, idep_util, wsi_deps],
     c_args: args,
     install: true
   )
