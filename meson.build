@@ -146,7 +146,7 @@ if host_machine.system() == 'darwin'
   add_project_arguments('-DGL_SILENCE_DEPRECATION', language: 'c')
 endif
 
-if cc.get_id() == 'msvc'
+if cc.get_argument_syntax() == 'msvc'
   c_args = [ '-D_CRT_SECURE_NO_WARNINGS' ]
   c_args += cc.get_supported_arguments([
     '/wd4100', # 'var': unreferenced formal parameter
