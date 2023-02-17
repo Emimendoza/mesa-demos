@@ -264,7 +264,7 @@ libdecor_error(struct libdecor *context,
 }
 
 static struct libdecor_interface libdecor_interface = {
-   libdecor_error,
+   .error = libdecor_error,
 };
 
 static void
@@ -309,9 +309,9 @@ frame_commit(struct libdecor_frame *frame, void *user_data)
 }
 
 static struct libdecor_frame_interface frame_interface = {
-   frame_configure,
-   frame_close,
-   frame_commit,
+   .configure = frame_configure,
+   .close = frame_close,
+   .commit = frame_commit,
 };
 
 static void init_window(const char *title, int width, int height, bool fullscreen)
