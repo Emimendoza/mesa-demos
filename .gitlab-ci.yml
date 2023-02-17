@@ -90,7 +90,7 @@ x86_build:
       --prefix $PWD/install
       --buildtype debug
       ${EXTRA_OPTION}
-    - ninja -C _build -j4
+    - ninja -C _build -j${FDO_CI_CONCURRENT:-4}
     - ninja -C _build install
 
 build:
