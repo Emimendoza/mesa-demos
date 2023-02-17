@@ -246,7 +246,8 @@ static void init_display()
    keyboard_data.xkb_context = xkb_context_new(XKB_CONTEXT_NO_FLAGS);
 }
 
-void fini_display()
+static void
+fini_display()
 {
    wl_seat_destroy(keyboard_data.seat);
    xkb_context_unref(keyboard_data.xkb_context);
