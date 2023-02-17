@@ -1148,12 +1148,6 @@ float angle = 0.0;
 
 #define G2L(x) ((x) < 0.04045 ? (x) / 12.92 : powf(((x) + 0.055) / 1.055, 2.4))
 
-const float material_colors[3][3] = {
-   { G2L(0.8), G2L(0.1), G2L(0.0) },
-   { G2L(0.0), G2L(0.8), G2L(0.2) },
-   { G2L(0.2), G2L(0.2), G2L(1.0) },
-};
-
 static void
 draw_gears(VkCommandBuffer cmdbuf, const float view[16])
 {
@@ -1201,6 +1195,12 @@ draw_gears(VkCommandBuffer cmdbuf, const float view[16])
       angle,
       -2.0 * angle - 9.0,
       -2.0 * angle - 25.0,
+   };
+
+   const float material_colors[3][3] = {
+      { G2L(0.8), G2L(0.1), G2L(0.0) },
+      { G2L(0.0), G2L(0.8), G2L(0.2) },
+      { G2L(0.2), G2L(0.2), G2L(1.0) },
    };
 
    for (int i = 0; i < 3; ++i) {
