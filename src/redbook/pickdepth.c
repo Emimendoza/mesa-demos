@@ -112,9 +112,9 @@ processHits(GLint hits, GLuint buffer[])
     names = *ptr;
     printf(" number of names for hit = %d\n", names);
     ptr++;
-    printf("  z1 is %g;", (float) *ptr/0xffffffff);
+    printf("  z1 is %g;", (float) *ptr / (float) 0xffffffff);
     ptr++;
-    printf(" z2 is %g\n", (float) *ptr/0xffffffff);
+    printf(" z2 is %g\n", (float) *ptr / (float) 0xffffffff);
     ptr++;
     printf("   the name is ");
     for (j = 0; j < names; j++) {  /* for each name */

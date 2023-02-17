@@ -144,7 +144,7 @@ static float beta = 90.0;
 static float
 vrnd(void)
 {
-   return (((float) rand()) / RAND_MAX);
+   return ((float) rand() / (float) RAND_MAX);
 }
 
 static void
