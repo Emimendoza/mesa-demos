@@ -35,9 +35,10 @@ x86_build:
     # No need to pull the whole repo to build the container image
     GIT_STRATEGY: none
     # /!\ Bump the TAG when modifying the DEBS
-    FDO_DISTRIBUTION_TAG: &x86_build "2023-02-03-libdecor-1"
+    FDO_DISTRIBUTION_TAG: &x86_build "2023-02-17-clang"
     FDO_DISTRIBUTION_PACKAGES: >-
       build-essential
+      clang
       python3-pip
       pkg-config
       ninja-build
@@ -93,7 +94,7 @@ x86_build:
     - ninja -C _build -j${FDO_CI_CONCURRENT:-4}
     - ninja -C _build install
 
-build:
+.build-linux:
   extends:
     - .use-x86_build
     - .build
@@ -102,6 +103,17 @@ build:
       -Dauto_features=enabled
       -Dlibdecor-0:gtk=disabled
       -Dlibdecor-0:demo=false
+
+build-gcc:
+  extends:
+    - .build-linux
+
+build-clang:
+  extends:
+    - .build-linux
+  variables:
+    CC: clang
+    CXX: clang++
 
 build-mingw:
   extends:
