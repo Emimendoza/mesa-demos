@@ -146,15 +146,36 @@ if host_machine.system() == 'darwin'
   add_project_arguments('-DGL_SILENCE_DEPRECATION', language: 'c')
 endif
 
+c_args = []
 if cc.get_argument_syntax() == 'msvc'
-  c_args = [ '-D_CRT_SECURE_NO_WARNINGS' ]
+  c_args += '-D_CRT_SECURE_NO_WARNINGS'
   c_args += cc.get_supported_arguments([
     '/wd4100', # 'var': unreferenced formal parameter
     '/wd4244', # conversion from 'type1' to 'type2', possible loss of data
     '/wd4305', # trancation from 'type1' to 'type2'
     '/wd4459', # declaration of 'var' hides global declaration
   ])
-  add_project_arguments(c_args, language: 'c')
+else
+  c_args += cc.get_supported_arguments([
+    '-Werror=implicit-function-declaration',
+    '-Werror=missing-prototypes',
+    '-Werror=return-type',
+    '-Werror=empty-body',
+    '-Werror=incompatible-pointer-types',
+    '-Werror=int-conversion',
+    '-Wimplicit-fallthrough=3',
+    '-Wmisleading-indentation',
+    '-Wno-missing-field-initializers',
+    '-Wno-format-truncation',
+    '-fno-math-errno',
+    '-fno-trapping-math',
+    '-Qunused-arguments',
+    # Clang
+    '-Wno-microsoft-enum-value',
+    '-Wno-unused-function',
+  ])
 endif
+
+add_project_arguments(c_args, language: 'c')
 
 subdir('src')
