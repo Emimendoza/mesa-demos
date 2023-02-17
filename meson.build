@@ -67,6 +67,7 @@ if dep_vulkan.found()
   )
 endif
 
+dep_libdecor = null_dep
 if dep_wayland.found()
   dep_wl_scanner = dependency('wayland-scanner', native: true)
   prog_wl_scanner = find_program(dep_wl_scanner.get_variable(pkgconfig : 'wayland_scanner'))
@@ -81,8 +82,6 @@ if dep_wayland.found()
     'xdg-shell', 'xdg-shell.xml'
   )
   dep_libdecor = dependency('libdecor-0', version : '>= 0.1')
-else
-  dep_libdecor = dependency('', required : false)
 endif
 
 dep_threads = dependency('threads')
