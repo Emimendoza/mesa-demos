@@ -326,7 +326,7 @@ draw_gear(struct gear *gear, GLfloat *transform,
    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE,
          6 * sizeof(GLfloat), NULL);
    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE,
-         6 * sizeof(GLfloat), (GLfloat *) 0 + 3);
+         6 * sizeof(GLfloat), (GLfloat *) (sizeof(GLfloat) * 3));
 
    /* Enable the attributes */
    glEnableVertexAttribArray(0);
