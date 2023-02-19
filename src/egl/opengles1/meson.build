@@ -56,8 +56,10 @@ foreach p : progs_x11
     ])
 endforeach
 
+if host_machine.system() == 'linux'
 executable(
   'eglfbdev', files('eglfbdev.c'),
   dependencies: [
      dep_gles1, dep_egl
   ])
+endif
