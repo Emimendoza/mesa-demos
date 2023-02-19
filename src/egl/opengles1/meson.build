@@ -39,7 +39,7 @@ executable(
   'clear', files('clear.c'),
   dependencies: [
       # intentionally not link to dep_gles1
-      dep_m, idep_glad, idep_util, idep_eglut_x11
+      dep_egl, dep_m, idep_glad, idep_util, idep_eglut_x11
   ])
 
 progs_x11 = [
