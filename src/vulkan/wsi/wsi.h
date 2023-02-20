@@ -25,7 +25,7 @@
 
 #include <stdbool.h>
 
-#include<vulkan/vulkan.h>
+#include <vulkan/vulkan.h>
 
 #ifdef WAYLAND_SUPPORT
 struct wsi_interface
