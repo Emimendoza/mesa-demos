@@ -237,6 +237,7 @@ event_loop(Display *dpy, Window win)
                keypress(dpy, win, buffer[0]);
             }
          }
+         break;
       default:
          /* nothing */
          ;
