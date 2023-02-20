@@ -25,7 +25,7 @@
 #include <stdlib.h>
 
 struct wsi_interface
-wsi_interface()
+get_wsi_interface(void)
 {
 #if defined(WAYLAND_SUPPORT) && defined(XCB_SUPPORT)
    return getenv("WAYLAND_DISPLAY") ? wayland_wsi_interface() :

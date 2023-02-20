@@ -1404,7 +1404,7 @@ main(int argc, char *argv[])
 
    new_width = width, new_height = height;
 
-   wsi = wsi_interface();
+   wsi = get_wsi_interface();
    wsi.set_wsi_callbacks(wsi_callbacks);
 
    wsi.init_display();

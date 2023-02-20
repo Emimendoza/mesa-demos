@@ -475,7 +475,7 @@ create_surface(VkPhysicalDevice physical_device, VkInstance instance,
 }
 
 struct wsi_interface
-wayland_wsi_interface() {
+wayland_wsi_interface(void) {
    return (struct wsi_interface) {
       .required_extension_name = VK_KHR_WAYLAND_SURFACE_EXTENSION_NAME,
 

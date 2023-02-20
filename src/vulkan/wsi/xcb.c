@@ -272,7 +272,7 @@ create_surface(VkPhysicalDevice physical_device, VkInstance instance,
 }
 
 struct wsi_interface
-xcb_wsi_interface() {
+xcb_wsi_interface(void) {
    return (struct wsi_interface) {
       .required_extension_name = VK_KHR_XCB_SURFACE_EXTENSION_NAME,
 

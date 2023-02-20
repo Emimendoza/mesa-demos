@@ -29,16 +29,16 @@
 
 #ifdef WAYLAND_SUPPORT
 struct wsi_interface
-wayland_wsi_interface();
+wayland_wsi_interface(void);
 #endif
 
 #ifdef XCB_SUPPORT
 struct wsi_interface
-xcb_wsi_interface();
+xcb_wsi_interface(void);
 #endif
 
 struct wsi_interface
-wsi_interface();
+get_wsi_interface(void);
 
 enum wsi_key {
    WSI_KEY_UP,
