@@ -32,7 +32,7 @@ get_wsi_interface(void)
                                       xcb_wsi_interface();
 #elif defined(WAYLAND_SUPPORT)
    return wayland_wsi_interface();
-#elif defined(X11_SUPPORT)
+#elif defined(XCB_SUPPORT)
    return xcb_wsi_interface();
 #endif
 }
