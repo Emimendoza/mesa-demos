@@ -202,42 +202,6 @@ PrintConfigs(EGLDisplay d)
 
 
 static const char *
-PrintExtensions(const char *extensions)
-{
-   const char *p, *end, *next;
-   int column;
-
-   column = 0;
-   end = extensions + strlen(extensions);
-
-   for (p = extensions; p < end; p = next + 1) {
-      next = strchr(p, ' ');
-      if (next == NULL)
-         next = end;
-
-      if (column > 0 && column + next - p + 1 > MAX_COLUMN) {
-         printf("\n");
-         column = 0;
-      }
-      if (column == 0)
-         printf("    ");
-      else
-         printf(" ");
-      column += next - p + 1;
-
-      printf("%.*s", (int) (next - p), p);
-
-      p = next + 1;
-   }
-
-   if (column > 0)
-      printf("\n");
-
-   return extensions;
-}
-
-
-static const char *
 PrintDisplayExtensions(EGLDisplay d)
 {
    const char *extensions;
@@ -258,7 +222,8 @@ PrintDisplayExtensions(EGLDisplay d)
    puts(d == EGL_NO_DISPLAY ? "EGL client extensions string:" :
                               "EGL extensions string:");
 
-   return PrintExtensions(extensions);
+   print_extension_list(extensions, 0);
+   return extensions;
 }
 
 
@@ -276,7 +241,8 @@ PrintDeviceExtensions(EGLDeviceEXT d)
    if (!extensions)
       return NULL;
 
-   return PrintExtensions(extensions);
+   print_extension_list(extensions, 0);
+   return extensions;
 }
 
 
@@ -286,36 +252,21 @@ PrintDeviceExtensions(EGLDeviceEXT d)
 static EGLBoolean
 PrintContextExtensions(const char *api_name)
 {
-   if (!glGetStringi)
-      return 0;
-
-   int num_extensions;
-   glGetIntegerv(GL_NUM_EXTENSIONS, &num_extensions);
-
    printf("%s extensions:\n", api_name);
 
-   unsigned column = 0;
+   const char *extensions;
 
-   for (int i = 0; i < num_extensions; i++) {
-      const char *extension = (const char *) glGetStringi(GL_EXTENSIONS, i);
-      unsigned extension_len = strlen(extension);
-      if (column > 0 && column + extension_len > MAX_COLUMN) {
-         printf("\n");
-         column = 0;
-      }
+   if (glGetStringi) {
+      struct ext_functions funcs = {
+         .GetStringi = glGetStringi,
+      };
 
-      if (column == 0)
-         printf("    ");
-      else
-         printf(" ");
-
-      printf("%s", extension);
-
-      column += extension_len;
+      extensions = build_core_profile_extension_list(&funcs);
+   } else {
+      extensions = (const char*) glGetString(GL_EXTENSIONS);
    }
 
-   if (column > 0)
-      printf("\n");
+   print_extension_list(extensions, 0);
 
    return 1;
 }
