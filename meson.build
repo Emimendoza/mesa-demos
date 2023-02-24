@@ -148,6 +148,11 @@ if host_machine.system() == 'darwin'
   add_project_arguments('-DGL_SILENCE_DEPRECATION', language: 'c')
 endif
 
+if cc.has_function('sincos', prefix: '#define _GNU_SOURCE\n#include <math.h>',
+                   dependencies: dep_m)
+  add_project_arguments('-DHAVE_SINCOS', language: 'c')
+endif
+
 c_args = []
 if cc.get_argument_syntax() == 'msvc'
   c_args += '-D_CRT_SECURE_NO_WARNINGS'

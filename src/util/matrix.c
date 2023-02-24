@@ -37,8 +37,12 @@ void
 mat4_rotate(float *m, float angle, float x, float y, float z)
 {
    double s, c;
-
+#if HAVE_SINCOS
    sincos(angle, &s, &c);
+#else
+   s = sin(angle);
+   c = cos(angle);
+#endif
    float r[16] = {
       x * x * (1 - c) + c,     y * x * (1 - c) + z * s, x * z * (1 - c) - y * s, 0,
       x * y * (1 - c) - z * s, y * y * (1 - c) + c,     y * z * (1 - c) + x * s, 0,
