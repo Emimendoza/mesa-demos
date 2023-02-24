@@ -98,6 +98,15 @@ if not dep_glu.found() and host_machine.system() != 'darwin'
     required : dep_x11.found())
 endif
 
+dep_glx = dependency('glx', required: false, disabler : true)
+if not dep_glx.found() and host_machine.system() == 'darwin'
+  # xquartz doesn't have a glx.pc, but it does have the header. And all the
+  # symbols reside in libGL, so let's just use that.
+  if cc.check_header('GL/glx.h', dependencies: dep_x11)
+    dep_glx = dep_gl
+  endif
+endif
+
 # GBM is needed for EGL on KMS
 dep_gbm = dependency('gbm', required : false, disabler : true)
 

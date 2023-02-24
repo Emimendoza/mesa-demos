@@ -18,7 +18,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-glx_deps = [dep_gl, dep_x11, dep_m]
+glx_deps = [dep_gl, dep_glx, dep_x11, dep_m]
 
 progs = [
   'glsync',

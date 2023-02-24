@@ -151,6 +151,6 @@ x11_progs = [
 foreach p : x11_progs
   executable(
     p, files(p + '.c'),
-    dependencies: [deps, dep_x11]
+    dependencies: [deps, dep_x11, dep_glx]
   )
 endforeach
