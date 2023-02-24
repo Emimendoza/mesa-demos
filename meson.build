@@ -87,7 +87,8 @@ endif
 dep_threads = dependency('threads')
 
 dep_glu = dependency('glu', required : false)
-if not dep_glu.found()
+# GLU is part of OpenGL.Framework
+if not dep_glu.found() and host_machine.system() != 'darwin'
   _glu_name = 'GLU'
   if host_machine.system() == 'windows'
     _glu_name = 'glu32'
