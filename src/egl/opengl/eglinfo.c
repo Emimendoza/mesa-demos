@@ -247,10 +247,7 @@ PrintDeviceExtensions(EGLDeviceEXT d, EGLBoolean single_line)
 }
 
 
-/* Note that this function has a different return type than the other Print*
- * functions.
- */
-static EGLBoolean
+static const char*
 PrintContextExtensions(const char *api_name, EGLBoolean single_line)
 {
    printf("%s extensions:\n", api_name);
@@ -269,7 +266,7 @@ PrintContextExtensions(const char *api_name, EGLBoolean single_line)
 
    print_extension_list(extensions, single_line);
 
-   return 1;
+   return extensions;
 }
 
 
@@ -392,7 +389,11 @@ doOneContext(EGLDisplay d,
    printf("%s shading language version: %s\n", api_name,
           glGetString(GL_SHADING_LANGUAGE_VERSION));
 
-   if (!opts.brief && !PrintContextExtensions(api_name, opts.single_line))
+   const char *extensions = NULL;
+   if (!opts.brief)
+      extensions = PrintContextExtensions(api_name, opts.single_line);
+
+   if (!extensions)
       return 1;
 
    eglMakeCurrent(d, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
