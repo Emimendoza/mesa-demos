@@ -20,7 +20,8 @@
 
 project('mesa-demos', 'c', 'cpp',
   version : '8.5.0',
-  meson_version : '>= 0.59')
+  meson_version : '>= 0.59',
+  default_options: ['c_std=c11', 'cpp_std=c++17'])
 
 cc = meson.get_compiler('c')
 cpp = meson.get_compiler('cpp')
