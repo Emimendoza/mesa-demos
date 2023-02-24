@@ -32,15 +32,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "gl_versions.h"
+#include "glinfo_common.h"
 #include <glad/glad.h>
 
 #define MAX_CONFIGS 1000
 #define MAX_MODES 1000
 #define MAX_SCREENS 10
 #define MAX_COLUMN 70
-
-#define ELEMENTS(array) (sizeof(array) / sizeof(array[0]))
 
 /* These are X visual types, so if you're running eglinfo under
  * something not X, they probably don't make sense. */
