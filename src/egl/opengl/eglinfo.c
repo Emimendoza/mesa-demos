@@ -297,7 +297,8 @@ chooseEGLConfig(EGLDisplay d, int api_bitmask)
 static EGLContext
 createEGLContext(EGLDisplay d, EGLConfig conf, int api,
                  EGLBoolean khr_create_context,
-                 EGLBoolean core_profile)
+                 EGLBoolean core_profile,
+                 int *context_version)
 {
    EGLContext ctx;
 
@@ -338,10 +339,13 @@ createEGLContext(EGLDisplay d, EGLConfig conf, int api,
                continue;
             }
             gladLoadGLLoader((GLADloadproc) eglGetProcAddress);
+            *context_version =
+               gl_versions[i].major * 10 + gl_versions[i].minor;
             return ctx;
          }
       }
       /* couldn't get core profile context */
+      *context_version = 0;
       return NULL;
    }
 
@@ -443,6 +447,8 @@ doOneDisplay(EGLDisplay d, const char *name, struct options opts)
    EGLBoolean do_opengl_compat = (opts.api == OPENGL || opts.api == ALL);
    EGLBoolean do_opengl_es = (opts.api == OPENGL_ES || opts.api == ALL);
 
+   int version;
+
    if (has_opengl && (do_opengl_core || do_opengl_compat)) 
    {
       EGLBoolean api_result = eglBindAPI(EGL_OPENGL_API);
@@ -455,7 +461,8 @@ doOneDisplay(EGLDisplay d, const char *name, struct options opts)
                                    config,
                                    EGL_OPENGL_API,
                                    EGL_TRUE,
-                                   EGL_TRUE);
+                                   EGL_TRUE,
+                                   &version);
 
             if (ctx)
                if (doOneContext(d, ctx, "OpenGL core profile", opts) == 0)
@@ -468,7 +475,8 @@ doOneDisplay(EGLDisplay d, const char *name, struct options opts)
                                    config,
                                    EGL_OPENGL_API,
                                    khr_create_context,
-                                   EGL_FALSE);
+                                   EGL_FALSE,
+                                   &version);
             if (ctx)
                if (doOneContext(d, ctx, "OpenGL compatibility profile", opts) == 0)
                   if (!eglDestroyContext(d, ctx))
@@ -485,7 +493,8 @@ doOneDisplay(EGLDisplay d, const char *name, struct options opts)
                                            config,
                                            EGL_OPENGL_ES_API,
                                            khr_create_context,
-                                           EGL_FALSE);
+                                           EGL_FALSE,
+                                           &version);
 
          if (ctx) {
             if (doOneContext(d, ctx, "OpenGL ES profile", opts) == 0)
