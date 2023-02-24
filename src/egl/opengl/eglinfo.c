@@ -107,6 +107,7 @@ struct options {
    unsigned api;
    EGLBoolean brief;
    EGLBoolean single_line;
+   EGLBoolean limits;
 };
 
 /**
@@ -382,6 +383,7 @@ static int
 doOneContext(EGLDisplay d,
              EGLContext ctx,
              const char *api_name,
+             int version,
              struct options opts)
 {
    if (!glGetString || !glGetIntegerv)
@@ -399,6 +401,15 @@ doOneContext(EGLDisplay d,
 
    if (!extensions)
       return 1;
+
+   if (!opts.brief && opts.limits) {
+      struct ext_functions funcs = {
+         .GetProgramivARB = glGetProgramivARB,
+         .GetStringi = glGetStringi,
+         .GetConvolutionParameteriv = glGetConvolutionParameteriv,
+      };
+      print_limits(extensions, api_name, version, &funcs);
+   }
 
    eglMakeCurrent(d, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
    return 0;
@@ -465,7 +476,7 @@ doOneDisplay(EGLDisplay d, const char *name, struct options opts)
                                    &version);
 
             if (ctx)
-               if (doOneContext(d, ctx, "OpenGL core profile", opts) == 0)
+               if (doOneContext(d, ctx, "OpenGL core profile", version, opts) == 0)
                   if (!eglDestroyContext(d, ctx))
                      return 1;
          }
@@ -478,7 +489,7 @@ doOneDisplay(EGLDisplay d, const char *name, struct options opts)
                                    EGL_FALSE,
                                    &version);
             if (ctx)
-               if (doOneContext(d, ctx, "OpenGL compatibility profile", opts) == 0)
+               if (doOneContext(d, ctx, "OpenGL compatibility profile", version, opts) == 0)
                   if (!eglDestroyContext(d, ctx))
                      return 1;
          }
@@ -497,7 +508,7 @@ doOneDisplay(EGLDisplay d, const char *name, struct options opts)
                                            &version);
 
          if (ctx) {
-            if (doOneContext(d, ctx, "OpenGL ES profile", opts) == 0)
+            if (doOneContext(d, ctx, "OpenGL ES profile", version, opts) == 0)
                if (!eglDestroyContext(d, ctx))
                   return 1;
          }
@@ -574,6 +585,7 @@ usage(void)
    printf("Usage: eglinfo [-h] [-B] [-s]");
 
 #ifdef EGL_VERSION_1_2
+   printf(" [-l]");
    printf(" [-a <api>]");
 #endif
 
@@ -588,6 +600,7 @@ usage(void)
    printf("\t -s \t Print a single extension per line.\n");
 
 #ifdef EGL_VERSION_1_2
+   printf("\t -l \t Print interesting OpenGL limits.\n");
    printf("\t -a \t Print information for a specific API, if supported.\n");
    printf("\t\t (");
    for (int i = 0; i < ELEMENTS(apis) - 1; i++) {
@@ -610,6 +623,8 @@ parse_args(int argc, char *argv[], struct options *opts)
    opts->api = ALL;
    opts->platform = ALL; /* ALL == ~0 */
    opts->brief = 0;
+   opts->single_line = 0;
+   opts->limits = 0;
 
    if (argc <= 1)
       return;
@@ -623,8 +638,13 @@ parse_args(int argc, char *argv[], struct options *opts)
 
 #ifdef EGL_VERSION_1_2
    for (int i = 1; i < argc; i++) {
+      /* parse -l */
+      if (strcmp(argv[i], "-l") == 0) {
+         opts->limits = 1;
+      }
+
       /* parse -a */
-      if (strcmp(argv[i], "-a") == 0 && i + 1 < argc) {
+      else if (strcmp(argv[i], "-a") == 0 && i + 1 < argc) {
          const char *selected_api = argv[++i];
 
          for (int j = 0; j < ELEMENTS(apis); j++) {
