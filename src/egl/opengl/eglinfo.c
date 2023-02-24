@@ -102,25 +102,45 @@ static const struct platform platforms[] = {
    },
 };
 
+struct eglconfig_info {
+   EGLint id;
+   EGLint size;
+   EGLint level;
+
+   EGLint red;
+   EGLint green;
+   EGLint blue;
+   EGLint alpha;
+
+   EGLint depth;
+   EGLint stencil;
+
+   EGLint renderable;
+   EGLint surfaces;
+   EGLint vid;
+   EGLint vtype;
+   EGLint caveat;
+   EGLint bind_rgb;
+   EGLint bind_rgba;
+
+   EGLint samples;
+   EGLint sample_buffers;
+};
+
 struct options {
    unsigned platform;
    unsigned api;
-   EGLBoolean brief;
+   InfoMode mode;
    EGLBoolean single_line;
    EGLBoolean limits;
 };
 
 /**
- * Print table of all available configurations.
+ * Print a concise table of all available configurations.
  */
 static void
-PrintConfigs(EGLDisplay d)
+PrintConfigsNormal(unsigned num_configs, struct eglconfig_info *info)
 {
-   EGLConfig configs[MAX_CONFIGS];
-   EGLint numConfigs, i;
-
-   eglGetConfigs(d, configs, MAX_CONFIGS, &numConfigs);
-
    printf("Configurations:\n");
    printf("     bf lv colorbuffer dp st  ms    vis   cav bi  renderable  supported\n");
    printf("  id sz  l  r  g  b  a th cl ns b    id   eat nd gl es es2 vg surfaces \n");
@@ -144,64 +164,145 @@ PrintConfigs(EGLDisplay d)
     *        EGL_CONFIG_ID
     */
    printf("---------------------------------------------------------------------\n");
-   for (i = 0; i < numConfigs; i++) {
-      EGLint id, size, level;
-      EGLint red, green, blue, alpha;
-      EGLint depth, stencil;
-      EGLint renderable, surfaces;
-      EGLint vid, vtype, caveat, bindRgb, bindRgba;
-      EGLint samples, sampleBuffers;
-      char surfString[100] = "";
+   for (int i = 0; i < num_configs; i++) {
+      char surface[100] = "";
 
-      eglGetConfigAttrib(d, configs[i], EGL_CONFIG_ID, &id);
-      eglGetConfigAttrib(d, configs[i], EGL_BUFFER_SIZE, &size);
-      eglGetConfigAttrib(d, configs[i], EGL_LEVEL, &level);
-
-      eglGetConfigAttrib(d, configs[i], EGL_RED_SIZE, &red);
-      eglGetConfigAttrib(d, configs[i], EGL_GREEN_SIZE, &green);
-      eglGetConfigAttrib(d, configs[i], EGL_BLUE_SIZE, &blue);
-      eglGetConfigAttrib(d, configs[i], EGL_ALPHA_SIZE, &alpha);
-      eglGetConfigAttrib(d, configs[i], EGL_DEPTH_SIZE, &depth);
-      eglGetConfigAttrib(d, configs[i], EGL_STENCIL_SIZE, &stencil);
-      eglGetConfigAttrib(d, configs[i], EGL_NATIVE_VISUAL_ID, &vid);
-      eglGetConfigAttrib(d, configs[i], EGL_NATIVE_VISUAL_TYPE, &vtype);
-
-      eglGetConfigAttrib(d, configs[i], EGL_CONFIG_CAVEAT, &caveat);
-      eglGetConfigAttrib(d, configs[i], EGL_BIND_TO_TEXTURE_RGB, &bindRgb);
-      eglGetConfigAttrib(d, configs[i], EGL_BIND_TO_TEXTURE_RGBA, &bindRgba);
-      eglGetConfigAttrib(d, configs[i], EGL_RENDERABLE_TYPE, &renderable);
-      eglGetConfigAttrib(d, configs[i], EGL_SURFACE_TYPE, &surfaces);
-
-      eglGetConfigAttrib(d, configs[i], EGL_SAMPLES, &samples);
-      eglGetConfigAttrib(d, configs[i], EGL_SAMPLE_BUFFERS, &sampleBuffers);
-
-      if (surfaces & EGL_WINDOW_BIT)
-         strcat(surfString, "win,");
-      if (surfaces & EGL_PBUFFER_BIT)
-         strcat(surfString, "pb,");
-      if (surfaces & EGL_PIXMAP_BIT)
-         strcat(surfString, "pix,");
-      if (surfaces & EGL_STREAM_BIT_KHR)
-         strcat(surfString, "str,");
-      if (strlen(surfString) > 0)
-         surfString[strlen(surfString) - 1] = 0;
+      if (info[i].surfaces & EGL_WINDOW_BIT)
+         strcat(surface, "win,");
+      if (info[i].surfaces & EGL_PBUFFER_BIT)
+         strcat(surface, "pb,");
+      if (info[i].surfaces & EGL_PIXMAP_BIT)
+         strcat(surface, "pix,");
+      if (info[i].surfaces & EGL_STREAM_BIT_KHR)
+         strcat(surface, "str,");
+      if (strlen(surface) > 0)
+         surface[strlen(surface) - 1] = 0;
 
       printf("0x%02x %2d %2d %2d %2d %2d %2d %2d %2d %2d%2d 0x%02x%s ",
-             id, size, level,
-             red, green, blue, alpha,
-             depth, stencil,
-             samples, sampleBuffers, vid, vtype < 6 ? vnames[vtype] : "--");
+             info[i].id, info[i].size, info[i].level,
+             info[i].red, info[i].green, info[i].blue, info[i].alpha,
+             info[i].depth, info[i].stencil,
+             info[i].samples, info[i].sample_buffers, info[i].vid,
+             info[i].vtype < 6 ? vnames[info[i].vtype] : "--");
       printf("  %c  %c  %c  %c  %c   %c %s\n",
-             (caveat != EGL_NONE) ? 'y' : ' ',
-             (bindRgba) ? 'a' : (bindRgb) ? 'y' : ' ',
-             (renderable & EGL_OPENGL_BIT) ? 'y' : ' ',
-             (renderable & EGL_OPENGL_ES_BIT) ? 'y' : ' ',
-             (renderable & EGL_OPENGL_ES2_BIT) ? 'y' : ' ',
-             (renderable & EGL_OPENVG_BIT) ? 'y' : ' ',
-             surfString);
+             (info[i].caveat != EGL_NONE) ? 'y' : ' ',
+             (info[i].bind_rgba) ? 'a' : (info[i].bind_rgb) ? 'y' : ' ',
+             (info[i].renderable & EGL_OPENGL_BIT) ? 'y' : ' ',
+             (info[i].renderable & EGL_OPENGL_ES_BIT) ? 'y' : ' ',
+             (info[i].renderable & EGL_OPENGL_ES2_BIT) ? 'y' : ' ',
+             (info[i].renderable & EGL_OPENVG_BIT) ? 'y' : ' ',
+             surface);
    }
 }
 
+/**
+ * Print a verbose table of all available configurations.
+ */
+static void
+PrintConfigsVerbose(unsigned num_configs, struct eglconfig_info *info)
+{
+   printf("Configurations (%u in total):\n", num_configs);
+
+   for (int i = 0; i < num_configs; i++) {
+      printf("\nEGL_CONFIG_ID: %3x", info[i].id);
+      printf("    EGL_BUFFER_SIZE: %d", info[i].size);
+      printf("    EGL_LEVEL: %d", info[i].level);
+
+      printf("\n\tEGL_RED_SIZE: %d", info[i].red);
+      printf("    EGL_GREEN_SIZE: %d", info[i].green);
+      printf("    EGL_BLUE_SIZE: %d", info[i].blue);
+      printf("    EGL_ALPHA_SIZE: %d", info[i].alpha);
+
+      printf("\n\tEGL_DEPTH_SIZE: %d", info[i].depth);
+      printf("    EGL_STENCIL_SIZE: %d", info[i].stencil);
+
+      printf("\n\tEGL_SAMPLES: %d", info[i].samples);
+      printf("    EGL_SAMPLE_BUFFERS: %d", info[i].sample_buffers);
+
+      printf("\n\tEGL_NATIVE_VISUAL_ID: %x", info[i].vid);
+      printf("    EGL_NATIVE_VISUAL_TYPE: %x", info[i].vtype);
+      printf("    EGL_CONFIG_CAVEAT: %s", info[i].caveat == EGL_NONE ?
+                                          "true" : "false");
+      printf("\n\tEGL_BIND_TO_TEXTURE: %s", info[i].bind_rgb ? "rgb" :
+                                            info[i].bind_rgba ? "rgba" :
+                                            "no");
+
+      char renderable[100] = "";
+
+      if (info[i].renderable & EGL_OPENGL_BIT)
+         strcat(renderable, "opengl,");
+      if (info[i].renderable & EGL_OPENGL_ES_BIT)
+         strcat(renderable, "opengles,");
+      if (info[i].renderable & EGL_OPENGL_ES2_BIT)
+         strcat(renderable, "opengles2,");
+      if (info[i].renderable & EGL_OPENVG_BIT)
+         strcat(renderable, "openvg,");
+      /* remove the last comma */
+      renderable[strlen(renderable) - 1] = '\0';
+
+      printf("\n\tEGL_RENDERABLE_TYPE: %s", renderable);
+
+
+      char surface[100] = "";
+
+      if (info[i].surfaces & EGL_WINDOW_BIT)
+         strcat(surface, "window,");
+      if (info[i].surfaces & EGL_PBUFFER_BIT)
+         strcat(surface, "pbuffer,");
+      if (info[i].surfaces & EGL_PIXMAP_BIT)
+         strcat(surface, "pixmap,");
+      if (info[i].surfaces & EGL_STREAM_BIT_KHR)
+         strcat(surface, "stream,");
+      surface[strlen(surface) - 1] = '\0';
+
+      printf("\n\tEGL_SURFACE_TYPE: %s", surface);
+      printf("\n");
+   }
+}
+
+
+/**
+ * Print all available configurations.
+ */
+static void
+PrintConfigs(EGLDisplay d, InfoMode info)
+{
+   EGLConfig configs[MAX_CONFIGS];
+   struct eglconfig_info config_infos[MAX_CONFIGS];
+
+   EGLint num_configs, i;
+
+   eglGetConfigs(d, configs, MAX_CONFIGS, &num_configs);
+
+   for (i = 0; i < num_configs; i++) {
+      eglGetConfigAttrib(d, configs[i], EGL_CONFIG_ID, &config_infos[i].id);
+      eglGetConfigAttrib(d, configs[i], EGL_BUFFER_SIZE, &config_infos[i].size);
+      eglGetConfigAttrib(d, configs[i], EGL_LEVEL, &config_infos[i].level);
+
+      eglGetConfigAttrib(d, configs[i], EGL_RED_SIZE, &config_infos[i].red);
+      eglGetConfigAttrib(d, configs[i], EGL_GREEN_SIZE, &config_infos[i].green);
+      eglGetConfigAttrib(d, configs[i], EGL_BLUE_SIZE, &config_infos[i].blue);
+      eglGetConfigAttrib(d, configs[i], EGL_ALPHA_SIZE, &config_infos[i].alpha);
+      eglGetConfigAttrib(d, configs[i], EGL_DEPTH_SIZE, &config_infos[i].depth);
+      eglGetConfigAttrib(d, configs[i], EGL_STENCIL_SIZE, &config_infos[i].stencil);
+      eglGetConfigAttrib(d, configs[i], EGL_NATIVE_VISUAL_ID, &config_infos[i].vid);
+      eglGetConfigAttrib(d, configs[i], EGL_NATIVE_VISUAL_TYPE, &config_infos[i].vtype);
+
+      eglGetConfigAttrib(d, configs[i], EGL_CONFIG_CAVEAT, &config_infos[i].caveat);
+      eglGetConfigAttrib(d, configs[i], EGL_BIND_TO_TEXTURE_RGB, &config_infos[i].bind_rgb);
+      eglGetConfigAttrib(d, configs[i], EGL_BIND_TO_TEXTURE_RGBA, &config_infos[i].bind_rgba);
+      eglGetConfigAttrib(d, configs[i], EGL_RENDERABLE_TYPE, &config_infos[i].renderable);
+      eglGetConfigAttrib(d, configs[i], EGL_SURFACE_TYPE, &config_infos[i].surfaces);
+
+      eglGetConfigAttrib(d, configs[i], EGL_SAMPLES, &config_infos[i].samples);
+      eglGetConfigAttrib(d, configs[i], EGL_SAMPLE_BUFFERS, &config_infos[i].sample_buffers);
+   }
+
+   if (info == Normal)
+      PrintConfigsNormal(num_configs, config_infos);
+   else if (info == Verbose)
+      PrintConfigsVerbose(num_configs, config_infos);
+}
 
 static const char *
 PrintDisplayExtensions(EGLDisplay d, EGLBoolean single_line)
@@ -396,7 +497,7 @@ doOneContext(EGLDisplay d,
           glGetString(GL_SHADING_LANGUAGE_VERSION));
 
    const char *extensions = NULL;
-   if (!opts.brief) {
+   if (opts.mode != Brief) {
       extensions = PrintContextExtensions(api_name, opts.single_line);
 
       if (!extensions)
@@ -440,7 +541,7 @@ doOneDisplay(EGLDisplay d, const char *name, struct options opts)
 
    const char *display_exts = eglQueryString(d, EGL_EXTENSIONS);
    
-   if (!opts.brief)
+   if (opts.mode != Brief)
       PrintDisplayExtensions(d, opts.single_line);
 
 #ifdef EGL_VERSION_1_4
@@ -522,8 +623,8 @@ doOneDisplay(EGLDisplay d, const char *name, struct options opts)
    }
 #endif
 
-   if (!opts.brief)
-      PrintConfigs(d);
+   if (opts.mode != Brief)
+      PrintConfigs(d, opts.mode);
 
    eglTerminate(d);
    printf("\n");
@@ -540,7 +641,7 @@ doOneDevice(EGLDeviceEXT d, int i, struct options opts)
 
    printf("Device #%d:\n\n", i);
 
-   if (!opts.brief)
+   if (opts.mode != Brief)
       PrintDeviceExtensions(d, opts.single_line);
 
    return doOneDisplay(getPlatformDisplay(EGL_PLATFORM_DEVICE_EXT, d, NULL),
@@ -585,7 +686,7 @@ usage(void)
     * Usage portion of the help message
     */
 
-   printf("Usage: eglinfo [-h] [-B] [-s]");
+   printf("Usage: eglinfo [-h] [-B] [-s] [-v]");
 
 #ifdef EGL_VERSION_1_2
    printf(" [-l]");
@@ -601,6 +702,7 @@ usage(void)
    printf("\t -h \t This message.\n");
    printf("\t -B \t Brief output, print only the basics.\n");
    printf("\t -s \t Print a single extension per line.\n");
+   printf("\t -v \t Print visuals info in verbose form.\n");
 
 #ifdef EGL_VERSION_1_2
    printf("\t -l \t Print interesting OpenGL limits.\n");
@@ -625,7 +727,7 @@ parse_args(int argc, char *argv[], struct options *opts)
 {
    opts->api = ALL;
    opts->platform = ALL; /* ALL == ~0 */
-   opts->brief = 0;
+   opts->mode = Normal;
    opts->single_line = 0;
    opts->limits = 0;
 
@@ -683,12 +785,16 @@ parse_args(int argc, char *argv[], struct options *opts)
 
       /* parse -B */
       else if (strcmp(argv[i], "-B") == 0) {
-         opts->brief = 1;
+         opts->mode = Brief;
       }
 
       /* parse -s */
       else if (strcmp(argv[i], "-s") == 0) {
          opts->single_line = 1;
+      }
+
+      else if (strcmp(argv[i], "-v") == 0) {
+         opts->mode = Verbose;
       }
 
       /* unknown */
@@ -715,7 +821,7 @@ main(int argc, char *argv[])
    int ret = 0;
    const char *clientext;
 
-   if (!opts.brief) {
+   if (opts.mode != Brief) {
       clientext = PrintDisplayExtensions(EGL_NO_DISPLAY, opts.single_line);
       printf("\n");
    } else {
