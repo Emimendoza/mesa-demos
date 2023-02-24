@@ -396,19 +396,22 @@ doOneContext(EGLDisplay d,
           glGetString(GL_SHADING_LANGUAGE_VERSION));
 
    const char *extensions = NULL;
-   if (!opts.brief)
+   if (!opts.brief) {
       extensions = PrintContextExtensions(api_name, opts.single_line);
 
-   if (!extensions)
-      return 1;
+      if (!extensions)
+         return 1;
 
-   if (!opts.brief && opts.limits) {
-      struct ext_functions funcs = {
-         .GetProgramivARB = glGetProgramivARB,
-         .GetStringi = glGetStringi,
-         .GetConvolutionParameteriv = glGetConvolutionParameteriv,
-      };
-      print_limits(extensions, api_name, version, &funcs);
+      print_gpu_memory_info(extensions);
+
+      if (opts.limits) {
+         struct ext_functions funcs = {
+            .GetProgramivARB = glGetProgramivARB,
+            .GetStringi = glGetStringi,
+            .GetConvolutionParameteriv = glGetConvolutionParameteriv,
+         };
+         print_limits(extensions, api_name, version, &funcs);
+      }
    }
 
    eglMakeCurrent(d, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
