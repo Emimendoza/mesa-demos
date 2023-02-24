@@ -153,6 +153,14 @@ if cc.has_function('sincos', prefix: '#define _GNU_SOURCE\n#include <math.h>',
   add_project_arguments('-DHAVE_SINCOS', language: 'c')
 endif
 
+if ['linux', 'cygwin', 'gnu', 'freebsd', 'gnu/kfreebsd', 'haiku', 'android'].contains(host_machine.system())
+  add_project_arguments('-D_GNU_SOURCE', language: ['c', 'cpp'])
+elif host_machine.system() == 'windows'
+  add_project_arguments(['-D_USE_MATH_DEFINES'], language: ['c', 'cpp'])
+elif host_machine.system() == 'openbsd'
+  add_project_arguments('-D_ISOC11_SOURCE', language: ['c', 'cpp'])
+endif
+
 c_args = []
 if cc.get_argument_syntax() == 'msvc'
   c_args += '-D_CRT_SECURE_NO_WARNINGS'
