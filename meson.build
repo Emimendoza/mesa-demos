@@ -168,8 +168,6 @@ else
     '-Werror=missing-prototypes',
     '-Werror=return-type',
     '-Werror=empty-body',
-    '-Werror=incompatible-pointer-types',
-    '-Werror=int-conversion',
     '-Wimplicit-fallthrough=3',
     '-Wmisleading-indentation',
     '-Wno-missing-field-initializers',
@@ -181,6 +179,13 @@ else
     '-Wno-microsoft-enum-value',
     '-Wno-unused-function',
   ])
+
+  if host_machine.system() != 'darwin'
+    c_args += cc.get_supported_arguments([
+      '-Werror=incompatible-pointer-types',
+      '-Werror=int-conversion',
+    ])
+  endif
 endif
 
 add_project_arguments(c_args, language: 'c')
