@@ -662,6 +662,7 @@ parse_args(int argc, char *argv[], struct options *opts)
             goto fail;
          }
       }
+#endif
 
       /* parse -p */
       else if (strcmp(argv[i], "-p") == 0 && i + 1 < argc) {
@@ -696,7 +697,6 @@ parse_args(int argc, char *argv[], struct options *opts)
          goto fail;
       }
    }
-#endif
 
    return;
 
