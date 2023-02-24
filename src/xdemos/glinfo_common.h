@@ -34,7 +34,7 @@
 
 /**
  * Ext functions needed in common code but must be provided by
- * glxinfo or wglinfo.
+ * the glinfo tool.
  */
 struct ext_functions
 {
@@ -63,17 +63,6 @@ typedef enum
 } InfoMode;
 
 
-struct options
-{
-   InfoMode mode;
-   GLboolean findBest;
-   GLboolean limits;
-   GLboolean singleLine;
-   /* GLX only */
-   char *displayName;
-   GLboolean allowDirect;
-};
-
 void
 print_extension_list(const char *ext, GLboolean singleLine);
 
@@ -95,10 +84,6 @@ profile_mask_string(int mask);
 
 const char *
 context_flags_string(int mask);
-
-
-void
-parse_args(int argc, char *argv[], struct options *options);
 
 void
 print_gpu_memory_info(const char *glExtensions);

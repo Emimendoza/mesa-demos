@@ -58,6 +58,14 @@ struct format_info {
 };
 
 
+struct options {
+   InfoMode mode;
+   GLboolean findBest;
+   GLboolean limits;
+   GLboolean singleLine;
+};
+
+
 static LRESULT CALLBACK
 WndProc(HWND hWnd,
         UINT uMsg,
@@ -610,6 +618,61 @@ find_best_visual(HDC hdc)
 #endif
 }
 
+
+static void
+usage(void)
+{
+   printf("Usage: wglinfo [-v] [-t] [-h] [-b] [-l] [-s]\n");
+   printf("\t-B: brief output, print only the basics.\n");
+   printf("\t-v: Print visuals info in verbose form.\n");
+   printf("\t-t: Print verbose visual information table.\n");
+   printf("\t-h: This information.\n");
+   printf("\t-b: Find the 'best' visual and print its number.\n");
+   printf("\t-l: Print interesting OpenGL limits.\n");
+   printf("\t-s: Print a single extension per line.\n");
+}
+
+
+static void
+parse_args(int argc, char *argv[], struct options *options)
+{
+   int i;
+
+   options->mode = Normal;
+   options->findBest = GL_FALSE;
+   options->limits = GL_FALSE;
+   options->singleLine = GL_FALSE;
+
+   for (i = 1; i < argc; i++) {
+      if (strcmp(argv[i], "-t") == 0) {
+         options->mode = Wide;
+      }
+      else if (strcmp(argv[i], "-v") == 0) {
+         options->mode = Verbose;
+      }
+      else if (strcmp(argv[i], "-B") == 0) {
+         options->mode = Brief;
+      }
+      else if (strcmp(argv[i], "-b") == 0) {
+         options->findBest = GL_TRUE;
+      }
+      else if (strcmp(argv[i], "-l") == 0) {
+         options->limits = GL_TRUE;
+      }
+      else if (strcmp(argv[i], "-h") == 0) {
+         usage();
+         exit(0);
+      }
+      else if(strcmp(argv[i], "-s") == 0) {
+         options->singleLine = GL_TRUE;
+      }
+      else {
+         printf("Unknown option `%s'\n", argv[i]);
+         usage();
+         exit(0);
+      }
+   }
+}
 
 
 int

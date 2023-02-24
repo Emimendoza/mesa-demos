@@ -100,7 +100,17 @@ struct visual_attribs
    int swapMethod;
 };
 
-   
+struct options
+{
+   InfoMode mode;
+   GLboolean findBest;
+   GLboolean limits;
+   GLboolean singleLine;
+   char *displayName;
+   GLboolean allowDirect;
+};
+
+
 /**
  * Version of the context that was created
  *
@@ -1279,6 +1289,73 @@ find_best_visual(Display *dpy, int scrnum)
    XFree(visuals);
 
    return bestVis.id;
+}
+
+
+static void
+usage(void)
+{
+   printf("Usage: glxinfo [-v] [-t] [-h] [-b] [-l] [-s] [-i] [-display <dname>]\n");
+   printf("\t-display <dname>: Print GLX visuals on specified server.\n");
+   printf("\t-i: Force an indirect rendering context.\n");
+   printf("\t-B: brief output, print only the basics.\n");
+   printf("\t-v: Print visuals info in verbose form.\n");
+   printf("\t-t: Print verbose visual information table.\n");
+   printf("\t-h: This information.\n");
+   printf("\t-b: Find the 'best' visual and print its number.\n");
+   printf("\t-l: Print interesting OpenGL limits.\n");
+   printf("\t-s: Print a single extension per line.\n");
+}
+
+
+static void
+parse_args(int argc, char *argv[], struct options *options)
+{
+   int i;
+
+   options->mode = Normal;
+   options->findBest = GL_FALSE;
+   options->limits = GL_FALSE;
+   options->singleLine = GL_FALSE;
+   options->displayName = NULL;
+   options->allowDirect = GL_TRUE;
+
+   for (i = 1; i < argc; i++) {
+      if (strcmp(argv[i], "-display") == 0 && i + 1 < argc) {
+         options->displayName = argv[i + 1];
+         i++;
+      }
+      else if (strcmp(argv[i], "-i") == 0) {
+         options->allowDirect = GL_FALSE;
+      }
+      else if (strcmp(argv[i], "-t") == 0) {
+         options->mode = Wide;
+      }
+      else if (strcmp(argv[i], "-v") == 0) {
+         options->mode = Verbose;
+      }
+      else if (strcmp(argv[i], "-B") == 0) {
+         options->mode = Brief;
+      }
+      else if (strcmp(argv[i], "-b") == 0) {
+         options->findBest = GL_TRUE;
+      }
+      else if (strcmp(argv[i], "-l") == 0) {
+         options->limits = GL_TRUE;
+      }
+      else if (strcmp(argv[i], "-h") == 0) {
+         usage();
+         exit(0);
+      }
+      else if(strcmp(argv[i], "-s") == 0) {
+         options->singleLine = GL_TRUE;
+      }
+      else {
+         printf("Unknown option `%s'\n", argv[i]);
+         usage();
+         exit(0);
+      }
+   }
 }
 
 
