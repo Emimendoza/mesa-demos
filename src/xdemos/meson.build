@@ -51,8 +51,8 @@ endforeach
 
 executable(
   'glxinfo',
-  files('glxinfo.c', 'glinfo_common.c'),
-  dependencies: [glx_deps, idep_glad],
+  files('glxinfo.c'),
+  dependencies: [glx_deps, idep_glad, idep_util],
   install: true
 )
 

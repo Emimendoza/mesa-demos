@@ -40,9 +40,9 @@ executable(
 )
 
 executable(
-  'wglinfo', files('wglinfo.c', '../xdemos/glinfo_common.c'),
+  'wglinfo', files('wglinfo.c'),
   include_directories: include_directories('../xdemos'),
-  dependencies: [dep_gl, idep_glad],
+  dependencies: [dep_gl, idep_glad, idep_util],
   install: true
 )
 

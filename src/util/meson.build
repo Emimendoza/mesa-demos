@@ -21,6 +21,7 @@
 inc_util = include_directories('.')
 
 files_libutil = files(
+  'glinfo_common.c',
   'readtex.c',
   'showbuffer.c',
   'trackball.c',
