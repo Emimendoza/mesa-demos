@@ -86,13 +86,14 @@ endif
 
 dep_threads = dependency('threads')
 
-dep_glu = dependency('glu', required : dep_x11.found())
+dep_glu = dependency('glu', required : false)
 if not dep_glu.found()
   _glu_name = 'GLU'
   if host_machine.system() == 'windows'
     _glu_name = 'glu32'
   endif
-  dep_glu = cc.find_library(_glu_name, has_headers: 'GL/glu.h')
+  dep_glu = cc.find_library(_glu_name, has_headers: 'GL/glu.h',
+    required : dep_x11.found())
 endif
 
 # GBM is needed for EGL on KMS
