@@ -106,6 +106,7 @@ struct options {
    unsigned platform;
    unsigned api;
    EGLBoolean brief;
+   EGLBoolean single_line;
 };
 
 /**
@@ -202,7 +203,7 @@ PrintConfigs(EGLDisplay d)
 
 
 static const char *
-PrintDisplayExtensions(EGLDisplay d)
+PrintDisplayExtensions(EGLDisplay d, EGLBoolean single_line)
 {
    const char *extensions;
 
@@ -222,13 +223,13 @@ PrintDisplayExtensions(EGLDisplay d)
    puts(d == EGL_NO_DISPLAY ? "EGL client extensions string:" :
                               "EGL extensions string:");
 
-   print_extension_list(extensions, 0);
+   print_extension_list(extensions, single_line);
    return extensions;
 }
 
 
 static const char *
-PrintDeviceExtensions(EGLDeviceEXT d)
+PrintDeviceExtensions(EGLDeviceEXT d, EGLBoolean single_line)
 {
    PFNEGLQUERYDEVICESTRINGEXTPROC queryDeviceString =
      (PFNEGLQUERYDEVICESTRINGEXTPROC)
@@ -241,7 +242,7 @@ PrintDeviceExtensions(EGLDeviceEXT d)
    if (!extensions)
       return NULL;
 
-   print_extension_list(extensions, 0);
+   print_extension_list(extensions, single_line);
    return extensions;
 }
 
@@ -250,7 +251,7 @@ PrintDeviceExtensions(EGLDeviceEXT d)
  * functions.
  */
 static EGLBoolean
-PrintContextExtensions(const char *api_name)
+PrintContextExtensions(const char *api_name, EGLBoolean single_line)
 {
    printf("%s extensions:\n", api_name);
 
@@ -266,7 +267,7 @@ PrintContextExtensions(const char *api_name)
       extensions = (const char*) glGetString(GL_EXTENSIONS);
    }
 
-   print_extension_list(extensions, 0);
+   print_extension_list(extensions, single_line);
 
    return 1;
 }
@@ -391,7 +392,7 @@ doOneContext(EGLDisplay d,
    printf("%s shading language version: %s\n", api_name,
           glGetString(GL_SHADING_LANGUAGE_VERSION));
 
-   if (!opts.brief && !PrintContextExtensions(api_name))
+   if (!opts.brief && !PrintContextExtensions(api_name, opts.single_line))
       return 1;
 
    eglMakeCurrent(d, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
@@ -421,7 +422,7 @@ doOneDisplay(EGLDisplay d, const char *name, struct options opts)
    const char *display_exts = eglQueryString(d, EGL_EXTENSIONS);
    
    if (!opts.brief)
-      PrintDisplayExtensions(d);
+      PrintDisplayExtensions(d, opts.single_line);
 
 #ifdef EGL_VERSION_1_4
    int khr_create_context = (maj == 1 && min >= 4) &&
@@ -516,7 +517,7 @@ doOneDevice(EGLDeviceEXT d, int i, struct options opts)
    printf("Device #%d:\n\n", i);
 
    if (!opts.brief)
-      PrintDeviceExtensions(d);
+      PrintDeviceExtensions(d, opts.single_line);
 
    return doOneDisplay(getPlatformDisplay(EGL_PLATFORM_DEVICE_EXT, d, NULL),
                        "Platform Device", opts);
@@ -560,7 +561,7 @@ usage(void)
     * Usage portion of the help message
     */
 
-   printf("Usage: eglinfo [-h] [-B]");
+   printf("Usage: eglinfo [-h] [-B] [-s]");
 
 #ifdef EGL_VERSION_1_2
    printf(" [-a <api>]");
@@ -574,6 +575,7 @@ usage(void)
 
    printf("\t -h \t This message.\n");
    printf("\t -B \t Brief output, print only the basics.\n");
+   printf("\t -s \t Print a single extension per line.\n");
 
 #ifdef EGL_VERSION_1_2
    printf("\t -a \t Print information for a specific API, if supported.\n");
@@ -650,6 +652,11 @@ parse_args(int argc, char *argv[], struct options *opts)
          opts->brief = 1;
       }
 
+      /* parse -s */
+      else if (strcmp(argv[i], "-s") == 0) {
+         opts->single_line = 1;
+      }
+
       /* unknown */
       else {
          printf("Unknown option: %s\n", argv[i]);
@@ -676,7 +683,7 @@ main(int argc, char *argv[])
    const char *clientext;
 
    if (!opts.brief) {
-      clientext = PrintDisplayExtensions(EGL_NO_DISPLAY);
+      clientext = PrintDisplayExtensions(EGL_NO_DISPLAY, opts.single_line);
       printf("\n");
    } else {
       clientext = eglQueryString(EGL_NO_DISPLAY, EGL_EXTENSIONS);
