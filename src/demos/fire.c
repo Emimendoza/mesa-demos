@@ -13,7 +13,7 @@
 #include <time.h>
 #include <string.h>
 
-#ifdef WIN32
+#ifdef _WIN32
 #include <windows.h>
 #include <mmsystem.h>
 #endif
@@ -340,7 +340,7 @@ printhelp(void)
 static void
 dojoy(void)
 {
-#ifdef WIN32
+#ifdef _WIN32
    static UINT max[2] = { 0, 0 };
    static UINT min[2] = { 0xffffffff, 0xffffffff }, center[2];
    MMRESULT res;
