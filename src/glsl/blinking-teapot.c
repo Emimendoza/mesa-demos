@@ -67,7 +67,7 @@ init_opengl (void)
   fshad_id = CompileShaderFile (GL_FRAGMENT_SHADER, "blinking-teapot.frag");
   prog_id = LinkShaders (vshad_id, fshad_id);
 
-  UseProgram (prog_id);
+  glUseProgram (prog_id);
 
   reshape (680, 400);
 

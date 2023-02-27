@@ -280,11 +280,11 @@ Init(void)
    /* check link */
    {
       GLint stat;
-      GetProgramiv(Program, GL_LINK_STATUS, &stat);
+      glGetProgramiv(Program, GL_LINK_STATUS, &stat);
       if (!stat) {
          GLchar log[1000];
          GLsizei len;
-         GetProgramInfoLog(Program, 1000, &len, log);
+         glGetProgramInfoLog(Program, 1000, &len, log);
          fprintf(stderr, "Shader link error:\n%s\n", log);
       }
    }

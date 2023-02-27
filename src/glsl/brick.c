@@ -80,9 +80,9 @@ Reshape(int width, int height)
 static void
 CleanUp(void)
 {
-   DeleteShader(fragShader);
-   DeleteShader(vertShader);
-   DeleteProgram(program);
+   glDeleteShader(fragShader);
+   glDeleteShader(vertShader);
+   glDeleteProgram(program);
    glutDestroyWindow(win);
 }
 
@@ -146,7 +146,7 @@ Init(void)
    fragShader = CompileShaderFile(GL_FRAGMENT_SHADER, FragProgFile);
    program = LinkShaders(vertShader, fragShader);
 
-   UseProgram(program);
+   glUseProgram(program);
 
    SetUniformValues(program, Uniforms);
    PrintUniforms(Uniforms);
