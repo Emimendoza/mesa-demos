@@ -69,32 +69,6 @@ ShadersSupported(void)
       GetAttribLocation = glGetAttribLocation;
       return GL_TRUE;
    }
-   else if (GLAD_GL_ARB_vertex_shader && GLAD_GL_ARB_fragment_shader
-	    && GLAD_GL_ARB_shader_objects) {
-      fprintf(stderr, "Warning: Trying ARB GLSL instead of OpenGL 2.x.  This may not work.\n");
-      CreateShader = glCreateShaderObjectARB;
-      DeleteShader = glDeleteObjectARB;
-      ShaderSource = (PFNGLSHADERSOURCEPROC)glShaderSourceARB;
-      GetShaderiv = glGetObjectParameterivARB;
-      GetShaderInfoLog = glGetInfoLogARB;
-      CreateProgram = glCreateProgramObjectARB;
-      DeleteProgram = glDeleteObjectARB;
-      AttachShader = glAttachObjectARB;
-      LinkProgram = glLinkProgramARB;
-      UseProgram = glUseProgramObjectARB;
-      GetProgramiv = glGetObjectParameterivARB;
-      GetProgramInfoLog = glGetInfoLogARB;
-      ValidateProgram = glValidateProgramARB;
-      Uniform1i = glUniform1iARB;
-      Uniform1fv = glUniform1fvARB;
-      Uniform2fv = glUniform2fvARB;
-      Uniform3fv = glUniform3fvARB;
-      Uniform4fv = glUniform4fvARB;
-      UniformMatrix4fv = glUniformMatrix4fvARB;
-      GetActiveAttrib = glGetActiveAttribARB;
-      GetAttribLocation = glGetAttribLocationARB;
-      return GL_TRUE;
-   }
    fprintf(stderr, "Sorry, GLSL not supported with this OpenGL.\n");
    return GL_FALSE;
 }
