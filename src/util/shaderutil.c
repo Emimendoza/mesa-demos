@@ -32,7 +32,7 @@ PFNGLLINKPROGRAMPROC LinkProgram = NULL;
 PFNGLUSEPROGRAMPROC UseProgram = NULL;
 PFNGLGETPROGRAMIVPROC GetProgramiv = NULL;
 PFNGLGETPROGRAMINFOLOGPROC GetProgramInfoLog = NULL;
-PFNGLVALIDATEPROGRAMARBPROC ValidateProgramARB = NULL;
+PFNGLVALIDATEPROGRAMPROC ValidateProgram = NULL;
 PFNGLUNIFORM1IPROC Uniform1i = NULL;
 PFNGLUNIFORM1FVPROC Uniform1fv = NULL;
 PFNGLUNIFORM2FVPROC Uniform2fv = NULL;
@@ -41,12 +41,6 @@ PFNGLUNIFORM4FVPROC Uniform4fv = NULL;
 PFNGLUNIFORMMATRIX4FVPROC UniformMatrix4fv = NULL;
 PFNGLGETACTIVEATTRIBPROC GetActiveAttrib = NULL;
 PFNGLGETATTRIBLOCATIONPROC GetAttribLocation = NULL;
-
-static void GLAPIENTRY
-fake_ValidateProgram(GLuint prog)
-{
-   (void) prog;
-}
 
 GLboolean
 ShadersSupported(void)
@@ -64,8 +58,7 @@ ShadersSupported(void)
       UseProgram = glUseProgram;
       GetProgramiv = glGetProgramiv;
       GetProgramInfoLog = glGetProgramInfoLog;
-      ValidateProgramARB = (GLAD_GL_ARB_shader_objects)
-	 ? glValidateProgramARB : fake_ValidateProgram;
+      ValidateProgram = glValidateProgram;
       Uniform1i = glUniform1i;
       Uniform1fv = glUniform1fv;
       Uniform2fv = glUniform2fv;
@@ -91,7 +84,7 @@ ShadersSupported(void)
       UseProgram = glUseProgramObjectARB;
       GetProgramiv = glGetObjectParameterivARB;
       GetProgramInfoLog = glGetInfoLogARB;
-      ValidateProgramARB = glValidateProgramARB;
+      ValidateProgram = glValidateProgramARB;
       Uniform1i = glUniform1iARB;
       Uniform1fv = glUniform1fvARB;
       Uniform2fv = glUniform2fvARB;
@@ -268,7 +261,7 @@ GLboolean
 ValidateShaderProgram(GLuint program)
 {
    GLint stat;
-   ValidateProgramARB(program);
+   ValidateProgram(program);
    GetProgramiv(program, GL_VALIDATE_STATUS, &stat);
 
    if (!stat) {
