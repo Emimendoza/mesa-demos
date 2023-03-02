@@ -38,8 +38,6 @@
 #define GL_GLEXT_PROTOTYPES
 #define EGL_EGLEXT_PROTOTYPES
 
-#define _GNU_SOURCE
-
 #include <assert.h>
 #include <math.h>
 #include <stdlib.h>
