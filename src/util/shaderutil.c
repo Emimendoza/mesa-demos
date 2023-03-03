@@ -227,9 +227,9 @@ LinkShaders3WithGeometryInfo(GLuint vertShader, GLuint geomShader, GLuint fragSh
     AttachShader(program, vertShader);
   if (geomShader) {
     AttachShader(program, geomShader);
-    glProgramParameteriARB(program, GL_GEOMETRY_VERTICES_OUT_ARB, verticesOut);
-    glProgramParameteriARB(program, GL_GEOMETRY_INPUT_TYPE_ARB, inputType);
-    glProgramParameteriARB(program, GL_GEOMETRY_OUTPUT_TYPE_ARB, outputType);
+    glProgramParameteri(program, GL_GEOMETRY_VERTICES_OUT, verticesOut);
+    glProgramParameteri(program, GL_GEOMETRY_INPUT_TYPE, inputType);
+    glProgramParameteri(program, GL_GEOMETRY_OUTPUT_TYPE, outputType);
   }
   if (fragShader)
     AttachShader(program, fragShader);
