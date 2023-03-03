@@ -34,13 +34,10 @@
  * Brian Paul  26 January 2000
  */
 
-#define GLX_GLXEXT_PROTOTYPES
-#define GL_GLEXT_PROTOTYPES
-
 #include <assert.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
-#include <GL/gl.h>
+#include "glad/glad.h"
 #include <GL/glx.h>
 #include <stdio.h>
 #include <string.h>
@@ -459,6 +456,13 @@ print_screen_info(Display *dpy, int scrnum,
 		       visinfo->visual, mask, &attr);
 
    if (glXMakeCurrent(dpy, win, ctx)) {
+      int loaded_gl = gladLoadGLLoader((GLADloadproc) glXGetProcAddressARB);
+
+      if (!loaded_gl) {
+         fprintf(stderr, "Error: unable to load GL functions\n");
+         exit(1);
+      }
+
       const char *serverVendor = glXQueryServerString(dpy, scrnum, GLX_VENDOR);
       const char *serverVersion = glXQueryServerString(dpy, scrnum, GLX_VERSION);
       const char *serverExtensions = glXQueryServerString(dpy, scrnum, GLX_EXTENSIONS);
@@ -479,11 +483,11 @@ print_screen_info(Display *dpy, int scrnum,
       CheckError(__LINE__);
 
       /* Get some ext functions */
-      extfuncs.GetProgramivARB = (GETPROGRAMIVARBPROC)
+      extfuncs.GetProgramivARB = (PFNGLGETPROGRAMIVARBPROC)
          glXGetProcAddressARB((GLubyte *) "glGetProgramivARB");
-      extfuncs.GetStringi = (GETSTRINGIPROC)
+      extfuncs.GetStringi = (PFNGLGETSTRINGIPROC)
          glXGetProcAddressARB((GLubyte *) "glGetStringi");
-      extfuncs.GetConvolutionParameteriv = (GETCONVOLUTIONPARAMETERIVPROC)
+      extfuncs.GetConvolutionParameteriv = (PFNGLGETCONVOLUTIONPARAMETERIVPROC)
          glXGetProcAddressARB((GLubyte *) "glGetConvolutionParameteriv");
 
       if (!glXQueryVersion(dpy, & glxVersionMajor, & glxVersionMinor)) {

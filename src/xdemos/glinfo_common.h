@@ -27,20 +27,9 @@
 #ifndef GLINFO_COMMON_H
 #define GLINFO_COMMON_H
 
-
-#ifdef _WIN32
-/* GL/glext.h is not commonly available on Windows. */
 #include <glad/glad.h>
-#else
-#include <GL/gl.h>
-#include <GL/glext.h>
-#endif
 
 #include "gl_versions.h"
-
-typedef void (APIENTRY * GETPROGRAMIVARBPROC) (GLenum target, GLenum pname, GLint *params);
-typedef const GLubyte *(APIENTRY * GETSTRINGIPROC) (GLenum name, GLuint index);
-typedef void (APIENTRY * GETCONVOLUTIONPARAMETERIVPROC) (GLenum target, GLenum pname, GLint *params);
 
 
 /**
@@ -49,9 +38,9 @@ typedef void (APIENTRY * GETCONVOLUTIONPARAMETERIVPROC) (GLenum target, GLenum p
  */
 struct ext_functions
 {
-   GETPROGRAMIVARBPROC GetProgramivARB;
-   GETSTRINGIPROC GetStringi;
-   GETCONVOLUTIONPARAMETERIVPROC GetConvolutionParameteriv;
+   PFNGLGETPROGRAMIVARBPROC GetProgramivARB;
+   PFNGLGETSTRINGIPROC GetStringi;
+   PFNGLGETCONVOLUTIONPARAMETERIVPROC GetConvolutionParameteriv;
 };
 
 

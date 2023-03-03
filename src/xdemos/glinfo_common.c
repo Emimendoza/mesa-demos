@@ -30,19 +30,6 @@
 #define snprintf _snprintf
 #endif
 
-#ifndef GL_CONTEXT_FLAG_FORWARD_COMPATIBLE_BIT
-#define GL_CONTEXT_FLAG_FORWARD_COMPATIBLE_BIT 0x00000001
-#endif
-#ifndef GL_CONTEXT_FLAG_DEBUG_BIT
-#define GL_CONTEXT_FLAG_DEBUG_BIT 0x00000002
-#endif
-#ifndef GL_CONTEXT_FLAG_ROBUST_ACCESS_BIT_ARB
-#define GL_CONTEXT_FLAG_ROBUST_ACCESS_BIT_ARB 0x00000004
-#endif
-#ifndef GL_CONTEXT_FLAG_NO_ERROR_BIT_KHR
-#define GL_CONTEXT_FLAG_NO_ERROR_BIT_KHR 0x00000008
-#endif
-
 /**
  * Return the GL enum name for a numeric value.
  * We really only care about the compressed texture formats for now.
