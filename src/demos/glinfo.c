@@ -10,6 +10,9 @@
 #include <stdio.h>
 #include "glut_wrap.h"
 
+#ifndef GL_SHADING_LANGUAGE_VERSION
+#define GL_SHADING_LANGUAGE_VERSION       0x8B8C
+#endif
 
 int main( int argc, char *argv[] )
 {
