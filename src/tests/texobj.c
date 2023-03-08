@@ -20,18 +20,6 @@ static GLfloat Angle = 0.0f;
 static GLboolean UseObj = GL_FALSE;
 
 
-#if defined(GL_VERSION_1_1) || defined(GL_VERSION_1_2)
-#  define TEXTURE_OBJECT 1
-#elif defined(GL_EXT_texture_object)
-#  define TEXTURE_OBJECT 1
-#  define glBindTexture(A,B)     glBindTextureEXT(A,B)
-#  define glGenTextures(A,B)     glGenTexturesEXT(A,B)
-#  define glDeleteTextures(A,B)  glDeleteTexturesEXT(A,B)
-#endif
-
-
-
-
 static void draw( void )
 {
    glClear( GL_COLOR_BUFFER_BIT );
@@ -43,9 +31,7 @@ static void draw( void )
    glTranslatef( -1.0, 0.0, 0.0 );
    glRotatef( Angle, 0.0, 0.0, 1.0 );
    if (UseObj) {
-#ifdef TEXTURE_OBJECT
       glBindTexture( GL_TEXTURE_2D, TexObj[0] );
-#endif
    }
    else {
       glCallList( TexObj[0] );
@@ -63,9 +49,7 @@ static void draw( void )
    glTranslatef( 1.0, 0.0, 0.0 );
    glRotatef( Angle-90.0, 0.0, 1.0, 0.0 );
    if (UseObj) {
-#ifdef TEXTURE_OBJECT
       glBindTexture( GL_TEXTURE_2D, TexObj[1] );
-#endif
    }
    else {
       glCallList( TexObj[1] );
@@ -104,9 +88,7 @@ static void key(unsigned char k, int x, int y)
    (void) y;
    switch (k) {
       case 27:
-#ifdef TEXTURE_OBJECT
          glDeleteTextures( 2, TexObj );
-#endif
          glutDestroyWindow(Window);
          exit(0);
    }
@@ -165,9 +147,7 @@ static void init( void )
 
    /* generate texture object IDs */
    if (UseObj) {
-#ifdef TEXTURE_OBJECT
       glGenTextures( 2, TexObj );
-#endif
    }
    else {
       TexObj[0] = glGenLists(2);
@@ -176,10 +156,8 @@ static void init( void )
 
    /* setup first texture object */
    if (UseObj) {
-#ifdef TEXTURE_OBJECT
       glBindTexture( GL_TEXTURE_2D, TexObj[0] );
       assert(glIsTexture(TexObj[0]));
-#endif
    }
    else {
       glNewList( TexObj[0], GL_COMPILE );
@@ -210,10 +188,8 @@ static void init( void )
 
    /* setup second texture object */
    if (UseObj) {
-#ifdef TEXTURE_OBJECT
       glBindTexture( GL_TEXTURE_2D, TexObj[1] );
       assert(glIsTexture(TexObj[1]));
-#endif
       assert(!glIsTexture(TexObj[1] + 999));
    }
    else {
@@ -261,7 +237,6 @@ int main( int argc, char *argv[] )
    /* check that renderer has the GL_EXT_texture_object extension
     * or supports OpenGL 1.1
     */
-#ifdef TEXTURE_OBJECT
    {
       char *exten = (char *) glGetString( GL_EXTENSIONS );
       char *version = (char *) glGetString( GL_VERSION );
@@ -271,7 +246,6 @@ int main( int argc, char *argv[] )
          UseObj = GL_TRUE;
       }
    }
-#endif
 
    init();
 
