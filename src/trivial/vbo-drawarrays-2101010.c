@@ -67,11 +67,6 @@ static void Init( void )
       "MOV  result.color, vertex.color;\n"
       "END\n";
 
-#ifndef GL_ARB_vertex_type_2_10_10_10_rev
-   fprintf(stderr,"built without ARB_vertex_type_2_10_10_10_rev\n");
-   exit(1);
-#endif
-
   if (!glutExtensionSupported("GL_ARB_vertex_type_2_10_10_10_rev")){
      fprintf(stderr,"requires ARB_vertex_type_2_10_10_10_rev\n");
      exit(1);
@@ -107,10 +102,8 @@ static void Init( void )
    if (bgra)
      color_size = GL_BGRA;
 
-#ifdef GL_ARB_vertex_type_2_10_10_10_rev
    glVertexPointer( 4, GL_INT_2_10_10_10_REV, sizeof(verts[0]), 0 );
    glColorPointer( color_size, GL_UNSIGNED_INT_2_10_10_10_REV, sizeof(verts[0]), (void *)(sizeof(unsigned int)) );
-#endif
 }
 
 

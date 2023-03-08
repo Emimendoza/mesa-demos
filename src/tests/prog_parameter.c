@@ -38,13 +38,6 @@
 #include "glad/gl.h"
 #include "glut_wrap.h"
 
-#ifndef GL_EXT_gpu_program_parameters
-typedef void (APIENTRYP PFNGLPROGRAMLOCALPARAMETERS4FVEXTPROC)(GLenum,
-    GLuint, GLsizei, const GLfloat *);
-typedef void (APIENTRYP PFNGLPROGRAMENVPARAMETERS4FVEXTPROC)(GLenum,
-    GLuint, GLsizei, const GLfloat *);
-#endif
-
 static PFNGLPROGRAMLOCALPARAMETER4FVARBPROC program_local_parameter4fv = NULL;
 static PFNGLGETPROGRAMLOCALPARAMETERFVARBPROC get_program_local_parameterfv = NULL;
 static PFNGLPROGRAMENVPARAMETER4FVARBPROC program_env_parameter4fv = NULL;

@@ -43,10 +43,6 @@
 #include "glut_wrap.h"
 #include "readtex.h"
 
-#ifndef GL_TEXTURE_CUBE_MAP_SEAMLESS
-#define GL_TEXTURE_CUBE_MAP_SEAMLESS 0x884F
-#endif
-
 static GLfloat Xrot = 0, Yrot = 0;
 static GLfloat EyeDist = 10;
 static GLboolean use_vertex_arrays = GL_FALSE;

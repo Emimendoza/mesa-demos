@@ -765,7 +765,6 @@ static void ModeMenu(int m)
 	  */
 	 glVertexPointer( 3, GL_FLOAT, sizeof(data[0]), compressed_data );
 	 glNormalPointer( GL_FLOAT, sizeof(data[0]), &compressed_data[0][3] );
-#ifdef GL_EXT_compiled_vertex_array
 	 if (allowed & LOCKED) {
 	    if (state & LOCKED) {
 	       glLockArraysEXT( 0, numuniq );
@@ -773,7 +772,6 @@ static void ModeMenu(int m)
 	       glUnlockArraysEXT();
 	    }
 	 }
-#endif
       }
       else if ((state & PRIMITIVE_MASK) == TRIANGLES &&
 	       (state & RENDER_STYLE_MASK) == DRAW_ARRAYS) {
@@ -783,7 +781,6 @@ static void ModeMenu(int m)
 	 glVertexPointer( 3, GL_FLOAT, sizeof(data[0]), expanded_data );
 	 glNormalPointer( GL_FLOAT, sizeof(data[0]), &expanded_data[0][3] );
 
-#ifdef GL_EXT_compiled_vertex_array
 	 if (allowed & LOCKED) {
 	    if (state & LOCKED) {
 	       glLockArraysEXT( 0, (numverts-2)*3 );
@@ -791,13 +788,11 @@ static void ModeMenu(int m)
 	       glUnlockArraysEXT();
 	    }
 	 }
-#endif
       }
       else {
 	 fprintf(stderr, "enabling normal arrays\n");
 	 glVertexPointer( 3, GL_FLOAT, sizeof(data[0]), data );
 	 glNormalPointer( GL_FLOAT, sizeof(data[0]), &data[0][3] );
-#ifdef GL_EXT_compiled_vertex_array
 	 if (allowed & LOCKED) {
 	    if (state & LOCKED) {
 	       glLockArraysEXT( 0, numverts );
@@ -805,7 +800,6 @@ static void ModeMenu(int m)
 	       glUnlockArraysEXT();
 	    }
 	 }
-#endif
       }
 
    }

@@ -51,9 +51,7 @@ static struct format_type Formats[] = {
    { "GL_RGBA, GLuint_8_8_8_8", 4, GL_RGBA, GL_UNSIGNED_INT_8_8_8_8 },
    { "GL_BGRA, GLuint_8_8_8_8", 4, GL_BGRA_EXT, GL_UNSIGNED_INT_8_8_8_8 },
    { "GL_BGRA, GLuint_8_8_8_8_rev", 4, GL_BGRA_EXT, GL_UNSIGNED_INT_8_8_8_8_REV },
-#ifdef GL_EXT_packed_depth_stencil
    { "GL_DEPTH_STENCIL_EXT, GLuint24+8", 4, GL_DEPTH_STENCIL_EXT, GL_UNSIGNED_INT_24_8_EXT },
-#endif
    { "GL_DEPTH_COMPONENT, GLfloat", 4, GL_DEPTH_COMPONENT, GL_FLOAT },
    { "GL_DEPTH_COMPONENT, GLuint", 4, GL_DEPTH_COMPONENT, GL_UNSIGNED_INT }
 };

@@ -41,17 +41,13 @@ static void Idle( void )
       if (Drift >= 1.0)
          Drift = 0.0;
 
-#ifdef GL_ARB_multitexture
       glActiveTextureARB(GL_TEXTURE0_ARB);
-#endif
       glMatrixMode(GL_TEXTURE);
       glLoadIdentity();
       glTranslatef(Drift, 0.0, 0.0);
       glMatrixMode(GL_MODELVIEW);
 
-#ifdef GL_ARB_multitexture
       glActiveTextureARB(GL_TEXTURE1_ARB);
-#endif
       glMatrixMode(GL_TEXTURE);
       glLoadIdentity();
       glTranslatef(0.0, Drift, 0.0);
@@ -66,7 +62,6 @@ static void DrawObject(void)
 {
    glBegin(GL_QUADS);
 
-#ifdef GL_ARB_multitexture
    glMultiTexCoord2fARB(GL_TEXTURE0_ARB, 0.0, 0.0);
    glMultiTexCoord2fARB(GL_TEXTURE1_ARB, 0.0, 0.0);
    glVertex2f(-1.0, -1.0);
@@ -82,19 +77,6 @@ static void DrawObject(void)
    glMultiTexCoord2fARB(GL_TEXTURE0_ARB, 0.0, 2.0);
    glMultiTexCoord2fARB(GL_TEXTURE1_ARB, 0.0, 1.0);
    glVertex2f(-1.0, 1.0);
-#else
-   glTexCoord2f(0.0, 0.0);
-   glVertex2f(-1.0, -1.0);
-
-   glTexCoord2f(1.0, 0.0);
-   glVertex2f(1.0, -1.0);
-
-   glTexCoord2f(1.0, 1.0);
-   glVertex2f(1.0, 1.0);
-
-   glTexCoord2f(0.0, 1.0);
-   glVertex2f(-1.0, 1.0);
-#endif
 
    glEnd();
 }
@@ -151,18 +133,14 @@ static void ModeMenu(int entry)
    }
 
    if (entry != ANIMATE) {
-#ifdef GL_ARB_multitexture
       glActiveTextureARB(GL_TEXTURE0_ARB);
-#endif
       if (enable0) {
          glEnable(GL_TEXTURE_2D);
       }
       else
          glDisable(GL_TEXTURE_2D);
 
-#ifdef GL_ARB_multitexture
       glActiveTextureARB(GL_TEXTURE1_ARB);
-#endif
       if (enable1) {
          glEnable(GL_TEXTURE_2D);
       }
@@ -309,12 +287,10 @@ static void Init( int argc, char *argv[] )
 #endif
 
    /* now bind the texture objects to the respective texture units */
-#ifdef GL_ARB_multitexture
    glActiveTextureARB(GL_TEXTURE0_ARB);
    glBindTexture(GL_TEXTURE_2D, texObj[0]);
    glActiveTextureARB(GL_TEXTURE1_ARB);
    glBindTexture(GL_TEXTURE_2D, texObj[1]);
-#endif
 
    glShadeModel(GL_FLAT);
    glClearColor(0.3, 0.3, 0.4, 1.0);

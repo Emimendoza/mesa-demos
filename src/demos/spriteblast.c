@@ -281,9 +281,7 @@ redraw(void)
         glEnable(GL_TEXTURE_2D);
      }
 
-#ifdef GL_ARB_point_sprite
      glEnable(GL_POINT_SPRITE_ARB);
-#endif
      if (UseFragShader) {
         glUseProgram(ShaderProg);
      }
@@ -306,9 +304,7 @@ redraw(void)
   glActiveTexture(GL_TEXTURE1);
   glDisable(GL_TEXTURE_2D);
 
-#ifdef GL_ARB_point_sprite
   glDisable(GL_POINT_SPRITE_ARB);
-#endif
   glDisable(GL_BLEND);
 
   glPopMatrix();
@@ -349,7 +345,6 @@ menu(int option)
   case 0:
     makePointList();
     break;
-#ifdef GL_ARB_point_parameters
   case 1:
     glPointParameterfvARB(GL_POINT_DISTANCE_ATTENUATION_ARB, constant);
     break;
@@ -359,21 +354,18 @@ menu(int option)
   case 3:
     glPointParameterfvARB(GL_POINT_DISTANCE_ATTENUATION_ARB, theQuad);
     break;
-#endif
   case 4:
     blend = 1;
     break;
   case 5:
     blend = 0;
     break;
-#ifdef GL_ARB_point_parameters
   case 6:
     glPointParameterfARB(GL_POINT_FADE_THRESHOLD_SIZE_ARB, 1.0);
     break;
   case 7:
     glPointParameterfARB(GL_POINT_FADE_THRESHOLD_SIZE_ARB, 10.0);
     break;
-#endif
   case 8:
     glEnable(GL_POINT_SMOOTH);
     smooth = 1;
@@ -529,9 +521,7 @@ makeSpriteTextures(void)
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-#ifdef GL_ARB_point_sprite
    glTexEnvi(GL_POINT_SPRITE_ARB, GL_COORD_REPLACE_ARB, GL_TRUE);
-#endif
 
    /* left=yellow, right=green */
    memset(texture, 0, sizeof(texture));
@@ -561,9 +551,7 @@ makeSpriteTextures(void)
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-#ifdef GL_ARB_point_sprite
    glTexEnvi(GL_POINT_SPRITE_ARB, GL_COORD_REPLACE_ARB, GL_TRUE);
-#endif
 
    glActiveTexture(GL_TEXTURE0);
 }

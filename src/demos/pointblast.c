@@ -270,7 +270,6 @@ menu(int option)
   case 0:
     makePointList();
     break;
-#ifdef GL_ARB_point_parameters
   case 1:
     glPointParameterfvARB(GL_POINT_DISTANCE_ATTENUATION_ARB, constant);
     break;
@@ -280,21 +279,18 @@ menu(int option)
   case 3:
     glPointParameterfvARB(GL_POINT_DISTANCE_ATTENUATION_ARB, theQuad);
     break;
-#endif
   case 4:
     blend = 1;
     break;
   case 5:
     blend = 0;
     break;
-#ifdef GL_ARB_point_parameters
   case 6:
     glPointParameterfARB(GL_POINT_FADE_THRESHOLD_SIZE_ARB, 1.0);
     break;
   case 7:
     glPointParameterfARB(GL_POINT_FADE_THRESHOLD_SIZE_ARB, 10.0);
     break;
-#endif
   case 8:
     glEnable(GL_POINT_SMOOTH);
     break;

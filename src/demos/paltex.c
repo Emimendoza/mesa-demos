@@ -134,9 +134,7 @@ static void Init( void )
    table['A'][2] = 0;
    table['A'][3] = 255;
 
-#ifdef GL_EXT_paletted_texture
-
-#if defined(GL_EXT_shared_texture_palette) && defined(USE_SHARED_PALETTE)
+#if defined(USE_SHARED_PALETTE)
    printf("Using shared palette\n");
    glColorTableEXT(GL_SHARED_TEXTURE_PALETTE_EXT,    /* target */
                    GL_RGBA,          /* internal format */
@@ -162,7 +160,6 @@ static void Init( void )
                 GL_COLOR_INDEX,      /* texture format */
                 GL_UNSIGNED_BYTE,    /* texture type */
                 texture);            /* the texture */
-#endif
 
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -206,9 +203,7 @@ static void Init2( void )
       table[i][3] = 255;
    }
 
-#ifdef GL_EXT_paletted_texture
-
-#if defined(GL_EXT_shared_texture_palette) && defined(USE_SHARED_PALETTE)
+#if defined(USE_SHARED_PALETTE)
    printf("Using shared palette\n");
    glColorTableEXT(GL_SHARED_TEXTURE_PALETTE_EXT,    /* target */
                    GL_RGBA,          /* internal format */
@@ -234,7 +229,6 @@ static void Init2( void )
                 GL_COLOR_INDEX,      /* texture format */
                 GL_UNSIGNED_BYTE,    /* texture type */
                 texture);            /* teh texture */
-#endif
 
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);

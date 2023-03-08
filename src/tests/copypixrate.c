@@ -81,7 +81,6 @@ BlitOne(void)
       y = Rand(WinHeight);
    } while (x <= ImgWidth && y <= ImgHeight);
 
-#ifdef GL_EXT_framebuffer_blit
    if (UseBlit)
    {
       glBlitFramebufferEXT(0, 0, ImgWidth, ImgHeight,
@@ -89,7 +88,6 @@ BlitOne(void)
                            GL_COLOR_BUFFER_BIT, GL_LINEAR);
    }
    else
-#endif
    {
       glWindowPos2iARB(x, y);
       glCopyPixels(0, 0, ImgWidth, ImgHeight, GL_COLOR);

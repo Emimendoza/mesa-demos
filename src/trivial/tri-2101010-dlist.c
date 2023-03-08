@@ -58,11 +58,6 @@ static void Init(void)
    fprintf(stderr, "GL_VENDOR     = %s\n", (char *) glGetString(GL_VENDOR));
    fflush(stderr);
 
-#ifndef GL_ARB_vertex_type_2_10_10_10_rev
-   fprintf(stderr,"built without ARB_vertex_type_2_10_10_10_rev\n");
-   exit(1);
-#endif
-
    if (!glutExtensionSupported("GL_ARB_vertex_type_2_10_10_10_rev")){
      fprintf(stderr,"requires ARB_vertex_type_2_10_10_10_rev\n");
      exit(1);
@@ -72,14 +67,12 @@ static void Init(void)
    list = glGenLists(1);
    glNewList(list, GL_COMPILE);
    glBegin(GL_TRIANGLES);
-#ifdef GL_ARB_vertex_type_2_10_10_10_rev
    glColorP3ui(GL_UNSIGNED_INT_2_10_10_10_REV, conv(820, 0, 0, 0));
    glVertexP3ui(GL_INT_2_10_10_10_REV, iconv(-90, -90, -30, 0));
    glColorP3ui(GL_UNSIGNED_INT_2_10_10_10_REV, conv(0, 921, 0, 0));
    glVertexP3ui(GL_INT_2_10_10_10_REV, iconv(90, -90, -30, 0));
    glColorP3ui(GL_UNSIGNED_INT_2_10_10_10_REV, conv(0, 0, 716, 0));
    glVertexP3ui(GL_INT_2_10_10_10_REV, iconv(0, 90, -30, 0));
-#endif /* GL_ARB_vertex_type_2_10_10_10_rev */
    glEnd();
    glEndList();
 
