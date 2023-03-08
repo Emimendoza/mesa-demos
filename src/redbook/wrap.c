@@ -55,9 +55,7 @@
 #define	checkImageHeight 64
 static GLubyte checkImage[checkImageHeight][checkImageWidth][4];
 
-#ifdef GL_VERSION_1_1
 static GLuint texName;
-#endif
 
 static void makeCheckImage(void)
 {
@@ -83,22 +81,15 @@ static void init(void)
    makeCheckImage();
    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-#ifdef GL_VERSION_1_1
    glGenTextures(1, &texName);
    glBindTexture(GL_TEXTURE_2D, texName);
-#endif
 
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-#ifdef GL_VERSION_1_1
    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, checkImageWidth, checkImageHeight, 
                 0, GL_RGBA, GL_UNSIGNED_BYTE, checkImage);
-#else
-   glTexImage2D(GL_TEXTURE_2D, 0, 4, checkImageWidth, checkImageHeight, 
-                0, GL_RGBA, GL_UNSIGNED_BYTE, checkImage);
-#endif
 }
 
 static void display(void)
@@ -106,9 +97,7 @@ static void display(void)
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
    glEnable(GL_TEXTURE_2D);
    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
-#ifdef GL_VERSION_1_1
    glBindTexture(GL_TEXTURE_2D, texName);
-#endif
 
    glBegin(GL_QUADS);
    glTexCoord2f(0.0, 0.0); glVertex3f(-2.0, -1.0, 0.0);

@@ -56,9 +56,7 @@
 #define	stripeImageWidth 32
 GLubyte stripeImage[4*stripeImageWidth];
 
-#ifdef GL_VERSION_1_1
 static GLuint texName;
-#endif
 
 static void makeStripeImage(void)
 {
@@ -88,20 +86,13 @@ static void init(void)
    makeStripeImage();
    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-#ifdef GL_VERSION_1_1
    glGenTextures(1, &texName);
    glBindTexture(GL_TEXTURE_1D, texName);
-#endif
    glTexParameteri(GL_TEXTURE_1D, GL_TEXTURE_WRAP_S, GL_REPEAT);
    glTexParameteri(GL_TEXTURE_1D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
    glTexParameteri(GL_TEXTURE_1D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-#ifdef GL_VERSION_1_1
    glTexImage1D(GL_TEXTURE_1D, 0, GL_RGBA, stripeImageWidth, 0,
                 GL_RGBA, GL_UNSIGNED_BYTE, stripeImage);
-#else
-   glTexImage1D(GL_TEXTURE_1D, 0, 4, stripeImageWidth, 0,
-                GL_RGBA, GL_UNSIGNED_BYTE, stripeImage);
-#endif
 
    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
    currentCoeff = xequalzero;
@@ -128,9 +119,7 @@ static void display(void)
 
    glPushMatrix ();
    glRotatef(45.0, 0.0, 0.0, 1.0);
-#ifdef GL_VERSION_1_1
    glBindTexture(GL_TEXTURE_1D, texName);
-#endif
    glutSolidTeapot(2.0);
    glPopMatrix ();
    glFlush();

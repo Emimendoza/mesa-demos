@@ -82,7 +82,6 @@ static void drawCube(GLdouble x0, GLdouble x1, GLdouble y0, GLdouble y1,
    v[0][2] = v[1][2] = v[2][2] = v[3][2] = z0;
    v[4][2] = v[5][2] = v[6][2] = v[7][2] = z1;
 
-#ifdef GL_VERSION_1_1
    glEnableClientState (GL_VERTEX_ARRAY);
    glEnableClientState (GL_COLOR_ARRAY);
    glVertexPointer (3, GL_FLOAT, 0, v);
@@ -90,11 +89,6 @@ static void drawCube(GLdouble x0, GLdouble x1, GLdouble y0, GLdouble y1,
    glDrawElements (GL_QUADS, NFACE*4, GL_UNSIGNED_BYTE, indices);
    glDisableClientState (GL_VERTEX_ARRAY);
    glDisableClientState (GL_COLOR_ARRAY);
-#else
-   printf ("If this is GL Version 1.0, ");
-   printf ("vertex arrays are not supported.\n");
-   exit(1);
-#endif
 }
 
 /*  Note:  polygons must be drawn from front to back

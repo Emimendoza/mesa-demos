@@ -51,7 +51,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#ifdef GL_VERSION_1_2
 #define	iWidth 16
 #define	iHeight 16
 #define iDepth 16
@@ -151,13 +150,3 @@ int main(int argc, char** argv)
    glutMainLoop();
    return 0; 
 }
-#else
-int main(int argc, char** argv)
-{
-    fprintf (stderr, "This program demonstrates a feature which is not in OpenGL Version 1.0 or 1.1.\n");
-    fprintf (stderr, "If your implementation of OpenGL has the right extensions,\n");
-    fprintf (stderr, "you may be able to modify this program to make it run.\n");
-    return 0;
-}
-#endif
-

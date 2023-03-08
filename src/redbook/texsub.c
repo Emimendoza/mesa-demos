@@ -47,7 +47,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#ifdef GL_VERSION_1_1
 /*  Create checkerboard textures  */
 #define checkImageWidth 64
 #define checkImageHeight 64
@@ -176,12 +175,3 @@ int main(int argc, char** argv)
    glutMainLoop();
    return 0;
 }
-#else
-int main(int argc, char** argv)
-{
-    fprintf (stderr, "This program demonstrates a feature which is not in OpenGL Version 1.0.\n");
-    fprintf (stderr, "If your implementation of OpenGL Version 1.0 has the right extensions,\n");
-    fprintf (stderr, "you may be able to modify this program to make it run.\n");
-    return 0;
-}
-#endif
