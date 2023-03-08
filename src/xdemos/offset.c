@@ -127,14 +127,6 @@ int main(int argc, char** argv) {
 
     glXMakeCurrent(dpy, win, cx);
 
-    /* check for the polygon offset extension */
-#ifndef GL_VERSION_1_1
-    if (!query_extension("GL_EXT_polygon_offset"))
-        error(argv[0], "polygon_offset extension is not available");
-#else
-   (void) query_extension;
-#endif
-
     /* set up viewing parameters */
     glMatrixMode(GL_PROJECTION);
     glFrustum(-1, 1, -1, 1, 6, 20);
@@ -147,13 +139,8 @@ int main(int argc, char** argv) {
     glGetIntegerv(GL_DEPTH_BITS, &z);
     printf("GL_DEPTH_BITS = %d\n", z);
 
-#ifdef GL_EXT_polygon_offset
-    printf("using 1.0 offset extension\n");
-    glPolygonOffsetEXT( 1.0, 0.00001 );
-#else
     printf("using 1.1 offset\n");
     glPolygonOffset( 1.0, 0.5 );
-#endif
 
     glShadeModel( GL_FLAT );
     glDisable( GL_DITHER );

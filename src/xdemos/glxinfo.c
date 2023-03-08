@@ -574,28 +574,26 @@ print_screen_info(Display *dpy, int scrnum,
 
       CheckError(__LINE__);
 
-#ifdef GL_VERSION_2_0
       if (version >= 20) {
          char *v = (char *) glGetString(GL_SHADING_LANGUAGE_VERSION);
          printf("%s shading language version string: %s\n", oglstring, v);
       }
-#endif
+
       CheckError(__LINE__);
-#ifdef GL_VERSION_3_0
+
       if (version >= 30 && !es2Profile) {
          GLint flags;
          glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
          printf("%s context flags: %s\n", oglstring, context_flags_string(flags));
       }
-#endif
+
       CheckError(__LINE__);
-#ifdef GL_VERSION_3_2
+
       if (version >= 32 && !es2Profile) {
          GLint mask;
          glGetIntegerv(GL_CONTEXT_PROFILE_MASK, &mask);
          printf("%s profile mask: %s\n", oglstring, profile_mask_string(mask));
       }
-#endif
 
       CheckError(__LINE__);
 
