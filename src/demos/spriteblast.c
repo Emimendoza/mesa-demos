@@ -442,12 +442,8 @@ key(unsigned char c, int x, int y)
   case 'o':
   case 'O':
     org ^= 1;
-#ifdef GL_VERSION_2_0
-#ifdef GL_ARB_point_parameters
     glPointParameteri(GL_POINT_SPRITE_COORD_ORIGIN,
                       org ? GL_LOWER_LEFT : GL_UPPER_LEFT);
-#endif
-#endif
     glutPostRedisplay();
     break;
   case 't':
@@ -656,9 +652,7 @@ main(int argc, char **argv)
   glEnable(GL_POINT_SMOOTH);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   glPointSize(32.0);
-#ifdef GL_ARB_point_parameters
   glPointParameterfvARB(GL_POINT_DISTANCE_ATTENUATION_ARB, theQuad);
-#endif
 
   glutMainLoop();
   return 0;             /* ANSI C requires main to return int. */

@@ -533,21 +533,17 @@ redraw(void)
 	 to raise the depth of the projected shadow slightly so
 	 that it does not depth buffer alias with the floor. */
       if (offsetShadow) {
-	switch (polygonOffsetVersion) {
-	case EXTENSION:
-#ifdef GL_EXT_polygon_offset
-	  glEnable(GL_POLYGON_OFFSET_EXT);
-	  break;
-#endif
-#ifdef GL_VERSION_1_1
-	case ONE_DOT_ONE:
-          glEnable(GL_POLYGON_OFFSET_FILL);
-	  break;
-#endif
-	case MISSING:
-	  /* Oh well. */
-	  break;
-	}
+         switch (polygonOffsetVersion) {
+         case EXTENSION:
+            glEnable(GL_POLYGON_OFFSET_EXT);
+            break;
+         case ONE_DOT_ONE:
+            glEnable(GL_POLYGON_OFFSET_FILL);
+            break;
+         case MISSING:
+            /* Oh well. */
+            break;
+         }
       }
 
       /* Render 50% black shadow color on top of whatever the
@@ -567,21 +563,17 @@ redraw(void)
       glEnable(GL_LIGHTING);
 
       if (offsetShadow) {
-	switch (polygonOffsetVersion) {
-#ifdef GL_EXT_polygon_offset
-	case EXTENSION:
-	  glDisable(GL_POLYGON_OFFSET_EXT);
-	  break;
-#endif
-#ifdef GL_VERSION_1_1
-	case ONE_DOT_ONE:
-          glDisable(GL_POLYGON_OFFSET_FILL);
-	  break;
-#endif
-	case MISSING:
-	  /* Oh well. */
-	  break;
-	}
+         switch (polygonOffsetVersion) {
+         case EXTENSION:
+            glDisable(GL_POLYGON_OFFSET_EXT);
+            break;
+         case ONE_DOT_ONE:
+            glDisable(GL_POLYGON_OFFSET_FILL);
+            break;
+         case MISSING:
+            /* Oh well. */
+            break;
+         }
       }
       if (stencilShadow) {
         glDisable(GL_STENCIL_TEST);
@@ -851,21 +843,15 @@ main(int argc, char **argv)
   glutAttachMenu(GLUT_RIGHT_BUTTON);
   makeDinosaur();
 
-#ifdef GL_VERSION_1_1
   if (GLAD_GL_VERSION_1_1 && !forceExtension) {
     polygonOffsetVersion = ONE_DOT_ONE;
     glPolygonOffset(-2.0, -9.0);
-  } else
-#endif
-  {
-#ifdef GL_EXT_polygon_offset
-  /* check for the polygon offset extension */
-  if (GLAD_GL_EXT_polygon_offset) {
-    polygonOffsetVersion = EXTENSION;
-    glPolygonOffsetEXT(-2.0, -0.002);
-  } else 
-#endif
-    {
+  } else {
+    /* check for the polygon offset extension */
+    if (GLAD_GL_EXT_polygon_offset) {
+      polygonOffsetVersion = EXTENSION;
+      glPolygonOffsetEXT(-2.0, -0.002);
+    } else {
       polygonOffsetVersion = MISSING;
       printf("\ndinoshine: Missing polygon offset.\n");
       printf("           Expect shadow depth aliasing artifacts.\n\n");
