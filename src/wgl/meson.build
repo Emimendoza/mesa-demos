@@ -49,6 +49,6 @@ executable(
 executable(
   'wincopy', files('wincopy.c', 'wglutil.c'),
   dependencies: [dep_gl, idep_glad],
-  gui_app: true,
+  win_subsystem: 'windows',
   install: true
 )
