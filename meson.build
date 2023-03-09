@@ -138,16 +138,37 @@ elif not get_option('glut').disabled()
     dep_glut = cc.find_library(
       'glut',
       has_headers: 'GL/glut.h',
-      required: get_option('glut')
+      required: false
     )
+  endif
+  if not dep_glut.found()
+    cmake = import('cmake')
+    opts = cmake.subproject_options()
+    opts.add_cmake_defines({
+      'FREEGLUT_BUILD_DEMOS': false,
+      'FREEGLUT_BUILD_STATIC_LIBS': false
+    })
+    sub_proj = cmake.subproject('freeglut', options: opts,
+                                required: get_option('glut'))
+    if sub_proj.found()
+      dep_glut = sub_proj.dependency('freeglut')
+      if host_machine.system() == 'windows'
+        add_project_arguments(['-DFREEGLUT_LIB_PRAGMAS=0'],
+                              language: ['c', 'cpp'])
+      endif
+    endif
+  endif
+  if not dep_glut.found() and get_option('glut').enabled()
+    error('glut was requested, but not found')
   endif
 else
   dep_glut = dependency('', required : false)
 endif
 
-if dep_glut.found() and cc.has_function('glutInitContextProfile',
-                                        dependencies: [dep_glut],
-                                        prefix : '#include <GL/freeglut.h>')
+if dep_glut.found() and (dep_glut.type_name() == 'internal' or
+   cc.has_function('glutInitContextProfile',
+                   dependencies: [dep_glut],
+                   prefix : '#include <GL/freeglut.h>'))
   add_project_arguments('-DHAVE_FREEGLUT', language : ['c', 'cpp'])
 endif
 

@@ -1,0 +1,4 @@
+[wrap-git]
+url = https://github.com/FreeGLUTProject/freeglut.git
+revision = v3.4.0
+depth = 1
