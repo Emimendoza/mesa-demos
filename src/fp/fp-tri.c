@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#ifndef WIN32
+#ifndef _WIN32
 #include <unistd.h>
 #include <signal.h>
 #endif
