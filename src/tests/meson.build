@@ -115,7 +115,6 @@ glut_progs = [
   'texdown',
   'texfilt',
   'texgenmix',
-  'texleak',
   'texline',
   'texobj',
   'texrect',
@@ -135,6 +134,11 @@ glut_progs = [
   'zdrawpix',
   'zreaddraw',
 ]
+
+if host_machine.system() != 'windows'
+  glut_progs += 'texleak'
+endif
+
 foreach p : glut_progs
   executable(
     p, files(p + '.c'),
