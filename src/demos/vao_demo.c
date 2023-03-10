@@ -286,8 +286,8 @@ static void Init( void )
    glEnableClientState( GL_COLOR_ARRAY );
 
    glBindVertexArrayAPPLE( 0 );
-   glVertexPointer( 4, GL_FLOAT, sizeof(GLfloat) * 4, (void *) 0xDEADBEEF );
-   glColorPointer( 4, GL_FLOAT, sizeof(GLfloat) * 4, (void *) 0xBADDC0DE );
+   glVertexPointer( 4, GL_FLOAT, sizeof(GLfloat) * 4, (void *) (uintptr_t) 0xDEADBEEF );
+   glColorPointer( 4, GL_FLOAT, sizeof(GLfloat) * 4, (void *) (uintptr_t) 0xBADDC0DE );
 }
 
 
