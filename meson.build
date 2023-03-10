@@ -172,6 +172,7 @@ elif host_machine.system() == 'openbsd'
 endif
 
 c_args = []
+cpp_args = []
 if cc.get_argument_syntax() == 'msvc'
   c_args += '-D_CRT_SECURE_NO_WARNINGS'
   c_args += cc.get_supported_arguments([
@@ -179,6 +180,11 @@ if cc.get_argument_syntax() == 'msvc'
     '/wd4244', # conversion from 'type1' to 'type2', possible loss of data
     '/wd4305', # truncation from 'type1' to 'type2'
     '/wd4459', # declaration of 'var' hides global declaration
+    '/wd4005', # macro redefinition
+  ])
+  cpp_args += cc.get_supported_arguments([
+    '/wd4305', # truncation from 'type1' to 'type2'
+    '/wd4005', # macro redefinition
   ])
 else
   c_args += cc.get_supported_arguments([
@@ -207,5 +213,6 @@ else
 endif
 
 add_project_arguments(c_args, language: 'c')
+add_project_arguments(cpp_args, language: 'cpp')
 
 subdir('src')
