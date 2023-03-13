@@ -177,7 +177,7 @@ if cc.get_argument_syntax() == 'msvc'
   c_args += cc.get_supported_arguments([
     '/wd4100', # 'var': unreferenced formal parameter
     '/wd4244', # conversion from 'type1' to 'type2', possible loss of data
-    '/wd4305', # trancation from 'type1' to 'type2'
+    '/wd4305', # truncation from 'type1' to 'type2'
     '/wd4459', # declaration of 'var' hides global declaration
   ])
 else
