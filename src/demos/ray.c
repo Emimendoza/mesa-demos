@@ -17,11 +17,6 @@
 
 #include "glut_wrap.h"
 
-#ifdef XMESA
-#include "GL/xmesa.h"
-static int fullscreen = 1;
-#endif
-
 static int WIDTH = 640;
 static int HEIGHT = 480;
 
@@ -226,12 +221,6 @@ key(unsigned char k, int x, int y)
 	 poutline = 1;
       }
       break;
-#ifdef XMESA
-   case ' ':
-      XMesaSetFXmode(fullscreen ? XMESA_FX_FULLSCREEN : XMESA_FX_WINDOW);
-      fullscreen = (!fullscreen);
-      break;
-#endif
    }
 }
 
@@ -881,9 +870,6 @@ main(int ac, char **av)
    glFogfv(GL_FOG_COLOR, fogcolor);
 
    glFogf(GL_FOG_DENSITY, 0.01);
-#ifdef FX
-   glHint(GL_FOG_HINT, GL_NICEST);
-#endif
 
    calcposobs();
 

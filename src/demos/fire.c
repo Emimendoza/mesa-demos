@@ -21,11 +21,6 @@
 #include "glut_wrap.h"
 #include "readtex.h"
 
-#ifdef XMESA
-#include "GL/xmesa.h"
-static int fullscreen = 1;
-#endif
-
 #ifndef M_PI
 #define M_PI 3.1415926535
 #endif
@@ -604,12 +599,6 @@ key(unsigned char key, int x, int y)
    case 'T':
       ridtri -= 0.005;
       break;
-#ifdef XMESA
-   case ' ':
-      XMesaSetFXmode(fullscreen ? XMESA_FX_FULLSCREEN : XMESA_FX_WINDOW);
-      fullscreen = (!fullscreen);
-      break;
-#endif
    case 'n':
       NiceFog = !NiceFog;
       printf("NiceFog %d\n", NiceFog);

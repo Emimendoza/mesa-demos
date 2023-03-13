@@ -19,11 +19,6 @@
 #include "readtex.h"
 #include "tunneldat.h"
 
-#ifdef XMESA
-#include "GL/xmesa.h"
-static int fullscreen = 1;
-#endif
-
 static int WIDTH = 640;
 static int HEIGHT = 480;
 
@@ -224,13 +219,6 @@ key(unsigned char k, int x, int y)
    case 'z':
       v -= 5.;
       break;
-
-#ifdef XMESA
-   case ' ':
-      fullscreen = (!fullscreen);
-      XMesaSetFXmode(fullscreen ? XMESA_FX_FULLSCREEN : XMESA_FX_WINDOW);
-      break;
-#endif
    case 'j':
       joyactive = (!joyactive);
       break;

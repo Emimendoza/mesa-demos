@@ -26,11 +26,6 @@ extern "C" {
 #include <mmsystem.h>
 #endif
 
-#ifdef XMESA
-#include "GL/xmesa.h"
-static int fullscreen=1;
-#endif
-
 static int WIDTH=640;
 static int HEIGHT=480;
 static int NUMPART=7500;
@@ -290,12 +285,6 @@ static void key(unsigned char key, int x, int y)
   case 'f':
     fog=(!fog);
     break;
-#ifdef XMESA
-  case ' ':
-    XMesaSetFXmode(fullscreen ? XMESA_FX_FULLSCREEN : XMESA_FX_WINDOW);
-    fullscreen=(!fullscreen);
-    break;
-#endif
   }
 }
 
@@ -377,9 +366,6 @@ int main(int ac,char **av)
   glFogi(GL_FOG_MODE,GL_EXP);
   glFogfv(GL_FOG_COLOR,fogcolor);
   glFogf(GL_FOG_DENSITY,0.1);
-#ifdef FX
-  glHint(GL_FOG_HINT,GL_NICEST);
-#endif
 
   initparticle();
 

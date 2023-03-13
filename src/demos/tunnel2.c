@@ -22,18 +22,6 @@
 #include "readtex.h"
 #include "tunneldat.h"
 
-#ifdef FX
-#endif
-
-#ifdef XMESA
-#include "GL/xmesa.h"
-static int fullscreen = 1;
-#endif
-
-#ifdef FX
-GLint fxMesaSelectCurrentBoard(int);
-#endif
-
 static int WIDTHC0 = 640;
 static int HEIGHTC0 = 480;
 
@@ -224,18 +212,6 @@ key(unsigned char k, int x, int y)
    case 'z':
       v -= 5.;
       break;
-
-#ifdef XMESA
-   case ' ':
-      fullscreen = (!fullscreen);
-
-      glutSetWindow(channel[0]);
-      XMesaSetFXmode(fullscreen ? XMESA_FX_FULLSCREEN : XMESA_FX_WINDOW);
-
-      glutSetWindow(channel[1]);
-      XMesaSetFXmode(fullscreen ? XMESA_FX_FULLSCREEN : XMESA_FX_WINDOW);
-      break;
-#endif
 
    case 'j':
       joyactive = (!joyactive);
@@ -566,12 +542,6 @@ main(int ac, char **av)
 
    glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
 
-#ifdef FX
-   if (fxMesaSelectCurrentBoard(0) < 0) {
-      fprintf(stderr, "The first Voodoo Graphics board is missing !?!?\n");
-      return -1;
-   }
-#endif
    if (!(channel[0] = glutCreateWindow("Channel 0"))) {
       fprintf(stderr, "Error, couldn't open window\n");
       return -1;
@@ -585,12 +555,6 @@ main(int ac, char **av)
    glutKeyboardFunc(key);
    glutSpecialFunc(special);
 
-#ifdef FX
-   if (fxMesaSelectCurrentBoard(1) < 0) {
-      fprintf(stderr, "The second Voodoo Graphics board is missing !\n");
-      exit(-1);
-   }
-#endif
    glutInitWindowPosition(WIDTHC0, 0);
    glutInitWindowSize(WIDTHC1, HEIGHTC1);
    if (!(channel[1] = glutCreateWindow("Channel 1"))) {
