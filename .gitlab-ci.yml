@@ -10,6 +10,10 @@ stages:
   - container
   - build
 
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+    - if: $CI_PIPELINE_SOURCE == 'push'
 
 # When & how to run the CI
 .ci-run-policy:
