@@ -27,7 +27,7 @@ foreach p : progs
   executable(
     p, files(p + '.c'),
     dependencies: [
-      dep_gl, dep_glu, dep_m, idep_util, dep_osmesa
+      dep_osmesa, dep_m, idep_util
     ],
     install: true
   )
