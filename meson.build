@@ -99,10 +99,11 @@ if not dep_glu.found() and host_machine.system() != 'darwin'
 endif
 
 dep_glx = dependency('glx', required: false, disabler : true)
-if not dep_glx.found() and host_machine.system() == 'darwin'
-  # xquartz doesn't have a glx.pc, but it does have the header. And all the
-  # symbols reside in libGL, so let's just use that.
-  if cc.check_header('GL/glx.h', dependencies: dep_x11)
+if not dep_glx.found()
+  # Both Mesa build without GLVND and XQuartz lacks a glx.pc, but does
+  # provide the header. And all the symbols reside in libGL, so let's
+  # just use that.
+  if cc.check_header('GL/glx.h', dependencies: [dep_x11, dep_gl])
     dep_glx = dep_gl
   endif
 endif
