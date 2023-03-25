@@ -25,18 +25,13 @@ executable(
   install: true
 )
 executable(
-  'es2gears_x11', files('es2gears.c'),
-  dependencies: [dep_gles2, idep_eglut_x11, idep_util],
+  'es2gears', files('es2gears.c'),
+  dependencies: [dep_gles2, idep_eglut, idep_util],
   install: true
 )
 executable(
   'es2tri', files('es2tri.c'),
   dependencies: [_deps_x11, dep_m],
-  install: true
-)
-executable(
-  'es2gears_wayland', files('es2gears.c'),
-  dependencies: [dep_gles2, idep_eglut_wayland, idep_util],
   install: true
 )
 executable(
