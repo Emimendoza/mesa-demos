@@ -206,9 +206,7 @@ eglutInit(int argc, char **argv)
       }
    }
 
-#if defined(X11_SUPPORT) || defined(WAYLAND_SUPPORT)
    _eglut->wsi = _eglutGetWindowSystemInterface();
-#endif
 
    _eglutNativeInitDisplay();
    _eglut->dpy = eglGetDisplay(_eglut->native_dpy);

@@ -51,24 +51,3 @@ if wsi_deps.length() > 0
 else
   idep_eglut = disabler()
 endif
-
-_libeglut_x11 = static_library(
-  'eglut_x11',
-  files('eglut.c', 'eglut_x11.c'),
-  dependencies: [dep_x11, dep_egl])
-
-idep_eglut_x11 = declare_dependency(
-  link_with: _libeglut_x11,
-  include_directories: inc_glut)
-
-_wayland_sources = files('eglut.c', 'eglut_wayland.c')
-
-_libeglut_wayland = static_library(
-  'eglut_wayland', _wayland_sources,
-  dependencies: [dep_wayland, dep_egl, dep_epoll, dep_libdecor]
-)
-
-idep_eglut_wayland = declare_dependency(
-  link_with: _libeglut_wayland,
-  include_directories: inc_glut
-)
