@@ -20,6 +20,7 @@
  * SOFTWARE.
  */
 
+#include "eglutint.h"
 #include "wsi.h"
 
 #include <stdlib.h>
@@ -36,4 +37,35 @@ _eglutGetWindowSystemInterface(void)
 #elif defined(X11_SUPPORT)
    return x11_wsi_interface();
 #endif
+}
+
+void
+_eglutNativeInitDisplay(void)
+{
+   _eglut->wsi.init_display();
+}
+
+void
+_eglutNativeFiniDisplay(void)
+{
+   _eglut->wsi.fini_display();
+}
+
+void
+_eglutNativeInitWindow(struct eglut_window *win, const char *title,
+                       int x, int y, int w, int h)
+{
+   _eglut->wsi.init_window(win, title, x, y, w, h);
+}
+
+void
+_eglutNativeFiniWindow(struct eglut_window *win)
+{
+   _eglut->wsi.fini_window(win);
+}
+
+void
+_eglutNativeEventLoop(void)
+{
+   _eglut->wsi.event_loop();
 }

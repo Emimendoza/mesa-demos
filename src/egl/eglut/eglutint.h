@@ -28,6 +28,7 @@
 
 #include "EGL/egl.h"
 #include "eglut.h"
+#include "wsi/wsi.h"
 
 struct eglut_window {
    EGLConfig config;
@@ -72,6 +73,7 @@ struct eglut_state {
    EGLint major, minor;
 
    struct eglut_window *current;
+   struct eglut_wsi_interface wsi;
 
    int redisplay;
 };
