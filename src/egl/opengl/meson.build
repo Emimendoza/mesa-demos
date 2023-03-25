@@ -21,13 +21,13 @@
 _deps = [dep_gl, dep_m, idep_util]
 
 executable(
-  'eglgears_x11', files('eglgears.c'),
-  dependencies: [_deps, dep_glu, idep_eglut_x11],
+  'eglgears', files('eglgears.c'),
+  dependencies: [_deps, dep_glu, idep_eglut],
   install: true
 )
 executable(
-  'egltri_x11', files('egltri.c'),
-  dependencies: [_deps, dep_glu, idep_eglut_x11],
+  'egltri', files('egltri.c'),
+  dependencies: [_deps, dep_glu, idep_eglut],
   install: true
 )
 executable(
@@ -38,17 +38,6 @@ executable(
 executable(
   'xeglthreads', files('xeglthreads.c'),
   dependencies: [_deps, dep_x11],
-  install: true
-)
-
-executable(
-  'eglgears_wayland', files('eglgears.c'),
-  dependencies: [_deps, dep_glu, idep_eglut_wayland],
-  install: true
-)
-executable(
-  'egltri_wayland', files('egltri.c'),
-  dependencies: [_deps, dep_glu, idep_eglut_wayland],
   install: true
 )
 
