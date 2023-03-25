@@ -39,20 +39,20 @@ executable(
   'clear', files('clear.c'),
   dependencies: [
       # intentionally not link to dep_gles1
-      dep_egl, dep_m, idep_glad, idep_util, idep_eglut_x11
+      dep_egl, dep_m, idep_glad, idep_util, idep_eglut
   ])
 
-progs_x11 = [
+progs = [
   'drawtex',
   'gears',
   'torus',
   'tri',
 ]
-foreach p : progs_x11
+foreach p : progs
   executable(
-    p + '_x11', files(p + '.c'),
+    p, files(p + '.c'),
     dependencies: [
-      dep_gles1, dep_m, idep_glad, idep_util, idep_eglut_x11
+      dep_gles1, dep_m, idep_glad, idep_util, idep_eglut
     ])
 endforeach
 
