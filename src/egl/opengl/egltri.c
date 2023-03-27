@@ -118,6 +118,7 @@ special_key(int special)
    default:
       break;
    }
+   eglutPostRedisplay();
 }
 
 int

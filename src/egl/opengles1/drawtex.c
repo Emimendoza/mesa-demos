@@ -76,6 +76,8 @@ reshape(int width, int height)
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
    glTranslatef(0.0, 0.0, -15.0);
+
+   eglutPostRedisplay();
 }
 
 
@@ -199,6 +201,7 @@ key(unsigned char key)
    default:
       break;
    }
+   eglutPostRedisplay();
 }
 
 static void
@@ -220,6 +223,7 @@ special_key(int key)
    default:
       break;
    }
+   eglutPostRedisplay();
 }
 
 int

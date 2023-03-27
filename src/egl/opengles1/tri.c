@@ -131,6 +131,8 @@ reshape(int width, int height)
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
    glTranslatef(0.0, 0.0, -10.0);
+
+   eglutPostRedisplay();
 }
 
 
@@ -187,6 +189,7 @@ special_key(int special)
    default:
       break;
    }
+   eglutPostRedisplay();
 }
 
 int
