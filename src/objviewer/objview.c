@@ -10,7 +10,7 @@
 #include <stdio.h>
 #include <assert.h>
 #include <stdarg.h>
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include "glut_wrap.h"
 #include "glm.h"
 #include "skybox.h"
@@ -479,7 +479,7 @@ main(int argc, char** argv)
    glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
    glutCreateWindow("objview");
 
-   gladLoadGL();
+   gladLoaderLoadGL();
 
    DoFeatureChecks();
 
@@ -514,5 +514,6 @@ main(int argc, char** argv)
 
    glutMainLoop();
 
+   gladLoaderUnloadGL();
    return 0;
 }

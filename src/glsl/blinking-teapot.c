@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include "glut_wrap.h"
 #include "shaderutil.h"
 
@@ -175,8 +175,9 @@ main (int argc, char **argv)
   glutDisplayFunc (render);
   glutMouseFunc (mouse);
   glutMotionFunc (motion);
-  gladLoadGL();
+  gladLoaderLoadGL();
   init_opengl ();
   glutMainLoop ();
+  gladLoaderUnloadGL();
   return 0;
 }

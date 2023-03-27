@@ -5,7 +5,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <math.h>
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include "glut_wrap.h"
 
 
@@ -179,7 +179,7 @@ int main(int argc, char **argv)
 	exit(1);
     }
 
-    gladLoadGL();
+    gladLoaderLoadGL();
 
     Init();
 
@@ -187,5 +187,6 @@ int main(int argc, char **argv)
     glutKeyboardFunc(Key);
     glutDisplayFunc(Draw);
     glutMainLoop();
+    gladLoaderUnloadGL();
 	return 0;
 }

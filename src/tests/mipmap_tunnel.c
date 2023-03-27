@@ -13,7 +13,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include "glut_wrap.h"
 
 
@@ -263,12 +263,13 @@ main(int argc, char **argv)
    glutInit(&argc, argv);
    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
    glutCreateWindow(argv[0]);
-   gladLoadGL();
+   gladLoaderLoadGL();
    glutReshapeFunc(Reshape);
    glutDisplayFunc(Display);
    glutKeyboardFunc(Key);
    Init();
    Usage();
    glutMainLoop();
+   gladLoaderUnloadGL();
    return 0;
 }

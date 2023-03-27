@@ -10,7 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include "glut_wrap.h"
 
 #include "../util/readtex.c"  /* a hack, I know */
@@ -287,11 +287,12 @@ main( int argc, char *argv[] )
    glutInitWindowSize( 750, 250 );
    glutInitDisplayMode( GLUT_RGB | GLUT_DOUBLE );
    glutCreateWindow(argv[0]);
-   gladLoadGL();
+   gladLoaderLoadGL();
    Init();
    glutReshapeFunc( Reshape );
    glutKeyboardFunc( Key );
    glutDisplayFunc( Display );
    glutMainLoop();
+   gladLoaderUnloadGL();
    return 0;
 }

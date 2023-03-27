@@ -5,7 +5,7 @@
 
 
 
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -143,11 +143,12 @@ main(int argc, char **argv)
     if (glutCreateWindow(*argv) == GL_FALSE) {
        exit(1);
     }
-    gladLoadGL();
+    gladLoaderLoadGL();
     glutReshapeFunc(Reshape);
     glutKeyboardFunc(Key);
     glutDisplayFunc(Draw);
     Init();
     glutMainLoop();
+    gladLoaderUnloadGL();
     return 0;
 }

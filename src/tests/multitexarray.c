@@ -16,7 +16,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "glad/glad.h"
+#include "glad/gl.h"
 #include "glut_wrap.h"
 
 static GLuint Window = 0;
@@ -222,7 +222,7 @@ int main( int argc, char *argv[] )
    glutInitDisplayMode( GLUT_RGB | GLUT_DOUBLE );
 
    Window = glutCreateWindow("Texture Objects");
-   gladLoadGL();
+   gladLoaderLoadGL();
    if (!Window) {
       exit(1);
    }
@@ -236,5 +236,6 @@ int main( int argc, char *argv[] )
       glutIdleFunc( idle );
    glutDisplayFunc( draw );
    glutMainLoop();
+   gladLoaderUnloadGL();
    return 0;
 }

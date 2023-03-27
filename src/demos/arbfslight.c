@@ -13,7 +13,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include "glut_wrap.h"
 
 static GLfloat diffuse[4] = { 0.5f, 0.5f, 1.0f, 1.0f };
@@ -256,7 +256,7 @@ main(int argc, char *argv[])
    glutInit(&argc, argv);
    glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
    glutCreateWindow(argv[0]);
-   gladLoadGL();
+   gladLoaderLoadGL();
    glutReshapeFunc(Reshape);
    glutKeyboardFunc(Key);
    glutSpecialFunc(SpecialKey);
@@ -265,5 +265,6 @@ main(int argc, char *argv[])
       glutIdleFunc(Idle);
    Init();
    glutMainLoop();
+   gladLoaderUnloadGL();
    return 0;
 }

@@ -13,7 +13,7 @@
 #include <windows.h>
 #endif
 #define GL_GLEXT_LEGACY
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include "glut_wrap.h"
 
 #include "../util/readtex.c"   /* I know, this is a hack. */
@@ -351,7 +351,7 @@ int main( int argc, char *argv[] )
    glutInitWindowPosition( 0, 0 );
    glutInitDisplayMode( GLUT_RGB | GLUT_DOUBLE );
    glutCreateWindow(argv[0] );
-   gladLoadGL();
+   gladLoaderLoadGL();
 
    Init( argc, argv );
 
@@ -370,5 +370,6 @@ int main( int argc, char *argv[] )
    glutAttachMenu(GLUT_RIGHT_BUTTON);
 
    glutMainLoop();
+   gladLoaderUnloadGL();
    return 0;
 }

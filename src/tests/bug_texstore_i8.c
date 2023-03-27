@@ -29,7 +29,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include "glut_wrap.h"
 
 static GLenum Target = GL_TEXTURE_2D;
@@ -181,7 +181,7 @@ int main(int argc, char **argv)
 	glutInitDisplayMode(type);
 
 	win = glutCreateWindow("Tex test");
-        gladLoadGL();
+        gladLoaderLoadGL();
 	if (!win) {
 		exit(1);
 	}
@@ -192,5 +192,6 @@ int main(int argc, char **argv)
 	glutKeyboardFunc(Key);
 	glutDisplayFunc(Draw);
 	glutMainLoop();
+	gladLoaderUnloadGL();
 	return 0;
 }

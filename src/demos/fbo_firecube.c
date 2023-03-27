@@ -33,7 +33,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include "glut_wrap.h"
 #include "readtex.h"
 
@@ -1060,7 +1060,7 @@ main(int argc, char *argv[])
    glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
 
    Win = glutCreateWindow("fbo_firecube");
-   gladLoadGL();
+   gladLoaderLoadGL();
    init(argc, argv);
 
    glutDisplayFunc(draw);
@@ -1070,5 +1070,6 @@ main(int argc, char *argv[])
    glutVisibilityFunc(visible);
 
    glutMainLoop();
+   gladLoaderUnloadGL();
    return 0;             /* ANSI C requires main to return int. */
 }

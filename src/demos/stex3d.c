@@ -18,7 +18,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include "glut_wrap.h"
 
 
@@ -676,7 +676,7 @@ main(int argc, char **argv)
       exit(0);
    }
 
-   gladLoadGL();
+   gladLoaderLoadGL();
 
    init();
 
@@ -689,6 +689,7 @@ main(int argc, char **argv)
    if (animate)
       glutIdleFunc(Idle);
    glutMainLoop();
+   gladLoaderUnloadGL();
    return 0;
 }
 

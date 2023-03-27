@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include "glut_wrap.h"
 
 #define windowSize 100
@@ -309,11 +309,12 @@ main(int argc, char *argv[])
    glutInitWindowSize(windowSize, windowSize);
    glutInitDisplayMode(GLUT_DEPTH | GLUT_RGBA | GLUT_SINGLE | GLUT_ALPHA);
    glutCreateWindow(argv[0]);
-   gladLoadGL();
+   gladLoaderLoadGL();
    glutReshapeFunc(Reshape);
    glutKeyboardFunc(Key);
    glutDisplayFunc(Display);
    Init();
    glutMainLoop();
+   gladLoaderUnloadGL();
    return 0;
 }

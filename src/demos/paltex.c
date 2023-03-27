@@ -11,7 +11,7 @@
 #ifdef _WIN32
 #include <windows.h>
 #endif
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include "glut_wrap.h"
 
 
@@ -252,7 +252,7 @@ int main( int argc, char *argv[] )
    glutInit( &argc, argv );
    glutInitDisplayMode( GLUT_RGB | GLUT_DOUBLE );
    glutCreateWindow(argv[0]);
-   gladLoadGL();
+   gladLoaderLoadGL();
 
    Init();
    (void) Init2; /* silence warning */
@@ -264,5 +264,6 @@ int main( int argc, char *argv[] )
       glutIdleFunc( Idle );
 
    glutMainLoop();
+   gladLoaderUnloadGL();
    return 0;
 }

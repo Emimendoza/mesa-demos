@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include "glut_wrap.h"
 
 static GLint WinWidth = 1000, WinHeight = 800;
@@ -256,7 +256,7 @@ main(int argc, char *argv[])
    glutInitWindowSize(WinWidth, WinHeight);
    glutInitDisplayMode(mode);
    glutCreateWindow(argv[0]);
-   gladLoadGL();
+   gladLoaderLoadGL();
    glutReshapeFunc(Reshape);
    glutKeyboardFunc(Key);
    glutSpecialFunc(SpecialKey);
@@ -270,5 +270,6 @@ main(int argc, char *argv[])
    printf("Alpha Test: %s\n", (AlphaTest ? "yes" : "no"));
 
    glutMainLoop();
+   gladLoaderUnloadGL();
    return 0;
 }

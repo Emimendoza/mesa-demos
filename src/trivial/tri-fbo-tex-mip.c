@@ -1,7 +1,7 @@
 /* Framebuffer object test */
 
 
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include "glut_wrap.h"
 #include <assert.h>
 #include <stdio.h>
@@ -247,7 +247,7 @@ main(int argc, char *argv[])
    glutInitWindowSize(Width, Height);
    glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
    Win = glutCreateWindow(argv[0]);
-   gladLoadGL();
+   gladLoaderLoadGL();
    glutReshapeFunc(Reshape);
    glutKeyboardFunc(Key);
    glutDisplayFunc(Display);
@@ -255,5 +255,6 @@ main(int argc, char *argv[])
       glutIdleFunc(Idle);
    Init(argc, argv);
    glutMainLoop();
+   gladLoaderUnloadGL();
    return 0;
 }

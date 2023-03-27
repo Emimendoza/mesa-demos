@@ -45,7 +45,7 @@
  *  Determine the minimum and maximum values of a group of pixels.
  *  This demonstrates use of the glMinmax() call.
  */
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include "glut_wrap.h"
 #include <assert.h>
 #include <stdlib.h>
@@ -172,11 +172,12 @@ int main(int argc, char** argv)
    glutInitWindowSize(width, height);
    glutInitWindowPosition(100, 100);
    glutCreateWindow(argv[0]);
-   gladLoadGL();
+   gladLoaderLoadGL();
    init();
    glutReshapeFunc(reshape);
    glutKeyboardFunc(keyboard);
    glutDisplayFunc(display);
    glutMainLoop();
+   gladLoaderUnloadGL();
    return 0;
 }

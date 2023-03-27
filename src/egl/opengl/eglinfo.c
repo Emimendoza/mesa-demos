@@ -24,16 +24,14 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#define EGL_EGLEXT_PROTOTYPES
 
-#include <EGL/egl.h>
-#include <EGL/eglext.h>
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "glinfo_common.h"
-#include <glad/glad.h>
+#include "glad/egl.h"
+#include "glad/gl.h"
 
 #define MAX_CONFIGS 1000
 #define MAX_MODES 1000
@@ -440,7 +438,7 @@ createEGLContext(EGLDisplay d, EGLConfig conf, int api,
                eglDestroyContext(d, ctx);
                continue;
             }
-            gladLoadGLLoader((GLADloadproc) eglGetProcAddress);
+            gladLoadGL((GLADloadfunc) eglGetProcAddress);
             *context_version =
                gl_versions[i].major * 10 + gl_versions[i].minor;
             return ctx;
@@ -469,9 +467,9 @@ createEGLContext(EGLDisplay d, EGLConfig conf, int api,
             }
 
             if (i >= 2)
-               gladLoadGLES2Loader((GLADloadproc) eglGetProcAddress);
+               gladLoadGLES2((GLADloadfunc) eglGetProcAddress);
             else
-               gladLoadGLES1Loader((GLADloadproc) eglGetProcAddress);
+               gladLoadGLES1((GLADloadfunc) eglGetProcAddress);
             return ctx;
          }
       }
@@ -516,6 +514,7 @@ doOneContext(EGLDisplay d,
    }
 
    eglMakeCurrent(d, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
+   gladLoaderUnloadGL();
    return 0;
 }
 
@@ -528,6 +527,11 @@ doOneDisplay(EGLDisplay d, const char *name, struct options opts)
    printf("%s platform:\n", name);
    if (!eglInitialize(d, &maj, &min)) {
       printf("eglinfo: eglInitialize failed\n\n");
+      return 1;
+   }
+
+   if (!gladLoaderLoadEGL(d)) {
+      printf("eglinfo: unable to load EGL functions for %s\n", name);
       return 1;
    }
 
@@ -821,6 +825,8 @@ main(int argc, char *argv[])
    int ret = 0;
    const char *clientext;
 
+   gladLoaderLoadEGL(EGL_NO_DISPLAY);
+
    if (opts.mode != Brief) {
       clientext = PrintDisplayExtensions(EGL_NO_DISPLAY, opts.single_line);
       printf("\n");
@@ -862,5 +868,6 @@ main(int argc, char *argv[])
       ret = doOneDisplay(eglGetDisplay(EGL_DEFAULT_DISPLAY), "Default display", opts);
    }
 
+   gladLoaderUnloadEGL();
    return ret;
 }

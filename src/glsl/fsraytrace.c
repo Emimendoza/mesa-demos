@@ -24,7 +24,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include "glut_wrap.h"
 #include "shaderutil.h"
 #include <math.h>
@@ -398,7 +398,7 @@ main(int argc, char *argv[])
   glutInit(&argc, argv);
   glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
   Win = glutCreateWindow(argv[0]);
-  gladLoadGL();
+  gladLoaderLoadGL();
   glutReshapeFunc(Reshape);
   glutKeyboardFunc(Key);
   glutDisplayFunc(Draw);
@@ -407,6 +407,7 @@ main(int argc, char *argv[])
   glutIdleFunc(Draw);
   Init();
   glutMainLoop();
+  gladLoaderUnloadGL();
   return 0;
 }
 

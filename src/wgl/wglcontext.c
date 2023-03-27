@@ -22,8 +22,8 @@
 #include <windows.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <glad/glad.h>
-#include <glad/glad_wgl.h>
+#include "glad/gl.h"
+#include "glad/wgl.h"
 
 static LRESULT CALLBACK
 WndProc(HWND hWnd,
@@ -223,8 +223,8 @@ create_context(int majorVersion, int minorVersion, int profileMask, int contextF
       return;
    }
 
-   gladLoadGL();
-   gladLoadWGL(hdc);
+   gladLoaderLoadGL();
+   gladLoaderLoadWGL(hdc);
 
    if (!GLAD_WGL_ARB_create_context) {
       fprintf(stderr, "wglCreateContextAttribsARB isn't supported\n");
@@ -264,6 +264,8 @@ create_context(int majorVersion, int minorVersion, int profileMask, int contextF
    }
 
    print_context_infos();
+
+   gladLoaderUnloadGL();
 }
 
 static void
@@ -320,5 +322,6 @@ main(int argc, char *argv[])
    create_context(majorVersion, minorVersion,
                   profileMask, contextFlags);
 
+   gladLoaderUnloadGL();
    return 0;
 }

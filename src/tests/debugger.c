@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include "glut_wrap.h"
 
 
@@ -722,7 +722,7 @@ int main( int argc, char *argv[] )
    glutInitWindowSize( 200, 200 );
    glutInitDisplayMode( GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH );
    glutCreateWindow(argv[0]);
-   gladLoadGL();
+   gladLoaderLoadGL();
    glutReshapeFunc( Reshape );
    glutKeyboardFunc( Key );
    glutSpecialFunc( SpecialKey );
@@ -731,5 +731,6 @@ int main( int argc, char *argv[] )
       glutIdleFunc(Idle);
    Init(argc, argv);
    glutMainLoop();
+   gladLoaderUnloadGL();
    return 0;
 }

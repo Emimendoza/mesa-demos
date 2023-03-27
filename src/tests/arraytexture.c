@@ -34,7 +34,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include "glut_wrap.h"
 
 #if !defined(GL_EXT_texture_array) && !defined(GL_MESA_texture_array)
@@ -317,7 +317,7 @@ int main(int argc, char *argv[])
    glutInitWindowSize(350, 350);
    glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
    glutCreateWindow("Array texture test");
-   gladLoadGL();
+   gladLoaderLoadGL();
    glutReshapeFunc(Reshape);
    glutKeyboardFunc(Key);
    glutSpecialFunc(SpecialKey);
@@ -325,5 +325,6 @@ int main(int argc, char *argv[])
    glutIdleFunc(Idle);
    Init();
    glutMainLoop();
+   gladLoaderUnloadGL();
    return 0;
 }

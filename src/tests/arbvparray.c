@@ -11,7 +11,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include "glad/glad.h"
+#include "glad/gl.h"
 #include "glut_wrap.h"
 
 #define MAXVERTS 10000
@@ -289,7 +289,7 @@ int main(int argc, char **argv)
    if (glutCreateWindow("Isosurface") <= 0) {
       exit(0);
    }
-   gladLoadGL();
+   gladLoaderLoadGL();
    glutReshapeFunc(Reshape);
    glutKeyboardFunc(Key);
    glutSpecialFunc(SpecialKey);
@@ -298,5 +298,6 @@ int main(int argc, char **argv)
    init();
 
    glutMainLoop();
+   gladLoaderUnloadGL();
    return 0;
 }

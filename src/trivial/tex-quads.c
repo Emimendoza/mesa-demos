@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include "glut_wrap.h"
 
 #define NUM_TEX 10
@@ -133,11 +133,12 @@ int main(int argc, char **argv)
    if (!Win) {
       exit(1);
    }
-   gladLoadGL();
+   gladLoaderLoadGL();
    Init();
    glutReshapeFunc(Reshape);
    glutKeyboardFunc(Key);
    glutDisplayFunc(Draw);
    glutMainLoop();
+   gladLoaderUnloadGL();
    return 0;
 }

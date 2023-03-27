@@ -32,7 +32,7 @@
 #include <windows.h>
 #undef CLIP_MASK
 #endif
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include "glut_wrap.h"
 
 #include "readtex.h"
@@ -1066,7 +1066,7 @@ int main(int argc, char **argv)
       exit(0);
    }
 
-   gladLoadGL();
+   gladLoaderLoadGL();
 
    /* Make sure server supports vertex arrays */
    if (!GLAD_GL_VERSION_1_1)
@@ -1134,5 +1134,6 @@ int main(int argc, char **argv)
    glutDisplayFunc(Display);
 
    glutMainLoop();
+   gladLoaderUnloadGL();
    return 0;
 }

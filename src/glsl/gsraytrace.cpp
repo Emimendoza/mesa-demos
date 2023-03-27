@@ -28,7 +28,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include "glut_wrap.h"
 #include "shaderutil.h"
 #include <math.h>
@@ -935,7 +935,7 @@ main(int argc, char *argv[])
 #endif
    Win = glutCreateWindow(argv[0]);
 
-   gladLoadGL();
+   gladLoaderLoadGL();
    glGetError();
 
    glutReshapeFunc(Reshape);
@@ -948,6 +948,7 @@ main(int argc, char *argv[])
    Reshape(WinWidth, WinHeight ); // fix crash under nvidia driver, as Reshape() not being called before rendering, and thus the BO-s were not created
    glutMainLoop();
    glutDestroyWindow(Win);
+   gladLoaderUnloadGL();
    return 0;
 }
 

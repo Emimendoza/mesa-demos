@@ -5,7 +5,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include "glut_wrap.h"
 
 static void assert_test(const char *file, int line, int cond, const char *msg)
@@ -327,7 +327,7 @@ int main(int argc, char **argv)
 {
    glutInit(&argc, argv);
    glutCreateWindow("Mesa bug demo");
-   gladLoadGL();
+   gladLoaderLoadGL();
 
    if (!GLAD_GL_VERSION_2_0) {
       printf("Sorry, this test requires OpenGL 2.x GLSL support\n");
@@ -343,5 +343,6 @@ int main(int argc, char **argv)
    RUN_TEST(test_uniform_bool_conversion);
    /* Leave this one at the end, since it crashes Mesa's shader compiler */
    RUN_TEST(test_uniform_multiple_samplers);
+   gladLoaderUnloadGL();
    return 0;
 }

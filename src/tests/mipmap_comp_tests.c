@@ -45,7 +45,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include "glut_wrap.h"
 
 #define SIZE 16 /* not larger then 16 */
@@ -305,12 +305,13 @@ main(int argc, char** argv)
     glutInitDisplayMode (GLUT_SINGLE | GLUT_RGB | GLUT_DEPTH);
     glutInitWindowSize (600, 600);
     glutCreateWindow (argv[0]);
-    gladLoadGL();
+    gladLoaderLoadGL();
     myInit();
     glutReshapeFunc (myReshape);
     glutDisplayFunc(display);
     glutKeyboardFunc(key);
     usage();
     glutMainLoop();
+    gladLoaderUnloadGL();
     return 0;             /* ANSI C requires main to return int. */
 }

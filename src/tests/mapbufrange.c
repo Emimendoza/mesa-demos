@@ -14,8 +14,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <glad/glad.h>
-#include <glad/glad.h>
+#include "glad/gl.h"
+#include "glad/gl.h"
 #include "glut_wrap.h"
 
 static GLuint Win;
@@ -193,13 +193,13 @@ main(int argc, char *argv[])
    glutInitWindowSize(800, 200);
    glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
    Win = glutCreateWindow(argv[0]);
-   gladLoadGL();
-   gladLoadGL();
+   gladLoaderLoadGL();
    glutReshapeFunc(Reshape);
    glutKeyboardFunc(Key);
    glutDisplayFunc(Display);
    glutIdleFunc(Anim ? Idle : NULL);
    Init();
    glutMainLoop();
+   gladLoaderUnloadGL();
    return 0;
 }

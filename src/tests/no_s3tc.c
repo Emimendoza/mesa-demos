@@ -38,7 +38,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include "glut_wrap.h"
 
 static unsigned data[16];
@@ -59,7 +59,7 @@ main( int argc, char ** argv )
    glutInitWindowPosition( 0, 0 );
    glutInitWindowSize( 300, 300 );
    glutCreateWindow( "No S3TC Test" );
-   gladLoadGL();
+   gladLoaderLoadGL();
 
    gl_version = strtod( (const char *) glGetString( GL_VERSION ), NULL );
    if ( ! glutExtensionSupported( "GL_ARB_texture_compression" )
@@ -94,5 +94,6 @@ main( int argc, char ** argv )
 	       "0x%04x was generated instead.\n", GL_INVALID_ENUM, err );
    }
 	
+   gladLoaderUnloadGL();
    return (err == GL_INVALID_ENUM) ? EXIT_SUCCESS : EXIT_FAILURE;
 }

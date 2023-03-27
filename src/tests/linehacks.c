@@ -11,7 +11,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include "glut_wrap.h"
 #include "shaderutil.h"
 
@@ -322,9 +322,10 @@ main(int argc, char *argv[])
    glutKeyboardFunc(Key);
    glutSpecialFunc(SpecialKey);
    glutDisplayFunc(Draw);
-   gladLoadGL();
+   gladLoaderLoadGL();
    Usage();
    Init();
    glutMainLoop();
+   gladLoaderUnloadGL();
    return 0;
 }

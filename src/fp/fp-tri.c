@@ -8,7 +8,7 @@
 #include <signal.h>
 #endif
 
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include "glut_wrap.h"
 
 #include "readtex.c"
@@ -252,7 +252,7 @@ int main(int argc, char **argv)
    glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE | GLUT_DEPTH);
    args(argc, argv);
    glutCreateWindow(filename);
-   gladLoadGL();
+   gladLoaderLoadGL();
    glutReshapeFunc(Reshape);
    glutKeyboardFunc(Key);
    glutDisplayFunc(Draw);
@@ -264,5 +264,6 @@ int main(int argc, char **argv)
    }
 #endif
    glutMainLoop();
+   gladLoaderUnloadGL();
    return 0;
 }

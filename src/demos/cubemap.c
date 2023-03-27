@@ -39,7 +39,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include "glut_wrap.h"
 #include "readtex.h"
 
@@ -616,7 +616,7 @@ int main( int argc, char *argv[] )
    glutInit(&argc, argv);
    glutInitDisplayMode( GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE );
    glutCreateWindow("Texture Cube Mapping");
-   gladLoadGL();
+   gladLoaderLoadGL();
    glutReshapeFunc( reshape );
    glutKeyboardFunc( key );
    glutSpecialFunc( specialkey );
@@ -626,5 +626,6 @@ int main( int argc, char *argv[] )
    parse_args(argc, argv);
    usage();
    glutMainLoop();
+   gladLoaderUnloadGL();
    return 0;
 }

@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include "glut_wrap.h"
 
 #include "readtex.h"
@@ -254,7 +254,7 @@ int main( int argc, char *argv[] )
       glutInitDisplayMode( GLUT_RGB | GLUT_DOUBLE);
 
    glutCreateWindow(argv[0]);
-   gladLoadGL();
+   gladLoaderLoadGL();
 
    Init(ciMode, filename);
    Usage();
@@ -265,5 +265,6 @@ int main( int argc, char *argv[] )
    glutDisplayFunc( Display );
 
    glutMainLoop();
+   gladLoaderUnloadGL();
    return 0;
 }

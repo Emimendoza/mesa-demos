@@ -36,7 +36,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include "glut_wrap.h"
 
 static int Width = 400;
@@ -387,7 +387,7 @@ int main( int argc, char *argv[] )
    glutInitWindowSize( Width, Height );
    glutInitDisplayMode( GLUT_RGB | GLUT_DOUBLE );
    glutCreateWindow( "glInterleavedArrays test" );
-   gladLoadGL();
+   gladLoaderLoadGL();
    glutReshapeFunc( Reshape );
    glutKeyboardFunc( Key );
    glutDisplayFunc( Display );
@@ -404,5 +404,6 @@ int main( int argc, char *argv[] )
 
    Init();
    glutMainLoop();
+   gladLoaderUnloadGL();
    return 0;
 }

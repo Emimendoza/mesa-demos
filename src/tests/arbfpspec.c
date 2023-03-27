@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include "glut_wrap.h"
 
 static float Xrot = 0.0, Yrot = 0.0, Zrot = 0.0;
@@ -180,7 +180,7 @@ int main( int argc, char *argv[] )
    glutInitWindowSize( 250, 250 );
    glutInitDisplayMode( GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH );
    glutCreateWindow(argv[0]);
-   gladLoadGL();
+   gladLoaderLoadGL();
    glutReshapeFunc( Reshape );
    glutKeyboardFunc( Key );
    glutSpecialFunc( SpecialKey );
@@ -189,5 +189,6 @@ int main( int argc, char *argv[] )
       glutIdleFunc(Idle);
    Init();
    glutMainLoop();
+   gladLoaderUnloadGL();
    return 0;
 }

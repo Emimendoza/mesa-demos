@@ -11,7 +11,7 @@
 #ifdef _WIN32
 #include <windows.h>
 #endif
-#include "glad/glad.h"
+#include "glad/gl.h"
 #include "glut_wrap.h"
 
 #include "readtex.h"
@@ -104,7 +104,7 @@ int main( int argc, char *argv[] )
       exit(0);
    }
 
-   gladLoadGL();
+   gladLoaderLoadGL();
 
    init();
 
@@ -112,5 +112,6 @@ int main( int argc, char *argv[] )
    glutKeyboardFunc( key );
    glutDisplayFunc( draw );
    glutMainLoop();
+   gladLoaderUnloadGL();
    return 0;
 }

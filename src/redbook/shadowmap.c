@@ -43,7 +43,7 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include "glut_wrap.h"
 #include "matrix.h"
 /*#include "helpers.h"*/
@@ -324,7 +324,7 @@ main( int argc, char** argv )
     glutInitWindowSize( 512, 512 );
     glutInitWindowPosition( 100, 100 );
     glutCreateWindow( argv[0] );
-    gladLoadGL();
+    gladLoaderLoadGL();
 
     init();
 
@@ -335,5 +335,6 @@ main( int argc, char** argv )
 
     glutMainLoop();
 
+    gladLoaderUnloadGL();
     return 0;
 }

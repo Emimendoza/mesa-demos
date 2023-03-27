@@ -43,7 +43,7 @@
 #include <windows.h>
 #endif
 #define GL_GLEXT_LEGACY
-#include <glad/glad.h>    /* OpenGL Utility Toolkit header */
+#include "glad/gl.h"      /* OpenGL Utility Toolkit header */
 #include "glut_wrap.h"    /* OpenGL Utility Toolkit header */
 
 /* Some <math.h> files do not define M_PI... */
@@ -807,7 +807,7 @@ main(int argc, char **argv)
 #endif
 
   glutCreateWindow("Shadowy Leapin' Lizards");
-  gladLoadGL();
+  gladLoaderLoadGL();
 
   if (glutGet(GLUT_WINDOW_STENCIL_SIZE) <= 1) {
     printf("dinoshade: Sorry, I need at least 2 bits of stencil.\n");
@@ -886,5 +886,6 @@ main(int argc, char **argv)
   findPlane(floorPlane, floorVertices[1], floorVertices[2], floorVertices[3]);
 
   glutMainLoop();
+  gladLoaderUnloadGL();
   return 0;             /* ANSI C requires main to return int. */
 }

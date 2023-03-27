@@ -22,7 +22,7 @@
 #ifdef _WIN32
 #include <windows.h>
 #endif
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include "glut_wrap.h"
 
 /* Some <math.h> files do not define M_PI... */
@@ -614,7 +614,7 @@ main(int argc, char **argv)
     }
   }
   glutCreateWindow("sprite blast");
-  gladLoadGL();
+  gladLoaderLoadGL();
   glutReshapeFunc(reshape);
   glutDisplayFunc(redraw);
   glutMouseFunc(mouse);
@@ -655,5 +655,6 @@ main(int argc, char **argv)
   glPointParameterfvARB(GL_POINT_DISTANCE_ATTENUATION_ARB, theQuad);
 
   glutMainLoop();
+  gladLoaderUnloadGL();
   return 0;             /* ANSI C requires main to return int. */
 }

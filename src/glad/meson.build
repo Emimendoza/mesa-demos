@@ -20,9 +20,12 @@
 
 inc_glad = include_directories('include')
 
-_libglad_files = files('src/glad.c')
+_libglad_files = files('src/gl.c')
+if get_option('egl').allowed()
+  _libglad_files += files('src/egl.c')
+endif
 if host_machine.system() == 'windows'
-  _libglad_files += files('src/glad_wgl.c')
+  _libglad_files += files('src/wgl.c')
 endif
 
 _libglad = static_library(

@@ -15,7 +15,7 @@
 #include <windows.h>
 #endif
 #define GL_GLEXT_LEGACY
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include "glut_wrap.h"
 
 GLfloat verts[][4] = {
@@ -125,7 +125,7 @@ int main( int argc, char **argv )
    glutInitWindowSize( 250, 250 );
    glutInitWindowPosition( 100, 100 );
    glutCreateWindow( "CVA Test" );
-   gladLoadGL();
+   gladLoaderLoadGL();
 
    /* Make sure the server supports GL 1.2 vertex arrays.
     */
@@ -146,5 +146,6 @@ int main( int argc, char **argv )
    glutKeyboardFunc( keyboard );
    glutMainLoop();
 
+   gladLoaderUnloadGL();
    return 0;
 }

@@ -32,8 +32,8 @@
 
 #include <assert.h>
 #include <windows.h>
-#include <glad/glad.h>
-#include <glad/glad_wgl.h>
+#include "glad/gl.h"
+#include "glad/wgl.h"
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -445,7 +445,7 @@ make_window(const char *name, int x, int y, int width, int height)
    hRC = wglCreateContext(hDC);
    wglMakeCurrent(hDC, hRC);
 
-   gladLoadWGL(hDC);
+   gladLoaderLoadWGL(hDC);
 
    if (use_srgb || samples > 0) {
       /* We can't query/use extension functions until after we've
@@ -511,7 +511,7 @@ make_window(const char *name, int x, int y, int width, int height)
       wglMakeCurrent(hDC, hRC);
    }
 
-   gladLoadGL();
+   gladLoaderLoadGL();
 
    ShowWindow(hWnd, SW_SHOW);
    SetForegroundWindow(hWnd);
@@ -721,6 +721,7 @@ main(int argc, char *argv[])
    event_loop();
 
    /* cleanup */
+   gladLoaderUnloadGL();
    wglMakeCurrent (NULL, NULL);
    wglDeleteContext (hRC);
    ReleaseDC (hWnd, hDC);

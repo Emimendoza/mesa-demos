@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include "glut_wrap.h"
 
 static const char *filename = NULL;
@@ -352,12 +352,13 @@ int main( int argc, char *argv[] )
    glutInitWindowSize( 250, 250 );
    glutInitDisplayMode( GLUT_RGB | GLUT_SINGLE | GLUT_DEPTH );
    glutCreateWindow(argv[argc-1]);
-   gladLoadGL();
+   gladLoaderLoadGL();
    glutReshapeFunc( Reshape );
    glutKeyboardFunc( Key );
    glutDisplayFunc( Display );
    args( argc, argv );
    prepare_shaders();
    glutMainLoop();
+   gladLoaderUnloadGL();
    return 0;
 }

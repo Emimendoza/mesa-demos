@@ -58,7 +58,7 @@
  *  scaling factor and reversing the order of subtraction
  *  for a combination function.
  */
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include "glut_wrap.h"
 #include <stdlib.h>
 #include <stdio.h>
@@ -369,11 +369,12 @@ int main(int argc, char** argv)
    glutInitWindowSize(400, 400);
    glutInitWindowPosition(100, 100);
    glutCreateWindow(argv[0]);
-   gladLoadGL();
+   gladLoaderLoadGL();
    init();
    glutDisplayFunc(display);
    glutReshapeFunc(reshape);
    glutKeyboardFunc(keyboard);
    glutMainLoop();
+   gladLoaderUnloadGL();
    return 0; 
 }

@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include "glut_wrap.h"
 
 #include "readtex.c" /* I know, this is a hack. */
@@ -398,7 +398,7 @@ int main( int argc, char *argv[] )
       exit(0);
    }
 
-   gladLoadGL();
+   gladLoaderLoadGL();
    gl_version = atof( (const char *) glGetString( GL_VERSION ) );
    if ( (gl_version < 1.3) 
 	&& !glutExtensionSupported("GL_ARB_texture_compression") ) {
@@ -434,5 +434,6 @@ int main( int argc, char *argv[] )
       glutIdleFunc( Idle );
 
    glutMainLoop();
+   gladLoaderUnloadGL();
    return 0;
 }

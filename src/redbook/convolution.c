@@ -45,7 +45,7 @@
  *  Use various 2D convolutions filters to find edges in an image.
  *  
  */
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include "glut_wrap.h"
 #include <assert.h>
 #include <stdio.h>
@@ -208,11 +208,12 @@ int main(int argc, char** argv)
    glutInitWindowSize(width, height);
    glutInitWindowPosition(100, 100);
    glutCreateWindow(argv[0]);
-   gladLoadGL();
+   gladLoaderLoadGL();
    init();
    glutReshapeFunc(reshape);
    glutKeyboardFunc(keyboard);
    glutDisplayFunc(display);
    glutMainLoop();
+   gladLoaderUnloadGL();
    return 0;
 }

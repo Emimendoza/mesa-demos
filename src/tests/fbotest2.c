@@ -10,7 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include "glut_wrap.h"
 
 static int Win = 0;
@@ -219,7 +219,7 @@ main( int argc, char *argv[] )
    glutInitWindowSize(Width, Height);
    glutInitDisplayMode( GLUT_RGB | GLUT_DOUBLE );
    Win = glutCreateWindow(argv[0]);
-   gladLoadGL();
+   gladLoaderLoadGL();
    glutReshapeFunc( Reshape );
    glutKeyboardFunc( Key );
    glutDisplayFunc( Display );
@@ -227,5 +227,6 @@ main( int argc, char *argv[] )
       glutIdleFunc(Idle);
    Init();
    glutMainLoop();
+   gladLoaderUnloadGL();
    return 0;
 }

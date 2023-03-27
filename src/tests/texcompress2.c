@@ -5,7 +5,7 @@
 
 #include <assert.h>
 #include <stdio.h>
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include "glut_wrap.h"
 #include "readtex.c"
 
@@ -276,7 +276,7 @@ main( int argc, char *argv[] )
    glutInitDisplayMode( GLUT_RGB | GLUT_DOUBLE);
 
    glutCreateWindow(argv[0]);
-   gladLoadGL();
+   gladLoaderLoadGL();
 
    glutReshapeFunc( Reshape );
    glutKeyboardFunc( Key );
@@ -288,5 +288,6 @@ main( int argc, char *argv[] )
       Init(IMAGE_FILE);
 
    glutMainLoop();
+   gladLoaderUnloadGL();
    return 0;
 }

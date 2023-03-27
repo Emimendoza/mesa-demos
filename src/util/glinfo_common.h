@@ -27,7 +27,7 @@
 #ifndef GLINFO_COMMON_H
 #define GLINFO_COMMON_H
 
-#include <glad/glad.h>
+#include "glad/gl.h"
 
 #include "gl_versions.h"
 

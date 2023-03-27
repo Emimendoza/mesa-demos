@@ -46,7 +46,7 @@
  *  specifically the OpenGL routine glMultiDrawElements().
  */
 
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include "glut_wrap.h"
 #include <stdlib.h>
 #include <stdio.h>
@@ -115,11 +115,12 @@ int main(int argc, char** argv)
    glutInitWindowSize (350, 350); 
    glutInitWindowPosition (100, 100);
    glutCreateWindow (argv[0]);
-   gladLoadGL();
+   gladLoaderLoadGL();
    init ();
    glutDisplayFunc(display); 
    glutReshapeFunc(reshape);
    glutKeyboardFunc (keyboard);
    glutMainLoop();
+   gladLoaderUnloadGL();
    return 0;
 }

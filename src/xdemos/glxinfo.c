@@ -37,7 +37,7 @@
 #include <assert.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
-#include "glad/glad.h"
+#include "glad/gl.h"
 #include <GL/glx.h>
 #include <stdio.h>
 #include <string.h>
@@ -466,7 +466,7 @@ print_screen_info(Display *dpy, int scrnum,
 		       visinfo->visual, mask, &attr);
 
    if (glXMakeCurrent(dpy, win, ctx)) {
-      int loaded_gl = gladLoadGLLoader((GLADloadproc) glXGetProcAddressARB);
+      int loaded_gl = gladLoadGL((GLADloadfunc) glXGetProcAddressARB);
 
       if (!loaded_gl) {
          fprintf(stderr, "Error: unable to load GL functions\n");
@@ -608,6 +608,8 @@ print_screen_info(Display *dpy, int scrnum,
 
       if (coreProfile)
          free(glExtensions);
+
+      gladLoaderUnloadGL();
    }
    else {
       fprintf(stderr, "Error: glXMakeCurrent failed\n");

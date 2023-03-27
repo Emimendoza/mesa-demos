@@ -19,7 +19,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include "glut_wrap.h"
 #include "readtex.h"
 #include "matrix.h"
@@ -954,7 +954,7 @@ main(int argc, char **argv)
   glutInit(&argc, argv);
   glutInitDisplayMode(GLUT_RGBA | GLUT_DEPTH | GLUT_DOUBLE);
   (void) glutCreateWindow("projtex");
-  gladLoadGL();
+  gladLoaderLoadGL();
 
   if (argc > 1) {
      NumTextures = atoi(argv[1]);
@@ -979,5 +979,6 @@ main(int argc, char **argv)
   glutAttachMenu(GLUT_RIGHT_BUTTON);
   texture();
   glutMainLoop();
+  gladLoaderUnloadGL();
   return 0;             /* ANSI C requires main to return int. */
 }

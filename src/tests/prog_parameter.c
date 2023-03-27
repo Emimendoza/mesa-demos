@@ -35,7 +35,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include "glut_wrap.h"
 
 #ifndef GL_EXT_gpu_program_parameters
@@ -275,7 +275,7 @@ int main( int argc, char *argv[] )
    glutInitWindowSize( Width, Height );
    glutInitDisplayMode( GLUT_RGB );
    glutCreateWindow( "Program Parameters Test" );
-   gladLoadGL();
+   gladLoaderLoadGL();
    glutReshapeFunc( Reshape );
    glutKeyboardFunc( Key );
    glutDisplayFunc( Display );
@@ -283,5 +283,6 @@ int main( int argc, char *argv[] )
 
    Init();
 
+   gladLoaderUnloadGL();
    return 0;
 }

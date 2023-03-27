@@ -13,7 +13,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include "glut_wrap.h"
 
 /* For debug */
@@ -699,10 +699,11 @@ main(int argc, char *argv[])
       glutIdleFunc(Idle);
 
    ParseArgs(argc, argv);
-   gladLoadGL();
+   gladLoaderLoadGL();
    Init();
    Usage();
 
    glutMainLoop();
+   gladLoaderUnloadGL();
    return 0;
 }

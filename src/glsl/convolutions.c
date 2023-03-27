@@ -5,7 +5,7 @@
  * Author: Zack Rusin
  */
 
-#include <glad/glad.h>
+#include "glad/gl.h"
 
 #define GL_GLEXT_PROTOTYPES
 #include "readtex.h"
@@ -456,7 +456,7 @@ int main(int argc, char **argv)
       exit(1);
    }
 
-   gladLoadGL();
+   gladLoaderLoadGL();
    init();
 
    glutReshapeFunc(reshape);
@@ -466,5 +466,6 @@ int main(int argc, char **argv)
 
 
    glutMainLoop();
+   gladLoaderUnloadGL();
    return 0;
 }

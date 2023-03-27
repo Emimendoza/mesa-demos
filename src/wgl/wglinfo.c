@@ -34,8 +34,8 @@
 
 #include <windows.h>
 #include <stdbool.h>
-#include <glad/glad.h>
-#include <glad/glad_wgl.h>
+#include "glad/gl.h"
+#include "glad/wgl.h"
 #include <assert.h>
 #include <stdio.h>
 #include <string.h>
@@ -158,8 +158,8 @@ print_screen_info(HDC _hdc, const struct options *opts, GLboolean coreProfile)
    }
 
    if (wglMakeCurrent(hdc, ctx)) {
-      gladLoadGL();
-      gladLoadWGL(hdc);
+      gladLoaderLoadGL();
+      gladLoaderLoadWGL(hdc);
       const char *glVendor, *glRenderer, *glVersion, *glExtensions;
       const char *wglExtensions = NULL;
       struct ext_functions extfuncs;
@@ -268,6 +268,8 @@ print_screen_info(HDC _hdc, const struct options *opts, GLboolean coreProfile)
       if (opts->limits) {
          print_limits(glExtensions, oglString, version, &extfuncs);
       }
+
+      gladLoaderUnloadGL();
    }
    else {
       fprintf(stderr, "Error: wglMakeCurrent failed\n");
@@ -700,5 +702,6 @@ main(int argc, char *argv[])
       }
    }
 
+   gladLoaderUnloadGL();
    return 0;
 }

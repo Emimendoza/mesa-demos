@@ -41,7 +41,7 @@
 #include <string.h>
 #include <X11/Xlib.h>
 #include <X11/keysym.h>
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include <GL/glx.h>
 
 
@@ -480,7 +480,7 @@ main(int argc, char *argv[])
    XMapWindow(dpy, win);
    glXMakeCurrent(dpy, win, ctx);
 
-   gladLoadGL();
+   gladLoaderLoadGL();
 
    if (printInfo) {
       printf("GL_RENDERER   = %s\n", (char *) glGetString(GL_RENDERER));
@@ -497,5 +497,6 @@ main(int argc, char *argv[])
    XDestroyWindow(dpy, win);
    XCloseDisplay(dpy);
 
+   gladLoaderUnloadGL();
    return 0;
 }

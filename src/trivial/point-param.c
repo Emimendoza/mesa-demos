@@ -22,7 +22,7 @@
  * OF THIS SOFTWARE.
  */
 
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include <math.h>
 #include <stdio.h>
 #include <string.h>
@@ -147,7 +147,7 @@ int main(int argc, char **argv)
 	exit(1);
     }
 
-    gladLoadGL();
+    gladLoaderLoadGL();
 
     Init();
 
@@ -155,5 +155,6 @@ int main(int argc, char **argv)
     glutKeyboardFunc(Key);
     glutDisplayFunc(Draw);
     glutMainLoop();
+    gladLoaderUnloadGL();
     return 0;
 }

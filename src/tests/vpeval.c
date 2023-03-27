@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include "glut_wrap.h"
 
 
@@ -227,11 +227,12 @@ main(int argc, char **argv)
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB | GLUT_DEPTH);
     glutInitWindowPosition(0, 0);
     glutCreateWindow(argv[0]);
-    gladLoadGL();
+    gladLoaderLoadGL();
     myinit(argc, argv);
     glutReshapeFunc(myReshape);
     glutDisplayFunc(display);
     glutKeyboardFunc(key);
     glutMainLoop();
+    gladLoaderUnloadGL();
     return 0;             /* ANSI C requires main to return int. */
 }

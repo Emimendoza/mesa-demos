@@ -37,7 +37,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <glad/glad.h>
+#include "glad/gl.h"
 #include "glut_wrap.h"
 
 #define inline __inline__
@@ -125,7 +125,7 @@ int main( int argc, char *argv[] )
    glutInitDisplayMode( GLUT_RGB );
 
    glutCreateWindow( argv[0] );
-   gladLoadGL();
+   gladLoaderLoadGL();
 
    if ( argc > 1 ) {
       count = strtoul( argv[1], NULL, 0 );
@@ -141,5 +141,6 @@ int main( int argc, char *argv[] )
    glutIdleFunc( Idle );
 
    glutMainLoop();
+   gladLoaderUnloadGL();
    return 0;
 }
