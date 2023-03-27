@@ -1,7 +1,5 @@
 This directory was generated as follows:
 
-    git clone -b master https://github.com/Dav1dde/glad
+    git clone -b glad2 https://github.com/Dav1dde/glad
     cd glad
-    python -m glad --out-path /path/to/mesa/demos/src/glad --api gl=,gles1=,gles2= --generator c
-    python -m glad --out-path /path/to/mesa/demos/src/glad --api wgl= --spec=wgl --generator c
-
+    python -m glad --api=egl=,gl:core=,gl:compatibility=,gles1=,gles2=,wgl= --merge --out-path /path/to/mesa/demos/src/glad c --loader
