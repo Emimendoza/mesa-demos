@@ -1361,6 +1361,33 @@ static struct wsi_callbacks wsi_callbacks = {
    .exit = wsi_exit,
 };
 
+static void
+buffer_barrier(VkCommandBuffer cmd_buffer,
+               VkPipelineStageFlags src_flags,
+               VkPipelineStageFlags dst_flags,
+               VkAccessFlags src_access,
+               VkAccessFlags dst_access,
+               VkBuffer buffer,
+               VkDeviceSize offset,
+               VkDeviceSize size)
+{
+   vkCmdPipelineBarrier(cmd_buffer,
+      src_flags, dst_flags,
+      0, 0, NULL,
+      1, &(VkBufferMemoryBarrier) {
+         .sType = VK_STRUCTURE_TYPE_BUFFER_MEMORY_BARRIER,
+         .pNext = NULL,
+         .srcAccessMask = src_access,
+         .dstAccessMask = dst_access,
+         .srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED,
+         .dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED,
+         .buffer = buffer,
+         .offset = offset,
+         .size = size,
+      },
+      0, NULL);
+}
+
 int
 main(int argc, char *argv[])
 {
@@ -1481,7 +1508,21 @@ main(int argc, char *argv[])
       struct ubo ubo;
       mat4_identity(ubo.projection);
       mat4_frustum_vk(ubo.projection, -1.0, 1.0, -h, +h, 5.0f, 60.0f);
+
+      buffer_barrier(swap_chain_data[index].cmd_buffer,
+         VK_PIPELINE_STAGE_VERTEX_SHADER_BIT,
+         VK_PIPELINE_STAGE_TRANSFER_BIT,
+         0, 0,
+         ubo_buffer, 0, sizeof(ubo));
+
       vkCmdUpdateBuffer(swap_chain_data[index].cmd_buffer, ubo_buffer, 0, sizeof(ubo), &ubo);
+
+      buffer_barrier(swap_chain_data[index].cmd_buffer,
+         VK_PIPELINE_STAGE_TRANSFER_BIT,
+         VK_PIPELINE_STAGE_VERTEX_SHADER_BIT,
+         VK_ACCESS_TRANSFER_WRITE_BIT,
+         VK_ACCESS_UNIFORM_READ_BIT,
+         ubo_buffer, 0, sizeof(ubo));
 
       /* Translate and rotate the view */
       float view[16];
