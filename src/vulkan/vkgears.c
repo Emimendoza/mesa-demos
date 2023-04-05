@@ -204,13 +204,6 @@ init_vk(const char *extension)
          .sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO,
       },
       NULL,
-      &back_buffer_semaphore);
-
-   vkCreateSemaphore(device,
-      &(VkSemaphoreCreateInfo) {
-         .sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO,
-      },
-      NULL,
       &present_semaphore);
 }
 
@@ -621,6 +614,13 @@ create_swapchain()
          },
          &swap_chain_data[i].cmd_buffer);
    }
+
+   vkCreateSemaphore(device,
+      &(VkSemaphoreCreateInfo) {
+         .sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO,
+      },
+      NULL,
+      &back_buffer_semaphore);
 }
 
 static void
@@ -642,6 +642,8 @@ free_swapchain_data()
       vkDestroyImage(device, color_msaa, NULL);
       vkFreeMemory(device, color_msaa_memory, NULL);
    }
+
+   vkDestroySemaphore(device, back_buffer_semaphore, NULL);
 }
 
 static void
