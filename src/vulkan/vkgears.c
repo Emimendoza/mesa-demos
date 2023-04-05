@@ -59,8 +59,10 @@ static VkSampleCountFlagBits sample_count;
 static uint32_t image_count;
 static VkRenderPass render_pass;
 static VkCommandPool cmd_pool;
+static VkPresentModeKHR present_mode;
 static VkFormat image_format;
 static VkFormat depth_format;
+uint32_t min_image_count = 2;
 static VkSurfaceKHR surface;
 static VkSwapchainKHR swap_chain;
 static VkImage color_msaa, depth_image;
@@ -419,7 +421,7 @@ create_render_pass()
 }
 
 static void
-create_swapchain()
+configure_swapchain()
 {
    VkSurfaceCapabilitiesKHR surface_caps;
    vkGetPhysicalDeviceSurfaceCapabilitiesKHR(physical_device, surface,
@@ -439,7 +441,7 @@ create_swapchain()
    vkGetPhysicalDeviceSurfacePresentModesKHR(physical_device, surface,
                                              &count, present_modes);
    int i;
-   VkPresentModeKHR present_mode = VK_PRESENT_MODE_FIFO_KHR;
+   present_mode = VK_PRESENT_MODE_FIFO_KHR;
    for (i = 0; i < count; i++) {
       if (present_modes[i] == desidered_present_mode) {
          present_mode = desidered_present_mode;
@@ -447,25 +449,37 @@ create_swapchain()
       }
    }
 
-   uint32_t minImageCount = 2;
-   if (minImageCount < surface_caps.minImageCount) {
+   min_image_count = 2;
+   if (min_image_count < surface_caps.minImageCount) {
       if (surface_caps.minImageCount > ARRAY_SIZE(swap_chain_data))
           error("surface_caps.minImageCount is too large (is: %d, max: %d)",
                 surface_caps.minImageCount, ARRAY_SIZE(swap_chain_data));
-      minImageCount = surface_caps.minImageCount;
+      min_image_count = surface_caps.minImageCount;
    }
 
    if (surface_caps.maxImageCount > 0 &&
-       minImageCount > surface_caps.maxImageCount) {
-      minImageCount = surface_caps.maxImageCount;
+       min_image_count > surface_caps.maxImageCount) {
+      min_image_count = surface_caps.maxImageCount;
    }
 
+   image_format = VK_FORMAT_B8G8R8A8_SRGB;
+
+   // either VK_FORMAT_D32_SFLOAT or VK_FORMAT_X8_D24_UNORM_PACK32 needs to be supported; find out which one
+   VkFormatProperties props;
+   vkGetPhysicalDeviceFormatProperties(physical_device, VK_FORMAT_D32_SFLOAT, &props);
+   depth_format = (props.optimalTilingFeatures & VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT) ?
+      VK_FORMAT_D32_SFLOAT : VK_FORMAT_X8_D24_UNORM_PACK32;
+}
+
+static void
+create_swapchain()
+{
    vkCreateSwapchainKHR(device,
       &(VkSwapchainCreateInfoKHR) {
          .sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR,
          .flags = 0,
          .surface = surface,
-         .minImageCount = minImageCount,
+         .minImageCount = min_image_count,
          .imageFormat = image_format,
          .imageColorSpace = VK_COLOR_SPACE_SRGB_NONLINEAR_KHR,
          .imageExtent = { width, height },
@@ -1307,16 +1321,6 @@ print_info()
    }
 }
 
-static VkFormat
-find_depth_format()
-{
-   // either VK_FORMAT_D32_SFLOAT or VK_FORMAT_X8_D24_UNORM_PACK32 needs to be supported; find out which one
-   VkFormatProperties props;
-   vkGetPhysicalDeviceFormatProperties(physical_device, VK_FORMAT_D32_SFLOAT, &props);
-   return (props.optimalTilingFeatures & VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT) ?
-      VK_FORMAT_D32_SFLOAT : VK_FORMAT_X8_D24_UNORM_PACK32;
-}
-
 static VkSampleCountFlagBits
 sample_count_flag(int sample_count)
 {
@@ -1479,16 +1483,14 @@ main(int argc, char *argv[])
       error("Sample count not supported");
 
    int attachment_count = sample_count != VK_SAMPLE_COUNT_1_BIT ? 3 : 2;
-   image_format = VK_FORMAT_B8G8R8A8_SRGB;
 
    if (printInfo)
       print_info();
 
-   depth_format = find_depth_format();
-
    if (!wsi.create_surface(physical_device, instance, &surface))
       error("Failed to create surface!");
 
+   configure_swapchain();
    create_render_pass();
    create_swapchain();
    init_gears();
