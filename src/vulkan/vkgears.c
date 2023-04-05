@@ -313,7 +313,7 @@ create_image_view(VkImage image,
 static void
 create_render_pass()
 {
-   int attachment_count, color_attachment_index;
+   int attachment_count, color_attachment_index, dependency_count;
    VkAttachmentReference *resolve_attachments = (VkAttachmentReference []) {
       {
          .attachment = 0,
@@ -323,9 +323,11 @@ create_render_pass()
 
    if (sample_count != VK_SAMPLE_COUNT_1_BIT) {
       attachment_count = 3;
+      dependency_count = 3;
       color_attachment_index = 2;
    } else {
       attachment_count = 2;
+      dependency_count = 2;
       resolve_attachments = NULL;
       color_attachment_index = 0;
    }
@@ -385,7 +387,39 @@ create_render_pass()
                .pPreserveAttachments = NULL,
             }
          },
-         .dependencyCount = 0
+         .dependencyCount = dependency_count,
+         .pDependencies = (VkSubpassDependency []) {
+            {
+               /* depth buffer is shared between swapchain images */
+               .srcSubpass = VK_SUBPASS_EXTERNAL,
+               .dstSubpass = 0,
+               .srcStageMask = VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT | VK_PIPELINE_STAGE_LATE_FRAGMENT_TESTS_BIT,
+               .dstStageMask = VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT | VK_PIPELINE_STAGE_LATE_FRAGMENT_TESTS_BIT,
+               .srcAccessMask = VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT,
+               .dstAccessMask = VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT | VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT,
+               .dependencyFlags = 0,
+            },
+            {
+               /* image layout */
+               .srcSubpass = VK_SUBPASS_EXTERNAL,
+               .dstSubpass = 0,
+               .srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT,
+               .dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT,
+               .srcAccessMask = 0,
+               .dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT | VK_ACCESS_COLOR_ATTACHMENT_READ_BIT,
+               .dependencyFlags = 0,
+            },
+            {
+               /* msaa buffer is shared between swapchain images */
+               .srcSubpass = VK_SUBPASS_EXTERNAL,
+               .dstSubpass = 0,
+               .srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT,
+               .dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT,
+               .srcAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT,
+               .dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT,
+               .dependencyFlags = 0,
+            },
+         },
       },
       NULL,
       &render_pass);
