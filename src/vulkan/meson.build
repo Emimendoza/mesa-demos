@@ -57,3 +57,8 @@ if (dep_wayland.found() or dep_xcb.found()) and prog_glslang.found()
     install: true
   )
 endif
+
+devenv = environment()
+devenv.set('VK_LOADER_LAYERS_ENABLE', 'VK_LAYER_KHRONOS_validation')
+devenv.set('VK_LAYER_SETTINGS_PATH', meson.current_source_dir())
+meson.add_devenv(devenv)
