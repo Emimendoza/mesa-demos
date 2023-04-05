@@ -1478,6 +1478,7 @@ main(int argc, char *argv[])
    if (!check_sample_count_support(sample_count))
       error("Sample count not supported");
 
+   int attachment_count = sample_count != VK_SAMPLE_COUNT_1_BIT ? 3 : 2;
    image_format = VK_FORMAT_B8G8R8A8_SRGB;
 
    if (printInfo)
@@ -1574,7 +1575,7 @@ main(int argc, char *argv[])
             .renderPass = render_pass,
             .framebuffer = swap_chain_data[index].framebuffer,
             .renderArea = { { 0, 0 }, { width, height } },
-            .clearValueCount = 3,
+            .clearValueCount = attachment_count,
             .pClearValues = (VkClearValue []) {
                { .color = { .float32 = { 0.0f, 0.0f, 0.0f, 1.0f } } },
                { .depthStencil.depth = 1.0f },
