@@ -61,6 +61,7 @@ static VkRenderPass render_pass;
 static VkCommandPool cmd_pool;
 static VkPresentModeKHR present_mode;
 static VkFormat image_format;
+static VkColorSpaceKHR color_space;
 static VkFormat depth_format;
 uint32_t min_image_count = 2;
 static VkSurfaceKHR surface;
@@ -462,7 +463,21 @@ configure_swapchain()
       min_image_count = surface_caps.maxImageCount;
    }
 
-   image_format = VK_FORMAT_B8G8R8A8_SRGB;
+   vkGetPhysicalDeviceSurfaceFormatsKHR(physical_device, surface,
+                                        &count, NULL);
+   VkSurfaceFormatKHR surface_formats[count];
+   vkGetPhysicalDeviceSurfaceFormatsKHR(physical_device, surface,
+                                        &count, surface_formats);
+   image_format = surface_formats[0].format;
+   color_space = surface_formats[0].colorSpace;
+   for (i = 0; i < count; i++) {
+      if (surface_formats[i].format == VK_FORMAT_B8G8R8A8_SRGB &&
+          surface_formats[i].colorSpace == VK_COLOR_SPACE_SRGB_NONLINEAR_KHR) {
+         image_format = surface_formats[i].format;
+         color_space = surface_formats[i].colorSpace;
+         break;
+      }
+   }
 
    // either VK_FORMAT_D32_SFLOAT or VK_FORMAT_X8_D24_UNORM_PACK32 needs to be supported; find out which one
    VkFormatProperties props;
@@ -481,7 +496,7 @@ create_swapchain()
          .surface = surface,
          .minImageCount = min_image_count,
          .imageFormat = image_format,
-         .imageColorSpace = VK_COLOR_SPACE_SRGB_NONLINEAR_KHR,
+         .imageColorSpace = color_space,
          .imageExtent = { width, height },
          .imageArrayLayers = 1,
          .imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT,
