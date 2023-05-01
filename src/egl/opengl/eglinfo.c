@@ -25,6 +25,8 @@
  */
 
 
+#define EGL_PLATFORM_ANGLE_ANGLE 0x3202
+
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -97,6 +99,12 @@ static const struct platform platforms[] = {
       .short_name = "surfaceless",
       .human_name = "Surfaceless",
       .platform_enum = EGL_PLATFORM_SURFACELESS_MESA,
+   },
+   {
+      .names = { "EGL_ANGLE_platform_angle" },
+      .short_name = "angle",
+      .human_name = "ANGLE",
+      .platform_enum = EGL_PLATFORM_ANGLE_ANGLE,
    },
 };
 
