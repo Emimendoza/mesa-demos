@@ -824,6 +824,72 @@ fail:
 }
 
 static int
+doExtExplicitDevice(struct options opts, const char *clientext)
+{
+   int ret = 0;
+   PFNEGLGETPLATFORMDISPLAYPROC getPlatformDisplay =
+     (PFNEGLGETPLATFORMDISPLAYPROC)
+     eglGetProcAddress("eglGetPlatformDisplay");
+   PFNEGLQUERYDEVICESEXTPROC queryDevices =
+     (PFNEGLQUERYDEVICESEXTPROC)
+     eglGetProcAddress("eglQueryDevicesEXT");
+   EGLDeviceEXT *devices;
+   EGLint max_devices, num_devices;
+   
+   if (opts.platform != ALL)
+      return 0;
+
+   if (!queryDevices(0, NULL, &max_devices)) {
+      printf("eglinfo: queryDevices failed\n");
+      return 1;
+   }
+
+   devices = calloc(sizeof(EGLDeviceEXT), max_devices);
+   if (!devices) {
+      printf("eglinfo: calloc failed\n");
+      return 1;
+   }
+
+   if (!queryDevices(max_devices, devices, &num_devices))
+      num_devices = 0;
+
+   for (int i = 0; i < ELEMENTS(platforms); i++) {
+      for (int j = 0; j < ELEMENTS(platforms[i].names); j++) {
+         const char *name = platforms[i].names[j];
+
+         if (!name)
+            break;
+
+         if (!strstr(clientext, name))
+            break;
+
+         for (int k = 0; k < num_devices; k++) {
+            const EGLAttrib attrib_list[] = {
+               EGL_DEVICE_EXT, (EGLAttrib) devices[k],
+               EGL_NONE
+            };
+            char description[64];
+
+            snprintf(description, 64, "Device %d on %s",
+                     k, platforms[i].human_name);
+
+            EGLDisplay d = getPlatformDisplay(platforms[i].platform_enum,
+                                              EGL_DEFAULT_DISPLAY,
+                                              attrib_list);
+            if (!d)
+               break;
+
+            ret += doOneDisplay(d, description, opts);
+         }
+      }
+   }
+
+   free(devices);
+
+   return ret;
+}
+
+static int
 doExtPlatformBase(struct options opts, const char *clientext)
 {
    int ret = 0;
@@ -843,8 +909,8 @@ doExtPlatformBase(struct options opts, const char *clientext)
 
          if (strstr(clientext, name)) {
             EGLDisplay d = getPlatformDisplay(platforms[i].platform_enum,
-                                             EGL_DEFAULT_DISPLAY,
-                                             NULL);
+                                              EGL_DEFAULT_DISPLAY,
+                                              NULL);
             ret += doOneDisplay(d, platforms[i].human_name, opts);
             break;
          }
@@ -875,6 +941,10 @@ main(int argc, char *argv[])
       printf("\n");
    } else {
       clientext = eglQueryString(EGL_NO_DISPLAY, EGL_EXTENSIONS);
+   }
+
+   if (strstr(clientext, "EGL_EXT_explicit_device")) {
+      ret += doExtExplicitDevice(opts, clientext);
    }
 
    if (strstr(clientext, "EGL_EXT_platform_base")) {
