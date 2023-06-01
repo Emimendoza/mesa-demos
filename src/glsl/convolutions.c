@@ -340,7 +340,7 @@ static void init(void)
 
    menuInit();
    readTexture(textureLocation);
-   createProgram("convolution.vert", "convolution.frag");
+   createProgram(DEMOS_DATA_DIR "convolution.vert", DEMOS_DATA_DIR "convolution.frag");
 
    glEnable(GL_TEXTURE_2D);
    glClearColor(1.0, 1.0, 1.0, 1.0);

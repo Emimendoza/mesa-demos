@@ -13,7 +13,7 @@
 #include "glut_wrap.h"
 #include "shaderutil.h"
 
-static const char *filename = "bezier.geom";
+static const char *filename = DEMOS_DATA_DIR "bezier.geom";
 
 static GLuint fragShader;
 static GLuint vertShader;

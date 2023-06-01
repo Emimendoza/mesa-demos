@@ -14,8 +14,8 @@
 #include "shaderutil.h"
 
 
-static char *FragProgFile = "CH06-brick.frag";
-static char *VertProgFile = "CH06-brick.vert";
+static char *FragProgFile = DEMOS_DATA_DIR "CH06-brick.frag";
+static char *VertProgFile = DEMOS_DATA_DIR "CH06-brick.vert";
 
 /* program/shader objects */
 static GLuint fragShader;

@@ -20,8 +20,8 @@
 #define M_PI 3.1415926535
 #endif
 
-static char *FragProgFile = "skinning.frag";
-static char *VertProgFile = "skinning.vert";
+static char *FragProgFile = DEMOS_DATA_DIR "skinning.frag";
+static char *VertProgFile = DEMOS_DATA_DIR "skinning.vert";
 
 /* program/shader objects */
 static GLuint fragShader;

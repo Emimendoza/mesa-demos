@@ -14,8 +14,8 @@
 #include "shaderutil.h"
 
 
-static char *FragProgFile = "CH18-mandel.frag";
-static char *VertProgFile = "CH18-mandel.vert";
+static char *FragProgFile = DEMOS_DATA_DIR "CH18-mandel.frag";
+static char *VertProgFile = DEMOS_DATA_DIR "CH18-mandel.vert";
 
 /* program/shader objects */
 static GLuint fragShader;

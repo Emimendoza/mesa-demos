@@ -35,11 +35,11 @@
 
 static const char *Demo = "texdemo1";
 
-static const char *ReflectVertFile = "reflect.vert";
-static const char *CubeFragFile = "cubemap.frag";
+static const char *ReflectVertFile = DEMOS_DATA_DIR "reflect.vert";
+static const char *CubeFragFile = DEMOS_DATA_DIR "cubemap.frag";
 
-static const char *SimpleVertFile = "simple.vert";
-static const char *SimpleTexFragFile = "shadowtex.frag";
+static const char *SimpleVertFile = DEMOS_DATA_DIR "simple.vert";
+static const char *SimpleTexFragFile = DEMOS_DATA_DIR "shadowtex.frag";
 
 static const char *GroundImage = DEMOS_DATA_DIR "tile.rgb";
 

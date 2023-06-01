@@ -15,9 +15,9 @@
 #include "readtex.h"
 
 
-static char *FragProgFile = "CH11-bumpmap.frag";
-static char *FragTexProgFile = "CH11-bumpmaptex.frag";
-static char *VertProgFile = "CH11-bumpmap.vert";
+static char *FragProgFile = DEMOS_DATA_DIR "CH11-bumpmap.frag";
+static char *FragTexProgFile = DEMOS_DATA_DIR "CH11-bumpmaptex.frag";
+static char *VertProgFile = DEMOS_DATA_DIR "CH11-bumpmap.vert";
 static char *TextureFile = DEMOS_DATA_DIR "tile.rgb";
 
 /* program/shader objects */

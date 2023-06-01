@@ -83,3 +83,38 @@ executable(
   ],
   install: true
 )
+
+glsl_data = [
+  'bezier.geom',
+  'blinking-teapot.frag',
+  'blinking-teapot.vert',
+  'brick.shtest',
+  'CH06-brick.frag',
+  'CH06-brick.vert',
+  'CH11-bumpmap.frag',
+  'CH11-bumpmaptex.frag',
+  'CH11-bumpmap.vert',
+  'CH11-toyball.frag',
+  'CH11-toyball.vert',
+  'CH18-mandel.frag',
+  'CH18-mandel.vert',
+  'convolution.frag',
+  'convolution.vert',
+  'cubemap.frag',
+  'mandelbrot.shtest',
+  'multitex.frag',
+  'multitex.shtest',
+  'multitex.vert',
+  'reflect.vert',
+  'shadowtex.frag',
+  'simple.vert',
+  'simplex-noise.glsl',
+  'skinning.frag',
+  'skinning.vert',
+  'toyball.shtest',
+]
+
+install_data(
+  glsl_data,
+  install_dir: get_option('datadir') / 'mesa-demos'
+)
