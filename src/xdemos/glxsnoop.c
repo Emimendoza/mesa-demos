@@ -18,10 +18,10 @@
 #include <X11/keysym.h>
 
 
-#define Z_BUFFER 1
+#define Z_BUFFER       1
 #define STENCIL_BUFFER 2
-#define BACK_BUFFER 3
-#define FRONT_BUFFER 4
+#define BACK_BUFFER    3
+#define FRONT_BUFFER   4
 
 
 static int Buffer = BACK_BUFFER;
@@ -132,8 +132,8 @@ make_gl_window(Display *dpy, XVisualInfo *visinfo, int width, int height)
    mask = CWBackPixel | CWBorderPixel | CWColormap | CWEventMask;
 
    win = XCreateWindow( dpy, root, x, y, width, height,
-		        0, visinfo->depth, InputOutput,
-		        visinfo->visual, mask, &attr );
+                        0, visinfo->depth, InputOutput,
+                        visinfo->visual, mask, &attr );
 
    /* set hints and properties */
    {
@@ -145,7 +145,7 @@ make_gl_window(Display *dpy, XVisualInfo *visinfo, int width, int height)
       sizehints.flags = USSize | USPosition;
       XSetNormalHints(dpy, win, &sizehints);
       XSetStandardProperties(dpy, win, name, name,
-                              None, (char **)NULL, 0, &sizehints);
+                             None, (char **)NULL, 0, &sizehints);
    }
 
    return win;

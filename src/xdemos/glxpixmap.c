@@ -23,7 +23,7 @@ static GC gc;
 
 
 static Window make_rgb_window( Display *dpy,
-				  unsigned int width, unsigned int height )
+                               unsigned int width, unsigned int height )
 {
    const int sbAttrib[] = { GLX_RGBA,
                             GLX_RED_SIZE, 1,
@@ -63,8 +63,8 @@ static Window make_rgb_window( Display *dpy,
    mask = CWBackPixel | CWBorderPixel | CWColormap | CWEventMask;
 
    win = XCreateWindow( dpy, root, 0, 0, width, height,
-		        0, visinfo->depth, InputOutput,
-		        visinfo->visual, mask, &attr );
+                        0, visinfo->depth, InputOutput,
+                        visinfo->visual, mask, &attr );
 
    /* make an X GC so we can do XCopyArea later */
    gc = XCreateGC( dpy, win, 0, NULL );
@@ -83,8 +83,8 @@ static Window make_rgb_window( Display *dpy,
 
 
 static GLXPixmap make_pixmap( Display *dpy, Window win,
-			       unsigned int width, unsigned int height,
-                               Pixmap *pixmap)
+                              unsigned int width, unsigned int height,
+                              Pixmap *pixmap)
 {
    Pixmap pm;
    GLXPixmap glxpm;
@@ -141,16 +141,16 @@ static void event_loop( Display *dpy, GLXPixmap pm )
       XNextEvent( dpy, &event );
 
       switch (event.type) {
-	 case Expose:
-	    printf("Redraw\n");
-	    /* copy the image from GLXPixmap to window */
-	    XCopyArea( dpy, pm, event.xany.window,  /* src, dest */
-		       gc, 0, 0, 300, 300,          /* gc, src pos, size */
-		       0, 0 );                      /* dest pos */
-	    break;
-	 case ConfigureNotify:
-	    /* nothing */
-	    break;
+      case Expose:
+         printf("Redraw\n");
+         /* copy the image from GLXPixmap to window */
+         XCopyArea( dpy, pm, event.xany.window,  /* src, dest */
+                     gc, 0, 0, 300, 300,          /* gc, src pos, size */
+                     0, 0 );                      /* dest pos */
+         break;
+      case ConfigureNotify:
+         /* nothing */
+         break;
       }
    }
 }

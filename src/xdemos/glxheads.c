@@ -69,11 +69,11 @@ AddHead(const char *displayName)
    Window win;
    GLXContext ctx;
    int attrib[] = { GLX_RGBA,
-		    GLX_RED_SIZE, 1,
-		    GLX_GREEN_SIZE, 1,
-		    GLX_BLUE_SIZE, 1,
-		    GLX_DOUBLEBUFFER,
-		    None };
+                    GLX_RED_SIZE, 1,
+                    GLX_GREEN_SIZE, 1,
+                    GLX_BLUE_SIZE, 1,
+                    GLX_DOUBLEBUFFER,
+                    None };
    int scrnum;
    XSetWindowAttributes attr;
    unsigned long mask;
@@ -108,8 +108,8 @@ AddHead(const char *displayName)
    mask = CWBackPixel | CWBorderPixel | CWColormap | CWEventMask;
 
    win = XCreateWindow(dpy, root, 0, 0, width, height,
-		        0, visinfo->depth, InputOutput,
-		        visinfo->visual, mask, &attr);
+                       0, visinfo->depth, InputOutput,
+                       visinfo->visual, mask, &attr);
    if (!win) {
       Error(displayName, "Couldn't create window");
       return NULL;
@@ -124,7 +124,7 @@ AddHead(const char *displayName)
       sizehints.flags = USSize | USPosition;
       XSetNormalHints(dpy, win, &sizehints);
       XSetStandardProperties(dpy, win, displayName, displayName,
-                              None, (char **)NULL, 0, &sizehints);
+                             None, (char **)NULL, 0, &sizehints);
    }
 
 
@@ -245,16 +245,16 @@ EventLoop(void)
             XNextEvent(h->Dpy, &event);
             if (event.xany.window == h->Win) {
                switch (event.type) {
-                  case Expose:
-                     Redraw(h);
-                     break;
-                  case ConfigureNotify:
-                     Resize(h, event.xconfigure.width, event.xconfigure.height);
-                     break;
-                  case KeyPress:
-                     return;
-                  default:
-                     /*no-op*/ ;
+               case Expose:
+                  Redraw(h);
+                  break;
+               case ConfigureNotify:
+                  Resize(h, event.xconfigure.width, event.xconfigure.height);
+                  break;
+               case KeyPress:
+                  return;
+               default:
+                  /*no-op*/ ;
                }
             }
             else {

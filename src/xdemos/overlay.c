@@ -69,7 +69,7 @@ RedrawOverlay(Display *dpy)
 
 static Window
 MakeWindow(Display *dpy, XVisualInfo *visinfo, Window parent,
-             unsigned int width, unsigned int height)
+           unsigned int width, unsigned int height)
 {
    int scrnum;
    XSetWindowAttributes attr;
@@ -88,8 +88,8 @@ MakeWindow(Display *dpy, XVisualInfo *visinfo, Window parent,
    mask = CWBackPixel | CWBorderPixel | CWColormap | CWEventMask;
 
    win = XCreateWindow(dpy, parent, 0, 0, width, height,
-		        0, visinfo->depth, InputOutput,
-		        visinfo->visual, mask, &attr);
+                       0, visinfo->depth, InputOutput,
+                       visinfo->visual, mask, &attr);
    return win;
 }
 
@@ -98,11 +98,11 @@ static void
 MakeNormalWindow(Display *dpy)
 {
    int attrib[] = { GLX_RGBA,
-		    GLX_RED_SIZE, 1,
-		    GLX_GREEN_SIZE, 1,
-		    GLX_BLUE_SIZE, 1,
-		    GLX_DOUBLEBUFFER,
-		    None };
+                    GLX_RED_SIZE, 1,
+                    GLX_GREEN_SIZE, 1,
+                    GLX_BLUE_SIZE, 1,
+                    GLX_DOUBLEBUFFER,
+                    None };
    int scrnum;
    Window root;
    XVisualInfo *visinfo;
@@ -186,31 +186,31 @@ EventLoop(Display *dpy)
       XNextEvent(dpy, &event);
 
       switch (event.type) {
-	 case Expose:
-	    RedrawNormal(dpy);
-	    RedrawOverlay(dpy);
-	    break;
-	 case ConfigureNotify:
-            WinWidth = event.xconfigure.width;
-            WinHeight = event.xconfigure.height;
-            if (event.xconfigure.window == NormalWindow)
-               XResizeWindow(dpy, OverlayWindow, WinWidth, WinHeight);
-	    break;
-         case KeyPress:
-            {
-               char buffer[10];
-	       XLookupString(&event.xkey, buffer, sizeof(buffer),
-                             NULL, NULL);
-	       if (buffer[0] == 27) {
-                  /* escape */
-                  return;
-               }
-               else if (buffer[0] == ' ') {
-                  Angle += 5.0;
-                  RedrawNormal(dpy);
-               }
+      case Expose:
+         RedrawNormal(dpy);
+         RedrawOverlay(dpy);
+         break;
+      case ConfigureNotify:
+         WinWidth = event.xconfigure.width;
+         WinHeight = event.xconfigure.height;
+         if (event.xconfigure.window == NormalWindow)
+            XResizeWindow(dpy, OverlayWindow, WinWidth, WinHeight);
+         break;
+      case KeyPress:
+         {
+            char buffer[10];
+            XLookupString(&event.xkey, buffer, sizeof(buffer),
+                           NULL, NULL);
+            if (buffer[0] == 27) {
+               /* escape */
+               return;
             }
-            break;
+            else if (buffer[0] == ' ') {
+               Angle += 5.0;
+               RedrawNormal(dpy);
+            }
+         }
+         break;
          default:
             ; /* nothing */
       }

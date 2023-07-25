@@ -66,11 +66,11 @@ static void
 CreateWindow(const char *name)
 {
    int attrib[] = { GLX_RGBA,
-		    GLX_RED_SIZE, 1,
-		    GLX_GREEN_SIZE, 1,
-		    GLX_BLUE_SIZE, 1,
-		    GLX_DOUBLEBUFFER,
-		    None };
+                    GLX_RED_SIZE, 1,
+                    GLX_GREEN_SIZE, 1,
+                    GLX_BLUE_SIZE, 1,
+                    GLX_DOUBLEBUFFER,
+                    None };
    int scrnum;
    XSetWindowAttributes attr;
    unsigned long mask;
@@ -98,8 +98,8 @@ CreateWindow(const char *name)
    mask = CWBackPixel | CWBorderPixel | CWColormap | CWEventMask;
 
    Win = XCreateWindow(Dpy, root, xpos, ypos, WinWidth, WinHeight,
-		        0, VisInfo->depth, InputOutput,
-		        VisInfo->visual, mask, &attr);
+                       0, VisInfo->depth, InputOutput,
+                       VisInfo->visual, mask, &attr);
    if (!Win) {
       Error("Couldn't create window");
    }
@@ -113,7 +113,7 @@ CreateWindow(const char *name)
       sizehints.flags = USSize | USPosition;
       XSetNormalHints(Dpy, Win, &sizehints);
       XSetStandardProperties(Dpy, Win, name, name,
-                              None, (char **)NULL, 0, &sizehints);
+                             None, (char **)NULL, 0, &sizehints);
    }
 
    XMapWindow(Dpy, Win);

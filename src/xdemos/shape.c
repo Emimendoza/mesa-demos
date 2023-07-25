@@ -227,40 +227,40 @@ static void event_loop(Display *dpy, Window win)
       if (XPending(dpy)) {
          XNextEvent(dpy, &event);
          switch (event.type) {
-            case Expose:
-               display(dpy, event.xexpose.window);
-               break;
-            case ConfigureNotify:
-               Width = event.xconfigure.width;
-               Height = event.xconfigure.height,
-               make_shape_mask(dpy, win, Width, Height, Sides);
-               reshape(Width, Height);
-               break;
-            case KeyPress:
-               {
-                  char buf[100];
-                  KeySym keySym;
-                  XComposeStatus stat;
-                  XLookupString(&event.xkey, buf, sizeof(buf), &keySym, &stat);
-                  switch (keySym) {
-                     case XK_Escape:
-                        exit(0);
-                        break;
-                     case XK_Up:
-                        Sides++;
-                        if (Sides>MaxSides) Sides = MaxSides;
-                        make_shape_mask(dpy, win, Width, Height, Sides);
-                        break;
-                     case XK_Down:
-                        Sides--;
-                        if (Sides<MinSides) Sides = MinSides;
-                        make_shape_mask(dpy, win, Width, Height, Sides);
-                        break;
-                  }
+         case Expose:
+            display(dpy, event.xexpose.window);
+            break;
+         case ConfigureNotify:
+            Width = event.xconfigure.width;
+            Height = event.xconfigure.height,
+            make_shape_mask(dpy, win, Width, Height, Sides);
+            reshape(Width, Height);
+            break;
+         case KeyPress:
+            {
+               char buf[100];
+               KeySym keySym;
+               XComposeStatus stat;
+               XLookupString(&event.xkey, buf, sizeof(buf), &keySym, &stat);
+               switch (keySym) {
+                  case XK_Escape:
+                     exit(0);
+                     break;
+                  case XK_Up:
+                     Sides++;
+                     if (Sides>MaxSides) Sides = MaxSides;
+                     make_shape_mask(dpy, win, Width, Height, Sides);
+                     break;
+                  case XK_Down:
+                     Sides--;
+                     if (Sides<MinSides) Sides = MinSides;
+                     make_shape_mask(dpy, win, Width, Height, Sides);
+                     break;
                }
-               break;
-            default:
-               ;;
+            }
+            break;
+         default:
+            ;;
          }
       }
       else {
@@ -371,7 +371,7 @@ int main(int argc, char *argv[])
       sizehints.flags = 0;
       XSetNormalHints(dpy, win, &sizehints);
       XSetStandardProperties(dpy, win, name, name,
-                              None, (char **)NULL, 0, &sizehints);
+                             None, (char **)NULL, 0, &sizehints);
    }
 
 

@@ -72,14 +72,14 @@ draw(void)
 static void
 make_window( const char * dpyName, const char *name,
              int x, int y, int width, int height,
-	     Display **dpyRet, Window *winRet, GLXContext *ctxRet)
+             Display **dpyRet, Window *winRet, GLXContext *ctxRet)
 {
    int attrib[] = { GLX_RGBA,
-		    GLX_RED_SIZE, 1,
-		    GLX_GREEN_SIZE, 1,
-		    GLX_BLUE_SIZE, 1,
-		    GLX_DOUBLEBUFFER,
-		    None };
+                    GLX_RED_SIZE, 1,
+                    GLX_GREEN_SIZE, 1,
+                    GLX_BLUE_SIZE, 1,
+                    GLX_DOUBLEBUFFER,
+                    None };
    int scrnum;
    XSetWindowAttributes attr;
    unsigned long mask;
@@ -113,8 +113,8 @@ make_window( const char * dpyName, const char *name,
    mask = CWBackPixel | CWBorderPixel | CWColormap | CWEventMask;
 
    win = XCreateWindow( dpy, root, 0, 0, width, height,
-		        0, visinfo->depth, InputOutput,
-		        visinfo->visual, mask, &attr );
+                        0, visinfo->depth, InputOutput,
+                        visinfo->visual, mask, &attr );
 
    /* set hints and properties */
    {
@@ -126,7 +126,7 @@ make_window( const char * dpyName, const char *name,
       sizehints.flags = USSize | USPosition;
       XSetNormalHints(dpy, win, &sizehints);
       XSetStandardProperties(dpy, win, name, name,
-                              None, (char **)NULL, 0, &sizehints);
+                             None, (char **)NULL, 0, &sizehints);
    }
 
    ctx = glXCreateContext( dpy, visinfo, NULL, True );
@@ -169,7 +169,7 @@ main(int argc, char *argv[])
    }
 
    printf("If this program segfaults, then Mesa bug #508473 is probably "
-	  "back.\n");
+          "back.\n");
    make_window(dpyName, "Open-close-open", 0, 0, 300, 300, &dpy, &win, &ctx);
    XMapWindow(dpy, win);
    glXMakeCurrent(dpy, win, ctx);

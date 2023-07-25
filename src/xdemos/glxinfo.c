@@ -54,19 +54,19 @@
 #endif
 
 #ifndef GLX_RGBA_BIT
-#define GLX_RGBA_BIT			0x00000001
+#define GLX_RGBA_BIT                   0x00000001
 #endif
 
 #ifndef GLX_COLOR_INDEX_BIT
-#define GLX_COLOR_INDEX_BIT		0x00000002
+#define GLX_COLOR_INDEX_BIT            0x00000002
 #endif
 
 
 struct visual_attribs
 {
    /* X visual attribs */
-   int id;		/* May be visual ID or FBConfig ID */
-   int vis_id;		/* Visual ID.  Only set for FBConfigs */
+   int id;             /* May be visual ID or FBConfig ID */
+   int vis_id;         /* Visual ID.  Only set for FBConfigs */
    int klass;
    int depth;
    int redMask, greenMask, blueMask;
@@ -278,10 +278,10 @@ create_context_with_config(Display *dpy, GLXFBConfig config,
        */
       int i;
       for (i = 0; gl_versions[i].major > 0; i++) {
-          /* don't bother below GL 3.0 */
-          if (gl_versions[i].major == 3 &&
-              gl_versions[i].minor == 0)
-             return 0;
+         /* don't bother below GL 3.0 */
+         if (gl_versions[i].major == 3 &&
+             gl_versions[i].minor == 0)
+            return 0;
          ctx = create_context_flags(dpy, config,
                                     gl_versions[i].major,
                                     gl_versions[i].minor,
@@ -355,45 +355,45 @@ static void
 query_renderer(void)
 {
 #ifdef GLX_MESA_query_renderer
-    PFNGLXQUERYCURRENTRENDERERINTEGERMESAPROC queryInteger;
-    PFNGLXQUERYCURRENTRENDERERSTRINGMESAPROC queryString;
-    unsigned int v[3];
+   PFNGLXQUERYCURRENTRENDERERINTEGERMESAPROC queryInteger;
+   PFNGLXQUERYCURRENTRENDERERSTRINGMESAPROC queryString;
+   unsigned int v[3];
 
-    queryInteger = (PFNGLXQUERYCURRENTRENDERERINTEGERMESAPROC)
-	glXGetProcAddressARB((const GLubyte *)
-			     "glXQueryCurrentRendererIntegerMESA");
-    queryString = (PFNGLXQUERYCURRENTRENDERERSTRINGMESAPROC)
-	glXGetProcAddressARB((const GLubyte *)
-			     "glXQueryCurrentRendererStringMESA");
+   queryInteger = (PFNGLXQUERYCURRENTRENDERERINTEGERMESAPROC)
+      glXGetProcAddressARB((const GLubyte *)
+                           "glXQueryCurrentRendererIntegerMESA");
+   queryString = (PFNGLXQUERYCURRENTRENDERERSTRINGMESAPROC)
+      glXGetProcAddressARB((const GLubyte *)
+                           "glXQueryCurrentRendererStringMESA");
 
-    printf("Extended renderer info (GLX_MESA_query_renderer):\n");
-    queryInteger(GLX_RENDERER_VENDOR_ID_MESA, v);
-    printf("    Vendor: %s (0x%x)\n",
-	   queryString(GLX_RENDERER_VENDOR_ID_MESA), *v);
-    queryInteger(GLX_RENDERER_DEVICE_ID_MESA, v);
-    printf("    Device: %s (0x%x)\n",
-	   queryString(GLX_RENDERER_DEVICE_ID_MESA), *v);
-    queryInteger(GLX_RENDERER_VERSION_MESA, v);
-    printf("    Version: %d.%d.%d\n", v[0], v[1], v[2]);
-    queryInteger(GLX_RENDERER_ACCELERATED_MESA, v);
-    printf("    Accelerated: %s\n", *v ? "yes" : "no");
-    queryInteger(GLX_RENDERER_VIDEO_MEMORY_MESA, v);
-    printf("    Video memory: %dMB\n", *v);
-    queryInteger(GLX_RENDERER_UNIFIED_MEMORY_ARCHITECTURE_MESA, v);
-    printf("    Unified memory: %s\n", *v ? "yes" : "no");
-    queryInteger(GLX_RENDERER_PREFERRED_PROFILE_MESA, v);
-    printf("    Preferred profile: %s (0x%x)\n",
-	   *v == GLX_CONTEXT_CORE_PROFILE_BIT_ARB ? "core" :
-	   *v == GLX_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB ? "compat" :
-	   "unknown", *v);
-    queryInteger(GLX_RENDERER_OPENGL_CORE_PROFILE_VERSION_MESA, v);
-    printf("    Max core profile version: %d.%d\n", v[0], v[1]);
-    queryInteger(GLX_RENDERER_OPENGL_COMPATIBILITY_PROFILE_VERSION_MESA, v);
-    printf("    Max compat profile version: %d.%d\n", v[0], v[1]);
-    queryInteger(GLX_RENDERER_OPENGL_ES_PROFILE_VERSION_MESA, v);
-    printf("    Max GLES1 profile version: %d.%d\n", v[0], v[1]);
-    queryInteger(GLX_RENDERER_OPENGL_ES2_PROFILE_VERSION_MESA, v);
-    printf("    Max GLES[23] profile version: %d.%d\n", v[0], v[1]);
+   printf("Extended renderer info (GLX_MESA_query_renderer):\n");
+   queryInteger(GLX_RENDERER_VENDOR_ID_MESA, v);
+   printf("    Vendor: %s (0x%x)\n",
+          queryString(GLX_RENDERER_VENDOR_ID_MESA), *v);
+   queryInteger(GLX_RENDERER_DEVICE_ID_MESA, v);
+   printf("    Device: %s (0x%x)\n",
+          queryString(GLX_RENDERER_DEVICE_ID_MESA), *v);
+   queryInteger(GLX_RENDERER_VERSION_MESA, v);
+   printf("    Version: %d.%d.%d\n", v[0], v[1], v[2]);
+   queryInteger(GLX_RENDERER_ACCELERATED_MESA, v);
+   printf("    Accelerated: %s\n", *v ? "yes" : "no");
+   queryInteger(GLX_RENDERER_VIDEO_MEMORY_MESA, v);
+   printf("    Video memory: %dMB\n", *v);
+   queryInteger(GLX_RENDERER_UNIFIED_MEMORY_ARCHITECTURE_MESA, v);
+   printf("    Unified memory: %s\n", *v ? "yes" : "no");
+   queryInteger(GLX_RENDERER_PREFERRED_PROFILE_MESA, v);
+   printf("    Preferred profile: %s (0x%x)\n",
+          *v == GLX_CONTEXT_CORE_PROFILE_BIT_ARB ? "core" :
+          *v == GLX_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB ? "compat" :
+          "unknown", *v);
+   queryInteger(GLX_RENDERER_OPENGL_CORE_PROFILE_VERSION_MESA, v);
+   printf("    Max core profile version: %d.%d\n", v[0], v[1]);
+   queryInteger(GLX_RENDERER_OPENGL_COMPATIBILITY_PROFILE_VERSION_MESA, v);
+   printf("    Max compat profile version: %d.%d\n", v[0], v[1]);
+   queryInteger(GLX_RENDERER_OPENGL_ES_PROFILE_VERSION_MESA, v);
+   printf("    Max GLES1 profile version: %d.%d\n", v[0], v[1]);
+   queryInteger(GLX_RENDERER_OPENGL_ES2_PROFILE_VERSION_MESA, v);
+   printf("    Max GLES[23] profile version: %d.%d\n", v[0], v[1]);
 #endif
 }
 
@@ -437,7 +437,7 @@ print_screen_info(Display *dpy, int scrnum,
    else if (!coreProfile && !es2Profile) {
       visinfo = choose_xvisinfo(dpy, scrnum);
       if (visinfo)
-	 ctx = glXCreateContext(dpy, visinfo, NULL, opts->allowDirect);
+         ctx = glXCreateContext(dpy, visinfo, NULL, opts->allowDirect);
    } else
       visinfo = NULL;
 
@@ -448,7 +448,7 @@ print_screen_info(Display *dpy, int scrnum,
 
    if (!ctx) {
       if (!coreProfile && !es2Profile)
-	 fprintf(stderr, "Error: glXCreateContext failed\n");
+         fprintf(stderr, "Error: glXCreateContext failed\n");
       XFree(visinfo);
       return False;
    }
@@ -462,8 +462,8 @@ print_screen_info(Display *dpy, int scrnum,
    attr.event_mask = StructureNotifyMask | ExposureMask;
    mask = CWBackPixel | CWBorderPixel | CWColormap | CWEventMask;
    win = XCreateWindow(dpy, root, 0, 0, width, height,
-		       0, visinfo->depth, InputOutput,
-		       visinfo->visual, mask, &attr);
+                       0, visinfo->depth, InputOutput,
+                       visinfo->visual, mask, &attr);
 
    if (glXMakeCurrent(dpy, win, ctx)) {
       int loaded_gl = gladLoadGL((GLADloadfunc) glXGetProcAddressARB);
@@ -561,7 +561,7 @@ print_screen_info(Display *dpy, int scrnum,
             print_extension_list(glxExtensions, opts->singleLine);
          }
          if (strstr(glxExtensions, "GLX_MESA_query_renderer"))
-	    query_renderer();
+            query_renderer();
          print_gpu_memory_info(glExtensions);
          printf("OpenGL vendor string: %s\n", glVendor);
          printf("OpenGL renderer string: %s\n", glRenderer);
@@ -627,20 +627,20 @@ static const char *
 visual_class_name(int cls)
 {
    switch (cls) {
-      case StaticColor:
-         return "StaticColor";
-      case PseudoColor:
-         return "PseudoColor";
-      case StaticGray:
-         return "StaticGray";
-      case GrayScale:
-         return "GrayScale";
-      case TrueColor:
-         return "TrueColor";
-      case DirectColor:
-         return "DirectColor";
-      default:
-         return "";
+   case StaticColor:
+      return "StaticColor";
+   case PseudoColor:
+      return "PseudoColor";
+   case StaticGray:
+      return "StaticGray";
+   case GrayScale:
+      return "GrayScale";
+   case TrueColor:
+      return "TrueColor";
+   case DirectColor:
+      return "DirectColor";
+   default:
+      return "";
    }
 }
 
@@ -660,20 +660,20 @@ static const char *
 visual_class_abbrev(int cls)
 {
    switch (cls) {
-      case StaticColor:
-         return "sc";
-      case PseudoColor:
-         return "pc";
-      case StaticGray:
-         return "sg";
-      case GrayScale:
-         return "gs";
-      case TrueColor:
-         return "tc";
-      case DirectColor:
-         return "dc";
-      default:
-         return "";
+   case StaticColor:
+      return "sc";
+   case PseudoColor:
+      return "pc";
+   case StaticGray:
+      return "sg";
+   case GrayScale:
+      return "gs";
+   case TrueColor:
+      return "tc";
+   case DirectColor:
+      return "dc";
+   default:
+      return "";
    }
 }
 
@@ -681,18 +681,18 @@ static const char *
 visual_render_type_name(int type)
 {
    switch (type) {
-      case GLX_RGBA_UNSIGNED_FLOAT_BIT_EXT:
-         return "ufloat";
-      case GLX_RGBA_FLOAT_BIT_ARB:
-         return "float";
-      case GLX_RGBA_BIT:
-         return "rgba";
-      case GLX_COLOR_INDEX_BIT:
-         return "ci";
-      case GLX_RGBA_BIT | GLX_COLOR_INDEX_BIT:
-         return "rgba|ci";
-      default:
-         return "";
+   case GLX_RGBA_UNSIGNED_FLOAT_BIT_EXT:
+      return "ufloat";
+   case GLX_RGBA_FLOAT_BIT_ARB:
+      return "float";
+   case GLX_RGBA_BIT:
+      return "rgba";
+   case GLX_COLOR_INDEX_BIT:
+      return "ci";
+   case GLX_RGBA_BIT | GLX_COLOR_INDEX_BIT:
+      return "rgba|ci";
+   default:
+      return "";
    }
 }
 
@@ -701,17 +701,17 @@ caveat_string(int caveat)
 {
    switch (caveat) {
 #ifdef GLX_EXT_visual_rating
-      case GLX_SLOW_VISUAL_EXT:
-         return "Slow";
-      case GLX_NON_CONFORMANT_VISUAL_EXT:
-         return "Ncon";
-      case GLX_NONE_EXT:
-         /* fall-through */
+   case GLX_SLOW_VISUAL_EXT:
+      return "Slow";
+   case GLX_NON_CONFORMANT_VISUAL_EXT:
+      return "Ncon";
+   case GLX_NONE_EXT:
+      /* fall-through */
 #endif
-      case 0:
-         /* fall-through */
-      default:
-         return "None";
+   case 0:
+      /* fall-through */
+   default:
+      return "None";
    }
 }
 
@@ -720,15 +720,15 @@ swap_method_verbose_string(int swap_method)
 {
    switch (swap_method) {
 #ifdef GLX_SWAP_METHOD_OML
-      case GLX_SWAP_EXCHANGE_OML:
-         return "Exchange";
-      case GLX_SWAP_COPY_OML:
-         return "Copy";
-      case GLX_SWAP_UNDEFINED_OML:
-         return "Undefined";
+   case GLX_SWAP_EXCHANGE_OML:
+      return "Exchange";
+   case GLX_SWAP_COPY_OML:
+      return "Copy";
+   case GLX_SWAP_UNDEFINED_OML:
+      return "Undefined";
 #endif
-      default:
-         return "Unknown value";
+   default:
+      return "Unknown value";
    }
 }
 
@@ -736,14 +736,14 @@ static char
 swap_method_short_string(int swap_method)
 {
 #ifdef GLX_SWAP_METHOD_OML
-    if (swap_method == GLX_SWAP_EXCHANGE_OML)
-        return 'e';
-    else if (swap_method == GLX_SWAP_COPY_OML)
-        return 'c';
-    else if (swap_method == GLX_SWAP_UNDEFINED_OML)
-        return 'u';
+   if (swap_method == GLX_SWAP_EXCHANGE_OML)
+      return 'e';
+   else if (swap_method == GLX_SWAP_COPY_OML)
+      return 'c';
+   else if (swap_method == GLX_SWAP_UNDEFINED_OML)
+      return 'u';
 #endif
-    return '.';
+   return '.';
 }
 
 
@@ -798,13 +798,13 @@ get_visual_attribs(Display *dpy, XVisualInfo *vInfo,
    /* get transparent pixel stuff */
    glXGetConfig(dpy, vInfo,GLX_TRANSPARENT_TYPE, &attribs->transparentType);
    if (attribs->transparentType == GLX_TRANSPARENT_RGB) {
-     glXGetConfig(dpy, vInfo, GLX_TRANSPARENT_RED_VALUE, &attribs->transparentRedValue);
-     glXGetConfig(dpy, vInfo, GLX_TRANSPARENT_GREEN_VALUE, &attribs->transparentGreenValue);
-     glXGetConfig(dpy, vInfo, GLX_TRANSPARENT_BLUE_VALUE, &attribs->transparentBlueValue);
-     glXGetConfig(dpy, vInfo, GLX_TRANSPARENT_ALPHA_VALUE, &attribs->transparentAlphaValue);
+      glXGetConfig(dpy, vInfo, GLX_TRANSPARENT_RED_VALUE, &attribs->transparentRedValue);
+      glXGetConfig(dpy, vInfo, GLX_TRANSPARENT_GREEN_VALUE, &attribs->transparentGreenValue);
+      glXGetConfig(dpy, vInfo, GLX_TRANSPARENT_BLUE_VALUE, &attribs->transparentBlueValue);
+      glXGetConfig(dpy, vInfo, GLX_TRANSPARENT_ALPHA_VALUE, &attribs->transparentAlphaValue);
    }
    else if (attribs->transparentType == GLX_TRANSPARENT_INDEX) {
-     glXGetConfig(dpy, vInfo, GLX_TRANSPARENT_INDEX_VALUE, &attribs->transparentIndexValue);
+      glXGetConfig(dpy, vInfo, GLX_TRANSPARENT_INDEX_VALUE, &attribs->transparentIndexValue);
    }
 
    /* multisample attribs */
@@ -871,7 +871,7 @@ glx_token_to_visual_class(int visual_type)
 
 static Bool
 get_fbconfig_attribs(Display *dpy, GLXFBConfig fbconfig,
-		     struct visual_attribs *attribs)
+                     struct visual_attribs *attribs)
 {
    const char *ext = glXQueryExtensionsString(dpy, 0);
    int visual_type;
@@ -919,13 +919,13 @@ get_fbconfig_attribs(Display *dpy, GLXFBConfig fbconfig,
    /* get transparent pixel stuff */
    glXGetFBConfigAttrib(dpy, fbconfig,GLX_TRANSPARENT_TYPE, &attribs->transparentType);
    if (attribs->transparentType == GLX_TRANSPARENT_RGB) {
-     glXGetFBConfigAttrib(dpy, fbconfig, GLX_TRANSPARENT_RED_VALUE, &attribs->transparentRedValue);
-     glXGetFBConfigAttrib(dpy, fbconfig, GLX_TRANSPARENT_GREEN_VALUE, &attribs->transparentGreenValue);
-     glXGetFBConfigAttrib(dpy, fbconfig, GLX_TRANSPARENT_BLUE_VALUE, &attribs->transparentBlueValue);
-     glXGetFBConfigAttrib(dpy, fbconfig, GLX_TRANSPARENT_ALPHA_VALUE, &attribs->transparentAlphaValue);
+      glXGetFBConfigAttrib(dpy, fbconfig, GLX_TRANSPARENT_RED_VALUE, &attribs->transparentRedValue);
+      glXGetFBConfigAttrib(dpy, fbconfig, GLX_TRANSPARENT_GREEN_VALUE, &attribs->transparentGreenValue);
+      glXGetFBConfigAttrib(dpy, fbconfig, GLX_TRANSPARENT_BLUE_VALUE, &attribs->transparentBlueValue);
+      glXGetFBConfigAttrib(dpy, fbconfig, GLX_TRANSPARENT_ALPHA_VALUE, &attribs->transparentAlphaValue);
    }
    else if (attribs->transparentType == GLX_TRANSPARENT_INDEX) {
-     glXGetFBConfigAttrib(dpy, fbconfig, GLX_TRANSPARENT_INDEX_VALUE, &attribs->transparentIndexValue);
+      glXGetFBConfigAttrib(dpy, fbconfig, GLX_TRANSPARENT_INDEX_VALUE, &attribs->transparentIndexValue);
    }
 
    glXGetFBConfigAttrib(dpy, fbconfig, GLX_SAMPLE_BUFFERS, &attribs->numMultisample);
@@ -973,7 +973,7 @@ get_fbconfig_attribs(Display *dpy, GLXFBConfig fbconfig,
 
 static void
 print_visual_attribs_verbose(const struct visual_attribs *attribs,
-			     int fbconfigs)
+                             int fbconfigs)
 {
    if (fbconfigs) {
       printf("FBConfig ID: %x  Visual ID=%x  depth=%d  class=%s, type=%s\n",
@@ -983,12 +983,12 @@ print_visual_attribs_verbose(const struct visual_attribs *attribs,
    }
    else {
       printf("Visual ID: %x  depth=%d  class=%s, type=%s\n",
-	     attribs->id, attribs->depth, visual_class_name(attribs->klass),
-	     visual_drawable_type(attribs->drawableType));
+             attribs->id, attribs->depth, visual_class_name(attribs->klass),
+             visual_drawable_type(attribs->drawableType));
    }
    printf("    bufferSize=%d level=%d renderType=%s doubleBuffer=%d stereo=%d\n",
           attribs->bufferSize, attribs->level,
-	  visual_render_type_name(attribs->render_type),
+          visual_render_type_name(attribs->render_type),
           attribs->doubleBuffer, attribs->stereo);
    printf("    rgba: redSize=%d greenSize=%d blueSize=%d alphaSize=%d float=%c sRGB=%c\n",
           attribs->redSize, attribs->greenSize,
@@ -1011,13 +1011,13 @@ print_visual_attribs_verbose(const struct visual_attribs *attribs,
       printf("    visualCaveat=Nonconformant\n");
 #endif
    if (attribs->transparentType == GLX_NONE) {
-     printf("    Opaque.\n");
+      printf("    Opaque.\n");
    }
    else if (attribs->transparentType == GLX_TRANSPARENT_RGB) {
-     printf("    Transparent RGB: Red=%d Green=%d Blue=%d Alpha=%d\n",attribs->transparentRedValue,attribs->transparentGreenValue,attribs->transparentBlueValue,attribs->transparentAlphaValue);
+      printf("    Transparent RGB: Red=%d Green=%d Blue=%d Alpha=%d\n",attribs->transparentRedValue,attribs->transparentGreenValue,attribs->transparentBlueValue,attribs->transparentAlphaValue);
    }
    else if (attribs->transparentType == GLX_TRANSPARENT_INDEX) {
-     printf("    Transparent index=%d\n",attribs->transparentIndexValue);
+      printf("    Transparent index=%d\n",attribs->transparentIndexValue);
    }
 #ifdef GLX_SWAP_METHOD_OML
    printf("    SwapMethod=%s\n", swap_method_verbose_string(attribs->swapMethod));
@@ -1028,9 +1028,9 @@ print_visual_attribs_verbose(const struct visual_attribs *attribs,
 static void
 print_visual_attribs_short_header(void)
 {
- printf("    visual  x   bf lv rg d st  colorbuffer  sr ax dp st accumbuffer  ms  sw cav\n");
- printf("  id dep cl sp  sz l  ci b ro  r  g  b  a F gb bf th cl  r  g  b  a ns b ap eat\n");
- printf("----------------------------------------------------------------------------\n");
+   printf("    visual  x   bf lv rg d st  colorbuffer  sr ax dp st accumbuffer  ms  sw cav\n");
+   printf("  id dep cl sp  sz l  ci b ro  r  g  b  a F gb bf th cl  r  g  b  a ns b ap eat\n");
+   printf("----------------------------------------------------------------------------\n");
 }
 
 
@@ -1072,9 +1072,9 @@ print_visual_attribs_short(const struct visual_attribs *attribs)
 static void
 print_visual_attribs_long_header(void)
 {
- printf("Vis   Vis   Visual Trans  buff lev render DB ste  r   g   b   a      s  aux dep ste  accum buffer   MS   MS  swap        \n");
- printf(" ID  Depth   Type  parent size el   type     reo sz  sz  sz  sz flt rgb buf th  ncl  r   g   b   a  num bufs mthd caveats\n");
- printf("-------------------------------------------------------------------------------------------------------------------------\n");
+   printf("Vis   Vis   Visual Trans  buff lev render DB ste  r   g   b   a      s  aux dep ste  accum buffer   MS   MS  swap        \n");
+   printf(" ID  Depth   Type  parent size el   type     reo sz  sz  sz  sz flt rgb buf th  ncl  r   g   b   a  num bufs mthd caveats\n");
+   printf("-------------------------------------------------------------------------------------------------------------------------\n");
 }
 
 
@@ -1130,7 +1130,7 @@ print_visual_info(Display *dpy, int scrnum, InfoMode mode)
    numGlxVisuals = 0;
    for (i = 0; i < numVisuals; i++) {
       if (get_visual_attribs(dpy, &visuals[i], &attribs))
-	 numGlxVisuals++;
+         numGlxVisuals++;
    }
 
    if (numGlxVisuals == 0)
@@ -1145,10 +1145,10 @@ print_visual_info(Display *dpy, int scrnum, InfoMode mode)
 
    for (i = 0; i < numVisuals; i++) {
       if (!get_visual_attribs(dpy, &visuals[i], &attribs))
-	 continue;
+         continue;
 
       if (mode == Verbose)
-	 print_visual_attribs_verbose(&attribs, False);
+         print_visual_attribs_verbose(&attribs, False);
       else if (mode == Normal)
          print_visual_attribs_short(&attribs);
       else if (mode == Wide)
@@ -1189,7 +1189,7 @@ print_fbconfig_info(Display *dpy, int scrnum, InfoMode mode)
       if (mode == Verbose)
          print_visual_attribs_verbose(&attribs, True);
       else if (mode == Normal)
-	 print_visual_attribs_short(&attribs);
+         print_visual_attribs_short(&attribs);
       else if (mode == Wide)
          print_visual_attribs_long(&attribs);
    }

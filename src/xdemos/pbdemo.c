@@ -311,58 +311,58 @@ static void
 drawBox(GLfloat x0, GLfloat x1, GLfloat y0, GLfloat y1,
   GLfloat z0, GLfloat z1, GLenum type)
 {
-  static GLfloat n[6][3] =
-  {
-    {-1.0, 0.0, 0.0},
-    {0.0, 1.0, 0.0},
-    {1.0, 0.0, 0.0},
-    {0.0, -1.0, 0.0},
-    {0.0, 0.0, 1.0},
-    {0.0, 0.0, -1.0}
-  };
-  static GLint faces[6][4] =
-  {
-    {0, 1, 2, 3},
-    {3, 2, 6, 7},
-    {7, 6, 5, 4},
-    {4, 5, 1, 0},
-    {5, 6, 2, 1},
-    {7, 4, 0, 3}
-  };
-  GLfloat v[8][3], tmp;
-  GLint i;
+   static GLfloat n[6][3] =
+   {
+      {-1.0, 0.0, 0.0},
+      {0.0, 1.0, 0.0},
+      {1.0, 0.0, 0.0},
+      {0.0, -1.0, 0.0},
+      {0.0, 0.0, 1.0},
+      {0.0, 0.0, -1.0}
+   };
+   static GLint faces[6][4] =
+   {
+      {0, 1, 2, 3},
+      {3, 2, 6, 7},
+      {7, 6, 5, 4},
+      {4, 5, 1, 0},
+      {5, 6, 2, 1},
+      {7, 4, 0, 3}
+   };
+   GLfloat v[8][3], tmp;
+   GLint i;
 
-  if (x0 > x1) {
-    tmp = x0;
-    x0 = x1;
-    x1 = tmp;
-  }
-  if (y0 > y1) {
-    tmp = y0;
-    y0 = y1;
-    y1 = tmp;
-  }
-  if (z0 > z1) {
-    tmp = z0;
-    z0 = z1;
-    z1 = tmp;
-  }
-  v[0][0] = v[1][0] = v[2][0] = v[3][0] = x0;
-  v[4][0] = v[5][0] = v[6][0] = v[7][0] = x1;
-  v[0][1] = v[1][1] = v[4][1] = v[5][1] = y0;
-  v[2][1] = v[3][1] = v[6][1] = v[7][1] = y1;
-  v[0][2] = v[3][2] = v[4][2] = v[7][2] = z0;
-  v[1][2] = v[2][2] = v[5][2] = v[6][2] = z1;
+   if (x0 > x1) {
+      tmp = x0;
+      x0 = x1;
+      x1 = tmp;
+   }
+   if (y0 > y1) {
+      tmp = y0;
+      y0 = y1;
+      y1 = tmp;
+   }
+   if (z0 > z1) {
+      tmp = z0;
+      z0 = z1;
+      z1 = tmp;
+   }
+   v[0][0] = v[1][0] = v[2][0] = v[3][0] = x0;
+   v[4][0] = v[5][0] = v[6][0] = v[7][0] = x1;
+   v[0][1] = v[1][1] = v[4][1] = v[5][1] = y0;
+   v[2][1] = v[3][1] = v[6][1] = v[7][1] = y1;
+   v[0][2] = v[3][2] = v[4][2] = v[7][2] = z0;
+   v[1][2] = v[2][2] = v[5][2] = v[6][2] = z1;
 
-  for (i = 0; i < 6; i++) {
-    glBegin(type);
-    glNormal3fv(&n[i][0]);
-    glVertex3fv(&v[faces[i][0]][0]);
-    glVertex3fv(&v[faces[i][1]][0]);
-    glVertex3fv(&v[faces[i][2]][0]);
-    glVertex3fv(&v[faces[i][3]][0]);
-    glEnd();
-  }
+   for (i = 0; i < 6; i++) {
+      glBegin(type);
+      glNormal3fv(&n[i][0]);
+      glVertex3fv(&v[faces[i][0]][0]);
+      glVertex3fv(&v[faces[i][1]][0]);
+      glVertex3fv(&v[faces[i][2]][0]);
+      glVertex3fv(&v[faces[i][3]][0]);
+      glEnd();
+   }
 }
 
 

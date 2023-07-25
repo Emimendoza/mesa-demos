@@ -229,8 +229,8 @@ CreateWindow(Display *dpy, XVisualInfo *visinfo,
    mask = CWBackPixel | CWBorderPixel | CWColormap | CWEventMask;
 
    win = XCreateWindow(dpy, root, 0, 0, width, height,
-		        0, visinfo->depth, InputOutput,
-		        visinfo->visual, mask, &attr);
+                       0, visinfo->depth, InputOutput,
+                       visinfo->visual, mask, &attr);
    if (win) {
       XSizeHints sizehints;
       sizehints.width  = width;
@@ -238,7 +238,7 @@ CreateWindow(Display *dpy, XVisualInfo *visinfo,
       sizehints.flags = USSize;
       XSetNormalHints(dpy, win, &sizehints);
       XSetStandardProperties(dpy, win, name, name,
-                              None, (char **)NULL, 0, &sizehints);
+                             None, (char **)NULL, 0, &sizehints);
 
       XMapWindow(dpy, win);
    }

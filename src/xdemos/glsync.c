@@ -63,17 +63,17 @@ static PFNGLXWAITVIDEOSYNCSGIPROC video_sync;
 
 static int GLXExtensionSupported(Display *dpy, const char *extension)
 {
-	const char *extensionsString, *pos;
+   const char *extensionsString, *pos;
 
-	extensionsString = glXQueryExtensionsString(dpy, DefaultScreen(dpy));
+   extensionsString = glXQueryExtensionsString(dpy, DefaultScreen(dpy));
 
-	pos = strstr(extensionsString, extension);
+   pos = strstr(extensionsString, extension);
 
-	if (pos != NULL && (pos == extensionsString || pos[-1] == ' ') &&
-	    (pos[strlen(extension)] == ' ' || pos[strlen(extension)] == '\0'))
-		return 1;
+   if (pos != NULL && (pos == extensionsString || pos[-1] == ' ') &&
+       (pos[strlen(extension)] == ' ' || pos[strlen(extension)] == '\0'))
+      return 1;
 
-	return 0;
+   return 0;
 }
 
 extern char *optarg;
@@ -81,217 +81,217 @@ extern int optind, opterr, optopt;
 static char optstr[] = "w:h:s:vi:";
 
 enum sync_type {
-	none = 0,
-	sgi_video_sync,
-	buffer_swap
+   none = 0,
+   sgi_video_sync,
+   buffer_swap
 };
 
 static void usage(char *name)
 {
-	printf("usage: %s [-w <width>] [-h <height>] [-s<sync method>] "
-	       "[-v]\n", name);
-	printf("\t-s<sync method>:\n");
-	printf("\t\tn: none\n");
-	printf("\t\ts: SGI video sync extension\n");
-	printf("\t\tb: buffer swap\n");
-	printf("\t-i<swap interval>\n");
-	printf("\t-v: verbose (print count)\n");
-	exit(-1);
+   printf("usage: %s [-w <width>] [-h <height>] [-s<sync method>] "
+          "[-v]\n", name);
+   printf("\t-s<sync method>:\n");
+   printf("\t\tn: none\n");
+   printf("\t\ts: SGI video sync extension\n");
+   printf("\t\tb: buffer swap\n");
+   printf("\t-i<swap interval>\n");
+   printf("\t-v: verbose (print count)\n");
+   exit(-1);
 }
 
 int main(int argc, char *argv[])
 {
-	Display *disp;
-	XVisualInfo *pvi;
-	XSetWindowAttributes swa;
-	GLint last_val = -1;
-        unsigned int count = 0;
-	Window winGL;
-	GLXContext context;
-	int dummy;
-	Atom wmDelete;
-	enum sync_type waitforsync = none;
-	int width = 500, height = 500, verbose = 0, interval = 1;
-	int c;
-	unsigned i = 1;
-	int ret;
-	int attribs[] = { GLX_RGBA,
+   Display *disp;
+   XVisualInfo *pvi;
+   XSetWindowAttributes swa;
+   GLint last_val = -1;
+   unsigned int count = 0;
+   Window winGL;
+   GLXContext context;
+   int dummy;
+   Atom wmDelete;
+   enum sync_type waitforsync = none;
+   int width = 500, height = 500, verbose = 0, interval = 1;
+   int c;
+   unsigned i = 1;
+   int ret;
+   int attribs[] = { GLX_RGBA,
                      GLX_RED_SIZE, 1,
                      GLX_GREEN_SIZE, 1,
                      GLX_BLUE_SIZE, 1,
                      None };
-	int db_attribs[] = { GLX_RGBA,
-                     GLX_RED_SIZE, 1,
-                     GLX_GREEN_SIZE, 1,
-                     GLX_BLUE_SIZE, 1,
-                     GLX_DOUBLEBUFFER,
-                     GLX_DEPTH_SIZE, 1,
-                     None };
-	XSizeHints sizehints;
+   int db_attribs[] = { GLX_RGBA,
+                        GLX_RED_SIZE, 1,
+                        GLX_GREEN_SIZE, 1,
+                        GLX_BLUE_SIZE, 1,
+                        GLX_DOUBLEBUFFER,
+                        GLX_DEPTH_SIZE, 1,
+                        None };
+   XSizeHints sizehints;
 
-	opterr = 0;
-	while ((c = getopt(argc, argv, optstr)) != -1) {
-		switch (c) {
-		case 'w':
-			width = atoi(optarg);
-			break;
-		case 'h':
-			height = atoi(optarg);
-			break;
-		case 's':
-			switch (optarg[0]) {
-			case 'n':
-				waitforsync = none;
-				break;
-			case 's':
-				waitforsync = sgi_video_sync;
-				break;
-			case 'b':
-				waitforsync = buffer_swap;
-				break;
-			default:
-				usage(argv[0]);
-				break;
-			}
-			break;
-		case 'v':
-			verbose = 1;
-			break;
-		case 'i':
-			interval = atoi(optarg);
-			break;
-		default:
-			usage(argv[0]);
-			break;
-		}
-	}
+   opterr = 0;
+   while ((c = getopt(argc, argv, optstr)) != -1) {
+      switch (c) {
+      case 'w':
+         width = atoi(optarg);
+         break;
+      case 'h':
+         height = atoi(optarg);
+         break;
+      case 's':
+         switch (optarg[0]) {
+         case 'n':
+            waitforsync = none;
+            break;
+         case 's':
+            waitforsync = sgi_video_sync;
+            break;
+         case 'b':
+            waitforsync = buffer_swap;
+            break;
+         default:
+            usage(argv[0]);
+            break;
+         }
+         break;
+      case 'v':
+         verbose = 1;
+         break;
+      case 'i':
+         interval = atoi(optarg);
+         break;
+      default:
+         usage(argv[0]);
+         break;
+      }
+   }
 
-	disp = XOpenDisplay(NULL);
-	if (!disp) {
-		fprintf(stderr, "failed to open display\n");
-		return -1;
-	}
+   disp = XOpenDisplay(NULL);
+   if (!disp) {
+      fprintf(stderr, "failed to open display\n");
+      return -1;
+   }
 
-	if (!glXQueryExtension(disp, &dummy, &dummy)) {
-		fprintf(stderr, "glXQueryExtension failed\n");
-		return -1;
-	}
+   if (!glXQueryExtension(disp, &dummy, &dummy)) {
+      fprintf(stderr, "glXQueryExtension failed\n");
+      return -1;
+   }
 
-	if (!GLXExtensionSupported(disp, "GLX_SGI_video_sync")) {
-		fprintf(stderr, "GLX_SGI_video_sync not supported, exiting\n");
-		return -1;
-	}
+   if (!GLXExtensionSupported(disp, "GLX_SGI_video_sync")) {
+      fprintf(stderr, "GLX_SGI_video_sync not supported, exiting\n");
+      return -1;
+   }
 
-	if (waitforsync != buffer_swap) {
-		pvi = glXChooseVisual(disp, DefaultScreen(disp), attribs);
-	} else {
-		pvi = glXChooseVisual(disp, DefaultScreen(disp), db_attribs);
-	}
+   if (waitforsync != buffer_swap) {
+      pvi = glXChooseVisual(disp, DefaultScreen(disp), attribs);
+   } else {
+      pvi = glXChooseVisual(disp, DefaultScreen(disp), db_attribs);
+   }
 
-	if (!pvi) {
-		fprintf(stderr, "failed to choose visual, exiting\n");
-		return -1;
-	}
+   if (!pvi) {
+      fprintf(stderr, "failed to choose visual, exiting\n");
+      return -1;
+   }
 
-	pvi->screen = DefaultScreen(disp);
+   pvi->screen = DefaultScreen(disp);
 
-	swa.colormap = XCreateColormap(disp, RootWindow(disp, pvi->screen),
-				       pvi->visual, AllocNone);
-	swa.border_pixel = 0;
-	swa.event_mask = ExposureMask | KeyPressMask | ButtonPressMask |
-		StructureNotifyMask;
-	winGL = XCreateWindow(disp, RootWindow(disp, pvi->screen),
-			      0, 0,
-			      width, height,
-			      0, pvi->depth, InputOutput, pvi->visual,
-			      CWBorderPixel | CWColormap | CWEventMask, &swa);
-	if (!winGL) {
-		fprintf(stderr, "window creation failed\n");
-		return -1;
-	}
-        wmDelete = XInternAtom(disp, "WM_DELETE_WINDOW", True);
-        XSetWMProtocols(disp, winGL, &wmDelete, 1);
+   swa.colormap = XCreateColormap(disp, RootWindow(disp, pvi->screen),
+                                  pvi->visual, AllocNone);
+   swa.border_pixel = 0;
+   swa.event_mask = ExposureMask | KeyPressMask | ButtonPressMask |
+                    StructureNotifyMask;
+   winGL = XCreateWindow(disp, RootWindow(disp, pvi->screen),
+                         0, 0,
+                         width, height,
+                         0, pvi->depth, InputOutput, pvi->visual,
+                         CWBorderPixel | CWColormap | CWEventMask, &swa);
+   if (!winGL) {
+      fprintf(stderr, "window creation failed\n");
+      return -1;
+   }
+   wmDelete = XInternAtom(disp, "WM_DELETE_WINDOW", True);
+   XSetWMProtocols(disp, winGL, &wmDelete, 1);
 
-	sizehints.x = 0;
-	sizehints.y = 0;
-	sizehints.width  = width;
-	sizehints.height = height;
-	sizehints.flags = USSize | USPosition;
+   sizehints.x = 0;
+   sizehints.y = 0;
+   sizehints.width  = width;
+   sizehints.height = height;
+   sizehints.flags = USSize | USPosition;
 
-	XSetNormalHints(disp, winGL, &sizehints);
-	XSetStandardProperties(disp, winGL, "glsync test", "glsync text",
-			       None, NULL, 0, &sizehints);
+   XSetNormalHints(disp, winGL, &sizehints);
+   XSetStandardProperties(disp, winGL, "glsync test", "glsync text",
+                          None, NULL, 0, &sizehints);
 
-	context = glXCreateContext(disp, pvi, NULL, GL_TRUE);
-	if (!context) {
-		fprintf(stderr, "failed to create glx context\n");
-		return -1;
-	}
+   context = glXCreateContext(disp, pvi, NULL, GL_TRUE);
+   if (!context) {
+      fprintf(stderr, "failed to create glx context\n");
+      return -1;
+   }
 
-	XMapWindow(disp, winGL);
-	ret = glXMakeCurrent(disp, winGL, context);
-	if (!ret) {
-		fprintf(stderr, "failed to make context current: %d\n", ret);
-	}
+   XMapWindow(disp, winGL);
+   ret = glXMakeCurrent(disp, winGL, context);
+   if (!ret) {
+      fprintf(stderr, "failed to make context current: %d\n", ret);
+   }
 
-	video_sync_get = (PFNGLXGETVIDEOSYNCSGIPROC) glXGetProcAddress((unsigned char *)"glXGetVideoSyncSGI");
-	video_sync = (PFNGLXWAITVIDEOSYNCSGIPROC) glXGetProcAddress((unsigned char *)"glXWaitVideoSyncSGI");
+   video_sync_get = (PFNGLXGETVIDEOSYNCSGIPROC) glXGetProcAddress((unsigned char *)"glXGetVideoSyncSGI");
+   video_sync = (PFNGLXWAITVIDEOSYNCSGIPROC) glXGetProcAddress((unsigned char *)"glXWaitVideoSyncSGI");
 
-	swap_interval = (PFNGLXSWAPINTERVALSGIPROC) glXGetProcAddress((unsigned char *)"glXSwapIntervalSGI");
+   swap_interval = (PFNGLXSWAPINTERVALSGIPROC) glXGetProcAddress((unsigned char *)"glXSwapIntervalSGI");
 
-	if (!video_sync_get || !video_sync || !swap_interval) {
-		fprintf(stderr, "failed to get sync functions\n");
-		return -1;
-	}
+   if (!video_sync_get || !video_sync || !swap_interval) {
+      fprintf(stderr, "failed to get sync functions\n");
+      return -1;
+   }
 
-	if (waitforsync == buffer_swap) {
-		swap_interval(interval);
-		fprintf(stderr, "set swap interval to %d\n", interval);
-	}
-	video_sync_get(&count);
-	count++;
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	while (i++) {
-		/* Alternate colors to make tearing obvious */
-		if (i & 1) {
-			glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-			glColor3f(1.0f, 1.0f, 1.0f);
-		} else {
-			glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
-			glColor3f(1.0f, 0.0f, 0.0f);
-		}
+   if (waitforsync == buffer_swap) {
+      swap_interval(interval);
+      fprintf(stderr, "set swap interval to %d\n", interval);
+   }
+   video_sync_get(&count);
+   count++;
+   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+   while (i++) {
+      /* Alternate colors to make tearing obvious */
+      if (i & 1) {
+         glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+         glColor3f(1.0f, 1.0f, 1.0f);
+      } else {
+         glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
+         glColor3f(1.0f, 0.0f, 0.0f);
+      }
 
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glRectf(0, 0, width, height);
+      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+      glRectf(0, 0, width, height);
 
-		/* Wait for vsync */
-		if (waitforsync == sgi_video_sync) {
-			if (verbose)
-				fprintf(stderr, "waiting on count %d\n", count);
-			video_sync(2, (count + 1) % 2, &count);
-			if (count < last_val)
-				fprintf(stderr, "error:  vblank count went backwards: %d -> %d\n", last_val, count);
-			if (count == last_val)
-				fprintf(stderr, "error:  count didn't change: %d\n", count);
-			last_val = count;
-			glFlush();
-		} else if (waitforsync == buffer_swap) {
-			glXSwapBuffers(disp, winGL);
-		} else {
-			video_sync_get(&count);
-			sleep(1);
-			glFinish();
-		}
+      /* Wait for vsync */
+      if (waitforsync == sgi_video_sync) {
+         if (verbose)
+            fprintf(stderr, "waiting on count %d\n", count);
+         video_sync(2, (count + 1) % 2, &count);
+         if (count < last_val)
+            fprintf(stderr, "error:  vblank count went backwards: %d -> %d\n", last_val, count);
+         if (count == last_val)
+            fprintf(stderr, "error:  count didn't change: %d\n", count);
+         last_val = count;
+         glFlush();
+      } else if (waitforsync == buffer_swap) {
+         glXSwapBuffers(disp, winGL);
+      } else {
+         video_sync_get(&count);
+         sleep(1);
+         glFinish();
+      }
 
-		if (verbose) {
-			video_sync_get(&count);
-			fprintf(stderr, "current count: %d\n", count);
-		}
-	}
+      if (verbose) {
+         video_sync_get(&count);
+         fprintf(stderr, "current count: %d\n", count);
+      }
+   }
 
-	XDestroyWindow(disp, winGL);
-	glXDestroyContext(disp, context);
-	XCloseDisplay(disp);
+   XDestroyWindow(disp, winGL);
+   glXDestroyContext(disp, context);
+   XCloseDisplay(disp);
 
-	return 0;
+   return 0;
 }

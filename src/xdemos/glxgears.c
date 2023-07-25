@@ -87,7 +87,7 @@ current_time(void)
 
 
 /** Event handler results: */
-#define NOP 0
+#define NOP  0
 #define EXIT 1
 #define DRAW 2
 
@@ -95,15 +95,15 @@ static GLfloat view_rotx = 20.0, view_roty = 30.0, view_rotz = 0.0;
 static GLint gear1, gear2, gear3;
 static GLfloat angle = 0.0;
 
-static GLboolean fullscreen = GL_FALSE;	/* Create a single fullscreen window */
-static GLboolean stereo = GL_FALSE;	/* Enable stereo.  */
+static GLboolean fullscreen = GL_FALSE; /* Create a single fullscreen window */
+static GLboolean stereo = GL_FALSE;     /* Enable stereo.  */
 static GLint samples = 0;               /* Choose visual with at least N samples. */
 static GLint swapinterval = 1;          /* Swap interval */
 static GLboolean use_srgb = GL_FALSE;
-static GLboolean animate = GL_TRUE;	/* Animation */
-static GLfloat eyesep = 5.0;		/* Eye separation. */
-static GLfloat fix_point = 40.0;	/* Fixation point distance.  */
-static GLfloat left, right, asp;	/* Stereo frustum params.  */
+static GLboolean animate = GL_TRUE;     /* Animation */
+static GLfloat eyesep = 5.0;            /* Eye separation. */
+static GLfloat fix_point = 40.0;        /* Fixation point distance.  */
+static GLfloat left, right, asp;        /* Stereo frustum params.  */
 
 
 /*
@@ -143,9 +143,9 @@ gear(GLfloat inner_radius, GLfloat outer_radius, GLfloat width,
       glVertex3f(r0 * cos(angle), r0 * sin(angle), width * 0.5);
       glVertex3f(r1 * cos(angle), r1 * sin(angle), width * 0.5);
       if (i < teeth) {
-	 glVertex3f(r0 * cos(angle), r0 * sin(angle), width * 0.5);
-	 glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da),
-		    width * 0.5);
+         glVertex3f(r0 * cos(angle), r0 * sin(angle), width * 0.5);
+         glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da),
+                    width * 0.5);
       }
    }
    glEnd();
@@ -159,9 +159,9 @@ gear(GLfloat inner_radius, GLfloat outer_radius, GLfloat width,
       glVertex3f(r1 * cos(angle), r1 * sin(angle), width * 0.5);
       glVertex3f(r2 * cos(angle + da), r2 * sin(angle + da), width * 0.5);
       glVertex3f(r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da),
-		 width * 0.5);
+                 width * 0.5);
       glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da),
-		 width * 0.5);
+                 width * 0.5);
    }
    glEnd();
 
@@ -174,9 +174,9 @@ gear(GLfloat inner_radius, GLfloat outer_radius, GLfloat width,
       glVertex3f(r1 * cos(angle), r1 * sin(angle), -width * 0.5);
       glVertex3f(r0 * cos(angle), r0 * sin(angle), -width * 0.5);
       if (i < teeth) {
-	 glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da),
-		    -width * 0.5);
-	 glVertex3f(r0 * cos(angle), r0 * sin(angle), -width * 0.5);
+         glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da),
+                    -width * 0.5);
+         glVertex3f(r0 * cos(angle), r0 * sin(angle), -width * 0.5);
       }
    }
    glEnd();
@@ -188,9 +188,9 @@ gear(GLfloat inner_radius, GLfloat outer_radius, GLfloat width,
       angle = i * 2.0 * M_PI / teeth;
 
       glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da),
-		 -width * 0.5);
+                 -width * 0.5);
       glVertex3f(r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da),
-		 -width * 0.5);
+                 -width * 0.5);
       glVertex3f(r2 * cos(angle + da), r2 * sin(angle + da), -width * 0.5);
       glVertex3f(r1 * cos(angle), r1 * sin(angle), -width * 0.5);
    }
@@ -213,16 +213,16 @@ gear(GLfloat inner_radius, GLfloat outer_radius, GLfloat width,
       glVertex3f(r2 * cos(angle + da), r2 * sin(angle + da), -width * 0.5);
       glNormal3f(cos(angle), sin(angle), 0.0);
       glVertex3f(r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da),
-		 width * 0.5);
+                 width * 0.5);
       glVertex3f(r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da),
-		 -width * 0.5);
+                 -width * 0.5);
       u = r1 * cos(angle + 3 * da) - r2 * cos(angle + 2 * da);
       v = r1 * sin(angle + 3 * da) - r2 * sin(angle + 2 * da);
       glNormal3f(v, -u, 0.0);
       glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da),
-		 width * 0.5);
+                 width * 0.5);
       glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da),
-		 -width * 0.5);
+                 -width * 0.5);
       glNormal3f(cos(angle), sin(angle), 0.0);
    }
 
@@ -330,7 +330,7 @@ draw_frame(Display *dpy, Window win)
 
    if (animate) {
       /* advance rotation for next frame */
-      angle += 70.0 * dt;  /* 70 degrees per second */
+      angle += 70.0 * dt; /* 70 degrees per second */
       if (angle > 3600.0)
          angle -= 3600.0;
    }
@@ -493,8 +493,8 @@ make_fullscreen(Display *dpy, Window w)
       return;
 
    XChangeProperty(dpy, w, NET_WM_STATE,
-		   XA_ATOM, 32, PropModeReplace,
-		   (unsigned char *)&NET_WM_STATE_FULLSCREEN, 1);
+                   XA_ATOM, 32, PropModeReplace,
+                   (unsigned char *)&NET_WM_STATE_FULLSCREEN, 1);
 }
 
 /*
@@ -570,8 +570,8 @@ make_window( Display *dpy, const char *name,
    mask = CWBackPixel | CWBorderPixel | CWColormap | CWEventMask;
 
    win = XCreateWindow( dpy, root, x, y, width, height,
-		        0, visinfo->depth, InputOutput,
-		        visinfo->visual, mask, &attr );
+                        0, visinfo->depth, InputOutput,
+                        visinfo->visual, mask, &attr );
 
    if (fullscreen) {
       no_border(dpy, win);
@@ -588,7 +588,7 @@ make_window( Display *dpy, const char *name,
       sizehints.flags = USSize | USPosition;
       XSetNormalHints(dpy, win, &sizehints);
       XSetStandardProperties(dpy, win, name, name,
-                              None, (char **)NULL, 0, &sizehints);
+                             None, (char **)NULL, 0, &sizehints);
    }
 
    ctx = glXCreateContext( dpy, visinfo, NULL, True );
@@ -641,17 +641,17 @@ setup_vsync(Display *dpy, GLXDrawable drawable)
 
 #if defined(GLX_EXT_swap_control)
    if (is_glx_extension_supported(dpy, "GLX_EXT_swap_control")) {
-       unsigned int tmp = -1;
+      unsigned int tmp = -1;
 
-       if (swapinterval != 1) {
-          PFNGLXSWAPINTERVALEXTPROC pglXSwapIntervalEXT =
-             (PFNGLXSWAPINTERVALEXTPROC)
-             glXGetProcAddressARB((const GLubyte *) "glXSwapIntervalEXT");
-          pglXSwapIntervalEXT(dpy, drawable, swapinterval);
-       }
+      if (swapinterval != 1) {
+         PFNGLXSWAPINTERVALEXTPROC pglXSwapIntervalEXT =
+            (PFNGLXSWAPINTERVALEXTPROC)
+            glXGetProcAddressARB((const GLubyte *) "glXSwapIntervalEXT");
+         pglXSwapIntervalEXT(dpy, drawable, swapinterval);
+      }
 
-       glXQueryDrawable(dpy, drawable, GLX_SWAP_INTERVAL_EXT, &tmp);
-       interval = tmp;
+      glXQueryDrawable(dpy, drawable, GLX_SWAP_INTERVAL_EXT, &tmp);
+      interval = tmp;
    } else
 #endif
    if (is_glx_extension_supported(dpy, "GLX_MESA_swap_control")) {
@@ -659,12 +659,12 @@ setup_vsync(Display *dpy, GLXDrawable drawable)
           (PFNGLXGETSWAPINTERVALMESAPROC)
           glXGetProcAddressARB((const GLubyte *) "glXGetSwapIntervalMESA");
 
-       if (swapinterval != 1) {
-          PFNGLXSWAPINTERVALMESAPROC pglXSwapIntervalMESA =
-             (PFNGLXSWAPINTERVALMESAPROC)
-             glXGetProcAddressARB((const GLubyte *) "glXSwapIntervalMESA");
-          pglXSwapIntervalMESA(swapinterval);
-       }
+      if (swapinterval != 1) {
+         PFNGLXSWAPINTERVALMESAPROC pglXSwapIntervalMESA =
+            (PFNGLXSWAPINTERVALMESAPROC)
+            glXGetProcAddressARB((const GLubyte *) "glXSwapIntervalMESA");
+         pglXSwapIntervalMESA(swapinterval);
+      }
 
       interval = (*pglXGetSwapIntervalMESA)();
    } else if (is_glx_extension_supported(dpy, "GLX_SGI_swap_control")) {
@@ -675,12 +675,12 @@ setup_vsync(Display *dpy, GLXDrawable drawable)
        * export GLX_MESA_swap_control.  In that case, this branch will never
        * be taken, and the correct result should be reported.
        */
-       if (swapinterval != 1) {
-          PFNGLXSWAPINTERVALSGIPROC pglXSwapIntervalSGI =
-             (PFNGLXSWAPINTERVALSGIPROC)
-             glXGetProcAddressARB((const GLubyte *) "glXSwapIntervalSGI");
-          pglXSwapIntervalSGI(swapinterval);
-       }
+      if (swapinterval != 1) {
+         PFNGLXSWAPINTERVALSGIPROC pglXSwapIntervalSGI =
+            (PFNGLXSWAPINTERVALSGIPROC)
+            glXGetProcAddressARB((const GLubyte *) "glXSwapIntervalSGI");
+         pglXSwapIntervalSGI(swapinterval);
+      }
 
       interval = swapinterval;
    }
@@ -833,7 +833,7 @@ main(int argc, char *argv[])
    dpy = XOpenDisplay(dpyName);
    if (!dpy) {
       printf("Error: couldn't open display %s\n",
-	     dpyName ? dpyName : getenv("DISPLAY"));
+             dpyName ? dpyName : getenv("DISPLAY"));
       return -1;
    }
 

@@ -136,7 +136,7 @@ MakeNewTexture(struct winthread *wt)
       assert(width == TEX_SIZE);
       /* sub-tex replace */
       glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, TEX_SIZE, TEX_SIZE,
-                   GL_RGBA, GL_FLOAT, image);
+                      GL_RGBA, GL_FLOAT, image);
    }
    else {
       /* create new */
@@ -332,7 +332,7 @@ keypress(XEvent *event, struct winthread *wt)
    case XK_a:
    case XK_A:
       Animate = !Animate;
-      if (Animate)  /* yes, prev Animate state! */
+      if (Animate) /* yes, prev Animate state! */
          signal_redraw();
       break;
    case XK_s:
@@ -379,28 +379,27 @@ event_loop(Display *dpy)
       }
 
       switch (event.type) {
-         case ConfigureNotify:
-            /* Find winthread for this event's window */
-            for (i = 0; i < NumWinThreads; i++) {
-               struct winthread *wt = &WinThreads[i];
-               if (event.xconfigure.window == wt->Win) {
-                  resize(wt, event.xconfigure.width,
-                         event.xconfigure.height);
-                  break;
-               }
+      case ConfigureNotify:
+         /* Find winthread for this event's window */
+         for (i = 0; i < NumWinThreads; i++) {
+            struct winthread *wt = &WinThreads[i];
+            if (event.xconfigure.window == wt->Win) {
+               resize(wt, event.xconfigure.width, event.xconfigure.height);
+               break;
             }
-            break;
-         case KeyPress:
-            for (i = 0; i < NumWinThreads; i++) {
-               struct winthread *wt = &WinThreads[i];
-               if (event.xkey.window == wt->Win) {
-                  keypress(&event, wt);
-                  break;
-               }
+         }
+         break;
+      case KeyPress:
+         for (i = 0; i < NumWinThreads; i++) {
+            struct winthread *wt = &WinThreads[i];
+            if (event.xkey.window == wt->Win) {
+               keypress(&event, wt);
+               break;
             }
-            break;
-         default:
-            /*no-op*/ ;
+         }
+         break;
+      default:
+         /*no-op*/ ;
       }
    }
 }
@@ -448,12 +447,12 @@ create_window(struct winthread *wt, GLXContext shareCtx)
    Window win;
    GLXContext ctx;
    int attrib[] = { GLX_RGBA,
-		    GLX_RED_SIZE, 1,
-		    GLX_GREEN_SIZE, 1,
-		    GLX_BLUE_SIZE, 1,
+                    GLX_RED_SIZE, 1,
+                    GLX_GREEN_SIZE, 1,
+                    GLX_BLUE_SIZE, 1,
                     GLX_DEPTH_SIZE, 1,
-		    GLX_DOUBLEBUFFER,
-		    None };
+                    GLX_DOUBLEBUFFER,
+                    None };
    int scrnum;
    XSetWindowAttributes attr;
    unsigned long mask;
@@ -479,8 +478,8 @@ create_window(struct winthread *wt, GLXContext shareCtx)
    mask = CWBackPixel | CWBorderPixel | CWColormap | CWEventMask;
 
    win = XCreateWindow(wt->Dpy, root, xpos, ypos, width, height,
-		        0, visinfo->depth, InputOutput,
-		        visinfo->visual, mask, &attr);
+                       0, visinfo->depth, InputOutput,
+                       visinfo->visual, mask, &attr);
    if (!win) {
       Error("Couldn't create window");
    }
@@ -494,7 +493,7 @@ create_window(struct winthread *wt, GLXContext shareCtx)
       sizehints.flags = USSize | USPosition;
       XSetNormalHints(wt->Dpy, win, &sizehints);
       XSetStandardProperties(wt->Dpy, win, "glthreads", "glthreads",
-                              None, (char **)NULL, 0, &sizehints);
+                             None, (char **)NULL, 0, &sizehints);
    }
 
 
@@ -627,12 +626,12 @@ main(int argc, char *argv[])
    if (!MultiDisplays) {
       if (!Locking) {
          threadStat = XInitThreads();
-      if (threadStat) {
-         printf("XInitThreads() returned %d (success)\n", (int) threadStat);
-      }
-      else {
-         printf("XInitThreads() returned 0 (failure- this program may fail)\n");
-      }
+         if (threadStat) {
+            printf("XInitThreads() returned %d (success)\n", (int) threadStat);
+         }
+         else {
+            printf("XInitThreads() returned 0 (failure- this program may fail)\n");
+         }
       }
 
       dpy = XOpenDisplay(displayName);

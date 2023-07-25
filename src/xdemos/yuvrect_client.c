@@ -71,30 +71,30 @@ static void Reshape( int width, int height )
 static int queryClient(Display *dpy, int screen)
 {
 #ifdef GLX_MESA_allocate_memory
-  char *extensions;
+   char *extensions;
 
-  extensions = (char *)glXQueryExtensionsString(dpy, screen);
-  if (!extensions || !strstr(extensions,"GLX_MESA_allocate_memory")) {
-    return 0;
-  }
+   extensions = (char *)glXQueryExtensionsString(dpy, screen);
+   if (!extensions || !strstr(extensions,"GLX_MESA_allocate_memory")) {
+      return 0;
+   }
 
-  return 1;
+   return 1;
 #else
-  return 0;
+   return 0;
 #endif
 }
 
 static int
 query_extension(char* extName) {
-    char *p = (char *) glGetString(GL_EXTENSIONS);
-    char *end = p + strlen(p);
-    while (p < end) {
-        int n = strcspn(p, " ");
-        if ((strlen(extName) == n) && (strncmp(extName, p, n) == 0))
-            return GL_TRUE;
-        p += (n + 1);
-    }
-    return GL_FALSE;
+   char *p = (char *) glGetString(GL_EXTENSIONS);
+   char *end = p + strlen(p);
+   while (p < end) {
+      int n = strcspn(p, " ");
+      if ((strlen(extName) == n) && (strncmp(extName, p, n) == 0))
+         return GL_TRUE;
+      p += (n + 1);
+   }
+   return GL_FALSE;
 }
 
 static void Init( int argc, char *argv[] , Display *dpy, int screen, Window win)
@@ -113,8 +113,8 @@ static void Init( int argc, char *argv[] , Display *dpy, int screen, Window win)
    }
 
    if (!queryClient(dpy, screen)) {
-     printf("Sorry, GLX_MESA_allocate_memory is required\n");
-     exit(0);
+      printf("Sorry, GLX_MESA_allocate_memory is required\n");
+      exit(0);
    }
 
    glPixelStorei(GL_UNPACK_CLIENT_STORAGE_APPLE, 1);
@@ -144,8 +144,8 @@ static void Init( int argc, char *argv[] , Display *dpy, int screen, Window win)
 #endif
    if (!glx_memory)
    {
-     fprintf(stderr,"Failed to allocate MESA memory\n");
-     exit(-1);
+      fprintf(stderr,"Failed to allocate MESA memory\n");
+      exit(-1);
    }
 
    memcpy(glx_memory, ImageYUV, ImgWidth * ImgHeight * 2);
@@ -196,8 +196,8 @@ make_window( Display *dpy, const char *name,
 
    visinfo = glXChooseVisual( dpy, scrnum, attribs );
    if (!visinfo) {
-     printf("Error: couldn't get an RGB, Double-buffered visual\n");
-     exit(1);
+      printf("Error: couldn't get an RGB, Double-buffered visual\n");
+      exit(1);
    }
 
    /* window attributes */
@@ -209,8 +209,8 @@ make_window( Display *dpy, const char *name,
    mask = CWBackPixel | CWBorderPixel | CWColormap | CWEventMask | CWOverrideRedirect;
 
    win = XCreateWindow( dpy, root, 0, 0, width, height,
-		        0, visinfo->depth, InputOutput,
-		        visinfo->visual, mask, &attr );
+                        0, visinfo->depth, InputOutput,
+                        visinfo->visual, mask, &attr );
 
    /* set hints and properties */
    {
@@ -222,7 +222,7 @@ make_window( Display *dpy, const char *name,
       sizehints.flags = USSize | USPosition;
       XSetNormalHints(dpy, win, &sizehints);
       XSetStandardProperties(dpy, win, name, name,
-                              None, (char **)NULL, 0, &sizehints);
+                             None, (char **)NULL, 0, &sizehints);
    }
 
    ctx = glXCreateContext( dpy, visinfo, NULL, True );
@@ -246,12 +246,12 @@ event_loop(Display *dpy, Window win)
          XEvent event;
          XNextEvent(dpy, &event);
          switch (event.type) {
-	 case Expose:
+         case Expose:
             /* we'll redraw below */
-	    break;
-	 case ConfigureNotify:
-	   Reshape(event.xconfigure.width, event.xconfigure.height);
-	    break;
+            break;
+         case ConfigureNotify:
+            Reshape(event.xconfigure.width, event.xconfigure.height);
+            break;
          case KeyPress:
             {
                char buffer[10];
@@ -289,13 +289,13 @@ main(int argc, char *argv[])
          printInfo = GL_TRUE;
       }
       else
-	 printf("Warrning: unknown parameter: %s\n", argv[i]);
+         printf("Warrning: unknown parameter: %s\n", argv[i]);
    }
 
    dpy = XOpenDisplay(dpyName);
    if (!dpy) {
       printf("Error: couldn't open display %s\n",
-	     XDisplayName(dpyName));
+             XDisplayName(dpyName));
       return -1;
    }
 

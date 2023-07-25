@@ -82,37 +82,37 @@ static void resize( unsigned int width, unsigned int height )
 
 static void setup_font( Display *dpy )
 {
-    XFontStruct *fontInfo;
-    Font id;
-    unsigned int first, last;
+   XFontStruct *fontInfo;
+   Font id;
+   unsigned int first, last;
 
-    fontInfo = XLoadQueryFont(dpy, FontName);
-    if (!fontInfo) {
-        printf("Error: font %s not found\n", FontName);
-	exit(0);
-    }
+   fontInfo = XLoadQueryFont(dpy, FontName);
+   if (!fontInfo) {
+      printf("Error: font %s not found\n", FontName);
+      exit(0);
+   }
 
-    id = fontInfo->fid;
-    first = fontInfo->min_char_or_byte2;
-    last = fontInfo->max_char_or_byte2;
+   id = fontInfo->fid;
+   first = fontInfo->min_char_or_byte2;
+   last = fontInfo->max_char_or_byte2;
 
-    FontBase = glGenLists((GLuint) last + 1);
-    if (!FontBase) {
-        printf("Error: unable to allocate display lists\n");
-	exit(0);
-    }
-    glXUseXFont(id, first, last - first + 1, FontBase + first);
+   FontBase = glGenLists((GLuint) last + 1);
+   if (!FontBase) {
+      printf("Error: unable to allocate display lists\n");
+      exit(0);
+   }
+   glXUseXFont(id, first, last - first + 1, FontBase + first);
 }
 
 static Window make_rgb_db_window( Display *dpy, int xpos, int ypos,
-				  unsigned int width, unsigned int height )
+                                  unsigned int width, unsigned int height )
 {
    int attrib[] = { GLX_RGBA,
-		    GLX_RED_SIZE, 1,
-		    GLX_GREEN_SIZE, 1,
-		    GLX_BLUE_SIZE, 1,
-		    GLX_DOUBLEBUFFER,
-		    None };
+                    GLX_RED_SIZE, 1,
+                    GLX_GREEN_SIZE, 1,
+                    GLX_BLUE_SIZE, 1,
+                    GLX_DOUBLEBUFFER,
+                    None };
    int scrnum;
    XSetWindowAttributes attr;
    unsigned long mask;
@@ -138,8 +138,8 @@ static Window make_rgb_db_window( Display *dpy, int xpos, int ypos,
    mask = CWBackPixel | CWBorderPixel | CWColormap | CWEventMask;
 
    win = XCreateWindow( dpy, root, 0, 0, width, height,
-		        0, visinfo->depth, InputOutput,
-		        visinfo->visual, mask, &attr );
+                        0, visinfo->depth, InputOutput,
+                        visinfo->visual, mask, &attr );
 
    {
       XSizeHints sizehints;
@@ -150,7 +150,7 @@ static Window make_rgb_db_window( Display *dpy, int xpos, int ypos,
       sizehints.flags = USSize | USPosition;
       XSetNormalHints(dpy, win, &sizehints);
       XSetStandardProperties(dpy, win, ProgramName, ProgramName,
-                              None, (char **)NULL, 0, &sizehints);
+                             None, (char **)NULL, 0, &sizehints);
    }
 
 
@@ -170,16 +170,16 @@ static void event_loop( Display *dpy )
       XNextEvent( dpy, &event );
 
       switch (event.type) {
-	 case Expose:
-	    redraw( dpy, event.xany.window );
-	    break;
-	 case ConfigureNotify:
-	    resize( event.xconfigure.width, event.xconfigure.height );
-	    break;
-         case KeyPress:
-            exit(0);
-         default:
-            ;  /* no-op */
+      case Expose:
+         redraw( dpy, event.xany.window );
+         break;
+      case ConfigureNotify:
+         resize( event.xconfigure.width, event.xconfigure.height );
+         break;
+      case KeyPress:
+         exit(0);
+      default:
+         ;  /* no-op */
       }
    }
 }

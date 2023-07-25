@@ -129,9 +129,9 @@ gear(GLfloat inner_radius, GLfloat outer_radius, GLfloat width,
       glVertex3f(r0 * cos(angle), r0 * sin(angle), width * 0.5);
       glVertex3f(r1 * cos(angle), r1 * sin(angle), width * 0.5);
       if (i < teeth) {
-	 glVertex3f(r0 * cos(angle), r0 * sin(angle), width * 0.5);
-	 glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da),
-		    width * 0.5);
+         glVertex3f(r0 * cos(angle), r0 * sin(angle), width * 0.5);
+         glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da),
+                    width * 0.5);
       }
    }
    glEnd();
@@ -145,9 +145,9 @@ gear(GLfloat inner_radius, GLfloat outer_radius, GLfloat width,
       glVertex3f(r1 * cos(angle), r1 * sin(angle), width * 0.5);
       glVertex3f(r2 * cos(angle + da), r2 * sin(angle + da), width * 0.5);
       glVertex3f(r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da),
-		 width * 0.5);
+                 width * 0.5);
       glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da),
-		 width * 0.5);
+                 width * 0.5);
    }
    glEnd();
 
@@ -160,9 +160,9 @@ gear(GLfloat inner_radius, GLfloat outer_radius, GLfloat width,
       glVertex3f(r1 * cos(angle), r1 * sin(angle), -width * 0.5);
       glVertex3f(r0 * cos(angle), r0 * sin(angle), -width * 0.5);
       if (i < teeth) {
-	 glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da),
-		    -width * 0.5);
-	 glVertex3f(r0 * cos(angle), r0 * sin(angle), -width * 0.5);
+         glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da),
+                    -width * 0.5);
+         glVertex3f(r0 * cos(angle), r0 * sin(angle), -width * 0.5);
       }
    }
    glEnd();
@@ -174,9 +174,9 @@ gear(GLfloat inner_radius, GLfloat outer_radius, GLfloat width,
       angle = i * 2.0 * M_PI / teeth;
 
       glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da),
-		 -width * 0.5);
+                 -width * 0.5);
       glVertex3f(r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da),
-		 -width * 0.5);
+                 -width * 0.5);
       glVertex3f(r2 * cos(angle + da), r2 * sin(angle + da), -width * 0.5);
       glVertex3f(r1 * cos(angle), r1 * sin(angle), -width * 0.5);
    }
@@ -199,16 +199,16 @@ gear(GLfloat inner_radius, GLfloat outer_radius, GLfloat width,
       glVertex3f(r2 * cos(angle + da), r2 * sin(angle + da), -width * 0.5);
       glNormal3f(cos(angle), sin(angle), 0.0);
       glVertex3f(r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da),
-		 width * 0.5);
+                 width * 0.5);
       glVertex3f(r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da),
-		 -width * 0.5);
+                 -width * 0.5);
       u = r1 * cos(angle + 3 * da) - r2 * cos(angle + 2 * da);
       v = r1 * sin(angle + 3 * da) - r2 * sin(angle + 2 * da);
       glNormal3f(v, -u, 0.0);
       glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da),
-		 width * 0.5);
+                 width * 0.5);
       glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da),
-		 -width * 0.5);
+                 -width * 0.5);
       glNormal3f(cos(angle), sin(angle), 0.0);
    }
 
@@ -318,7 +318,7 @@ init(void)
 
 static GLXWindow
 dummy_create_window(Display *dpy, GLXFBConfig config, Window win,
-                   const int *attrib_list)
+                    const int *attrib_list)
 {
    (void) dpy;
    (void) config;
@@ -366,35 +366,35 @@ init_fbconfig_functions(Display *dpy, int scrnum)
        && ((match[len] == '\0') || (match[len] == ' '));
 
    printf( "GLX 1.3 is %ssupported.\n",
-	   (glx_1_3_supported) ? "" : "not " );
+           (glx_1_3_supported) ? "" : "not " );
    printf( "%s is %ssupported.\n",
-	   ext_name, (ext_version_supported) ? "" : "not " );
+           ext_name, (ext_version_supported) ? "" : "not " );
 
    if ( glx_1_3_supported ) {
       choose_fbconfig = (PFNGLXCHOOSEFBCONFIGPROC)
-	 glXGetProcAddressARB((GLubyte *) "glXChooseFBConfig");
+         glXGetProcAddressARB((GLubyte *) "glXChooseFBConfig");
       get_visual_from_fbconfig = (PFNGLXGETVISUALFROMFBCONFIGPROC)
-	 glXGetProcAddressARB((GLubyte *) "glXGetVisualFromFBConfig");
+         glXGetProcAddressARB((GLubyte *) "glXGetVisualFromFBConfig");
       create_new_context = (PFNGLXCREATENEWCONTEXTPROC)
-	 glXGetProcAddressARB((GLubyte *) "glXCreateNewContext");
+         glXGetProcAddressARB((GLubyte *) "glXCreateNewContext");
       create_window = (PFNGLXCREATEWINDOWPROC)
-	 glXGetProcAddressARB((GLubyte *) "glXCreateWindow");
+         glXGetProcAddressARB((GLubyte *) "glXCreateWindow");
       destroy_window = (PFNGLXDESTROYWINDOWPROC)
-	 glXGetProcAddressARB((GLubyte *) "glXDestroyWindow");
+         glXGetProcAddressARB((GLubyte *) "glXDestroyWindow");
    }
    else if ( ext_version_supported ) {
       choose_fbconfig = (PFNGLXCHOOSEFBCONFIGPROC)
-	 glXGetProcAddressARB((GLubyte *) "glXChooseFBConfigSGIX");
+         glXGetProcAddressARB((GLubyte *) "glXChooseFBConfigSGIX");
       get_visual_from_fbconfig = (PFNGLXGETVISUALFROMFBCONFIGPROC)
-	 glXGetProcAddressARB((GLubyte *) "glXGetVisualFromFBConfigSGIX");
+         glXGetProcAddressARB((GLubyte *) "glXGetVisualFromFBConfigSGIX");
       create_new_context = (PFNGLXCREATENEWCONTEXTPROC)
-	 glXGetProcAddressARB((GLubyte *) "glXCreateContextWithConfigSGIX");
+         glXGetProcAddressARB((GLubyte *) "glXCreateContextWithConfigSGIX");
       create_window = dummy_create_window;
       destroy_window = dummy_destroy_window;
    }
    else {
       printf( "This demo requires either GLX 1.3 or %s be supported.\n",
-	      ext_name );
+              ext_name );
       exit(1);
    }
 
@@ -425,13 +425,13 @@ make_window( Display *dpy, const char *name,
              Window *winRet, GLXWindow *glxWinRet, GLXContext *ctxRet)
 {
    int attrib[] = { GLX_DRAWABLE_TYPE, GLX_WINDOW_BIT,
-		    GLX_RENDER_TYPE,   GLX_RGBA_BIT,
-		    GLX_RED_SIZE,      1,
-		    GLX_GREEN_SIZE,    1,
-		    GLX_BLUE_SIZE,     1,
-		    GLX_DOUBLEBUFFER,  GL_TRUE,
-		    GLX_DEPTH_SIZE,    1,
-		    None };
+                    GLX_RENDER_TYPE,   GLX_RGBA_BIT,
+                    GLX_RED_SIZE,      1,
+                    GLX_GREEN_SIZE,    1,
+                    GLX_BLUE_SIZE,     1,
+                    GLX_DOUBLEBUFFER,  GL_TRUE,
+                    GLX_DEPTH_SIZE,    1,
+                    None };
    GLXFBConfig * fbconfig;
    int num_configs;
    int scrnum;
@@ -455,7 +455,7 @@ make_window( Display *dpy, const char *name,
    }
 
    printf("\nThe following fbconfigs meet the requirements.  The first one "
-	  "will be used.\n\n");
+          "will be used.\n\n");
    for ( i = 0 ; i < num_configs ; i++ ) {
       PrintFBConfigInfo(dpy, scrnum, fbconfig[i], GL_TRUE);
    }
@@ -470,8 +470,8 @@ make_window( Display *dpy, const char *name,
    mask = CWBackPixel | CWBorderPixel | CWColormap | CWEventMask;
 
    win = XCreateWindow( dpy, root, 0, 0, width, height,
-		        0, visinfo->depth, InputOutput,
-		        visinfo->visual, mask, &attr );
+                        0, visinfo->depth, InputOutput,
+                        visinfo->visual, mask, &attr );
 
    /* set hints and properties */
    {
@@ -483,7 +483,7 @@ make_window( Display *dpy, const char *name,
       sizehints.flags = USSize | USPosition;
       XSetNormalHints(dpy, win, &sizehints);
       XSetStandardProperties(dpy, win, name, name,
-                              None, (char **)NULL, 0, &sizehints);
+                             None, (char **)NULL, 0, &sizehints);
    }
 
    glxWin = (*create_window)(dpy, fbconfig[0], win, NULL);
@@ -510,12 +510,12 @@ event_loop(Display *dpy, GLXWindow win)
          XEvent event;
          XNextEvent(dpy, &event);
          switch (event.type) {
-	 case Expose:
+         case Expose:
             /* we'll redraw below */
-	    break;
-	 case ConfigureNotify:
-	    reshape(event.xconfigure.width, event.xconfigure.height);
-	    break;
+            break;
+         case ConfigureNotify:
+            reshape(event.xconfigure.width, event.xconfigure.height);
+            break;
          case KeyPress:
             {
                char buffer[10];

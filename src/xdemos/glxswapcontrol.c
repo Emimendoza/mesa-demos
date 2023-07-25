@@ -154,9 +154,9 @@ gear(GLfloat inner_radius, GLfloat outer_radius, GLfloat width,
       glVertex3f(r0 * cos(angle), r0 * sin(angle), width * 0.5);
       glVertex3f(r1 * cos(angle), r1 * sin(angle), width * 0.5);
       if (i < teeth) {
-	 glVertex3f(r0 * cos(angle), r0 * sin(angle), width * 0.5);
-	 glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da),
-		    width * 0.5);
+         glVertex3f(r0 * cos(angle), r0 * sin(angle), width * 0.5);
+         glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da),
+                    width * 0.5);
       }
    }
    glEnd();
@@ -170,9 +170,9 @@ gear(GLfloat inner_radius, GLfloat outer_radius, GLfloat width,
       glVertex3f(r1 * cos(angle), r1 * sin(angle), width * 0.5);
       glVertex3f(r2 * cos(angle + da), r2 * sin(angle + da), width * 0.5);
       glVertex3f(r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da),
-		 width * 0.5);
+                 width * 0.5);
       glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da),
-		 width * 0.5);
+                 width * 0.5);
    }
    glEnd();
 
@@ -185,9 +185,9 @@ gear(GLfloat inner_radius, GLfloat outer_radius, GLfloat width,
       glVertex3f(r1 * cos(angle), r1 * sin(angle), -width * 0.5);
       glVertex3f(r0 * cos(angle), r0 * sin(angle), -width * 0.5);
       if (i < teeth) {
-	 glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da),
-		    -width * 0.5);
-	 glVertex3f(r0 * cos(angle), r0 * sin(angle), -width * 0.5);
+         glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da),
+                    -width * 0.5);
+         glVertex3f(r0 * cos(angle), r0 * sin(angle), -width * 0.5);
       }
    }
    glEnd();
@@ -199,9 +199,9 @@ gear(GLfloat inner_radius, GLfloat outer_radius, GLfloat width,
       angle = i * 2.0 * M_PI / teeth;
 
       glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da),
-		 -width * 0.5);
+                 -width * 0.5);
       glVertex3f(r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da),
-		 -width * 0.5);
+                 -width * 0.5);
       glVertex3f(r2 * cos(angle + da), r2 * sin(angle + da), -width * 0.5);
       glVertex3f(r1 * cos(angle), r1 * sin(angle), -width * 0.5);
    }
@@ -224,16 +224,16 @@ gear(GLfloat inner_radius, GLfloat outer_radius, GLfloat width,
       glVertex3f(r2 * cos(angle + da), r2 * sin(angle + da), -width * 0.5);
       glNormal3f(cos(angle), sin(angle), 0.0);
       glVertex3f(r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da),
-		 width * 0.5);
+                 width * 0.5);
       glVertex3f(r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da),
-		 -width * 0.5);
+                 -width * 0.5);
       u = r1 * cos(angle + 3 * da) - r2 * cos(angle + 2 * da);
       v = r1 * sin(angle + 3 * da) - r2 * sin(angle + 2 * da);
       glNormal3f(v, -u, 0.0);
       glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da),
-		 width * 0.5);
+                 width * 0.5);
       glVertex3f(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da),
-		 -width * 0.5);
+                 -width * 0.5);
       glNormal3f(cos(angle), sin(angle), 0.0);
    }
 
@@ -262,25 +262,25 @@ draw(void)
    if ( use_ztrick ) {
       static GLboolean flip = GL_FALSE;
       static const GLfloat vert[4][3] = {
-	 { -1, -1, -0.999 },
-	 {  1, -1, -0.999 },
-	 {  1,  1, -0.999 },
-	 { -1,  1, -0.999 }
+         { -1, -1, -0.999 },
+         {  1, -1, -0.999 },
+         {  1,  1, -0.999 },
+         { -1,  1, -0.999 }
       };
       static const GLfloat col[4][3] = {
-	 { 1.0, 0.6, 0.0 },
-	 { 1.0, 0.6, 0.0 },
-	 { 0.0, 0.0, 0.0 },
-	 { 0.0, 0.0, 0.0 },
+         { 1.0, 0.6, 0.0 },
+         { 1.0, 0.6, 0.0 },
+         { 0.0, 0.0, 0.0 },
+         { 0.0, 0.0, 0.0 },
       };
 
       if ( flip ) {
-	 glDepthRange(0, 0.5);
-	 glDepthFunc(GL_LEQUAL);
+         glDepthRange(0, 0.5);
+         glDepthFunc(GL_LEQUAL);
       }
       else {
-	 glDepthRange(1.0, 0.4999);
-	 glDepthFunc(GL_GEQUAL);
+         glDepthRange(1.0, 0.4999);
+         glDepthFunc(GL_GEQUAL);
       }
 
       flip = !flip;
@@ -463,12 +463,12 @@ make_window( Display *dpy, const char *name,
              Window *winRet, GLXContext *ctxRet)
 {
    int attrib[] = { GLX_RGBA,
-		    GLX_RED_SIZE, 1,
-		    GLX_GREEN_SIZE, 1,
-		    GLX_BLUE_SIZE, 1,
-		    GLX_DOUBLEBUFFER,
-		    GLX_DEPTH_SIZE, 1,
-		    None };
+                    GLX_RED_SIZE, 1,
+                    GLX_GREEN_SIZE, 1,
+                    GLX_BLUE_SIZE, 1,
+                    GLX_DOUBLEBUFFER,
+                    GLX_DEPTH_SIZE, 1,
+                    None };
    int scrnum;
    XSetWindowAttributes attr;
    unsigned long mask;
@@ -500,8 +500,8 @@ make_window( Display *dpy, const char *name,
    mask = CWBackPixel | CWBorderPixel | CWColormap | CWEventMask;
 
    win = XCreateWindow( dpy, root, 0, 0, width, height,
-		        0, visinfo->depth, InputOutput,
-		        visinfo->visual, mask, &attr );
+                        0, visinfo->depth, InputOutput,
+                        visinfo->visual, mask, &attr );
 
    /* set hints and properties */
    {
@@ -513,7 +513,7 @@ make_window( Display *dpy, const char *name,
       sizehints.flags = USSize | USPosition;
       XSetNormalHints(dpy, win, &sizehints);
       XSetStandardProperties(dpy, win, name, name,
-                              None, (char **)NULL, 0, &sizehints);
+                             None, (char **)NULL, 0, &sizehints);
    }
 
    if (fullscreen)
@@ -542,12 +542,12 @@ event_loop(Display *dpy, Window win)
          XEvent event;
          XNextEvent(dpy, &event);
          switch (event.type) {
-	 case Expose:
+         case Expose:
             /* we'll redraw below */
-	    break;
-	 case ConfigureNotify:
-	    reshape(event.xconfigure.width, event.xconfigure.height);
-	    break;
+            break;
+         case ConfigureNotify:
+            reshape(event.xconfigure.width, event.xconfigure.height);
+            break;
          case KeyPress:
             {
                char buffer[10];
@@ -585,10 +585,10 @@ event_loop(Display *dpy, Window win)
       glXSwapBuffers(dpy, win);
 
       if ( get_frame_usage != NULL ) {
-	 GLfloat   temp;
+         GLfloat   temp;
 
-	 (*get_frame_usage)( dpy, win, & temp );
-	 frame_usage += temp;
+         (*get_frame_usage)( dpy, win, & temp );
+         frame_usage += temp;
       }
 
       /* calc framerate */
@@ -605,20 +605,20 @@ event_loop(Display *dpy, Window win)
          if (t - t0 >= 5.0) {
             GLfloat seconds = t - t0;
             GLfloat fps = frames / seconds;
-	    if ( get_frame_usage != NULL ) {
-	       printf("%d frames in %3.1f seconds = %6.3f FPS (%3.1f%% usage)\n",
-		      frames, seconds, fps,
-		      (frame_usage * 100.0) / (float) frames );
-	    }
-	    else {
-	       printf("%d frames in %3.1f seconds = %6.3f FPS\n",
-		      frames, seconds, fps);
-	    }
-	    fflush(stdout);
+            if ( get_frame_usage != NULL ) {
+               printf("%d frames in %3.1f seconds = %6.3f FPS (%3.1f%% usage)\n",
+                      frames, seconds, fps,
+                      (frame_usage * 100.0) / (float) frames );
+            }
+            else {
+               printf("%d frames in %3.1f seconds = %6.3f FPS\n",
+                      frames, seconds, fps);
+            }
+            fflush(stdout);
 
             t0 = t;
             frames = 0;
-	    frame_usage = 0.0;
+            frame_usage = 0.0;
          }
       }
    }
@@ -671,7 +671,7 @@ make_extension_table( const char * string )
    num_strings = 1;
    for ( i = 0 ; string[i] != NUL ; i++ ) {
       if ( string[i] == ' ' ) {
-	 num_strings++;
+         num_strings++;
       }
    }
 
@@ -688,20 +688,20 @@ make_extension_table( const char * string )
        */
 
       for ( i = 0
-	    ; (string[ base + i ] != NUL) && (string[ base + i ] != ' ')
-	    ; i++ ) {
-	 /* empty */ ;
+            ; (string[ base + i ] != NUL) && (string[ base + i ] != ' ')
+            ; i++ ) {
+         /* empty */ ;
       }
 
       if ( i > 0 ) {
-	 /* If the string was non-zero length, add it to the table.  We
-	  * can get zero length strings if there is a space at the end of
-	  * the string or if there are two (or more) spaces next to each
-	  * other in the string.
-	  */
+         /* If the string was non-zero length, add it to the table.  We
+          * can get zero length strings if there is a space at the end of
+          * the string or if there are two (or more) spaces next to each
+          * other in the string.
+          */
 
-	 string_tab[ idx ] = malloc( sizeof( char ) * (i + 1) );
-	 if ( string_tab[ idx ] == NULL ) {
+         string_tab[ idx ] = malloc( sizeof( char ) * (i + 1) );
+         if ( string_tab[ idx ] == NULL ) {
             unsigned j = 0;
 
             for ( j = 0; j < idx; j++ ) {
@@ -710,12 +710,12 @@ make_extension_table( const char * string )
 
             free( string_tab );
 
-	    return;
-	 }
+            return;
+         }
 
-	 (void) memcpy( string_tab[ idx ], & string[ base ], i );
-	 string_tab[ idx ][i] = NUL;
-	 idx++;
+         (void) memcpy( string_tab[ idx ], & string[ base ], i );
+         string_tab[ idx ][i] = NUL;
+         idx++;
       }
 
 
@@ -723,9 +723,9 @@ make_extension_table( const char * string )
        */
 
       for ( base += i
-	    ; (string[ base ] == ' ') && (string[ base ] != NUL)
-	    ; base++ ) {
-	 /* empty */ ;
+            ; (string[ base ] == ' ') && (string[ base ] != NUL)
+            ; base++ ) {
+         /* empty */ ;
       }
    }
 
@@ -749,7 +749,7 @@ is_extension_supported( const char * ext )
 
    for ( i = 0 ; i < num_extensions ; i++ ) {
       if ( strcmp( ext, extension_table[i] ) == 0 ) {
-	 return GL_TRUE;
+         return GL_TRUE;
       }
    }
 
@@ -783,22 +783,22 @@ main(int argc, char *argv[])
          printInfo = GL_TRUE;
       }
       else if (strcmp(argv[i], "-swap") == 0 && i + 1 < argc) {
-	 swap_interval = atoi( argv[i+1] );
-	 do_swap_interval = GL_TRUE;
-	 i++;
+         swap_interval = atoi( argv[i+1] );
+         do_swap_interval = GL_TRUE;
+         i++;
       }
       else if (strcmp(argv[i], "-forcegetrate") == 0) {
-	 /* This option was put in because some DRI drivers don't support the
-	  * full GLX_OML_sync_control extension, but they do support
-	  * glXGetMscRateOML.
-	  */
-	 force_get_rate = GL_TRUE;
+         /* This option was put in because some DRI drivers don't support the
+          * full GLX_OML_sync_control extension, but they do support
+          * glXGetMscRateOML.
+          */
+         force_get_rate = GL_TRUE;
       }
       else if (strcmp(argv[i], "-fullscreen") == 0) {
          fullscreen = GL_TRUE;
       }
       else if (strcmp(argv[i], "-ztrick") == 0) {
-	 use_ztrick = GL_TRUE;
+         use_ztrick = GL_TRUE;
       }
       else if (strcmp(argv[i], "-help") == 0) {
          printf("Usage:\n");
@@ -850,32 +850,32 @@ main(int argc, char *argv[])
       printf("GL_VENDOR     = %s\n", (char *) glGetString(GL_VENDOR));
       printf("GL_EXTENSIONS = %s\n", (char *) glGetString(GL_EXTENSIONS));
       if ( has_OML_sync_control || force_get_rate ) {
-	 show_refresh_rate( dpy );
+         show_refresh_rate( dpy );
       }
 
       if ( get_swap_interval != NULL ) {
-	 printf("Default swap interval = %d\n", (*get_swap_interval)() );
+         printf("Default swap interval = %d\n", (*get_swap_interval)() );
       }
    }
 
    if ( do_swap_interval ) {
       if ( set_swap_interval != NULL ) {
-	 if ( ((swap_interval == 0) && !has_MESA_swap_control)
-	      || (swap_interval < 0) ) {
-	    printf( "Swap interval must be non-negative or greater than zero "
-		    "if GLX_MESA_swap_control is not supported.\n" );
-	 }
-	 else {
-	    (*set_swap_interval)( swap_interval );
-	 }
+         if ( ((swap_interval == 0) && !has_MESA_swap_control)
+              || (swap_interval < 0) ) {
+            printf( "Swap interval must be non-negative or greater than zero "
+                    "if GLX_MESA_swap_control is not supported.\n" );
+         }
+         else {
+            (*set_swap_interval)( swap_interval );
+         }
 
-	 if ( printInfo && (get_swap_interval != NULL) ) {
-	    printf("Current swap interval = %d\n", (*get_swap_interval)() );
-	 }
+         if ( printInfo && (get_swap_interval != NULL) ) {
+            printf("Current swap interval = %d\n", (*get_swap_interval)() );
+         }
       }
       else {
-	 printf("Unable to set swap-interval.  Neither GLX_SGI_swap_control "
-		"nor GLX_MESA_swap_control are supported.\n" );
+         printf("Unable to set swap-interval.  Neither GLX_SGI_swap_control "
+                "nor GLX_MESA_swap_control are supported.\n" );
       }
    }
 
