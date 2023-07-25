@@ -379,11 +379,9 @@ init(Display *dpy, Window win, GLXContext ctx1, GLXContext ctx2)
  * Return the window and two context handles.
  */
 static void
-make_window_and_contexts( Display *dpy, const char *name,
-                          int x, int y, int width, int height,
-                          Window *winRet,
-                          GLXContext *ctxRet1,
-                          GLXContext *ctxRet2)
+make_window_and_contexts(Display *dpy, const char *name, int x, int y,
+                         int width, int height, Window *winRet,
+                         GLXContext *ctxRet1, GLXContext *ctxRet2)
 {
    int attribs[] = { GLX_RGBA,
                      GLX_RED_SIZE, 1,

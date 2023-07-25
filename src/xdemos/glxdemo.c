@@ -14,7 +14,8 @@
 
 
 
-static void redraw( Display *dpy, Window w )
+static void
+redraw(Display *dpy, Window w)
 {
    printf("Redraw event\n");
 
@@ -28,7 +29,8 @@ static void redraw( Display *dpy, Window w )
 
 
 
-static void resize( unsigned int width, unsigned int height )
+static void
+resize(unsigned int width, unsigned int height)
 {
    printf("Resize event\n");
    glViewport( 0, 0, width, height );
@@ -39,8 +41,9 @@ static void resize( unsigned int width, unsigned int height )
 
 
 
-static Window make_rgb_db_window( Display *dpy,
-                                  unsigned int width, unsigned int height )
+static Window
+make_rgb_db_window(Display *dpy,
+                   unsigned int width, unsigned int height)
 {
    int attrib[] = { GLX_RGBA,
                     GLX_RED_SIZE, 1,
@@ -88,7 +91,8 @@ static Window make_rgb_db_window( Display *dpy,
 }
 
 
-static void event_loop( Display *dpy )
+static void
+event_loop(Display *dpy)
 {
    XEvent event;
 
@@ -108,7 +112,8 @@ static void event_loop( Display *dpy )
 
 
 
-int main( int argc, char *argv[] )
+int
+main(int argc, char *argv[])
 {
    Display *dpy;
    Window win;

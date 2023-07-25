@@ -21,9 +21,9 @@ static XVisualInfo *visinfo;
 static GC gc;
 
 
-
-static Window make_rgb_window( Display *dpy,
-                               unsigned int width, unsigned int height )
+static Window
+make_rgb_window(Display *dpy,
+                unsigned int width, unsigned int height)
 {
    const int sbAttrib[] = { GLX_RGBA,
                             GLX_RED_SIZE, 1,
@@ -82,9 +82,10 @@ static Window make_rgb_window( Display *dpy,
 }
 
 
-static GLXPixmap make_pixmap( Display *dpy, Window win,
-                              unsigned int width, unsigned int height,
-                              Pixmap *pixmap)
+static GLXPixmap
+make_pixmap(Display *dpy, Window win,
+            unsigned int width, unsigned int height,
+            Pixmap *pixmap)
 {
    Pixmap pm;
    GLXPixmap glxpm;
@@ -132,8 +133,8 @@ static GLXPixmap make_pixmap( Display *dpy, Window win,
 }
 
 
-
-static void event_loop( Display *dpy, GLXPixmap pm )
+static void
+event_loop(Display *dpy, GLXPixmap pm)
 {
    XEvent event;
 
@@ -157,7 +158,8 @@ static void event_loop( Display *dpy, GLXPixmap pm )
 
 
 
-int main( int argc, char *argv[] )
+int
+main(int argc, char *argv[])
 {
    Display *dpy;
    Window win;

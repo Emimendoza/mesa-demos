@@ -44,7 +44,8 @@ static const char *FontName = "fixed";
 static GLuint FontBase[4];
 
 
-static void redraw( Display *dpy, Window w )
+static void
+redraw(Display *dpy, Window w)
 {
    static const char *text = "  Rotated bitmap text";
    int i;
@@ -78,8 +79,8 @@ static void redraw( Display *dpy, Window w )
 }
 
 
-
-static void resize( unsigned int width, unsigned int height )
+static void
+resize(unsigned int width, unsigned int height)
 {
    glViewport( 0, 0, width, height );
    glMatrixMode( GL_PROJECTION );
@@ -88,8 +89,8 @@ static void resize( unsigned int width, unsigned int height )
 }
 
 
-
-static void setup_font( Display *dpy )
+static void
+setup_font(Display *dpy)
 {
    XFontStruct *fontInfo;
    Font id;
@@ -118,8 +119,9 @@ static void setup_font( Display *dpy )
 }
 
 
-static Window make_rgb_db_window( Display *dpy, int xpos, int ypos,
-                                  unsigned int width, unsigned int height )
+static Window
+make_rgb_db_window(Display *dpy, int xpos, int ypos, unsigned int width,
+                   unsigned int height)
 {
    int attrib[] = { GLX_RGBA,
                     GLX_RED_SIZE, 1,
@@ -176,7 +178,8 @@ static Window make_rgb_db_window( Display *dpy, int xpos, int ypos,
 }
 
 
-static void event_loop( Display *dpy )
+static void
+event_loop(Display *dpy)
 {
    XEvent event;
 
@@ -200,7 +203,8 @@ static void event_loop( Display *dpy )
 
 
 
-int main( int argc, char *argv[] )
+int
+main(int argc, char *argv[])
 {
    Display *dpy;
    Window win;

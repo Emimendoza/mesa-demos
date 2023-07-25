@@ -371,7 +371,8 @@ DestroyContext(Display *dpy, GLXContext ctx)
 
 /* This is only used by CreatePbuffer() */
 static int XErrorFlag = 0;
-static int HandleXError(Display *dpy, XErrorEvent *event)
+static int
+HandleXError(Display *dpy, XErrorEvent *event)
 {
    XErrorFlag = 1;
    return 0;

@@ -420,9 +420,9 @@ init_fbconfig_functions(Display *dpy, int scrnum)
  * Return the window and context handles.
  */
 static void
-make_window( Display *dpy, const char *name,
-             int x, int y, int width, int height,
-             Window *winRet, GLXWindow *glxWinRet, GLXContext *ctxRet)
+make_window(Display *dpy, const char *name,
+            int x, int y, int width, int height,
+            Window *winRet, GLXWindow *glxWinRet, GLXContext *ctxRet)
 {
    int attrib[] = { GLX_DRAWABLE_TYPE, GLX_WINDOW_BIT,
                     GLX_RENDER_TYPE,   GLX_RGBA_BIT,

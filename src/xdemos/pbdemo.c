@@ -309,7 +309,7 @@ RandomColor(void)
 /* This function borrowed from Mark Kilgard's GLUT */
 static void
 drawBox(GLfloat x0, GLfloat x1, GLfloat y0, GLfloat y1,
-  GLfloat z0, GLfloat z1, GLenum type)
+        GLfloat z0, GLfloat z1, GLenum type)
 {
    static GLfloat n[6][3] =
    {

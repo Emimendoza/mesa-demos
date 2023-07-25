@@ -42,7 +42,8 @@
 void (*get_sync_values)(Display *dpy, Window winGL, int64_t *ust, int64_t *msc, int64_t *sbc);
 void (*wait_sync)(Display *dpy, Window winGL, int64_t target_msc, int64_t divisor, int64_t remainder, int64_t *ust, int64_t *msc, int64_t *sbc);
 
-static int GLXExtensionSupported(Display *dpy, const char *extension)
+static int
+GLXExtensionSupported(Display *dpy, const char *extension)
 {
    const char *extensionsString, *pos;
 
@@ -57,7 +58,8 @@ static int GLXExtensionSupported(Display *dpy, const char *extension)
    return 0;
 }
 
-int main(int argc, char *argv[])
+int
+main(int argc, char *argv[])
 {
    Display *disp;
    XVisualInfo *pvi;

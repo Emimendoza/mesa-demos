@@ -53,7 +53,8 @@ current_time(void)
 /*
  * Draw the OpenGL stuff and do a SwapBuffers.
  */
-static void display(Display *dpy, Window win)
+static void
+display(Display *dpy, Window win)
 {
    float scale = 1.7;
 
@@ -157,8 +158,8 @@ static void display(Display *dpy, Window win)
  * We just generate an n-sided regular polygon here but any other shape
  * would be possible.
  */
-static void make_shape_mask(Display *dpy, Window win, int width, int height,
-                            int sides)
+static void
+make_shape_mask(Display *dpy, Window win, int width, int height, int sides)
 {
    Pixmap shapeMask;
    XGCValues xgcv;
@@ -203,7 +204,8 @@ static void make_shape_mask(Display *dpy, Window win, int width, int height,
 /*
  * Called when window is resized.  Do OpenGL viewport and projection stuff.
  */
-static void reshape(int width, int height)
+static void
+reshape(int width, int height)
 {
    glViewport(0, 0, width, height);
    glMatrixMode(GL_PROJECTION);
@@ -220,7 +222,8 @@ static void reshape(int width, int height)
 /*
  * Process X events.
  */
-static void event_loop(Display *dpy, Window win)
+static void
+event_loop(Display *dpy, Window win)
 {
    while (1) {
       XEvent event;
@@ -281,7 +284,8 @@ static void event_loop(Display *dpy, Window win)
 /*
  * Allocate a "nice" colormap.  This could be better (HP-CR support, etc).
  */
-static Colormap alloc_colormap(Display *dpy, Window parent, Visual *vis)
+static Colormap
+alloc_colormap(Display *dpy, Window parent, Visual *vis)
 {
    Screen *scr = DefaultScreenOfDisplay(dpy);
    int scrnum = DefaultScreen(dpy);
@@ -297,7 +301,8 @@ static Colormap alloc_colormap(Display *dpy, Window parent, Visual *vis)
 }
 
 
-int main(int argc, char *argv[])
+int
+main(int argc, char *argv[])
 {
    static int glAttribs[] = {
       GLX_DOUBLEBUFFER,

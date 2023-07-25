@@ -320,7 +320,7 @@ init(void)
 
 
 static void
-draw( Display *dpy, Window win )
+draw(Display *dpy, Window win)
 {
    GLXContext ctx;
 
@@ -352,9 +352,9 @@ draw( Display *dpy, Window win )
  * Return the window and context handles.
  */
 static void
-make_window( Display *dpy, const char *name,
-             int x, int y, int width, int height,
-             Window *winRet)
+make_window(Display *dpy, const char *name,
+            int x, int y, int width, int height,
+            Window *winRet)
 {
    int attribs[] = { GLX_RGBA,
                      GLX_RED_SIZE, 1,

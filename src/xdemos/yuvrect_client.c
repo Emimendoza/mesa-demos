@@ -23,7 +23,8 @@ static GLint ImgWidth, ImgHeight;
 static GLushort *ImageYUV = NULL;
 static void *glx_memory;
 
-static void DrawObject(void)
+static void
+DrawObject(void)
 {
    glBegin(GL_QUADS);
 
@@ -43,7 +44,8 @@ static void DrawObject(void)
 }
 
 
-static void scr_Display( void )
+static void
+scr_Display(void)
 {
    glClear( GL_COLOR_BUFFER_BIT );
 
@@ -57,7 +59,8 @@ static void scr_Display( void )
 }
 
 
-static void Reshape( int width, int height )
+static void
+Reshape(int width, int height)
 {
    glViewport( 0, 0, width, height );
    glMatrixMode( GL_PROJECTION );
@@ -68,7 +71,8 @@ static void Reshape( int width, int height )
    glTranslatef( 0.0, 0.0, -15.0 );
 }
 
-static int queryClient(Display *dpy, int screen)
+static int
+queryClient(Display *dpy, int screen)
 {
 #ifdef GLX_MESA_allocate_memory
    char *extensions;
@@ -85,7 +89,8 @@ static int queryClient(Display *dpy, int screen)
 }
 
 static int
-query_extension(char* extName) {
+query_extension(char *extName)
+{
    char *p = (char *) glGetString(GL_EXTENSIONS);
    char *end = p + strlen(p);
    while (p < end) {
@@ -97,7 +102,8 @@ query_extension(char* extName) {
    return GL_FALSE;
 }
 
-static void Init( int argc, char *argv[] , Display *dpy, int screen, Window win)
+static void
+Init(int argc, char *argv[], Display *dpy, int screen, Window win)
 {
    GLuint texObj = 100;
    const char *file;
@@ -172,9 +178,8 @@ static void Init( int argc, char *argv[] , Display *dpy, int screen, Window win)
  * Return the window and context handles.
  */
 static void
-make_window( Display *dpy, const char *name,
-             int x, int y, int width, int height,
-             Window *winRet, GLXContext *ctxRet)
+make_window(Display *dpy, const char *name, int x, int y, int width, int height,
+            Window *winRet, GLXContext *ctxRet)
 {
    int attribs[] = { GLX_RGBA,
                      GLX_RED_SIZE, 1,

@@ -75,7 +75,7 @@ RuntimeQueryGLXVersion(Display *dpy, int screen)
  * Create the pbuffer and return a GLXPbuffer handle.
  */
 static GLXPbuffer
-MakePbuffer( Display *dpy, int screen, int width, int height )
+MakePbuffer(Display *dpy, int screen, int width, int height)
 {
    GLXFBConfig *fbConfigs;
    GLXFBConfig chosenFBConfig;

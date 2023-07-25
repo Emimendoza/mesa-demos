@@ -61,7 +61,8 @@ static PFNGLXSWAPINTERVALSGIPROC swap_interval;
 static PFNGLXWAITVIDEOSYNCSGIPROC video_sync;
 
 
-static int GLXExtensionSupported(Display *dpy, const char *extension)
+static int
+GLXExtensionSupported(Display *dpy, const char *extension)
 {
    const char *extensionsString, *pos;
 
@@ -86,7 +87,8 @@ enum sync_type {
    buffer_swap
 };
 
-static void usage(char *name)
+static void
+usage(char *name)
 {
    printf("usage: %s [-w <width>] [-h <height>] [-s<sync method>] "
           "[-v]\n", name);
@@ -99,7 +101,8 @@ static void usage(char *name)
    exit(-1);
 }
 
-int main(int argc, char *argv[])
+int
+main(int argc, char *argv[])
 {
    Display *disp;
    XVisualInfo *pvi;

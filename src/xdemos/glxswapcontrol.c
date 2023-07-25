@@ -411,7 +411,7 @@ init(void)
  * Remove window border/decorations.
  */
 static void
-no_border( Display *dpy, Window w)
+no_border(Display *dpy, Window w)
 {
    static const unsigned MWM_HINTS_DECORATIONS = (1 << 1);
    static const int PROP_MOTIF_WM_HINTS_ELEMENTS = 5;
@@ -458,9 +458,8 @@ no_border( Display *dpy, Window w)
  * Return the window and context handles.
  */
 static void
-make_window( Display *dpy, const char *name,
-             int x, int y, int width, int height, GLboolean fullscreen,
-             Window *winRet, GLXContext *ctxRet)
+make_window(Display *dpy, const char *name, int x, int y, int width, int height,
+            GLboolean fullscreen, Window *winRet, GLXContext *ctxRet)
 {
    int attrib[] = { GLX_RGBA,
                     GLX_RED_SIZE, 1,
@@ -630,7 +629,7 @@ event_loop(Display *dpy, Window win)
  * extension.
  */
 static void
-show_refresh_rate( Display * dpy )
+show_refresh_rate(Display *dpy)
 {
 #if defined(GLX_OML_sync_control) && defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 199901L)
    PFNGLXGETMSCRATEOMLPROC  get_msc_rate;
@@ -656,7 +655,7 @@ show_refresh_rate( Display * dpy )
  * \sa is_extension_supported
  */
 static void
-make_extension_table( const char * string )
+make_extension_table(const char *string)
 {
    char ** string_tab;
    unsigned  num_strings;
@@ -743,7 +742,7 @@ make_extension_table( const char * string )
  * \sa make_extension_table
  */
 static GLboolean
-is_extension_supported( const char * ext )
+is_extension_supported(const char *ext)
 {
    unsigned   i;
 

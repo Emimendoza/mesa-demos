@@ -79,13 +79,26 @@ Quad quads[MAXQUAD] = {
 #define WIREFRAME      0
 #define HIDDEN_LINE    1
 
-static void error(const char* prog, const char* msg);
-static void cubes(int mx, int my, int mode);
-static void fill(Quad quad);
-static void outline(Quad quad);
-static void draw_hidden(Quad quad, int mode, int face);
-static void process_input(Display *dpy, Window win);
-static int query_extension(char* extName);
+static void
+error(const char *prog, const char *msg);
+
+static void
+cubes(int mx, int my, int mode);
+
+static void
+fill(Quad quad);
+
+static void
+outline(Quad quad);
+
+static void
+draw_hidden(Quad quad, int mode, int face);
+
+static void
+process_input(Display *dpy, Window win);
+
+static int
+query_extension(char *extName);
 
 static int attributeList[] = { GLX_RGBA, GLX_RED_SIZE, 1, GLX_GREEN_SIZE, 1,
     GLX_BLUE_SIZE, 1, GLX_DOUBLEBUFFER, GLX_DEPTH_SIZE, 1, None };
@@ -95,7 +108,9 @@ static int dimension = 3;
 static float Scale = 1.0;
 
 
-int main(int argc, char** argv) {
+int
+main(int argc, char **argv)
+{
    Display *dpy;
    XVisualInfo *vi;
    XSetWindowAttributes swa;
@@ -150,7 +165,8 @@ int main(int argc, char** argv) {
 }
 
 static void
-draw_scene(int mx, int my) {
+draw_scene(int mx, int my)
+{
    glClearColor(0.25, 0.25, 0.25, 0);
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -174,7 +190,8 @@ draw_scene(int mx, int my) {
 
 
 static void
-cubes(int mx, int my, int mode) {
+cubes(int mx, int my, int mode)
+{
    int x, y, z, i;
 
    /* track the mouse */
@@ -199,7 +216,8 @@ cubes(int mx, int my, int mode) {
 }
 
 static void
-fill(Quad quad) {
+fill(Quad quad)
+{
    /* draw a filled polygon */
    glBegin(GL_QUADS);
    glVertex3fv(quad[0]);
@@ -210,7 +228,8 @@ fill(Quad quad) {
 }
 
 static void
-outline(Quad quad) {
+outline(Quad quad)
+{
    /* draw an outlined polygon */
    glBegin(GL_LINE_LOOP);
    glVertex3fv(quad[0]);
@@ -221,7 +240,8 @@ outline(Quad quad) {
 }
 
 static void
-draw_hidden(Quad quad, int mode, int face) {
+draw_hidden(Quad quad, int mode, int face)
+{
    static const GLfloat colors[3][3] = {
       {0.5, 0.5, 0.0},
       {0.8, 0.5, 0.0},
@@ -238,7 +258,8 @@ draw_hidden(Quad quad, int mode, int face) {
 }
 
 static void
-process_input(Display *dpy, Window win) {
+process_input(Display *dpy, Window win)
+{
    XEvent event;
    static int prevx, prevy;
    static int deltax = 90, deltay = 40;
@@ -300,13 +321,15 @@ process_input(Display *dpy, Window win) {
 }
 
 static void
-error(const char *prog, const char *msg) {
+error(const char *prog, const char *msg)
+{
    fprintf(stderr, "%s: %s\n", prog, msg);
    exit(EXIT_FAILURE);
 }
 
 static int
-query_extension(char* extName) {
+query_extension(char *extName)
+{
    char *p = (char *) glGetString(GL_EXTENSIONS);
    char *end = p + strlen(p);
    while (p < end) {

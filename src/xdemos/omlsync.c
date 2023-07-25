@@ -70,7 +70,8 @@ Bool (*glXWaitForSbcOML)(Display *dpy, GLXDrawable drawable, int64_t target_sbc,
                          int64_t *ust, int64_t *msc, int64_t *sbc);
 int (*glXSwapInterval)(int interval);
 
-static int GLXExtensionSupported(Display *dpy, const char *extension)
+static int
+GLXExtensionSupported(Display *dpy, const char *extension)
 {
    const char *extensionsString, *pos;
 
@@ -89,7 +90,8 @@ extern char *optarg;
 extern int optind, opterr, optopt;
 static char optstr[] = "w:h:vd:r:n:i:";
 
-static void usage(char *name)
+static void
+usage(char *name)
 {
    printf("usage: %s [-w <width>] [-h <height>] ...\n", name);
    printf("\t-d<divisor> - divisor for OML swap\n");
@@ -99,7 +101,8 @@ static void usage(char *name)
    exit(-1);
 }
 
-int main(int argc, char *argv[])
+int
+main(int argc, char *argv[])
 {
    Display *disp;
    XVisualInfo *pvi;

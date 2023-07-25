@@ -377,7 +377,8 @@ Redraw(struct window *h)
    pthread_mutex_unlock(&h->drawMutex);
 }
 
-static void *threadRunner (void *arg)
+static void *
+threadRunner(void *arg)
 {
    struct thread_init_arg *tia = (struct thread_init_arg *) arg;
    struct window *win;

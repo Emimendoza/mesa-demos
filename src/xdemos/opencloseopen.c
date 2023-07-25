@@ -70,9 +70,8 @@ draw(void)
  * Return the window and context handles.
  */
 static void
-make_window( const char * dpyName, const char *name,
-             int x, int y, int width, int height,
-             Display **dpyRet, Window *winRet, GLXContext *ctxRet)
+make_window(const char *dpyName, const char *name, int x, int y, int width,
+            int height, Display **dpyRet, Window *winRet, GLXContext *ctxRet)
 {
    int attrib[] = { GLX_RGBA,
                     GLX_RED_SIZE, 1,
@@ -143,7 +142,7 @@ make_window( const char * dpyName, const char *name,
 
 
 static void
-destroy_window( Display *dpy, Window win, GLXContext ctx )
+destroy_window(Display *dpy, Window win, GLXContext ctx)
 {
    glXMakeCurrent(dpy, None, NULL);
    glXDestroyContext(dpy, ctx);

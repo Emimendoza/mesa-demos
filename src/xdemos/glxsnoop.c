@@ -36,7 +36,7 @@ static int Width, Height;
  * (possibly converted to grayscale) in the dstWin.
  */
 static void
-redraw(Display *dpy, Window srcWin, Window dstWin )
+redraw(Display *dpy, Window srcWin, Window dstWin)
 {
    GLubyte *image = malloc(Width * Height * 4);
 
@@ -343,7 +343,7 @@ parse_opts(int argc, char *argv[])
 
 
 int
-main( int argc, char *argv[] )
+main(int argc, char *argv[])
 {
    Display *dpy;
    VisualID vid;

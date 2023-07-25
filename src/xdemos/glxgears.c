@@ -441,7 +441,7 @@ init(void)
  * Remove window border/decorations.
  */
 static void
-no_border( Display *dpy, Window w)
+no_border(Display *dpy, Window w)
 {
    static const unsigned MWM_HINTS_DECORATIONS = (1 << 1);
    static const int PROP_MOTIF_WM_HINTS_ELEMENTS = 5;
@@ -502,9 +502,9 @@ make_fullscreen(Display *dpy, Window w)
  * Return the window and context handles.
  */
 static void
-make_window( Display *dpy, const char *name,
-             int x, int y, int width, int height,
-             Window *winRet, GLXContext *ctxRet, VisualID *visRet)
+make_window(Display *dpy, const char *name,
+            int x, int y, int width, int height,
+            Window *winRet, GLXContext *ctxRet, VisualID *visRet)
 {
    int attribs[64];
    int i = 0;

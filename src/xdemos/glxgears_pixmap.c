@@ -328,8 +328,9 @@ init(int width, int height)
  * Return the window and context handles.
  */
 static void
-make_window( Display *dpy, const char *name,
-             int x, int y, int width, int height, struct gears *gears)
+make_window(Display *dpy, const char *name,
+            int x, int y, int width, int height,
+            struct gears *gears)
 {
    int attrib[] = { GLX_DRAWABLE_TYPE, GLX_WINDOW_BIT,
                     GLX_RENDER_TYPE,   GLX_RGBA_BIT,
