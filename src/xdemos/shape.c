@@ -260,7 +260,7 @@ static void event_loop(Display *dpy, Window win)
             }
             break;
          default:
-            ;;
+            ;
          }
       }
       else {
