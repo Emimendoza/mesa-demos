@@ -446,13 +446,12 @@ no_border(Display *dpy, Window w)
    static const unsigned MWM_HINTS_DECORATIONS = (1 << 1);
    static const int PROP_MOTIF_WM_HINTS_ELEMENTS = 5;
 
-   typedef struct
-   {
-      unsigned long       flags;
-      unsigned long       functions;
-      unsigned long       decorations;
-      long                inputMode;
-      unsigned long       status;
+   typedef struct {
+      unsigned long flags;
+      unsigned long functions;
+      unsigned long decorations;
+      long inputMode;
+      unsigned long status;
    } PropMotifWmHints;
 
    PropMotifWmHints motif_hints;

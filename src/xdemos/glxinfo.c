@@ -62,8 +62,7 @@
 #endif
 
 
-struct visual_attribs
-{
+struct visual_attribs {
    /* X visual attribs */
    int id;     /* May be visual ID or FBConfig ID */
    int vis_id; /* Visual ID.  Only set for FBConfigs */
@@ -100,8 +99,7 @@ struct visual_attribs
    int swapMethod;
 };
 
-struct options
-{
+struct options {
    InfoMode mode;
    GLboolean findBest;
    GLboolean limits;
