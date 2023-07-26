@@ -438,7 +438,8 @@ print_screen_info(Display *dpy, int scrnum,
       visinfo = choose_xvisinfo(dpy, scrnum);
       if (visinfo)
          ctx = glXCreateContext(dpy, visinfo, NULL, opts->allowDirect);
-   } else
+   }
+   else
       visinfo = NULL;
 
    if (!visinfo && !coreProfile && !es2Profile) {
@@ -565,7 +566,8 @@ print_screen_info(Display *dpy, int scrnum,
          print_gpu_memory_info(glExtensions);
          printf("OpenGL vendor string: %s\n", glVendor);
          printf("OpenGL renderer string: %s\n", glRenderer);
-      } else
+      }
+      else
          printf("\n");
 
       printf("%s version string: %s\n", oglstring, glVersion);

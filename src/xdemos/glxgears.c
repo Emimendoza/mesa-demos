@@ -652,7 +652,8 @@ setup_vsync(Display *dpy, GLXDrawable drawable)
 
       glXQueryDrawable(dpy, drawable, GLX_SWAP_INTERVAL_EXT, &tmp);
       interval = tmp;
-   } else
+   }
+   else
 #endif
    if (is_glx_extension_supported(dpy, "GLX_MESA_swap_control")) {
       PFNGLXGETSWAPINTERVALMESAPROC pglXGetSwapIntervalMESA =
@@ -667,7 +668,8 @@ setup_vsync(Display *dpy, GLXDrawable drawable)
       }
 
       interval = (*pglXGetSwapIntervalMESA)();
-   } else if (is_glx_extension_supported(dpy, "GLX_SGI_swap_control")) {
+   }
+   else if (is_glx_extension_supported(dpy, "GLX_SGI_swap_control")) {
       /* The default swap interval with this extension is 1.  Assume that it
        * is set to the default.
        *
@@ -689,7 +691,8 @@ setup_vsync(Display *dpy, GLXDrawable drawable)
       printf("Running synchronized to the vertical refresh.  The framerate should be\n");
       if (interval == 1) {
          printf("approximately the same as the monitor refresh rate.\n");
-      } else {
+      }
+      else {
          printf("approximately 1/%d the monitor refresh rate.\n",
                 abs(interval));
       }

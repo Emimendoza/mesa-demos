@@ -187,7 +187,8 @@ main(int argc, char *argv[])
 
    if (waitforsync != buffer_swap) {
       pvi = glXChooseVisual(disp, DefaultScreen(disp), attribs);
-   } else {
+   }
+   else {
       pvi = glXChooseVisual(disp, DefaultScreen(disp), db_attribs);
    }
 
@@ -259,7 +260,8 @@ main(int argc, char *argv[])
       if (i & 1) {
          glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
          glColor3f(1.0f, 1.0f, 1.0f);
-      } else {
+      }
+      else {
          glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
          glColor3f(1.0f, 0.0f, 0.0f);
       }
@@ -278,9 +280,11 @@ main(int argc, char *argv[])
             fprintf(stderr, "error:  count didn't change: %d\n", count);
          last_val = count;
          glFlush();
-      } else if (waitforsync == buffer_swap) {
+      }
+      else if (waitforsync == buffer_swap) {
          glXSwapBuffers(disp, winGL);
-      } else {
+      }
+      else {
          video_sync_get(&count);
          sleep(1);
          glFinish();

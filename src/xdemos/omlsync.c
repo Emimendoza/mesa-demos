@@ -239,7 +239,8 @@ main(int argc, char *argv[])
       if (i & 1) {
          glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
          glColor3f(1.0f, 1.0f, 1.0f);
-      } else {
+      }
+      else {
          glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
          glColor3f(1.0f, 0.0f, 0.0f);
       }
