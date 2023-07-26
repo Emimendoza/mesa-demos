@@ -233,7 +233,7 @@ CreateWindow(Display *dpy, XVisualInfo *visinfo,
                        visinfo->visual, mask, &attr);
    if (win) {
       XSizeHints sizehints;
-      sizehints.width  = width;
+      sizehints.width = width;
       sizehints.height = height;
       sizehints.flags = USSize;
       XSetNormalHints(dpy, win, &sizehints);
@@ -291,7 +291,7 @@ Redraw(Display *dpy, Window win, float rot)
    glTexCoord2d(0.0, bottom);
    glVertex2f(-1, -1);
    glTexCoord2d(1.0, bottom);
-   glVertex2f( 1, -1);
+   glVertex2f(1, -1);
    glTexCoord2d(1.0, top);
    glVertex2d(1.0, 1.0);
    glTexCoord2d(0.0, top);

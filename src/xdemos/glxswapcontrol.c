@@ -44,23 +44,23 @@
 #ifndef __VMS
 /*# include <stdint.h>*/
 #endif
-# define GLX_GLXEXT_PROTOTYPES
+#define GLX_GLXEXT_PROTOTYPES
 #include <GL/gl.h>
 #include <GL/glx.h>
 
 #ifndef GLX_MESA_swap_control
-typedef GLint ( * PFNGLXSWAPINTERVALMESAPROC) (unsigned interval);
-typedef GLint ( * PFNGLXGETSWAPINTERVALMESAPROC) ( void );
+typedef GLint (*PFNGLXSWAPINTERVALMESAPROC)(unsigned interval);
+typedef GLint (*PFNGLXGETSWAPINTERVALMESAPROC)(void);
 #endif
 
-#if !defined( GLX_OML_sync_control ) && defined( _STDINT_H )
+#if !defined(GLX_OML_sync_control) && defined(_STDINT_H)
 #define GLX_OML_sync_control 1
-typedef Bool ( * PFNGLXGETMSCRATEOMLPROC) (Display *dpy, GLXDrawable drawable, int32_t *numerator, int32_t *denominator);
+typedef Bool (*PFNGLXGETMSCRATEOMLPROC)(Display *dpy, GLXDrawable drawable, int32_t *numerator, int32_t *denominator);
 #endif
 
 #ifndef GLX_MESA_swap_frame_usage
 #define GLX_MESA_swap_frame_usage 1
-typedef int ( * PFNGLXGETFRAMEUSAGEMESAPROC) (Display *dpy, GLXDrawable drawable, float * usage );
+typedef int (*PFNGLXGETFRAMEUSAGEMESAPROC)(Display *dpy, GLXDrawable drawable, float *usage);
 #endif
 
 #define BENCHMARK
@@ -82,7 +82,7 @@ current_time(void)
 {
    struct timeval tv;
 #ifdef __VMS
-   (void) gettimeofday(&tv, NULL );
+   (void) gettimeofday(&tv, NULL);
 #else
    struct timezone tz;
    (void) gettimeofday(&tv, &tz);
@@ -111,7 +111,7 @@ static GLboolean has_SGI_swap_control = GL_FALSE;
 static GLboolean has_MESA_swap_control = GL_FALSE;
 static GLboolean has_MESA_swap_frame_usage = GL_FALSE;
 
-static char ** extension_table = NULL;
+static char **extension_table = NULL;
 static unsigned num_extensions;
 
 static GLboolean use_ztrick = GL_FALSE;
@@ -259,7 +259,7 @@ gear(GLfloat inner_radius, GLfloat outer_radius, GLfloat width,
 static void
 draw(void)
 {
-   if ( use_ztrick ) {
+   if (use_ztrick) {
       static GLboolean flip = GL_FALSE;
       static const GLfloat vert[4][3] = {
          { -1, -1, -0.999 },
@@ -274,7 +274,7 @@ draw(void)
          { 0.0, 0.0, 0.0 },
       };
 
-      if ( flip ) {
+      if (flip) {
          glDepthRange(0, 0.5);
          glDepthFunc(GL_LEQUAL);
       }
@@ -297,13 +297,13 @@ draw(void)
       glDisable(GL_LIGHTING);
       glShadeModel(GL_SMOOTH);
 
-      glEnableClientState( GL_VERTEX_ARRAY );
-      glEnableClientState( GL_COLOR_ARRAY );
-      glVertexPointer( 3, GL_FLOAT, 0, vert );
-      glColorPointer( 3, GL_FLOAT, 0, col );
-      glDrawArrays( GL_POLYGON, 0, 4 );
-      glDisableClientState( GL_COLOR_ARRAY );
-      glDisableClientState( GL_VERTEX_ARRAY );
+      glEnableClientState(GL_VERTEX_ARRAY);
+      glEnableClientState(GL_COLOR_ARRAY);
+      glVertexPointer(3, GL_FLOAT, 0, vert);
+      glColorPointer(3, GL_FLOAT, 0, col);
+      glDrawArrays(GL_POLYGON, 0, 4);
+      glDisableClientState(GL_COLOR_ARRAY);
+      glDisableClientState(GL_VERTEX_ARRAY);
 
       glMatrixMode(GL_PROJECTION);
       glLoadIdentity();
@@ -434,7 +434,7 @@ no_border(Display *dpy, Window w)
    motif_hints.decorations = flags;
 
    /* get the atom for the property */
-   prop = XInternAtom( dpy, "_MOTIF_WM_HINTS", True );
+   prop = XInternAtom(dpy, "_MOTIF_WM_HINTS", True);
    if (!prop) {
       /* something went wrong! */
       return;
@@ -443,13 +443,13 @@ no_border(Display *dpy, Window w)
    /* not sure this is correct, seems to work, XA_WM_HINTS didn't work */
    proptype = prop;
 
-   XChangeProperty( dpy, w,                         /* display, window */
-                    prop, proptype,                 /* property, type */
-                    32,                             /* format: 32-bit datums */
-                    PropModeReplace,                /* mode */
-                    (unsigned char *) &motif_hints, /* data */
-                    PROP_MOTIF_WM_HINTS_ELEMENTS    /* nelements */
-                  );
+   XChangeProperty(dpy, w,                         /* display, window */
+                   prop, proptype,                 /* property, type */
+                   32,                             /* format: 32-bit datums */
+                   PropModeReplace,                /* mode */
+                   (unsigned char *) &motif_hints, /* data */
+                   PROP_MOTIF_WM_HINTS_ELEMENTS    /* nelements */
+   );
 }
 
 
@@ -476,16 +476,16 @@ make_window(Display *dpy, const char *name, int x, int y, int width, int height,
    GLXContext ctx;
    XVisualInfo *visinfo;
 
-   scrnum = DefaultScreen( dpy );
-   root = RootWindow( dpy, scrnum );
+   scrnum = DefaultScreen(dpy);
+   root = RootWindow(dpy, scrnum);
 
    if (fullscreen) {
       x = y = 0;
-      width = DisplayWidth( dpy, scrnum );
-      height = DisplayHeight( dpy, scrnum );
+      width = DisplayWidth(dpy, scrnum);
+      height = DisplayHeight(dpy, scrnum);
    }
 
-   visinfo = glXChooseVisual( dpy, scrnum, attrib );
+   visinfo = glXChooseVisual(dpy, scrnum, attrib);
    if (!visinfo) {
       printf("Error: couldn't get an RGB, Double-buffered visual\n");
       exit(1);
@@ -494,20 +494,20 @@ make_window(Display *dpy, const char *name, int x, int y, int width, int height,
    /* window attributes */
    attr.background_pixel = 0;
    attr.border_pixel = 0;
-   attr.colormap = XCreateColormap( dpy, root, visinfo->visual, AllocNone);
+   attr.colormap = XCreateColormap(dpy, root, visinfo->visual, AllocNone);
    attr.event_mask = StructureNotifyMask | ExposureMask | KeyPressMask;
    mask = CWBackPixel | CWBorderPixel | CWColormap | CWEventMask;
 
-   win = XCreateWindow( dpy, root, 0, 0, width, height,
-                        0, visinfo->depth, InputOutput,
-                        visinfo->visual, mask, &attr );
+   win = XCreateWindow(dpy, root, 0, 0, width, height,
+                       0, visinfo->depth, InputOutput,
+                       visinfo->visual, mask, &attr);
 
    /* set hints and properties */
    {
       XSizeHints sizehints;
       sizehints.x = x;
       sizehints.y = y;
-      sizehints.width  = width;
+      sizehints.width = width;
       sizehints.height = height;
       sizehints.flags = USSize | USPosition;
       XSetNormalHints(dpy, win, &sizehints);
@@ -518,7 +518,7 @@ make_window(Display *dpy, const char *name, int x, int y, int width, int height,
    if (fullscreen)
       no_border(dpy, win);
 
-   ctx = glXCreateContext( dpy, visinfo, NULL, True );
+   ctx = glXCreateContext(dpy, visinfo, NULL, True);
    if (!ctx) {
       printf("Error: glXCreateContext failed\n");
       exit(1);
@@ -534,7 +534,7 @@ make_window(Display *dpy, const char *name, int x, int y, int width, int height,
 static void
 event_loop(Display *dpy, Window win)
 {
-   float  frame_usage = 0.0;
+   float frame_usage = 0.0;
 
    while (1) {
       while (XPending(dpy) > 0) {
@@ -583,10 +583,10 @@ event_loop(Display *dpy, Window win)
 
       glXSwapBuffers(dpy, win);
 
-      if ( get_frame_usage != NULL ) {
-         GLfloat   temp;
+      if (get_frame_usage != NULL) {
+         GLfloat temp;
 
-         (*get_frame_usage)( dpy, win, & temp );
+         (*get_frame_usage)(dpy, win, &temp);
          frame_usage += temp;
       }
 
@@ -604,7 +604,7 @@ event_loop(Display *dpy, Window win)
          if (t - t0 >= 5.0) {
             GLfloat seconds = t - t0;
             GLfloat fps = frames / seconds;
-            if ( get_frame_usage != NULL ) {
+            if (get_frame_usage != NULL) {
                printf("%d frames in %3.1f seconds = %6.3f FPS (%3.1f%% usage)\n",
                       frames, seconds, fps,
                       (frame_usage * 100.0) / (float) frames );
@@ -639,11 +639,11 @@ show_refresh_rate(Display *dpy)
    get_msc_rate = (PFNGLXGETMSCRATEOMLPROC) glXGetProcAddressARB( (const GLubyte *) "glXGetMscRateOML" );
    if ( get_msc_rate != NULL ) {
       (*get_msc_rate)( dpy, glXGetCurrentDrawable(), &n, &d );
-      printf( "refresh rate: %.1fHz\n", (float) n / d );
+      printf("refresh rate: %.1fHz\n", (float) n / d);
       return;
    }
 #endif
-   printf( "glXGetMscRateOML not supported.\n" );
+   printf("glXGetMscRateOML not supported.\n");
 }
 
 
@@ -657,63 +657,63 @@ show_refresh_rate(Display *dpy)
 static void
 make_extension_table(const char *string)
 {
-   char ** string_tab;
-   unsigned  num_strings;
-   unsigned  base;
-   unsigned  idx;
-   unsigned  i;
+   char **string_tab;
+   unsigned num_strings;
+   unsigned base;
+   unsigned idx;
+   unsigned i;
 
    /* Count the number of spaces in the string.  That gives a base-line
     * figure for the number of extension in the string.
     */
 
    num_strings = 1;
-   for ( i = 0 ; string[i] != NUL ; i++ ) {
-      if ( string[i] == ' ' ) {
+   for (i = 0; string[i] != NUL; i++) {
+      if (string[i] == ' ') {
          num_strings++;
       }
    }
 
-   string_tab = (char **) malloc( sizeof( char * ) * num_strings );
-   if ( string_tab == NULL ) {
+   string_tab = (char **) malloc(sizeof(char *) * num_strings);
+   if (string_tab == NULL) {
       return;
    }
 
    base = 0;
    idx = 0;
 
-   while ( string[ base ] != NUL ) {
+   while (string[base] != NUL) {
       /* Determine the length of the next extension string.
        */
 
-      for ( i = 0
-            ; (string[ base + i ] != NUL) && (string[ base + i ] != ' ')
-            ; i++ ) {
+      for (i = 0
+           ; (string[ base + i ] != NUL) && (string[ base + i ] != ' ')
+           ; i++) {
          /* empty */ ;
       }
 
-      if ( i > 0 ) {
+      if (i > 0) {
          /* If the string was non-zero length, add it to the table.  We
           * can get zero length strings if there is a space at the end of
           * the string or if there are two (or more) spaces next to each
           * other in the string.
           */
 
-         string_tab[ idx ] = malloc( sizeof( char ) * (i + 1) );
-         if ( string_tab[ idx ] == NULL ) {
+         string_tab[idx] = malloc(sizeof(char) * (i + 1));
+         if (string_tab[idx] == NULL) {
             unsigned j = 0;
 
-            for ( j = 0; j < idx; j++ ) {
-               free( string_tab[j] );
+            for (j = 0; j < idx; j++) {
+               free(string_tab[j]);
             }
 
-            free( string_tab );
+            free(string_tab);
 
             return;
          }
 
-         (void) memcpy( string_tab[ idx ], & string[ base ], i );
-         string_tab[ idx ][i] = NUL;
+         (void) memcpy(string_tab[idx], &string[base], i);
+         string_tab[idx][i] = NUL;
          idx++;
       }
 
@@ -721,10 +721,10 @@ make_extension_table(const char *string)
       /* Skip to the start of the next extension string.
        */
 
-      for ( base += i
-            ; (string[ base ] == ' ') && (string[ base ] != NUL)
-            ; base++ ) {
-         /* empty */ ;
+      for (base += i
+           ; (string[base] == ' ') && (string[base] != NUL)
+           ; base++) {
+         /* empty */;
       }
    }
 
@@ -744,10 +744,10 @@ make_extension_table(const char *string)
 static GLboolean
 is_extension_supported(const char *ext)
 {
-   unsigned   i;
+   unsigned i;
 
-   for ( i = 0 ; i < num_extensions ; i++ ) {
-      if ( strcmp( ext, extension_table[i] ) == 0 ) {
+   for (i = 0; i < num_extensions; i++) {
+      if (strcmp(ext, extension_table[i]) == 0) {
          return GL_TRUE;
       }
    }
@@ -775,14 +775,14 @@ main(int argc, char *argv[])
 
    for (i = 1; i < argc; i++) {
       if (strcmp(argv[i], "-display") == 0 && i + 1 < argc) {
-         dpyName = argv[i+1];
+         dpyName = argv[i + 1];
          i++;
       }
       else if (strcmp(argv[i], "-info") == 0) {
          printInfo = GL_TRUE;
       }
       else if (strcmp(argv[i], "-swap") == 0 && i + 1 < argc) {
-         swap_interval = atoi( argv[i+1] );
+         swap_interval = atoi(argv[i + 1]);
          do_swap_interval = GL_TRUE;
          i++;
       }
@@ -823,23 +823,22 @@ main(int argc, char *argv[])
    XMapWindow(dpy, win);
    glXMakeCurrent(dpy, win, ctx);
 
-   make_extension_table( (char *) glXQueryExtensionsString(dpy,DefaultScreen(dpy)) );
-   has_OML_sync_control = is_extension_supported( "GLX_OML_sync_control" );
-   has_SGI_swap_control = is_extension_supported( "GLX_SGI_swap_control" );
-   has_MESA_swap_control = is_extension_supported( "GLX_MESA_swap_control" );
-   has_MESA_swap_frame_usage = is_extension_supported( "GLX_MESA_swap_frame_usage" );
+   make_extension_table((char *) glXQueryExtensionsString(dpy, DefaultScreen(dpy)));
+   has_OML_sync_control = is_extension_supported("GLX_OML_sync_control");
+   has_SGI_swap_control = is_extension_supported("GLX_SGI_swap_control");
+   has_MESA_swap_control = is_extension_supported("GLX_MESA_swap_control");
+   has_MESA_swap_frame_usage = is_extension_supported("GLX_MESA_swap_frame_usage");
 
-   if ( has_MESA_swap_control ) {
+   if (has_MESA_swap_control) {
       set_swap_interval = (PFNGLXSWAPINTERVALMESAPROC) glXGetProcAddressARB( (const GLubyte *) "glXSwapIntervalMESA" );
       get_swap_interval = (PFNGLXGETSWAPINTERVALMESAPROC) glXGetProcAddressARB( (const GLubyte *) "glXGetSwapIntervalMESA" );
    }
-   else if ( has_SGI_swap_control ) {
+   else if (has_SGI_swap_control) {
       set_swap_interval = (PFNGLXSWAPINTERVALMESAPROC) glXGetProcAddressARB( (const GLubyte *) "glXSwapIntervalSGI" );
    }
 
-
-   if ( has_MESA_swap_frame_usage ) {
-      get_frame_usage = (PFNGLXGETFRAMEUSAGEMESAPROC)  glXGetProcAddressARB( (const GLubyte *) "glXGetFrameUsageMESA" );
+   if (has_MESA_swap_frame_usage) {
+      get_frame_usage = (PFNGLXGETFRAMEUSAGEMESAPROC) glXGetProcAddressARB((const GLubyte *) "glXGetFrameUsageMESA");
    }
 
 
@@ -848,33 +847,33 @@ main(int argc, char *argv[])
       printf("GL_VERSION    = %s\n", (char *) glGetString(GL_VERSION));
       printf("GL_VENDOR     = %s\n", (char *) glGetString(GL_VENDOR));
       printf("GL_EXTENSIONS = %s\n", (char *) glGetString(GL_EXTENSIONS));
-      if ( has_OML_sync_control || force_get_rate ) {
-         show_refresh_rate( dpy );
+      if (has_OML_sync_control || force_get_rate) {
+         show_refresh_rate(dpy);
       }
 
-      if ( get_swap_interval != NULL ) {
-         printf("Default swap interval = %d\n", (*get_swap_interval)() );
+      if (get_swap_interval != NULL) {
+         printf("Default swap interval = %d\n", (*get_swap_interval)());
       }
    }
 
-   if ( do_swap_interval ) {
-      if ( set_swap_interval != NULL ) {
-         if ( ((swap_interval == 0) && !has_MESA_swap_control)
-              || (swap_interval < 0) ) {
+   if (do_swap_interval) {
+      if (set_swap_interval != NULL) {
+         if (((swap_interval == 0) && !has_MESA_swap_control)
+             || (swap_interval < 0)) {
             printf( "Swap interval must be non-negative or greater than zero "
                     "if GLX_MESA_swap_control is not supported.\n" );
          }
          else {
-            (*set_swap_interval)( swap_interval );
+            (*set_swap_interval)(swap_interval);
          }
 
-         if ( printInfo && (get_swap_interval != NULL) ) {
-            printf("Current swap interval = %d\n", (*get_swap_interval)() );
+         if (printInfo && (get_swap_interval != NULL)) {
+            printf("Current swap interval = %d\n", (*get_swap_interval)());
          }
       }
       else {
          printf("Unable to set swap-interval.  Neither GLX_SGI_swap_control "
-                "nor GLX_MESA_swap_control are supported.\n" );
+                "nor GLX_MESA_swap_control are supported.\n");
       }
    }
 

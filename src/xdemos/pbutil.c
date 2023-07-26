@@ -44,7 +44,7 @@ QueryFBConfig(Display *dpy, int screen)
    {
       char *extensions;
       extensions = (char *) glXQueryServerString(dpy, screen, GLX_EXTENSIONS);
-      if (extensions && strstr(extensions,"GLX_SGIX_fbconfig")) {
+      if (extensions && strstr(extensions, "GLX_SGIX_fbconfig")) {
          return 2;
       }
    }
@@ -158,8 +158,7 @@ GetFBConfigAttrib(Display *dpy, int screen,
 #elif defined(GLX_SGIX_fbconfig)
                   const GLXFBConfigSGIX config,
 #endif
-                  int attrib
-                  )
+                  int attrib)
 {
    int fbcSupport = QueryFBConfig(dpy, screen);
    int value = 0;
@@ -204,7 +203,7 @@ void
 PrintFBConfigInfo(Display *dpy, int screen, FBCONFIG config, Bool horizFormat)
 {
    PBUFFER pBuffer;
-   int width=2, height=2;
+   int width = 2, height = 2;
    int bufferSize, level, doubleBuffer, stereo, auxBuffers;
    int redSize, greenSize, blueSize, alphaSize;
    int depthSize, stencilSize;
@@ -259,13 +258,20 @@ PrintFBConfigInfo(Display *dpy, int screen, FBCONFIG config, Bool horizFormat)
 
    if (horizFormat) {
       printf("0x%-9x ", id);
-      if (xVisual==GLX_STATIC_GRAY)        printf("StaticGray  ");
-      else if (xVisual==GLX_GRAY_SCALE)    printf("GrayScale   ");
-      else if (xVisual==GLX_STATIC_COLOR)  printf("StaticColor ");
-      else if (xVisual==GLX_PSEUDO_COLOR)  printf("PseudoColor ");
-      else if (xVisual==GLX_TRUE_COLOR)    printf("TrueColor   ");
-      else if (xVisual==GLX_DIRECT_COLOR)  printf("DirectColor ");
-      else                            printf("  -none-    ");
+      if (xVisual == GLX_STATIC_GRAY)
+         printf("StaticGray  ");
+      else if (xVisual == GLX_GRAY_SCALE)
+         printf("GrayScale   ");
+      else if (xVisual == GLX_STATIC_COLOR)
+         printf("StaticColor ");
+      else if (xVisual == GLX_PSEUDO_COLOR)
+         printf("PseudoColor ");
+      else if (xVisual == GLX_TRUE_COLOR)
+         printf("TrueColor   ");
+      else if (xVisual == GLX_DIRECT_COLOR)
+         printf("DirectColor ");
+      else
+         printf("  -none-    ");
       printf(" %3d %3d   %s   %s  %s   %2s   ", bufferSize, level,
              (renderType & GLX_RGBA_BIT_SGIX) ? "y" : ".",
              (renderType & GLX_COLOR_INDEX_BIT_SGIX) ? "y" : ".",
@@ -300,13 +306,18 @@ PrintFBConfigInfo(Display *dpy, int screen, FBCONFIG config, Bool horizFormat)
       printf("  Sample Buffers: %d\n", sampleBuffers);
       printf("  Samples/Pixel: %d\n", samples);
       printf("  Drawable Types: ");
-      if (drawableType & GLX_WINDOW_BIT)  printf("Window ");
-      if (drawableType & GLX_PIXMAP_BIT)  printf("Pixmap ");
-      if (drawableType & GLX_PBUFFER_BIT)  printf("PBuffer");
+      if (drawableType & GLX_WINDOW_BIT)
+         printf("Window ");
+      if (drawableType & GLX_PIXMAP_BIT)
+         printf("Pixmap ");
+      if (drawableType & GLX_PBUFFER_BIT)
+         printf("PBuffer");
       printf("\n");
       printf("  Render Types: ");
-      if (renderType & GLX_RGBA_BIT_SGIX)  printf("RGBA ");
-      if (renderType & GLX_COLOR_INDEX_BIT_SGIX)  printf("CI ");
+      if (renderType & GLX_RGBA_BIT_SGIX)
+         printf("RGBA ");
+      if (renderType & GLX_COLOR_INDEX_BIT_SGIX)
+         printf("CI ");
       printf("\n");
       printf("  X Renderable: %s\n", xRenderable ? "yes" : "no");
 

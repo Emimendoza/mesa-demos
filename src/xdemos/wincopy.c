@@ -49,7 +49,7 @@
 static Display *Dpy;
 static int ScrNum;
 static GLXContext Context;
-static Window Win[2];  /* Win[0] = source,  Win[1] = dest */
+static Window Win[2]; /* Win[0] = source,  Win[1] = dest */
 static GLint Width[2], Height[2];
 static GLboolean TestClipping = GL_FALSE;
 static GLfloat Angle = 0.0;
@@ -84,7 +84,7 @@ CreateWindow(Display *dpy, int scrnum, XVisualInfo *visinfo,
       XSizeHints sizehints;
       sizehints.x = xpos;
       sizehints.y = ypos;
-      sizehints.width  = width;
+      sizehints.width = width;
       sizehints.height = height;
       sizehints.flags = USSize | USPosition;
       XSetNormalHints(dpy, win, &sizehints);
@@ -101,7 +101,7 @@ static void
 Redraw(void)
 {
    /* make the first window the current one */
-   if (! (*make_context_current)(Dpy, Win[0], Win[0], Context)) {
+   if (!(*make_context_current)(Dpy, Win[0], Win[0], Context)) {
       printf("glXMakeContextCurrent failed in Redraw()\n");
       return;
    }
@@ -133,8 +133,8 @@ Redraw(void)
    glRotatef(Angle, 0, 0, 1);
    glBegin(GL_POLYGON);
    glVertex2f(-0.5, -0.25);
-   glVertex2f( 0.5, -0.25);
-   glVertex2f( 0.5, 0.25);
+   glVertex2f(0.5, -0.25);
+   glVertex2f(0.5, 0.25);
    glVertex2f(-0.5, 0.25);
    glEnd();
    glPopMatrix();
@@ -198,7 +198,7 @@ EventLoop(void)
    XEvent event;
    while (1) {
       if (XPending(Dpy) > 0) {
-         XNextEvent( Dpy, &event );
+         XNextEvent(Dpy, &event);
          switch (event.type) {
          case Expose:
             Redraw();
@@ -224,7 +224,7 @@ EventLoop(void)
             }
             break;
          default:
-            /*no-op*/ ;
+            /*no-op*/;
          }
       }
       else {
@@ -259,17 +259,17 @@ Init(void)
 
    if (major * 100 + minor >= 103) {
       make_context_current = (PFNGLXMAKECURRENTREADSGIPROC)
-         glXGetProcAddressARB( (GLubyte *) "glXMakeContextCurrent" );
+         glXGetProcAddressARB((GLubyte *) "glXMakeContextCurrent");
    }
    else {
-      const char * const glxExtensions = glXQueryExtensionsString(Dpy, ScrNum);
-      const char * ext = strstr( glxExtensions, "GLX_SGI_make_current_read" );
-      const size_t len = strlen( "GLX_SGI_make_current_read" );
+      const char *const glxExtensions = glXQueryExtensionsString(Dpy, ScrNum);
+      const char *ext = strstr(glxExtensions, "GLX_SGI_make_current_read");
+      const size_t len = strlen("GLX_SGI_make_current_read");
 
-      if ( (ext != NULL)
-           && ((ext[len] == ' ') || (ext[len] == '\0')) ) {
+      if ((ext != NULL)
+          && ((ext[len] == ' ') || (ext[len] == '\0'))) {
          make_context_current = (PFNGLXMAKECURRENTREADSGIPROC)
-            glXGetProcAddressARB( (GLubyte *) "glXMakeCurrentReadSGI" );
+            glXGetProcAddressARB((GLubyte *) "glXMakeCurrentReadSGI");
       }
    }
 

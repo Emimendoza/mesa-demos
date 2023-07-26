@@ -46,7 +46,7 @@
 
 
 #ifndef GLX_NONE_EXT
-#define GLX_NONE_EXT  0x8000
+#define GLX_NONE_EXT 0x8000
 #endif
 
 #ifndef GLX_TRANSPARENT_RGB
@@ -54,19 +54,19 @@
 #endif
 
 #ifndef GLX_RGBA_BIT
-#define GLX_RGBA_BIT                   0x00000001
+#define GLX_RGBA_BIT 0x00000001
 #endif
 
 #ifndef GLX_COLOR_INDEX_BIT
-#define GLX_COLOR_INDEX_BIT            0x00000002
+#define GLX_COLOR_INDEX_BIT 0x00000002
 #endif
 
 
 struct visual_attribs
 {
    /* X visual attribs */
-   int id;             /* May be visual ID or FBConfig ID */
-   int vis_id;         /* Visual ID.  Only set for FBConfigs */
+   int id;     /* May be visual ID or FBConfig ID */
+   int vis_id; /* Visual ID.  Only set for FBConfigs */
    int klass;
    int depth;
    int redMask, greenMask, blueMask;
@@ -1347,7 +1347,7 @@ parse_args(int argc, char *argv[], struct options *options)
          usage();
          exit(0);
       }
-      else if(strcmp(argv[i], "-s") == 0) {
+      else if (strcmp(argv[i], "-s") == 0) {
          options->singleLine = GL_TRUE;
       }
       else {

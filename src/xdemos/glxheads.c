@@ -119,7 +119,7 @@ AddHead(const char *displayName)
       XSizeHints sizehints;
       sizehints.x = xpos;
       sizehints.y = ypos;
-      sizehints.width  = width;
+      sizehints.width = width;
       sizehints.height = height;
       sizehints.flags = USSize | USPosition;
       XSetNormalHints(dpy, win, &sizehints);
@@ -145,7 +145,7 @@ AddHead(const char *displayName)
    /* save the info for this head */
    {
       struct head *h = &Heads[NumHeads];
-      const char * tmp;
+      const char *tmp;
 
       if (strlen(displayName) + 1 > sizeof(h->DisplayName)) {
          Error(displayName, "displayName string length overflow");
@@ -180,7 +180,7 @@ AddHead(const char *displayName)
       strcpy(h->Renderer, tmp);
 
       NumHeads++;
-      return &Heads[NumHeads-1];
+      return &Heads[NumHeads - 1];
    }
 
 }
@@ -254,7 +254,7 @@ EventLoop(void)
                case KeyPress:
                   return;
                default:
-                  /*no-op*/ ;
+                  /*no-op*/;
                }
             }
             else {

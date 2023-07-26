@@ -50,24 +50,24 @@ redraw(Display *dpy, Window w)
    static const char *text = "  Rotated bitmap text";
    int i;
 
-   glClear( GL_COLOR_BUFFER_BIT );
+   glClear(GL_COLOR_BUFFER_BIT);
 
    /* triangle */
-   glColor3f( 0.2, 0.2, 1.0 );
+   glColor3f(0.2, 0.2, 1.0);
    glBegin(GL_TRIANGLES);
-   glVertex2f( -0.8,  0.7 );
-   glVertex2f( -0.8, -0.7 );
-   glVertex2f(  0.8,  0.0 );
+   glVertex2f(-0.8, 0.7);
+   glVertex2f(-0.8, -0.7);
+   glVertex2f(0.8, 0.0);
    glEnd();
 
    /* marker */
-   glColor3f( 0, 1, 0 );
+   glColor3f(0, 1, 0);
    glBegin(GL_POINTS);
    glVertex2f(0, 0);
    glEnd();
 
    /* text */
-   glColor3f( 1, 1, 1 );
+   glColor3f(1, 1, 1);
 
    for (i = 0; i < 4; i++) {
       glRasterPos2f(0, 0);
@@ -75,17 +75,17 @@ redraw(Display *dpy, Window w)
       glCallLists(strlen(text), GL_UNSIGNED_BYTE, (GLubyte *) text);
    }
 
-   glXSwapBuffers( dpy, w );
+   glXSwapBuffers(dpy, w);
 }
 
 
 static void
 resize(unsigned int width, unsigned int height)
 {
-   glViewport( 0, 0, width, height );
-   glMatrixMode( GL_PROJECTION );
+   glViewport(0, 0, width, height);
+   glMatrixMode(GL_PROJECTION);
    glLoadIdentity();
-   glOrtho( -1.0, 1.0, -1.0, 1.0, -1.0, 1.0 );
+   glOrtho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0);
 }
 
 
@@ -137,10 +137,10 @@ make_rgb_db_window(Display *dpy, int xpos, int ypos, unsigned int width,
    GLXContext ctx;
    XVisualInfo *visinfo;
 
-   scrnum = DefaultScreen( dpy );
-   root = RootWindow( dpy, scrnum );
+   scrnum = DefaultScreen(dpy);
+   root = RootWindow(dpy, scrnum);
 
-   visinfo = glXChooseVisual( dpy, scrnum, attrib );
+   visinfo = glXChooseVisual(dpy, scrnum, attrib);
    if (!visinfo) {
       printf("Error: couldn't get an RGB, Double-buffered visual\n");
       exit(1);
@@ -149,19 +149,19 @@ make_rgb_db_window(Display *dpy, int xpos, int ypos, unsigned int width,
    /* window attributes */
    attr.background_pixel = 0;
    attr.border_pixel = 0;
-   attr.colormap = XCreateColormap( dpy, root, visinfo->visual, AllocNone);
+   attr.colormap = XCreateColormap(dpy, root, visinfo->visual, AllocNone);
    attr.event_mask = StructureNotifyMask | ExposureMask | KeyPressMask;
    mask = CWBackPixel | CWBorderPixel | CWColormap | CWEventMask;
 
-   win = XCreateWindow( dpy, root, 0, 0, width, height,
-                        0, visinfo->depth, InputOutput,
-                        visinfo->visual, mask, &attr );
+   win = XCreateWindow(dpy, root, 0, 0, width, height,
+                       0, visinfo->depth, InputOutput,
+                       visinfo->visual, mask, &attr);
 
    {
       XSizeHints sizehints;
       sizehints.x = xpos;
       sizehints.y = ypos;
-      sizehints.width  = width;
+      sizehints.width = width;
       sizehints.height = height;
       sizehints.flags = USSize | USPosition;
       XSetNormalHints(dpy, win, &sizehints);
@@ -170,9 +170,9 @@ make_rgb_db_window(Display *dpy, int xpos, int ypos, unsigned int width,
    }
 
 
-   ctx = glXCreateContext( dpy, visinfo, NULL, True );
+   ctx = glXCreateContext(dpy, visinfo, NULL, True);
 
-   glXMakeCurrent( dpy, win, ctx );
+   glXMakeCurrent(dpy, win, ctx);
 
    return win;
 }
@@ -184,19 +184,18 @@ event_loop(Display *dpy)
    XEvent event;
 
    while (1) {
-      XNextEvent( dpy, &event );
+      XNextEvent(dpy, &event);
 
       switch (event.type) {
       case Expose:
-         redraw( dpy, event.xany.window );
+         redraw(dpy, event.xany.window);
          break;
       case ConfigureNotify:
-         resize( event.xconfigure.width, event.xconfigure.height );
+         resize(event.xconfigure.width, event.xconfigure.height);
          break;
       case KeyPress:
          exit(0);
-      default:
-         ;  /* no-op */
+      default:; /* no-op */
       }
    }
 }
@@ -211,14 +210,14 @@ main(int argc, char *argv[])
 
    dpy = XOpenDisplay(NULL);
 
-   win = make_rgb_db_window( dpy, 0, 0, 300, 300 );
-   setup_font( dpy );
+   win = make_rgb_db_window(dpy, 0, 0, 300, 300);
+   setup_font(dpy);
 
-   glShadeModel( GL_FLAT );
-   glClearColor( 0.5, 0.5, 1.0, 1.0 );
+   glShadeModel(GL_FLAT);
+   glClearColor(0.5, 0.5, 1.0, 1.0);
 
-   XMapWindow( dpy, win );
+   XMapWindow(dpy, win);
 
-   event_loop( dpy );
+   event_loop(dpy);
    return 0;
 }

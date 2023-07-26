@@ -127,7 +127,7 @@ fill_bitmap(Display *dpy, Pixmap pixmap, GC gc,
  * corresponding XCharStruct.
  */
 static const XCharStruct *
-isvalid(const XFontStruct * fs, unsigned int which)
+isvalid(const XFontStruct *fs, unsigned int which)
 {
    unsigned int rows, pages;
    unsigned int byte1 = 0, byte2 = 0;

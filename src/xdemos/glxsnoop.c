@@ -55,10 +55,10 @@ redraw(Display *dpy, Window srcWin, Window dstWin)
       int i;
       glReadPixels(0, 0, Width, Height, GL_DEPTH_COMPONENT, GL_FLOAT, z);
       for (i = 0; i < Width * Height; i++) {
-         image[i*4+0] =
-         image[i*4+1] =
-         image[i*4+2] = (GLint) (255.0 * z[i]);
-         image[i*4+3] = 255;
+         image[i * 4 + 0] =
+         image[i * 4 + 1] =
+         image[i * 4 + 2] = (GLint) (255.0 * z[i]);
+         image[i * 4 + 3] = 255;
       }
       free(z);
    }
@@ -82,10 +82,10 @@ redraw(Display *dpy, Window srcWin, Window dstWin)
       else
          step = 255.0 / (float) (max - min);
       for (i = 0; i < Width * Height; i++) {
-         image[i*4+0] =
-         image[i*4+1] =
-         image[i*4+2] = (GLint) ((sten[i] - min) * step);
-         image[i*4+3] = 255;
+         image[i * 4 + 0] =
+         image[i * 4 + 1] =
+         image[i * 4 + 2] = (GLint) ((sten[i] - min) * step);
+         image[i * 4 + 3] = 255;
       }
       free(sten);
    }
@@ -121,26 +121,26 @@ make_gl_window(Display *dpy, XVisualInfo *visinfo, int width, int height)
    int x = 0, y = 0;
    char *name = NULL;
 
-   scrnum = DefaultScreen( dpy );
-   root = RootWindow( dpy, scrnum );
+   scrnum = DefaultScreen(dpy);
+   root = RootWindow(dpy, scrnum);
 
    /* window attributes */
    attr.background_pixel = 0;
    attr.border_pixel = 0;
-   attr.colormap = XCreateColormap( dpy, root, visinfo->visual, AllocNone);
+   attr.colormap = XCreateColormap(dpy, root, visinfo->visual, AllocNone);
    attr.event_mask = StructureNotifyMask | ExposureMask | KeyPressMask;
    mask = CWBackPixel | CWBorderPixel | CWColormap | CWEventMask;
 
-   win = XCreateWindow( dpy, root, x, y, width, height,
-                        0, visinfo->depth, InputOutput,
-                        visinfo->visual, mask, &attr );
+   win = XCreateWindow(dpy, root, x, y, width, height,
+                       0, visinfo->depth, InputOutput,
+                       visinfo->visual, mask, &attr);
 
    /* set hints and properties */
    {
       XSizeHints sizehints;
       sizehints.x = x;
       sizehints.y = y;
-      sizehints.width  = width;
+      sizehints.width = width;
       sizehints.height = height;
       sizehints.flags = USSize | USPosition;
       XSetNormalHints(dpy, win, &sizehints);
@@ -215,7 +215,7 @@ event_loop(Display *dpy, Window win)
    XEvent event;
 
    while (1) {
-      XNextEvent( dpy, &event );
+      XNextEvent(dpy, &event);
 
       switch (event.type) {
       case Expose:
@@ -362,7 +362,7 @@ main(int argc, char *argv[])
 
    visinfo = visualid_to_visualinfo(dpy, vid);
 
-   Context = glXCreateContext( dpy, visinfo, NULL, True );
+   Context = glXCreateContext(dpy, visinfo, NULL, True);
    if (!Context) {
       printf("Error: glXCreateContext failed\n");
       exit(1);
@@ -372,7 +372,7 @@ main(int argc, char *argv[])
    XMapWindow(dpy, win);
    update_window_title(dpy, win);
 
-   event_loop( dpy, win );
+   event_loop(dpy, win);
 
    return 0;
 }

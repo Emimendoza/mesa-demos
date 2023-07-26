@@ -59,7 +59,7 @@ current_time(void)
 {
    struct timeval tv;
 #ifdef __VMS
-   (void) gettimeofday(&tv, NULL );
+   (void) gettimeofday(&tv, NULL);
 #else
    struct timezone tz;
    (void) gettimeofday(&tv, &tz);
@@ -464,7 +464,7 @@ no_border(Display *dpy, Window w)
    motif_hints.decorations = flags;
 
    /* get the atom for the property */
-   prop = XInternAtom( dpy, "_MOTIF_WM_HINTS", True );
+   prop = XInternAtom(dpy, "_MOTIF_WM_HINTS", True);
    if (!prop) {
       /* something went wrong! */
       return;
@@ -473,13 +473,13 @@ no_border(Display *dpy, Window w)
    /* not sure this is correct, seems to work, XA_WM_HINTS didn't work */
    proptype = prop;
 
-   XChangeProperty( dpy, w,                         /* display, window */
-                    prop, proptype,                 /* property, type */
-                    32,                             /* format: 32-bit datums */
-                    PropModeReplace,                /* mode */
-                    (unsigned char *) &motif_hints, /* data */
-                    PROP_MOTIF_WM_HINTS_ELEMENTS    /* nelements */
-                  );
+   XChangeProperty(dpy, w,                         /* display, window */
+                   prop, proptype,                 /* property, type */
+                   32,                             /* format: 32-bit datums */
+                   PropModeReplace,                /* mode */
+                   (unsigned char *) &motif_hints, /* data */
+                   PROP_MOTIF_WM_HINTS_ELEMENTS    /* nelements */
+   );
 }
 
 static void
@@ -545,8 +545,8 @@ make_window(Display *dpy, const char *name,
 
    attribs[i++] = None;
 
-   scrnum = DefaultScreen( dpy );
-   root = RootWindow( dpy, scrnum );
+   scrnum = DefaultScreen(dpy);
+   root = RootWindow(dpy, scrnum);
 
    visinfo = glXChooseVisual(dpy, scrnum, attribs);
    if (!visinfo) {
@@ -564,14 +564,14 @@ make_window(Display *dpy, const char *name,
    /* window attributes */
    attr.background_pixel = 0;
    attr.border_pixel = 0;
-   attr.colormap = XCreateColormap( dpy, root, visinfo->visual, AllocNone);
+   attr.colormap = XCreateColormap(dpy, root, visinfo->visual, AllocNone);
    attr.event_mask = StructureNotifyMask | ExposureMask | KeyPressMask;
    /* XXX this is a bad way to get a borderless window! */
    mask = CWBackPixel | CWBorderPixel | CWColormap | CWEventMask;
 
-   win = XCreateWindow( dpy, root, x, y, width, height,
-                        0, visinfo->depth, InputOutput,
-                        visinfo->visual, mask, &attr );
+   win = XCreateWindow(dpy, root, x, y, width, height,
+                       0, visinfo->depth, InputOutput,
+                       visinfo->visual, mask, &attr);
 
    if (fullscreen) {
       no_border(dpy, win);
@@ -583,7 +583,7 @@ make_window(Display *dpy, const char *name,
       XSizeHints sizehints;
       sizehints.x = x;
       sizehints.y = y;
-      sizehints.width  = width;
+      sizehints.width = width;
       sizehints.height = height;
       sizehints.flags = USSize | USPosition;
       XSetNormalHints(dpy, win, &sizehints);
@@ -591,7 +591,7 @@ make_window(Display *dpy, const char *name,
                              None, (char **)NULL, 0, &sizehints);
    }
 
-   ctx = glXCreateContext( dpy, visinfo, NULL, True );
+   ctx = glXCreateContext(dpy, visinfo, NULL, True);
    if (!ctx) {
       printf("Error: glXCreateContext failed\n");
       exit(1);
@@ -797,7 +797,7 @@ main(int argc, char *argv[])
 
    for (i = 1; i < argc; i++) {
       if (strcmp(argv[i], "-display") == 0) {
-         dpyName = argv[i+1];
+         dpyName = argv[i + 1];
          i++;
       }
       else if (strcmp(argv[i], "-info") == 0) {
@@ -809,19 +809,19 @@ main(int argc, char *argv[])
       else if (strcmp(argv[i], "-stereo") == 0) {
          stereo = GL_TRUE;
       }
-      else if (i < argc-1 && strcmp(argv[i], "-samples") == 0) {
-         samples = strtod(argv[i+1], NULL );
+      else if (i < argc - 1 && strcmp(argv[i], "-samples") == 0) {
+         samples = strtod(argv[i + 1], NULL);
          ++i;
       }
-      else if (i < argc-1 && strcmp(argv[i], "-swapinterval") == 0) {
-         swapinterval = strtod(argv[i+1], NULL );
+      else if (i < argc - 1 && strcmp(argv[i], "-swapinterval") == 0) {
+         swapinterval = strtod(argv[i + 1], NULL);
          ++i;
       }
       else if (strcmp(argv[i], "-fullscreen") == 0) {
          fullscreen = GL_TRUE;
       }
-      else if (i < argc-1 && strcmp(argv[i], "-geometry") == 0) {
-         XParseGeometry(argv[i+1], &x, &y, &winWidth, &winHeight);
+      else if (i < argc - 1 && strcmp(argv[i], "-geometry") == 0) {
+         XParseGeometry(argv[i + 1], &x, &y, &winWidth, &winHeight);
          i++;
       }
       else {

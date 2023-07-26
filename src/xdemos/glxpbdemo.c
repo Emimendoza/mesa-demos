@@ -159,8 +159,8 @@ Setup(int width, int height)
    }
 
    /* Create Pbuffer */
-   gPBuffer = MakePbuffer( gDpy, gScreen, width, height );
-   if (gPBuffer==None) {
+   gPBuffer = MakePbuffer(gDpy, gScreen, width, height);
+   if (gPBuffer == None) {
       printf("Error: couldn't create pbuffer\n");
       XCloseDisplay(gDpy);
       return 0;
@@ -186,7 +186,7 @@ Setup(int width, int height)
       return 0;
    }
 
-   return 1;  /* Success!! */
+   return 1; /* Success!! */
 #else
    printf("Error: GLX version 1.3 or 1.4 not available at compile time\n");
    return 0;
@@ -208,13 +208,12 @@ InitGL(void)
    glEnable(GL_CULL_FACE);
 
    glViewport(0, 0, gWidth, gHeight);
-   glMatrixMode( GL_PROJECTION );
+   glMatrixMode(GL_PROJECTION);
    glLoadIdentity();
-   glFrustum( -1.0, 1.0, -1.0, 1.0, 5.0, 25.0 );
-   glMatrixMode( GL_MODELVIEW );
+   glFrustum(-1.0, 1.0, -1.0, 1.0, 5.0, 25.0);
+   glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
-   glTranslatef( 0.0, 0.0, -15.0 );
-
+   glTranslatef(0.0, 0.0, -15.0);
 }
 
 
@@ -244,8 +243,7 @@ static void
 drawBox(GLfloat x0, GLfloat x1, GLfloat y0, GLfloat y1,
         GLfloat z0, GLfloat z1, GLenum type)
 {
-   static GLfloat n[6][3] =
-   {
+   static GLfloat n[6][3] = {
       {-1.0, 0.0, 0.0},
       {0.0, 1.0, 0.0},
       {1.0, 0.0, 0.0},
@@ -253,8 +251,7 @@ drawBox(GLfloat x0, GLfloat x1, GLfloat y0, GLfloat y1,
       {0.0, 0.0, 1.0},
       {0.0, 0.0, -1.0}
    };
-   static GLint faces[6][4] =
-   {
+   static GLint faces[6][4] = {
       {0, 1, 2, 3},
       {3, 2, 6, 7},
       {7, 6, 5, 4},
@@ -311,10 +308,10 @@ Render(void)
    glClearColor(0.2, 0.2, 0.9, 0.0);
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-   for (i=0;i<NumBoxes;i++) {
+   for (i = 0; i < NumBoxes; i++) {
       float tx = -2.0 + 4.0 * Random();
       float ty = -2.0 + 4.0 * Random();
-      float tz =  4.0 - 16.0 * Random();
+      float tz = 4.0 - 16.0 * Random();
       float sx = 0.1 + Random() * 0.4;
       float sy = 0.1 + Random() * 0.4;
       float sz = 0.1 + Random() * 0.4;
@@ -357,22 +354,22 @@ WriteFile(const char *filename)
       printf("Couldn't open image file: %s\n", filename);
       return;
    }
-   fprintf(f,"P6\n");
-   fprintf(f,"# ppm-file created by %s\n", "trdemo2");
-   fprintf(f,"%i %i\n", gWidth, gHeight);
-   fprintf(f,"255\n");
+   fprintf(f, "P6\n");
+   fprintf(f, "# ppm-file created by %s\n", "trdemo2");
+   fprintf(f, "%i %i\n", gWidth, gHeight);
+   fprintf(f, "255\n");
    fclose(f);
-   f = fopen(filename, "ab");  /* now append binary data */
+   f = fopen(filename, "ab"); /* now append binary data */
    if (!f) {
       printf("Couldn't append to image file: %s\n", filename);
       return;
    }
 
-   for (i=0;i<gHeight;i++) {
+   for (i = 0; i < gHeight; i++) {
       GLubyte *rowPtr;
       /* Remember, OpenGL images are bottom to top.  Have to reverse. */
-      rowPtr = image + (gHeight-1-i) * gWidth*3;
-      fwrite(rowPtr, 1, gWidth*3, f);
+      rowPtr = image + (gHeight - 1 - i) * gWidth * 3;
+      fwrite(rowPtr, 1, gWidth * 3, f);
    }
 
    fclose(f);
@@ -399,18 +396,18 @@ Usage(const char *appName)
 int
 main(int argc, char *argv[])
 {
-   if (argc!=4) {
+   if (argc != 4) {
       Usage(argv[0]);
    }
    else {
       int width = atoi(argv[1]);
       int height = atoi(argv[2]);
       char *fileName = argv[3];
-      if (width<=0) {
+      if (width <= 0) {
          printf("Error: width parameter must be at least 1.\n");
          return 1;
       }
-      if (height<=0) {
+      if (height <= 0) {
          printf("Error: height parameter must be at least 1.\n");
          return 1;
       }
@@ -424,7 +421,7 @@ main(int argc, char *argv[])
       WriteFile(fileName);
       printf("File write completed.\n");
 
-      glXDestroyPbuffer( gDpy, gPBuffer );
+      glXDestroyPbuffer(gDpy, gPBuffer);
    }
    return 0;
 }

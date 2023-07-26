@@ -149,7 +149,7 @@ main(int argc, char *argv[])
 
    while (i++) {
       get_sync_values(disp, winGL, &ust, &msc, &sbc);
-      fprintf(stderr, "ust: %"PRId64", msc: %"PRId64", sbc: %"PRId64"\n",
+      fprintf(stderr, "ust: %" PRId64 ", msc: %" PRId64 ", sbc: %" PRId64 "\n",
               ust, msc, sbc);
 
       /* Alternate colors to make tearing obvious */

@@ -58,11 +58,12 @@ draw(void)
    glRotatef(0, 0, 0, 1);
    glBegin(GL_POLYGON);
    glVertex2f(-0.5, -0.25);
-   glVertex2f( 0.5, -0.25);
-   glVertex2f( 0.5, 0.25);
+   glVertex2f(0.5, -0.25);
+   glVertex2f(0.5, 0.25);
    glVertex2f(-0.5, 0.25);
    glEnd();
-   glPopMatrix();}
+   glPopMatrix();
+}
 
 
 /*
@@ -95,10 +96,10 @@ make_window(const char *dpyName, const char *name, int x, int y, int width,
    }
 
    *dpyRet = dpy;
-   scrnum = DefaultScreen( dpy );
-   root = RootWindow( dpy, scrnum );
+   scrnum = DefaultScreen(dpy);
+   root = RootWindow(dpy, scrnum);
 
-   visinfo = glXChooseVisual( dpy, scrnum, attrib );
+   visinfo = glXChooseVisual(dpy, scrnum, attrib);
    if (!visinfo) {
       printf("Error: couldn't get an RGB, Double-buffered visual\n");
       exit(1);
@@ -107,20 +108,20 @@ make_window(const char *dpyName, const char *name, int x, int y, int width,
    /* window attributes */
    attr.background_pixel = 0;
    attr.border_pixel = 0;
-   attr.colormap = XCreateColormap( dpy, root, visinfo->visual, AllocNone);
+   attr.colormap = XCreateColormap(dpy, root, visinfo->visual, AllocNone);
    attr.event_mask = StructureNotifyMask | ExposureMask | KeyPressMask;
    mask = CWBackPixel | CWBorderPixel | CWColormap | CWEventMask;
 
-   win = XCreateWindow( dpy, root, 0, 0, width, height,
-                        0, visinfo->depth, InputOutput,
-                        visinfo->visual, mask, &attr );
+   win = XCreateWindow(dpy, root, 0, 0, width, height,
+                       0, visinfo->depth, InputOutput,
+                       visinfo->visual, mask, &attr);
 
    /* set hints and properties */
    {
       XSizeHints sizehints;
       sizehints.x = x;
       sizehints.y = y;
-      sizehints.width  = width;
+      sizehints.width = width;
       sizehints.height = height;
       sizehints.flags = USSize | USPosition;
       XSetNormalHints(dpy, win, &sizehints);
@@ -128,7 +129,7 @@ make_window(const char *dpyName, const char *name, int x, int y, int width,
                              None, (char **)NULL, 0, &sizehints);
    }
 
-   ctx = glXCreateContext( dpy, visinfo, NULL, True );
+   ctx = glXCreateContext(dpy, visinfo, NULL, True);
    if (!ctx) {
       printf("Error: glXCreateContext failed\n");
       exit(1);
@@ -162,7 +163,7 @@ main(int argc, char *argv[])
 
    for (i = 1; i < argc; i++) {
       if (strcmp(argv[i], "-display") == 0) {
-         dpyName = argv[i+1];
+         dpyName = argv[i + 1];
          i++;
       }
    }

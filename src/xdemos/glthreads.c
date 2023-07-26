@@ -275,10 +275,10 @@ draw_loop(struct winthread *wt)
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
       glPushMatrix();
-         glRotatef(wt->Angle, 0, 1, 0);
-         glRotatef(wt->Angle, 1, 0, 0);
-         glScalef(0.7, 0.7, 0.7);
-         draw_object();
+      glRotatef(wt->Angle, 0, 1, 0);
+      glRotatef(wt->Angle, 1, 0, 0);
+      glScalef(0.7, 0.7, 0.7);
+      draw_object();
       glPopMatrix();
 
       if (Locking)
@@ -340,8 +340,7 @@ keypress(XEvent *event, struct winthread *wt)
       if (!Animate)
          signal_redraw();
       break;
-   default:
-      ; /* nop */
+   default:; /* nop */
    }
 }
 
@@ -399,7 +398,7 @@ event_loop(Display *dpy)
          }
          break;
       default:
-         /*no-op*/ ;
+         /*no-op*/;
       }
    }
 }
@@ -427,8 +426,7 @@ event_loop_multi(void)
          case KeyPress:
             keypress(&event, wt);
             break;
-         default:
-            ; /* nop */
+         default:; /* nop */
          }
       }
       w = (w + 1) % NumWinThreads;
@@ -488,7 +486,7 @@ create_window(struct winthread *wt, GLXContext shareCtx)
       XSizeHints sizehints;
       sizehints.x = xpos;
       sizehints.y = ypos;
-      sizehints.width  = width;
+      sizehints.width = width;
       sizehints.height = height;
       sizehints.flags = USSize | USPosition;
       XSetNormalHints(wt->Dpy, win, &sizehints);
@@ -673,7 +671,7 @@ main(int argc, char *argv[])
    /* Create the threads */
    for (i = 0; i < numThreads; i++) {
       pthread_create(&WinThreads[i].Thread, NULL, thread_function,
-                     (void*) &WinThreads[i]);
+                     (void *) &WinThreads[i]);
       printf("glthreads: Created thread %p\n", (void *) WinThreads[i].Thread);
    }
 

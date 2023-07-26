@@ -15,13 +15,13 @@
 
 
 #if defined(GLX_VERSION_1_3)
-#define PBUFFER GLXPbuffer
+#define PBUFFER  GLXPbuffer
 #define FBCONFIG GLXFBConfig
 #elif defined(GLX_SGIX_fbconfig) && defined(GLX_SGIX_pbuffer)
-#define PBUFFER GLXPbufferSGIX
+#define PBUFFER  GLXPbufferSGIX
 #define FBCONFIG GLXFBConfigSGIX
 #else
-#define PBUFFER int
+#define PBUFFER  int
 #define FBCONFIG int
 #endif
 
@@ -66,4 +66,4 @@ extern void
 DestroyPbuffer(Display *dpy, int screen, PBUFFER pbuffer);
 
 
-#endif  /*PBUTIL_H*/
+#endif /*PBUTIL_H*/

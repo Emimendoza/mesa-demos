@@ -50,7 +50,7 @@ static GLfloat view_rotx = 0.0, view_roty = 210.0, view_rotz = 0.0;
 static GLint gear1, gear2;
 static GLfloat angle = 0.0;
 
-static GLboolean animate = GL_TRUE;    /* Animation */
+static GLboolean animate = GL_TRUE; /* Animation */
 
 
 static double
@@ -58,7 +58,7 @@ current_time(void)
 {
    struct timeval tv;
 #ifdef __VMS
-   (void) gettimeofday(&tv, NULL );
+   (void) gettimeofday(&tv, NULL);
 #else
    struct timezone tz;
    (void) gettimeofday(&tv, &tz);
@@ -254,7 +254,7 @@ draw_frame(Display *dpy, Window win, GLXContext ctx1, GLXContext ctx2)
 
    if (animate) {
       /* advance rotation for next frame */
-      angle += 70.0 * dt;  /* 70 degrees per second */
+      angle += 70.0 * dt; /* 70 degrees per second */
       if (angle > 3600.0)
          angle -= 3600.0;
    }
@@ -307,9 +307,9 @@ reshape(Display *dpy, Window win,
 static void
 init(Display *dpy, Window win, GLXContext ctx1, GLXContext ctx2)
 {
-   static GLfloat pos[4] = { 5.0, 5.0, 10.0, 0.0 };
-   static GLfloat red[4] = { 0.8, 0.1, 0.0, 1.0 };
-   static GLfloat green[4] = { 0.0, 0.8, 0.2, 0.5 };
+   static GLfloat pos[4] = {5.0, 5.0, 10.0, 0.0};
+   static GLfloat red[4] = {0.8, 0.1, 0.0, 1.0};
+   static GLfloat green[4] = {0.0, 0.8, 0.2, 0.5};
    /*static GLfloat blue[4] = { 0.2, 0.2, 1.0, 1.0 };*/
 
    /* first ctx */
@@ -397,10 +397,10 @@ make_window_and_contexts(Display *dpy, const char *name, int x, int y,
    Window win;
    XVisualInfo *visinfo;
 
-   scrnum = DefaultScreen( dpy );
-   root = RootWindow( dpy, scrnum );
+   scrnum = DefaultScreen(dpy);
+   root = RootWindow(dpy, scrnum);
 
-   visinfo = glXChooseVisual( dpy, scrnum, attribs );
+   visinfo = glXChooseVisual(dpy, scrnum, attribs);
    if (!visinfo) {
       printf("Error: couldn't get an RGB, Double-buffered visual\n");
       exit(1);
@@ -409,20 +409,20 @@ make_window_and_contexts(Display *dpy, const char *name, int x, int y,
    /* window attributes */
    attr.background_pixel = 0;
    attr.border_pixel = 0;
-   attr.colormap = XCreateColormap( dpy, root, visinfo->visual, AllocNone);
+   attr.colormap = XCreateColormap(dpy, root, visinfo->visual, AllocNone);
    attr.event_mask = StructureNotifyMask | ExposureMask | KeyPressMask;
    mask = CWBackPixel | CWBorderPixel | CWColormap | CWEventMask;
 
-   win = XCreateWindow( dpy, root, x, y, width, height,
-                        0, visinfo->depth, InputOutput,
-                        visinfo->visual, mask, &attr );
+   win = XCreateWindow(dpy, root, x, y, width, height,
+                       0, visinfo->depth, InputOutput,
+                       visinfo->visual, mask, &attr);
 
    /* set hints and properties */
    {
       XSizeHints sizehints;
       sizehints.x = x;
       sizehints.y = y;
-      sizehints.width  = width;
+      sizehints.width = width;
       sizehints.height = height;
       sizehints.flags = USSize | USPosition;
       XSetNormalHints(dpy, win, &sizehints);
@@ -431,8 +431,8 @@ make_window_and_contexts(Display *dpy, const char *name, int x, int y,
    }
 
    *winRet = win;
-   *ctxRet1 = glXCreateContext( dpy, visinfo, NULL, True );
-   *ctxRet2 = glXCreateContext( dpy, visinfo, NULL, True );
+   *ctxRet1 = glXCreateContext(dpy, visinfo, NULL, True);
+   *ctxRet2 = glXCreateContext(dpy, visinfo, NULL, True);
 
    if (!*ctxRet1 || !*ctxRet2) {
       printf("Error: glXCreateContext failed\n");
@@ -530,7 +530,7 @@ main(int argc, char *argv[])
 
    for (i = 1; i < argc; i++) {
       if (strcmp(argv[i], "-display") == 0) {
-         dpyName = argv[i+1];
+         dpyName = argv[i + 1];
          i++;
       }
       else {

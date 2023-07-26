@@ -67,7 +67,7 @@ current_time(void)
 {
    struct timeval tv;
 #ifdef __VMS
-   (void) gettimeofday(&tv, NULL );
+   (void) gettimeofday(&tv, NULL);
 #else
    struct timezone tz;
    (void) gettimeofday(&tv, &tz);
@@ -342,10 +342,10 @@ dummy_destroy_window(Display *dpy, GLXWindow win)
 static void
 init_fbconfig_functions(Display *dpy, int scrnum)
 {
-   const char * glx_extensions;
-   const char * match;
+   const char *glx_extensions;
+   const char *match;
    static const char ext_name[] = "GLX_SGIX_fbconfig";
-   const size_t len = strlen( ext_name );
+   const size_t len = strlen(ext_name);
    int major;
    int minor;
    GLboolean ext_version_supported;
@@ -354,23 +354,23 @@ init_fbconfig_functions(Display *dpy, int scrnum)
 
    /* Determine if GLX 1.3 or greater is supported.
     */
-   glXQueryVersion(dpy, & major, & minor);
+   glXQueryVersion(dpy, &major, &minor);
    glx_1_3_supported = (major == 1) && (minor >= 3);
 
    /* Determine if GLX_SGIX_fbconfig is supported.
     */
    glx_extensions = glXQueryExtensionsString(dpy, scrnum);
-   match = strstr( glx_extensions, ext_name );
+   match = strstr(glx_extensions, ext_name);
 
    ext_version_supported = (match != NULL)
        && ((match[len] == '\0') || (match[len] == ' '));
 
-   printf( "GLX 1.3 is %ssupported.\n",
-           (glx_1_3_supported) ? "" : "not " );
-   printf( "%s is %ssupported.\n",
-           ext_name, (ext_version_supported) ? "" : "not " );
+   printf("GLX 1.3 is %ssupported.\n",
+          (glx_1_3_supported) ? "" : "not ");
+   printf("%s is %ssupported.\n",
+          ext_name, (ext_version_supported) ? "" : "not ");
 
-   if ( glx_1_3_supported ) {
+   if (glx_1_3_supported) {
       choose_fbconfig = (PFNGLXCHOOSEFBCONFIGPROC)
          glXGetProcAddressARB((GLubyte *) "glXChooseFBConfig");
       get_visual_from_fbconfig = (PFNGLXGETVISUALFROMFBCONFIGPROC)
@@ -382,7 +382,7 @@ init_fbconfig_functions(Display *dpy, int scrnum)
       destroy_window = (PFNGLXDESTROYWINDOWPROC)
          glXGetProcAddressARB((GLubyte *) "glXDestroyWindow");
    }
-   else if ( ext_version_supported ) {
+   else if (ext_version_supported) {
       choose_fbconfig = (PFNGLXCHOOSEFBCONFIGPROC)
          glXGetProcAddressARB((GLubyte *) "glXChooseFBConfigSGIX");
       get_visual_from_fbconfig = (PFNGLXGETVISUALFROMFBCONFIGPROC)
@@ -393,23 +393,23 @@ init_fbconfig_functions(Display *dpy, int scrnum)
       destroy_window = dummy_destroy_window;
    }
    else {
-      printf( "This demo requires either GLX 1.3 or %s be supported.\n",
-              ext_name );
+      printf("This demo requires either GLX 1.3 or %s be supported.\n",
+             ext_name);
       exit(1);
    }
 
-   if ( choose_fbconfig == NULL ) {
-      printf( "glXChooseFBConfig not found!\n" );
+   if (choose_fbconfig == NULL) {
+      printf("glXChooseFBConfig not found!\n");
       exit(1);
    }
 
-   if ( get_visual_from_fbconfig == NULL ) {
-      printf( "glXGetVisualFromFBConfig not found!\n" );
+   if (get_visual_from_fbconfig == NULL) {
+      printf("glXGetVisualFromFBConfig not found!\n");
       exit(1);
    }
 
-   if ( create_new_context == NULL ) {
-      printf( "glXCreateNewContext not found!\n" );
+   if (create_new_context == NULL) {
+      printf("glXCreateNewContext not found!\n");
       exit(1);
    }
 }
@@ -432,7 +432,7 @@ make_window(Display *dpy, const char *name,
                     GLX_DOUBLEBUFFER,  GL_TRUE,
                     GLX_DEPTH_SIZE,    1,
                     None };
-   GLXFBConfig * fbconfig;
+   GLXFBConfig *fbconfig;
    int num_configs;
    int scrnum;
    int i;
@@ -444,11 +444,11 @@ make_window(Display *dpy, const char *name,
    GLXContext ctx;
    XVisualInfo *visinfo;
 
-   scrnum = DefaultScreen( dpy );
-   root = RootWindow( dpy, scrnum );
+   scrnum = DefaultScreen(dpy);
+   root = RootWindow(dpy, scrnum);
 
    init_fbconfig_functions(dpy, scrnum);
-   fbconfig = (*choose_fbconfig)(dpy, scrnum, attrib, & num_configs);
+   fbconfig = (*choose_fbconfig)(dpy, scrnum, attrib, &num_configs);
    if (fbconfig == NULL) {
       printf("Error: couldn't get an RGB, Double-buffered visual\n");
       exit(1);
@@ -456,7 +456,7 @@ make_window(Display *dpy, const char *name,
 
    printf("\nThe following fbconfigs meet the requirements.  The first one "
           "will be used.\n\n");
-   for ( i = 0 ; i < num_configs ; i++ ) {
+   for (i = 0; i < num_configs; i++) {
       PrintFBConfigInfo(dpy, scrnum, fbconfig[i], GL_TRUE);
    }
 
@@ -465,20 +465,20 @@ make_window(Display *dpy, const char *name,
    assert(visinfo != NULL);
    attr.background_pixel = 0;
    attr.border_pixel = 0;
-   attr.colormap = XCreateColormap( dpy, root, visinfo->visual, AllocNone);
+   attr.colormap = XCreateColormap(dpy, root, visinfo->visual, AllocNone);
    attr.event_mask = StructureNotifyMask | ExposureMask | KeyPressMask;
    mask = CWBackPixel | CWBorderPixel | CWColormap | CWEventMask;
 
-   win = XCreateWindow( dpy, root, 0, 0, width, height,
-                        0, visinfo->depth, InputOutput,
-                        visinfo->visual, mask, &attr );
+   win = XCreateWindow(dpy, root, 0, 0, width, height,
+                       0, visinfo->depth, InputOutput,
+                       visinfo->visual, mask, &attr);
 
    /* set hints and properties */
    {
       XSizeHints sizehints;
       sizehints.x = x;
       sizehints.y = y;
-      sizehints.width  = width;
+      sizehints.width = width;
       sizehints.height = height;
       sizehints.flags = USSize | USPosition;
       XSetNormalHints(dpy, win, &sizehints);
@@ -589,7 +589,7 @@ main(int argc, char *argv[])
 
    for (i = 1; i < argc; i++) {
       if (strcmp(argv[i], "-display") == 0) {
-         dpyName = argv[i+1];
+         dpyName = argv[i + 1];
          i++;
       }
       else if (strcmp(argv[i], "-info") == 0) {

@@ -151,7 +151,7 @@ AddWindow(Display *dpy, const char *displayName, int xpos, int ypos,
       XSizeHints sizehints;
       sizehints.x = xpos;
       sizehints.y = ypos;
-      sizehints.width  = width;
+      sizehints.width = width;
       sizehints.height = height;
       sizehints.flags = USSize | USPosition;
       XSetNormalHints(dpy, win, &sizehints);
@@ -187,7 +187,7 @@ AddWindow(Display *dpy, const char *displayName, int xpos, int ypos,
       h->visInfo = visinfo;
       pthread_mutex_init(&h->drawMutex, NULL);
       NumWindows++;
-      return &Windows[NumWindows-1];
+      return &Windows[NumWindows - 1];
    }
 }
 
@@ -385,7 +385,7 @@ threadRunner(void *arg)
 
    win = &Windows[tia->id];
 
-   while(!terminate) {
+   while (!terminate) {
       usleep(1000);
       Redraw(win);
    }
@@ -446,7 +446,7 @@ EventLoop(void)
                terminate = 1;
                return;
             default:
-               /*no-op*/ ;
+               /*no-op*/;
             }
          }
       }
@@ -473,9 +473,9 @@ main(int argc, char *argv[])
       return -1;
 
    /* four windows and contexts sharing display lists and texture objects */
-   h0 = AddWindow(gDpy, dpyName,  10,  10, gCtx);
-   (void) AddWindow(gDpy, dpyName, 330,  10, gCtx);
-   (void) AddWindow(gDpy, dpyName,  10, 350, gCtx);
+   h0 = AddWindow(gDpy, dpyName, 10, 10, gCtx);
+   (void) AddWindow(gDpy, dpyName, 330, 10, gCtx);
+   (void) AddWindow(gDpy, dpyName, 10, 350, gCtx);
    (void) AddWindow(gDpy, dpyName, 330, 350, gCtx);
 
    if (!glXMakeCurrent(gDpy, h0->Win, gCtx)) {

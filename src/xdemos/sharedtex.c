@@ -108,7 +108,7 @@ CreateWindow(const char *name)
       XSizeHints sizehints;
       sizehints.x = xpos;
       sizehints.y = ypos;
-      sizehints.width  = WinWidth;
+      sizehints.width = WinWidth;
       sizehints.height = WinHeight;
       sizehints.flags = USSize | USPosition;
       XSetNormalHints(Dpy, Win, &sizehints);
@@ -167,7 +167,7 @@ InitContext(void)
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
    glEnable(GL_TEXTURE_2D);
 
-   printf("GL_RENDERER = %s\n", (char*) glGetString(GL_RENDERER));
+   printf("GL_RENDERER = %s\n", (char *) glGetString(GL_RENDERER));
 }
 
 
@@ -290,7 +290,7 @@ EventLoop(void)
             Redraw();
             break;
          default:
-            /*no-op*/ ;
+            /*no-op*/;
          }
       }
 
@@ -309,7 +309,7 @@ main(int argc, char *argv[])
 
    for (i = 1; i < argc; i++) {
       if (strcmp(argv[i], "-display") == 0 && i < argc) {
-         DisplayName = argv[i+1];
+         DisplayName = argv[i + 1];
          i++;
       }
    }

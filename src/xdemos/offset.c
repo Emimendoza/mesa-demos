@@ -52,12 +52,11 @@ PERFORMANCE OF THIS SOFTWARE.
 #include <stdio.h>
 #include <string.h>
 
-
 #ifndef EXIT_FAILURE
-#  define EXIT_FAILURE    1
+#define EXIT_FAILURE 1
 #endif
 #ifndef EXIT_SUCCESS
-#  define EXIT_SUCCESS    0
+#define EXIT_SUCCESS 0
 #endif
 
 #define MAXQUAD 6
@@ -76,8 +75,8 @@ Quad quads[MAXQUAD] = {
    { {0,0,1}, {1,0,1}, {1,1,1}, {0,1,1} }  /* z = 1 */
 };
 
-#define WIREFRAME      0
-#define HIDDEN_LINE    1
+#define WIREFRAME   0
+#define HIDDEN_LINE 1
 
 static void
 error(const char *prog, const char *msg);
@@ -119,10 +118,12 @@ main(int argc, char **argv)
    GLint z;
 
    dpy = XOpenDisplay(0);
-   if (!dpy) error(argv[0], "can't open display");
+   if (!dpy)
+      error(argv[0], "can't open display");
 
    vi = glXChooseVisual(dpy, DefaultScreen(dpy), attributeList);
-   if (!vi) error(argv[0], "no suitable visual");
+   if (!vi)
+      error(argv[0], "no suitable visual");
 
    cx = glXCreateContext(dpy, vi, 0, GL_TRUE);
 
@@ -153,13 +154,14 @@ main(int argc, char **argv)
    printf("GL_DEPTH_BITS = %d\n", z);
 
    printf("using 1.1 offset\n");
-   glPolygonOffset( 1.0, 0.5 );
+   glPolygonOffset(1.0, 0.5);
 
-   glShadeModel( GL_FLAT );
-   glDisable( GL_DITHER );
+   glShadeModel(GL_FLAT);
+   glDisable(GL_DITHER);
 
    /* process events until the user presses ESC */
-   while (1) process_input(dpy, win);
+   while (1)
+      process_input(dpy, win);
 
    return 0;
 }
@@ -200,7 +202,7 @@ cubes(int mx, int my, int mode)
 
    /* draw the lines as hidden polygons */
    glTranslatef(-0.5, -0.5, -0.5);
-   glScalef(1.0/dimension, 1.0/dimension, 1.0/dimension);
+   glScalef(1.0 / dimension, 1.0 / dimension, 1.0 / dimension);
    for (z = 0; z < dimension; z++) {
       for (y = 0; y < dimension; y++) {
          for (x = 0; x < dimension; x++) {
@@ -269,7 +271,7 @@ process_input(Display *dpy, Window win)
       KeySym keysym;
 
       XNextEvent(dpy, &event);
-      switch(event.type) {
+      switch (event.type) {
       case Expose:
          break;
       case ConfigureNotify: {

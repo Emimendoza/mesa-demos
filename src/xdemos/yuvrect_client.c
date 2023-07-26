@@ -14,7 +14,7 @@
 #define GL_GLEXT_PROTOTYPES
 #include <GL/glx.h>
 
-#include "../util/readtex.c"   /* I know, this is a hack. */
+#include "../util/readtex.c" /* I know, this is a hack. */
 
 #define TEXTURE_FILE DEMOS_DATA_DIR "girl2.rgb"
 
@@ -47,13 +47,13 @@ DrawObject(void)
 static void
 scr_Display(void)
 {
-   glClear( GL_COLOR_BUFFER_BIT );
+   glClear(GL_COLOR_BUFFER_BIT);
 
    glPushMatrix();
-      glRotatef(Xrot, 1.0, 0.0, 0.0);
-      glRotatef(Yrot, 0.0, 1.0, 0.0);
-      glRotatef(Zrot, 0.0, 0.0, 1.0);
-      DrawObject();
+   glRotatef(Xrot, 1.0, 0.0, 0.0);
+   glRotatef(Yrot, 0.0, 1.0, 0.0);
+   glRotatef(Zrot, 0.0, 0.0, 1.0);
+   DrawObject();
    glPopMatrix();
 
 }
@@ -62,13 +62,13 @@ scr_Display(void)
 static void
 Reshape(int width, int height)
 {
-   glViewport( 0, 0, width, height );
-   glMatrixMode( GL_PROJECTION );
+   glViewport(0, 0, width, height);
+   glMatrixMode(GL_PROJECTION);
    glLoadIdentity();
-   glFrustum( -1.0, 1.0, -1.0, 1.0, 10.0, 100.0 );
-   glMatrixMode( GL_MODELVIEW );
+   glFrustum(-1.0, 1.0, -1.0, 1.0, 10.0, 100.0);
+   glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
-   glTranslatef( 0.0, 0.0, -15.0 );
+   glTranslatef(0.0, 0.0, -15.0);
 }
 
 static int
@@ -78,7 +78,7 @@ queryClient(Display *dpy, int screen)
    char *extensions;
 
    extensions = (char *)glXQueryExtensionsString(dpy, screen);
-   if (!extensions || !strstr(extensions,"GLX_MESA_allocate_memory")) {
+   if (!extensions || !strstr(extensions, "GLX_MESA_allocate_memory")) {
       return 0;
    }
 
@@ -146,11 +146,10 @@ Init(int argc, char *argv[], Display *dpy, int screen, Window win)
    }
 
 #ifdef GLX_MESA_allocate_memory
-   glx_memory = glXAllocateMemoryMESA(dpy, screen, ImgWidth * ImgHeight * 2, 0, 0 ,0);
+   glx_memory = glXAllocateMemoryMESA(dpy, screen, ImgWidth * ImgHeight * 2, 0, 0,0);
 #endif
-   if (!glx_memory)
-   {
-      fprintf(stderr,"Failed to allocate MESA memory\n");
+   if (!glx_memory) {
+      fprintf(stderr, "Failed to allocate MESA memory\n");
       exit(-1);
    }
 
@@ -196,10 +195,10 @@ make_window(Display *dpy, const char *name, int x, int y, int width, int height,
    GLXContext ctx;
    XVisualInfo *visinfo;
 
-   scrnum = DefaultScreen( dpy );
-   root = RootWindow( dpy, scrnum );
+   scrnum = DefaultScreen(dpy);
+   root = RootWindow(dpy, scrnum);
 
-   visinfo = glXChooseVisual( dpy, scrnum, attribs );
+   visinfo = glXChooseVisual(dpy, scrnum, attribs);
    if (!visinfo) {
       printf("Error: couldn't get an RGB, Double-buffered visual\n");
       exit(1);
@@ -208,21 +207,21 @@ make_window(Display *dpy, const char *name, int x, int y, int width, int height,
    /* window attributes */
    attr.background_pixel = 0;
    attr.border_pixel = 0;
-   attr.colormap = XCreateColormap( dpy, root, visinfo->visual, AllocNone);
+   attr.colormap = XCreateColormap(dpy, root, visinfo->visual, AllocNone);
    attr.event_mask = StructureNotifyMask | ExposureMask | KeyPressMask;
    attr.override_redirect = 0;
    mask = CWBackPixel | CWBorderPixel | CWColormap | CWEventMask | CWOverrideRedirect;
 
-   win = XCreateWindow( dpy, root, 0, 0, width, height,
-                        0, visinfo->depth, InputOutput,
-                        visinfo->visual, mask, &attr );
+   win = XCreateWindow(dpy, root, 0, 0, width, height,
+                       0, visinfo->depth, InputOutput,
+                       visinfo->visual, mask, &attr);
 
    /* set hints and properties */
    {
       XSizeHints sizehints;
       sizehints.x = x;
       sizehints.y = y;
-      sizehints.width  = width;
+      sizehints.width = width;
       sizehints.height = height;
       sizehints.flags = USSize | USPosition;
       XSetNormalHints(dpy, win, &sizehints);
@@ -230,7 +229,7 @@ make_window(Display *dpy, const char *name, int x, int y, int width, int height,
                              None, (char **)NULL, 0, &sizehints);
    }
 
-   ctx = glXCreateContext( dpy, visinfo, NULL, True );
+   ctx = glXCreateContext(dpy, visinfo, NULL, True);
    if (!ctx) {
       printf("Error: glXCreateContext failed\n");
       exit(1);
@@ -287,7 +286,7 @@ main(int argc, char *argv[])
 
    for (i = 1; i < argc; i++) {
       if (strcmp(argv[i], "-display") == 0) {
-         dpyName = argv[i+1];
+         dpyName = argv[i + 1];
          i++;
       }
       else if (strcmp(argv[i], "-info") == 0) {

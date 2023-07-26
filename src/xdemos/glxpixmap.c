@@ -42,12 +42,12 @@ make_rgb_window(Display *dpy,
    Window root;
    Window win;
 
-   scrnum = DefaultScreen( dpy );
-   root = RootWindow( dpy, scrnum );
+   scrnum = DefaultScreen(dpy);
+   root = RootWindow(dpy, scrnum);
 
-   visinfo = glXChooseVisual( dpy, scrnum, (int *) sbAttrib );
+   visinfo = glXChooseVisual(dpy, scrnum, (int *) sbAttrib);
    if (!visinfo) {
-      visinfo = glXChooseVisual( dpy, scrnum, (int *) dbAttrib );
+      visinfo = glXChooseVisual(dpy, scrnum, (int *) dbAttrib);
       if (!visinfo) {
          printf("Error: couldn't get an RGB visual\n");
          exit(1);
@@ -58,19 +58,19 @@ make_rgb_window(Display *dpy,
    attr.background_pixel = 0;
    attr.border_pixel = 0;
    /* TODO: share root colormap if possible */
-   attr.colormap = XCreateColormap( dpy, root, visinfo->visual, AllocNone);
+   attr.colormap = XCreateColormap(dpy, root, visinfo->visual, AllocNone);
    attr.event_mask = StructureNotifyMask | ExposureMask;
    mask = CWBackPixel | CWBorderPixel | CWColormap | CWEventMask;
 
-   win = XCreateWindow( dpy, root, 0, 0, width, height,
-                        0, visinfo->depth, InputOutput,
-                        visinfo->visual, mask, &attr );
+   win = XCreateWindow(dpy, root, 0, 0, width, height,
+                       0, visinfo->depth, InputOutput,
+                       visinfo->visual, mask, &attr);
 
    /* make an X GC so we can do XCopyArea later */
-   gc = XCreateGC( dpy, win, 0, NULL );
+   gc = XCreateGC(dpy, win, 0, NULL);
 
    /* need indirect context */
-   ctx = glXCreateContext( dpy, visinfo, NULL, False );
+   ctx = glXCreateContext(dpy, visinfo, NULL, False);
    if (!ctx) {
       printf("Error: glXCreateContext failed\n");
       exit(-1);
@@ -91,13 +91,13 @@ make_pixmap(Display *dpy, Window win,
    GLXPixmap glxpm;
    XWindowAttributes attr;
 
-   pm = XCreatePixmap( dpy, win, width, height, visinfo->depth );
+   pm = XCreatePixmap(dpy, win, width, height, visinfo->depth);
    if (!pm) {
       printf("Error: XCreatePixmap failed\n");
       exit(-1);
    }
 
-   XGetWindowAttributes( dpy, win, &attr );
+   XGetWindowAttributes(dpy, win, &attr);
 
    /*
     * IMPORTANT:
@@ -112,14 +112,14 @@ make_pixmap(Display *dpy, Window win,
       PFNGLXCREATEGLXPIXMAPMESAPROC glXCreateGLXPixmapMESA_func =
          (PFNGLXCREATEGLXPIXMAPMESAPROC)
          glXGetProcAddressARB((GLubyte *) "glXCreateGLXPixmapMESA");
-      glxpm = glXCreateGLXPixmapMESA_func( dpy, visinfo, pm, attr.colormap );
+      glxpm = glXCreateGLXPixmapMESA_func(dpy, visinfo, pm, attr.colormap);
    }
    else {
-      glxpm = glXCreateGLXPixmap( dpy, visinfo, pm );
+      glxpm = glXCreateGLXPixmap(dpy, visinfo, pm);
    }
 #else
    /* This will work with Mesa too if the visual is TrueColor or DirectColor */
-   glxpm = glXCreateGLXPixmap( dpy, visinfo, pm );
+   glxpm = glXCreateGLXPixmap(dpy, visinfo, pm);
 #endif
 
    if (!glxpm) {
@@ -139,15 +139,15 @@ event_loop(Display *dpy, GLXPixmap pm)
    XEvent event;
 
    while (1) {
-      XNextEvent( dpy, &event );
+      XNextEvent(dpy, &event);
 
       switch (event.type) {
       case Expose:
          printf("Redraw\n");
          /* copy the image from GLXPixmap to window */
-         XCopyArea( dpy, pm, event.xany.window,  /* src, dest */
-                     gc, 0, 0, 300, 300,          /* gc, src pos, size */
-                     0, 0 );                      /* dest pos */
+         XCopyArea(dpy, pm, event.xany.window, /* src, dest */
+                   gc, 0, 0, 300, 300,         /* gc, src pos, size */
+                   0, 0);                      /* dest pos */
          break;
       case ConfigureNotify:
          /* nothing */
@@ -168,25 +168,25 @@ main(int argc, char *argv[])
 
    dpy = XOpenDisplay(NULL);
 
-   win = make_rgb_window( dpy, 300, 300 );
-   glxpm = make_pixmap( dpy, win, 300, 300, &pm );
+   win = make_rgb_window(dpy, 300, 300);
+   glxpm = make_pixmap(dpy, win, 300, 300, &pm);
 
-   glXMakeCurrent( dpy, glxpm, ctx );
+   glXMakeCurrent(dpy, glxpm, ctx);
    printf("GL_RENDERER = %s\n", (char *) glGetString(GL_RENDERER));
 
    /* Render an image into the pixmap */
-   glShadeModel( GL_FLAT );
-   glClearColor( 0.5, 0.5, 0.5, 1.0 );
-   glClear( GL_COLOR_BUFFER_BIT );
-   glViewport( 0, 0, 300, 300 );
-   glOrtho( -1.0, 1.0, -1.0, 1.0, -1.0, 1.0 );
-   glColor3f( 0.0, 1.0, 1.0 );
-   glRectf( -0.75, -0.75, 0.75, 0.75 );
+   glShadeModel(GL_FLAT);
+   glClearColor(0.5, 0.5, 0.5, 1.0);
+   glClear(GL_COLOR_BUFFER_BIT);
+   glViewport(0, 0, 300, 300);
+   glOrtho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0);
+   glColor3f(0.0, 1.0, 1.0);
+   glRectf(-0.75, -0.75, 0.75, 0.75);
    glFlush();
    glXWaitGL();
 
-   XMapWindow( dpy, win );
+   XMapWindow(dpy, win);
 
-   event_loop( dpy, pm );
+   event_loop(dpy, pm);
    return 0;
 }

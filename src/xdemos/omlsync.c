@@ -201,7 +201,7 @@ main(int argc, char *argv[])
 
    sizehints.x = 0;
    sizehints.y = 0;
-   sizehints.width  = width;
+   sizehints.width = width;
    sizehints.height = height;
    sizehints.flags = USSize | USPosition;
 

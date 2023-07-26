@@ -27,7 +27,7 @@
 #include <GL/glx.h>
 
 
-static int Width=500, Height=500;
+static int Width = 500, Height = 500;
 
 static float Xangle = 0.0, Yangle = 0.0;
 static int Sides = 5;
@@ -41,7 +41,7 @@ current_time(void)
 {
    struct timeval tv;
 #ifdef __VMS
-   (void) gettimeofday(&tv, NULL );
+   (void) gettimeofday(&tv, NULL);
 #else
    struct timezone tz;
    (void) gettimeofday(&tv, &tz);
@@ -72,16 +72,16 @@ display(Display *dpy, Window win)
    glColor3f(1.0, 1.0, 1.0);
    glBegin(GL_LINE_LOOP);
    glVertex3f(-1.0, -1.0, -1.0);
-   glVertex3f( 1.0, -1.0, -1.0);
-   glVertex3f( 1.0,  1.0, -1.0);
-   glVertex3f(-1.0,  1.0, -1.0);
+   glVertex3f(1.0, -1.0, -1.0);
+   glVertex3f(1.0, 1.0, -1.0);
+   glVertex3f(-1.0, 1.0, -1.0);
    glEnd();
 
    glBegin(GL_LINE_LOOP);
    glVertex3f(-1.0, -1.0, 1.0);
-   glVertex3f( 1.0, -1.0, 1.0);
-   glVertex3f( 1.0,  1.0, 1.0);
-   glVertex3f(-1.0,  1.0, 1.0);
+   glVertex3f(1.0, -1.0, 1.0);
+   glVertex3f(1.0, 1.0, 1.0);
+   glVertex3f(-1.0, 1.0, 1.0);
    glEnd();
 
    glBegin(GL_LINES);
@@ -100,49 +100,49 @@ display(Display *dpy, Window win)
    glColor3f(1, 0, 0);
    glBegin(GL_POLYGON);
    glVertex3f(1, -1, -1);
-   glVertex3f(1,  1, -1);
-   glVertex3f(1,  1,  1);
-   glVertex3f(1, -1,  1);
+   glVertex3f(1, 1, -1);
+   glVertex3f(1, 1, 1);
+   glVertex3f(1, -1, 1);
    glEnd();
 
    glColor3f(0, 1, 1);
    glBegin(GL_POLYGON);
    glVertex3f(-1, -1, -1);
-   glVertex3f(-1,  1, -1);
-   glVertex3f(-1,  1,  1);
-   glVertex3f(-1, -1,  1);
+   glVertex3f(-1, 1, -1);
+   glVertex3f(-1, 1, 1);
+   glVertex3f(-1, -1, 1);
    glEnd();
 
    glColor3f(0, 1, 0);
    glBegin(GL_POLYGON);
    glVertex3f(-1, 1, -1);
-   glVertex3f( 1, 1, -1);
-   glVertex3f( 1, 1,  1);
-   glVertex3f(-1, 1,  1);
+   glVertex3f(1, 1, -1);
+   glVertex3f(1, 1, 1);
+   glVertex3f(-1, 1, 1);
    glEnd();
 
    glColor3f(1, 0, 1);
    glBegin(GL_POLYGON);
    glVertex3f(-1, -1, -1);
-   glVertex3f( 1, -1, -1);
-   glVertex3f( 1, -1,  1);
-   glVertex3f(-1, -1,  1);
+   glVertex3f(1, -1, -1);
+   glVertex3f(1, -1, 1);
+   glVertex3f(-1, -1, 1);
    glEnd();
 
    glColor3f(0, 0, 1);
    glBegin(GL_POLYGON);
    glVertex3f(-1, -1, 1);
-   glVertex3f( 1, -1, 1);
-   glVertex3f( 1,  1, 1);
-   glVertex3f(-1,  1, 1);
+   glVertex3f(1, -1, 1);
+   glVertex3f(1, 1, 1);
+   glVertex3f(-1, 1, 1);
    glEnd();
 
    glColor3f(1, 1, 0);
    glBegin(GL_POLYGON);
    glVertex3f(-1, -1, -1);
-   glVertex3f( 1, -1, -1);
-   glVertex3f( 1,  1, -1);
-   glVertex3f(-1,  1, -1);
+   glVertex3f(1, -1, -1);
+   glVertex3f(1, 1, -1);
+   glVertex3f(-1, 1, -1);
    glEnd();
    glPopMatrix();
 
@@ -183,7 +183,7 @@ make_shape_mask(Display *dpy, Window win, int width, int height, int sides)
       float radius = width / 2;
       int i;
       XPoint points[100];
-      for (i=0;i<sides;i++) {
+      for (i = 0; i < sides; i++) {
          int x = cx + radius * sin(angle);
          int y = cy - radius * cos(angle);
          points[i].x = x;
@@ -272,7 +272,7 @@ event_loop(Display *dpy, Window win)
          if (t0 < 0.0)
             t0 = t;
          dt = t - t0;
-         Xangle += 90.0 * dt;  /* 90 degrees per second */
+         Xangle += 90.0 * dt; /* 90 degrees per second */
          Yangle += 70.0 * dt;
          t0 = t;
          display(dpy, win);
@@ -290,7 +290,7 @@ alloc_colormap(Display *dpy, Window parent, Visual *vis)
    Screen *scr = DefaultScreenOfDisplay(dpy);
    int scrnum = DefaultScreen(dpy);
 
-   if (MaxCmapsOfScreen(scr)==1 && vis==DefaultVisual(dpy, scrnum)) {
+   if (MaxCmapsOfScreen(scr) == 1 && vis == DefaultVisual(dpy, scrnum)) {
       /* The window and root are of the same visual type so */
       /* share the root colormap. */
       return DefaultColormap(dpy, scrnum);
@@ -329,7 +329,7 @@ main(int argc, char *argv[])
    }
 
    /* check that we can use the shape extension */
-   if (!XQueryExtension(dpy, "SHAPE", &ignore, &ignore, &ignore )) {
+   if (!XQueryExtension(dpy, "SHAPE", &ignore, &ignore, &ignore)) {
       fprintf(stderr, "Display doesn't support shape extension\n");
       return 1;
    }

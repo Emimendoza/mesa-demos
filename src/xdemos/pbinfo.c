@@ -69,22 +69,22 @@ main(int argc, char *argv[])
    Bool horizFormat = True;
    int i;
 
-   for (i=1; i<argc; i++) {
-      if (strcmp(argv[i],"-display")==0) {
-         if (i+1<argc) {
-            dpyName = argv[i+1];
+   for (i = 1; i < argc; i++) {
+      if (strcmp(argv[i], "-display") == 0) {
+         if (i + 1 < argc) {
+            dpyName = argv[i + 1];
             i++;
          }
       }
-      else if (strcmp(argv[i],"-t")==0) {
+      else if (strcmp(argv[i], "-t") == 0) {
          /* tabular format */
          horizFormat = True;
       }
-      else if (strcmp(argv[i],"-v")==0) {
+      else if (strcmp(argv[i], "-v") == 0) {
          /* verbose format */
          horizFormat = False;
       }
-      else if (strcmp(argv[i],"-help")==0) {
+      else if (strcmp(argv[i], "-help") == 0) {
          PrintUsage();
          return 0;
       }

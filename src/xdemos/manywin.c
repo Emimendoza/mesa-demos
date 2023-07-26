@@ -124,7 +124,7 @@ AddHead(const char *displayName, const char *name)
       XSizeHints sizehints;
       sizehints.x = xpos;
       sizehints.y = ypos;
-      sizehints.width  = width;
+      sizehints.width = width;
       sizehints.height = height;
       sizehints.flags = USSize | USPosition;
       XSetNormalHints(dpy, win, &sizehints);
@@ -177,7 +177,7 @@ AddHead(const char *displayName, const char *name)
    /* save the info for this head */
    {
       struct head *h = &Heads[NumHeads];
-      const char * tmp;
+      const char *tmp;
 
       if (strlen(name) + 1 > sizeof(h->DisplayName)) {
          Error(displayName, "name string overflow");
@@ -212,7 +212,7 @@ AddHead(const char *displayName, const char *name)
       strcpy(h->Renderer, tmp);
 
       NumHeads++;
-      return &Heads[NumHeads-1];
+      return &Heads[NumHeads - 1];
    }
 
 }
@@ -391,7 +391,7 @@ main(int argc, char *argv[])
             SwapSeparate = GL_FALSE;
          }
          else if (strcmp(argv[i], "-display") == 0 && i < argc) {
-            dpyName = argv[i+1];
+            dpyName = argv[i + 1];
             i++;
          }
          else {

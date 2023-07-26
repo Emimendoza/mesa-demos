@@ -63,7 +63,7 @@ current_time(void)
 {
    struct timeval tv;
 #ifdef __VMS
-   (void) gettimeofday(&tv, NULL );
+   (void) gettimeofday(&tv, NULL);
 #else
    struct timezone tz;
    (void) gettimeofday(&tv, &tz);
@@ -340,7 +340,7 @@ make_window(Display *dpy, const char *name,
                     GLX_DOUBLEBUFFER,  GL_FALSE,
                     GLX_DEPTH_SIZE,    1,
                     None };
-   GLXFBConfig * fbconfig;
+   GLXFBConfig *fbconfig;
    int num_configs;
    int scrnum;
    XSetWindowAttributes attr;
@@ -351,10 +351,10 @@ make_window(Display *dpy, const char *name,
    gears->width = width;
    gears->height = height;
 
-   scrnum = DefaultScreen( dpy );
-   root = RootWindow( dpy, scrnum );
+   scrnum = DefaultScreen(dpy);
+   root = RootWindow(dpy, scrnum);
 
-   fbconfig = glXChooseFBConfig(dpy, scrnum, attrib, & num_configs);
+   fbconfig = glXChooseFBConfig(dpy, scrnum, attrib, &num_configs);
    if (fbconfig == NULL) {
       printf("Error: couldn't get an RGB, Double-buffered visual\n");
       exit(1);
@@ -365,20 +365,20 @@ make_window(Display *dpy, const char *name,
    assert(visinfo != NULL);
    attr.background_pixel = 0;
    attr.border_pixel = 0;
-   attr.colormap = XCreateColormap( dpy, root, visinfo->visual, AllocNone);
+   attr.colormap = XCreateColormap(dpy, root, visinfo->visual, AllocNone);
    attr.event_mask = StructureNotifyMask | ExposureMask | KeyPressMask;
    mask = CWBackPixel | CWBorderPixel | CWColormap | CWEventMask;
 
-   gears->win = XCreateWindow( dpy, root, 0, 0, width, height,
-                               0, visinfo->depth, InputOutput,
-                               visinfo->visual, mask, &attr );
+   gears->win = XCreateWindow(dpy, root, 0, 0, width, height,
+                              0, visinfo->depth, InputOutput,
+                              visinfo->visual, mask, &attr);
 
    /* set hints and properties */
    {
       XSizeHints sizehints;
       sizehints.x = x;
       sizehints.y = y;
-      sizehints.width  = width;
+      sizehints.width = width;
       sizehints.height = height;
       sizehints.flags = USSize | USPosition;
       XSetNormalHints(dpy, gears->win, &sizehints);
@@ -504,7 +504,7 @@ main(int argc, char *argv[])
 
    for (i = 1; i < argc; i++) {
       if (strcmp(argv[i], "-display") == 0) {
-         dpyName = argv[i+1];
+         dpyName = argv[i + 1];
          i++;
       }
       else if (strcmp(argv[i], "-info") == 0) {
