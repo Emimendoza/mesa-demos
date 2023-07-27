@@ -97,7 +97,8 @@ static GLfloat angle = 0.0;
 
 static GLboolean fullscreen = GL_FALSE; /* Create a single fullscreen window */
 static GLboolean stereo = GL_FALSE;     /* Enable stereo.  */
-static GLint samples = 0;               /* Choose visual with at least N samples. */
+static GLint samples = 0;               /* Choose visual with at least N
+                                           samples. */
 static GLint swapinterval = 1;          /* Swap interval */
 static GLboolean use_srgb = GL_FALSE;
 static GLboolean animate = GL_TRUE;     /* Animation */

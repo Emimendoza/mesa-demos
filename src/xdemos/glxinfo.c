@@ -1014,7 +1014,9 @@ print_visual_attribs_verbose(const struct visual_attribs *attribs,
       printf("    Opaque.\n");
    }
    else if (attribs->transparentType == GLX_TRANSPARENT_RGB) {
-      printf("    Transparent RGB: Red=%d Green=%d Blue=%d Alpha=%d\n",attribs->transparentRedValue,attribs->transparentGreenValue,attribs->transparentBlueValue,attribs->transparentAlphaValue);
+      printf("    Transparent RGB: Red=%d Green=%d Blue=%d Alpha=%d\n",
+             attribs->transparentRedValue, attribs->transparentGreenValue,
+             attribs->transparentBlueValue, attribs->transparentAlphaValue);
    }
    else if (attribs->transparentType == GLX_TRANSPARENT_INDEX) {
       printf("    Transparent index=%d\n",attribs->transparentIndexValue);

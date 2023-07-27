@@ -238,10 +238,13 @@ main(int argc, char *argv[])
       fprintf(stderr, "failed to make context current: %d\n", ret);
    }
 
-   video_sync_get = (PFNGLXGETVIDEOSYNCSGIPROC) glXGetProcAddress((unsigned char *)"glXGetVideoSyncSGI");
-   video_sync = (PFNGLXWAITVIDEOSYNCSGIPROC) glXGetProcAddress((unsigned char *)"glXWaitVideoSyncSGI");
+   video_sync_get = (PFNGLXGETVIDEOSYNCSGIPROC)
+      glXGetProcAddress((unsigned char *)"glXGetVideoSyncSGI");
+   video_sync = (PFNGLXWAITVIDEOSYNCSGIPROC)
+      glXGetProcAddress((unsigned char *)"glXWaitVideoSyncSGI");
 
-   swap_interval = (PFNGLXSWAPINTERVALSGIPROC) glXGetProcAddress((unsigned char *)"glXSwapIntervalSGI");
+   swap_interval = (PFNGLXSWAPINTERVALSGIPROC)
+      glXGetProcAddress((unsigned char *)"glXSwapIntervalSGI");
 
    if (!video_sync_get || !video_sync || !swap_interval) {
       fprintf(stderr, "failed to get sync functions\n");
