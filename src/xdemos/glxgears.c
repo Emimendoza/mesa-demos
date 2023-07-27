@@ -777,8 +777,10 @@ usage(void)
    printf("  -display <displayname>  set the display to run on\n");
    printf("  -srgb                   run in sRGB mode\n");
    printf("  -stereo                 run in stereo mode\n");
-   printf("  -samples N              run in multisample mode with at least N samples\n");
-   printf("  -swapinterval N         set swap interval to N frames (default 1)\n");
+   printf("  -samples N              run in multisample mode with at least"
+          "N samples\n");
+   printf("  -swapinterval N         set swap interval to N frames"
+          "(default 1)\n");
    printf("  -fullscreen             run in fullscreen mode\n");
    printf("  -info                   display OpenGL renderer info\n");
    printf("  -geometry WxH+X+Y       window geometry\n");
