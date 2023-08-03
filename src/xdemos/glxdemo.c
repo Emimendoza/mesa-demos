@@ -115,6 +115,11 @@ int main( int argc, char *argv[] )
 
    dpy = XOpenDisplay(NULL);
 
+   if (!dpy) {
+      fprintf(stderr, "Unable to open X display\n");
+      return 1;
+   }
+
    win = make_rgb_db_window( dpy, 300, 300 );
 
    glShadeModel( GL_FLAT );
