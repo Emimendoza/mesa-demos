@@ -184,18 +184,18 @@ static void Init( int argc, char *argv[] )
 
    {
       static const char *modulateYUV =
-	 "!!ARBfp1.0\n"
-	 "TEMP R0;\n"
-	 "TEX R0, fragment.texcoord[0], texture[0], 2D; \n"
+         "!!ARBfp1.0\n"
+         "TEMP R0;\n"
+         "TEX R0, fragment.texcoord[0], texture[0], 2D; \n"
 
-  	 "ADD R0, R0, {-0.0625, -0.5, -0.5, 0.0}; \n"
-   	 "DP3 result.color.x, R0, {1.164,  1.596,  0.0}; \n"   
-  	 "DP3 result.color.y, R0, {1.164, -0.813, -0.391}; \n" 
-  	 "DP3 result.color.z, R0, {1.164,  0.0,    2.018}; \n" 
-  	 "MOV result.color.w, R0.w; \n"  
+         "ADD R0, R0, {-0.0625, -0.5, -0.5, 0.0}; \n"
+         "DP3 result.color.x, R0, {1.164,  1.596,  0.0}; \n"
+         "DP3 result.color.y, R0, {1.164, -0.813, -0.391}; \n"
+         "DP3 result.color.z, R0, {1.164,  0.0,    2.018}; \n"
+         "MOV result.color.w, R0.w; \n"
 
-	 "END"
-	 ;
+         "END"
+         ;
 
       GLuint modulateProg;
 
