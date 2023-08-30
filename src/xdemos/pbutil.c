@@ -187,7 +187,7 @@ GetFBConfigAttrib(Display *dpy, int screen,
       return value;
    }
 #endif
-   
+
    return value;
 }
 

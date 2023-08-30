@@ -186,7 +186,7 @@ render_image(void)
    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
    glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-    
+
    glEnable(GL_DEPTH_TEST);
    glEnable(GL_LIGHT0);
 
@@ -216,21 +216,21 @@ render_image(void)
    glEnable(GL_LIGHTING);
 
    glPushMatrix();
-   glTranslatef(-1.5, 0.5, 0.0); 
+   glTranslatef(-1.5, 0.5, 0.0);
    glRotatef(90.0, 1.0, 0.0, 0.0);
    glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, red_mat );
    Torus(0.275, 0.85, 20, 20);
    glPopMatrix();
 
    glPushMatrix();
-   glTranslatef(-1.5, -0.5, 0.0); 
+   glTranslatef(-1.5, -0.5, 0.0);
    glRotatef(270.0, 1.0, 0.0, 0.0);
    glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, green_mat );
    Cone(1.0, 2.0, 16, 1);
    glPopMatrix();
 
    glPushMatrix();
-   glTranslatef(0.95, 0.0, -0.8); 
+   glTranslatef(0.95, 0.0, -0.8);
    glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, blue_mat );
    glLineWidth(2.0);
    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);

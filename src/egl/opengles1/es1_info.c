@@ -245,7 +245,7 @@ usage(void)
    printf("Usage:\n");
    printf("  -display <displayname>  set the display to run on\n");
 }
- 
+
 
 int
 main(int argc, char *argv[])

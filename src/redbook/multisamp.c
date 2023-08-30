@@ -23,7 +23,7 @@
  * LIABILITY, ARISING OUT OF OR IN CONNECTION WITH THE POSSESSION, USE
  * OR PERFORMANCE OF THIS SOFTWARE.
  *
- * US Government Users Restricted Rights 
+ * US Government Users Restricted Rights
  * Use, duplication, or disclosure by the Government is subject to
  * restrictions set forth in FAR 52.227.19(c)(2) or subparagraph
  * (c)(1)(ii) of the Rights in Technical Data and Computer Software
@@ -42,10 +42,10 @@
 
 /*
  *  multisamp.c
- *  This program draws shows how to use multisampling to 
+ *  This program draws shows how to use multisampling to
  *  draw anti-aliased geometric primitives.  The same
  *  display list, a pinwheel of triangles and lines of
- *  varying widths, is rendered twice.  Multisampling is 
+ *  varying widths, is rendered twice.  Multisampling is
  *  enabled when the left side is drawn.  Multisampling is
  *  disabled when the right side is drawn.
  *
@@ -60,10 +60,10 @@
 
 static int bgtoggle = 1;
 
-/*  
+/*
  *  Print out state values related to multisampling.
  *  Create display list with "pinwheel" of lines and
- *  triangles. 
+ *  triangles.
  */
 static void init(void)
 {
@@ -113,7 +113,7 @@ static void init(void)
    glEndList ();
 }
 
-/*  Draw two sets of primitives, so that you can 
+/*  Draw two sets of primitives, so that you can
  *  compare the user of multisampling against its absence.
  *
  *  This code enables antialiasing and draws one display list
@@ -123,7 +123,7 @@ static void display(void)
 {
    glClear(GL_COLOR_BUFFER_BIT);
 
-   if (bgtoggle) 
+   if (bgtoggle)
       glCallList (2);
 
    glEnable (GL_MULTISAMPLE_ARB);
@@ -145,11 +145,11 @@ static void reshape(int w, int h)
    glViewport(0, 0, w, h);
    glMatrixMode(GL_PROJECTION);
    glLoadIdentity();
-   if (w <= (2 * h)) 
-      gluOrtho2D (-2.0, 2.0, 
+   if (w <= (2 * h))
+      gluOrtho2D (-2.0, 2.0,
          -2.0*(GLfloat)h/(GLfloat)w, 2.0*(GLfloat)h/(GLfloat)w);
-   else 
-      gluOrtho2D (-2.0*(GLfloat)w/(GLfloat)h, 
+   else
+      gluOrtho2D (-2.0*(GLfloat)w/(GLfloat)h,
          2.0*(GLfloat)w/(GLfloat)h, -2.0, 2.0);
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
@@ -171,7 +171,7 @@ static void keyboard(unsigned char key, int x, int y)
 }
 
 /*  Main Loop
- *  Open window with initial window size, title bar, 
+ *  Open window with initial window size, title bar,
  *  RGBA display mode, and handle input events.
  */
 int main(int argc, char** argv)

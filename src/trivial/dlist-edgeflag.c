@@ -48,7 +48,7 @@ static void Init(void)
    glPolygonMode(GL_BACK, GL_POINT);
 
    list = glGenLists(1);
-   glNewList(list, GL_COMPILE); 
+   glNewList(list, GL_COMPILE);
    glBegin(GL_TRIANGLES);
    glEdgeFlag(1);
 /*    glColor3f(0,0,.7);  */
@@ -92,14 +92,14 @@ static void Key(unsigned char key, int x, int y)
 
 static void Draw(void)
 {
-   glClear(GL_COLOR_BUFFER_BIT); 
+   glClear(GL_COLOR_BUFFER_BIT);
 
    glPushMatrix();
-   glColor3f(0,.9,0); 
+   glColor3f(0,.9,0);
    glCallList(list);
 
    glRotatef(45,0,0,1);
-   glColor3f(1,0,1); 
+   glColor3f(1,0,1);
    glCallList(list);
    glPopMatrix();
 

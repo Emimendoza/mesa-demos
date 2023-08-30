@@ -202,7 +202,7 @@ MakeTexture(const struct pixel_format *format, GLenum intFormat, GLboolean swap)
       printf("IntFormat: 0x%x  R %d  G %d  B %d  A %d  L %d  I %d\n",
              intFormat, r, g, b, a, l, i);
       glGetError();
-   }                              
+   }
 
    if (glGetError()) {
       printf("GL Error for %s\n", format->name);

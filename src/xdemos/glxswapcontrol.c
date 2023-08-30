@@ -1,16 +1,16 @@
 /*
  * Copyright (C) 1999-2001  Brian Paul   All Rights Reserved.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
  * to deal in the Software without restriction, including without limitation
  * the rights to use, copy, modify, merge, publish, distribute, sublicense,
  * and/or sell copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included
  * in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
  * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
@@ -121,7 +121,7 @@ static GLfloat aspectX = 1.0f, aspectY = 1.0f;
  *
  *  Draw a gear wheel.  You'll probably want to call this function when
  *  building a display list since we do a lot of trig here.
- * 
+ *
  *  Input:  inner_radius - radius of hole at center
  *          outer_radius - radius at center of teeth
  *          width - width of gear
@@ -273,7 +273,7 @@ draw(void)
 	 { 0.0, 0.0, 0.0 },
 	 { 0.0, 0.0, 0.0 },
       };
-      
+
       if ( flip ) {
 	 glDepthRange(0, 0.5);
 	 glDepthFunc(GL_LEQUAL);
@@ -586,7 +586,7 @@ event_loop(Display *dpy, Window win)
 
       if ( get_frame_usage != NULL ) {
 	 GLfloat   temp;
-	 
+
 	 (*get_frame_usage)( dpy, win, & temp );
 	 frame_usage += temp;
       }
@@ -663,18 +663,18 @@ make_extension_table( const char * string )
    unsigned  base;
    unsigned  idx;
    unsigned  i;
-      
+
    /* Count the number of spaces in the string.  That gives a base-line
     * figure for the number of extension in the string.
     */
-   
+
    num_strings = 1;
    for ( i = 0 ; string[i] != NUL ; i++ ) {
       if ( string[i] == ' ' ) {
 	 num_strings++;
       }
    }
-   
+
    string_tab = (char **) malloc( sizeof( char * ) * num_strings );
    if ( string_tab == NULL ) {
       return;
@@ -687,7 +687,7 @@ make_extension_table( const char * string )
       /* Determine the length of the next extension string.
        */
 
-      for ( i = 0 
+      for ( i = 0
 	    ; (string[ base + i ] != NUL) && (string[ base + i ] != ' ')
 	    ; i++ ) {
 	 /* empty */ ;
@@ -723,7 +723,7 @@ make_extension_table( const char * string )
        */
 
       for ( base += i
-	    ; (string[ base ] == ' ') && (string[ base ] != NUL) 
+	    ; (string[ base ] == ' ') && (string[ base ] != NUL)
 	    ; base++ ) {
 	 /* empty */ ;
       }
@@ -733,11 +733,11 @@ make_extension_table( const char * string )
    num_extensions = idx;
 }
 
-    
+
 /**
  * Determine of an extension is supported.  The extension string table
  * must have already be initialized by calling \c make_extension_table.
- * 
+ *
  * \praram ext  Extension to be tested.
  * \return GL_TRUE of the extension is supported, GL_FALSE otherwise.
  * \sa make_extension_table
@@ -746,13 +746,13 @@ static GLboolean
 is_extension_supported( const char * ext )
 {
    unsigned   i;
-   
+
    for ( i = 0 ; i < num_extensions ; i++ ) {
       if ( strcmp( ext, extension_table[i] ) == 0 ) {
 	 return GL_TRUE;
       }
    }
-   
+
    return GL_FALSE;
 }
 
@@ -842,7 +842,7 @@ main(int argc, char *argv[])
    if ( has_MESA_swap_frame_usage ) {
       get_frame_usage = (PFNGLXGETFRAMEUSAGEMESAPROC)  glXGetProcAddressARB( (const GLubyte *) "glXGetFrameUsageMESA" );
    }
-      
+
 
    if (printInfo) {
       printf("GL_RENDERER   = %s\n", (char *) glGetString(GL_RENDERER));

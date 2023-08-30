@@ -52,7 +52,7 @@ static void
 Redisplay(void)
 {
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-   
+
    /* set interactive uniform parameters */
    glUniform1fv(uZoom, 1, &zoom);
    glUniform1fv(uXcenter, 1, &xCenter);

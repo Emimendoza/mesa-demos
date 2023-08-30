@@ -206,7 +206,7 @@ main(int argc, char *argv[])
    glBindTexture(GL_TEXTURE_2D, 0);
    glGetIntegerv(GL_TEXTURE_BINDING_2D, &tb);
    assert(tb == 0);
-   
+
 
    for (i = 0; i < NumContexts; i++) {
       DestroyContext(i);

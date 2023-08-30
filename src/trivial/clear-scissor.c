@@ -49,19 +49,19 @@ static void Draw(void)
 
    glClearColor(1, 0, 0, 0);
    glScissor(0, 0, Width / 2, Height / 2);
-   glClear(GL_COLOR_BUFFER_BIT); 
+   glClear(GL_COLOR_BUFFER_BIT);
 
    glClearColor(0, 1, 0, 0);
    glScissor(Width / 2, 0, Width - Width / 2, Height / 2);
-   glClear(GL_COLOR_BUFFER_BIT); 
+   glClear(GL_COLOR_BUFFER_BIT);
 
    glClearColor(0, 0, 1, 0);
    glScissor(0, Height / 2, Width / 2, Height - Height / 2);
-   glClear(GL_COLOR_BUFFER_BIT); 
+   glClear(GL_COLOR_BUFFER_BIT);
 
    glClearColor(1, 1, 1, 0);
    glScissor(Width / 2, Height / 2, Width - Width / 2, Height - Height / 2);
-   glClear(GL_COLOR_BUFFER_BIT); 
+   glClear(GL_COLOR_BUFFER_BIT);
 
    glFlush();
 

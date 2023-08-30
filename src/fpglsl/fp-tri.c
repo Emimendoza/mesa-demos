@@ -207,12 +207,12 @@ static void
 ResetTextureLevel( int i )
 {
    GLubyte tex2d[SIZE*SIZE][4];
-      
+
    {
       GLint Width = TexWidth / (1 << i);
       GLint Height = TexHeight / (1 << i);
       GLint s, t;
-         
+
       for (s = 0; s < Width; s++) {
          for (t = 0; t < Height; t++) {
             tex2d[t*Width+s][0] = ((s / 16) % 2) ? 0 : 255;
@@ -221,9 +221,9 @@ ResetTextureLevel( int i )
             tex2d[t*Width+s][3] = 255;
          }
       }
-         
+
       glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-         
+
       glTexImage2D(GL_TEXTURE_2D, i, GL_RGB, Width, Height, 0,
                    GL_RGBA, GL_UNSIGNED_BYTE, tex2d);
    }
@@ -234,7 +234,7 @@ static void
 ResetTexture( void )
 {
    int i;
-      
+
    for (i = 0; i <= LEVELS; i++)
    {
       ResetTextureLevel(i);

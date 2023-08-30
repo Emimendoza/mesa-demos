@@ -25,13 +25,13 @@
 /**
  * \file api_speed.c
  * Simple test to measure the overhead of making GL calls.
- * 
+ *
  * The main purpose of this test is to measure the difference in calling
  * overhead of different dispatch methods.  Since it uses asm/timex.h to
  * access the Pentium's cycle counters, it will probably only compile on
  * Linux (though most architectures have a get_cycles function in timex.h).
  * That is why it isn't in the default Makefile.
- * 
+ *
  * \author Ian Romanick <idr@us.ibm.com>
  */
 

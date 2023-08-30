@@ -23,7 +23,7 @@
  * LIABILITY, ARISING OUT OF OR IN CONNECTION WITH THE POSSESSION, USE
  * OR PERFORMANCE OF THIS SOFTWARE.
  *
- * US Government Users Restricted Rights 
+ * US Government Users Restricted Rights
  * Use, duplication, or disclosure by the Government is subject to
  * restrictions set forth in FAR 52.227.19(c)(2) or subparagraph
  * (c)(1)(ii) of the Rights in Technical Data and Computer Software
@@ -54,7 +54,7 @@ static GLubyte texels1[16][16][4];
 static void makeCheckImages(void)
 {
    int i, j;
-    
+
    for (i = 0; i < 32; i++) {
       for (j = 0; j < 32; j++) {
          texels0[i][j][0] = (GLubyte) (255 * i / 31);
@@ -75,7 +75,7 @@ static void makeCheckImages(void)
 }
 
 static void init(void)
-{    
+{
    GLuint texNames[2];
 
    glClearColor (0.0, 0.0, 0.0, 0.0);
@@ -87,17 +87,17 @@ static void init(void)
 
    glGenTextures(2, texNames);
    glBindTexture(GL_TEXTURE_2D, texNames[0]);
-   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 32, 32, 0, GL_RGBA, 
+   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 32, 32, 0, GL_RGBA,
 		GL_UNSIGNED_BYTE, texels0);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, 
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
                    GL_NEAREST);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, 
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
                    GL_NEAREST);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
    glBindTexture(GL_TEXTURE_2D, texNames[1]);
-   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 16, 16, 0, GL_RGBA, 
+   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 16, 16, 0, GL_RGBA,
 		GL_UNSIGNED_BYTE, texels1);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -174,5 +174,5 @@ int main(int argc, char** argv)
    glutKeyboardFunc (keyboard);
    glutMainLoop();
    gladLoaderUnloadGL();
-   return 0; 
+   return 0;
 }

@@ -83,18 +83,18 @@ static void Draw(void)
    GLuint passed;
    GLint ready;
 
-   glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT); 
+   glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
    glEnable(GL_DEPTH_TEST);
 
    glBeginQueryARB(GL_SAMPLES_PASSED_ARB, OccQuery);
 
    glBegin(GL_TRIANGLES);
-   glColor3f(0,0,.7); 
+   glColor3f(0,0,.7);
    glVertex3f( 0.9, -0.9, -30.0);
-   glColor3f(.8,0,0); 
+   glColor3f(.8,0,0);
    glVertex3f( 0.9,  0.9, -30.0);
-   glColor3f(0,.9,0); 
+   glColor3f(0,.9,0);
    glVertex3f(-0.9,  0.0, -30.0);
    glEnd();
 

@@ -73,31 +73,31 @@ static void quad( float half )
 
 static void Draw(void)
 {
-   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
+   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
    glEnable(GL_DEPTH_TEST);
 
    /* red: offset back */
    glEnable(GL_POLYGON_OFFSET_FILL);
    glPolygonOffset(0, 4);
-   glColor3f(1,0,0); 
+   glColor3f(1,0,0);
    quad(9);
 
    /* black: no offset */
-   glDisable(GL_POLYGON_OFFSET_FILL); 
-   glColor3f(0,0,0); 
+   glDisable(GL_POLYGON_OFFSET_FILL);
+   glColor3f(0,0,0);
    quad(6);
 
    /* green: offset 0 (this should obscure the black quad) */
    glEnable(GL_POLYGON_OFFSET_FILL);
    glPolygonOffset(0, 0);
    glDepthFunc( GL_EQUAL );
-   glColor3f(0,1,0); 
+   glColor3f(0,1,0);
    quad(6);
 
    /* blue: offset forward */
    glDepthFunc( GL_LESS );
    glPolygonOffset(0, -4);
-   glColor3f(0,0,1); 
+   glColor3f(0,0,1);
    quad(3);
 
    glDisable(GL_POLYGON_OFFSET_FILL);

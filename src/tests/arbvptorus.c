@@ -106,19 +106,19 @@ static void Init( void )
 {
    GLint errnum;
    GLuint prognum;
-	
+
    /* borrowed from an nvidia demo:
     * c[0..3] = modelview matrix
     * c[4..7] = invtrans modelview matrix
     * c[32] = light pos
     * c[35] = diffuse color
     */
-   static const char prog[] = 
+   static const char prog[] =
       "!!ARBvp1.0\n"
       "OPTION ARB_position_invariant ;"
       "TEMP R0, R1; \n"
 
-      "# normal x MV-1T -> lighting normal\n"		
+      "# normal x MV-1T -> lighting normal\n"
       "DP3   R1.x, state.matrix.modelview.invtrans.row[0], vertex.normal ;\n"
       "DP3   R1.y, state.matrix.modelview.invtrans.row[1], vertex.normal;\n"
       "DP3   R1.z, state.matrix.modelview.invtrans.row[2], vertex.normal;\n"
@@ -137,7 +137,7 @@ static void Init( void )
       exit(1);
    }
 
-   	
+
    glGenProgramsARB(1, &prognum);
 
    glBindProgramARB(GL_VERTEX_PROGRAM_ARB, prognum);

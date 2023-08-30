@@ -80,7 +80,7 @@ static void Init( void )
 {
    GLint errnum;
    GLuint prognum;
-   
+
    static const char *prog1 =
       "!!ARBvp1.0\n"
       "MOV  result.color, vertex.attrib[3];\n"

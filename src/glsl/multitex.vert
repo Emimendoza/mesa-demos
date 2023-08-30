@@ -5,7 +5,7 @@
 attribute vec4 TexCoord0, TexCoord1;
 attribute vec4 VertCoord;
 
-void main() 
+void main()
 {
    gl_TexCoord[0] = TexCoord0;
    gl_TexCoord[1] = TexCoord1;

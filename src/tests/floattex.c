@@ -15,7 +15,7 @@
 
 static const char *TexFile = DEMOS_DATA_DIR "arch.rgb";
 
-static const char *FragShaderText = 
+static const char *FragShaderText =
    "uniform sampler2D tex1; \n"
    "void main() \n"
    "{ \n"
@@ -24,7 +24,7 @@ static const char *FragShaderText =
    "   gl_FragColor = t * (-1.0 / 255.0); \n"
    "} \n";
 
-static const char *VertShaderText = 
+static const char *VertShaderText =
    "void main() \n"
    "{ \n"
    "   gl_TexCoord[0] = gl_MultiTexCoord0; \n"

@@ -227,7 +227,7 @@ Key(unsigned char key, int x, int y)
    case 'f':
       Filter = (Filter + 1) % NUM_FILTERS;
       SetTexParams();
-      break;      
+      break;
    case 'r':
       Randomize();
       break;

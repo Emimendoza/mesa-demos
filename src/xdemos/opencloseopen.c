@@ -1,17 +1,17 @@
 /*
  * Copyright (C) 1999-2001  Brian Paul   All Rights Reserved.
  * (C) Copyright IBM Corporation 2003
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
  * to deal in the Software without restriction, including without limitation
  * the rights to use, copy, modify, merge, publish, distribute, sublicense,
  * and/or sell copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included
  * in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
  * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
@@ -34,7 +34,7 @@
  * the display.  Re-open the display, create a new window and context.  This
  * should work, but, at least as of Mesa 5.1, it segfaults.  See the bug
  * report for more details.
- * 
+ *
  * Most of the code here was lifed from various other Mesa xdemos.
  */
 

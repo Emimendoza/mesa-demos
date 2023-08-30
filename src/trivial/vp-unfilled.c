@@ -12,7 +12,7 @@ static void Init( void )
 {
    GLint errnum;
    GLuint prognum;
-   
+
    static const char *prog1 =
       "!!ARBvp1.0\n"
       "MOV  result.color, vertex.color;\n"
@@ -48,16 +48,16 @@ static void Display( void )
    glEnable(GL_VERTEX_PROGRAM_NV);
 
    glBegin(GL_TRIANGLES);
-   glColor3f(0,0,1); 
+   glColor3f(0,0,1);
    glVertex3f( 0.9, -0.9, 0.0);
-   glColor3f(0,1,0); 
+   glColor3f(0,1,0);
    glVertex3f( 0.9,  0.9, 0.0);
-   glColor3f(1,0,0); 
+   glColor3f(1,0,0);
    glVertex3f(-0.9,  0.0, 0.0);
    glEnd();
 
 
-   glFlush(); 
+   glFlush();
 }
 
 

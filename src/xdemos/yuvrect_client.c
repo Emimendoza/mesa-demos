@@ -138,7 +138,7 @@ static void Init( int argc, char *argv[] , Display *dpy, int screen, Window win)
       printf("Couldn't read %s\n", TEXTURE_FILE);
       exit(0);
    }
-   
+
 #ifdef GLX_MESA_allocate_memory
    glx_memory = glXAllocateMemoryMESA(dpy, screen, ImgWidth * ImgHeight * 2, 0, 0 ,0);
 #endif
@@ -149,7 +149,7 @@ static void Init( int argc, char *argv[] , Display *dpy, int screen, Window win)
    }
 
    memcpy(glx_memory, ImageYUV, ImgWidth * ImgHeight * 2);
-   
+
    printf("Image: %dx%d\n", ImgWidth, ImgHeight);
 
    glTexImage2D(GL_TEXTURE_RECTANGLE_NV, 0,
@@ -193,7 +193,7 @@ make_window( Display *dpy, const char *name,
 
    scrnum = DefaultScreen( dpy );
    root = RootWindow( dpy, scrnum );
-   
+
    visinfo = glXChooseVisual( dpy, scrnum, attribs );
    if (!visinfo) {
      printf("Error: couldn't get an RGB, Double-buffered visual\n");
@@ -312,7 +312,7 @@ main(int argc, char *argv[])
 
    Init(argc, argv, dpy, DefaultScreen(dpy), win);
 
-   scr_Display();			       
+   scr_Display();
    glXSwapBuffers(dpy, win);
    event_loop(dpy, win);
 

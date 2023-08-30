@@ -23,7 +23,7 @@
  * LIABILITY, ARISING OUT OF OR IN CONNECTION WITH THE POSSESSION, USE
  * OR PERFORMANCE OF THIS SOFTWARE.
  *
- * US Government Users Restricted Rights 
+ * US Government Users Restricted Rights
  * Use, duplication, or disclosure by the Government is subject to
  * restrictions set forth in FAR 52.227.19(c)(2) or subparagraph
  * (c)(1)(ii) of the Rights in Technical Data and Computer Software
@@ -107,7 +107,7 @@ readImage( const char* filename, GLsizei* width, GLsizei *height )
 
     num_read = fread( pixels, sizeof( GLubyte ), n, infile );
     assert(num_read == n);
-    
+
     fclose( infile );
 
     return pixels;
@@ -130,12 +130,12 @@ static void init(void)
 static void display(void)
 {
    GLubyte  values[6];
-   
+
    glClear(GL_COLOR_BUFFER_BIT);
    glRasterPos2i(1, 1);
    glDrawPixels(width, height, GL_RGB, GL_UNSIGNED_BYTE, pixels);
    glFlush();
-   
+
    glGetMinmax(GL_MINMAX, GL_TRUE, GL_RGB, GL_UNSIGNED_BYTE, values);
    printf(" Red   : min = %d   max = %d\n", values[0], values[3]);
    printf(" Green : min = %d   max = %d\n", values[1], values[4]);
@@ -160,12 +160,12 @@ static void keyboard(unsigned char key, int x, int y)
 }
 
 /*  Main Loop
- *  Open window with initial window size, title bar, 
+ *  Open window with initial window size, title bar,
  *  RGBA display mode, and handle input events.
  */
 int main(int argc, char** argv)
 {
-   pixels = readImage("leeds.bin", &width, &height);    
+   pixels = readImage("leeds.bin", &width, &height);
 
    glutInit(&argc, argv);
    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);

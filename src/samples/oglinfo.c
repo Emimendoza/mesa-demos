@@ -69,11 +69,11 @@ int main(int argc, char **argv)
 ** if you are building on a machine that has an old (1.0) version
 ** of glx.
 **
-** This program could still be *run* on a machine that has an old 
+** This program could still be *run* on a machine that has an old
 ** version of glx, even if it was *compiled* on a version that has
 ** a new version.
 **
-** If compiled on a system with an old version of glx, then it will 
+** If compiled on a system with an old version of glx, then it will
 ** never recognize glx extensions, since that code would have been
 ** #ifdef'ed out.
 */
@@ -176,7 +176,7 @@ int main(int argc, char **argv)
 
 /*
 ** This #ifdef prevents a build failure if you compile on an a
-** machine with an old GLU library. 
+** machine with an old GLU library.
 **
 ** If you build on a pre GLU 1.1 machine, you will never be able
 ** to get glu info, even if you run on a GLU 1.1 or latter machine,
@@ -199,7 +199,7 @@ int main(int argc, char **argv)
     fprintf(stderr, "Error: gluGetString(GLU_VERSION) failed.\n");
     return 1;
   }
-  
+
   if(minor > 0 || major > 1)
     string = (char *) gluGetString(GLU_EXTENSIONS);
   else

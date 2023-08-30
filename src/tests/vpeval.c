@@ -18,7 +18,7 @@
  * Transform position by modelview/projection.
  * Square incoming color.
  */
-static const char prog[] = 
+static const char prog[] =
 "!!VP1.0\n"
 
 "# Typical modelview/projection\n"

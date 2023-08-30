@@ -173,7 +173,7 @@ static void make_midpoint( union vert *out,
       out->f[i] = v0->f[i] + .5 * (v1->f[i] - v0->f[i]);
 }
 
-static void subdiv( union vert *v0, 
+static void subdiv( union vert *v0,
 		    union vert *v1,
 		    union vert *v2,
 		    GLuint depth )
@@ -181,9 +181,9 @@ static void subdiv( union vert *v0,
    if (depth == 0) {
       glColor3fv(v0->v.color);
       glVertex3fv(v0->v.pos);
-      glColor3fv(v1->v.color); 
+      glColor3fv(v1->v.color);
       glVertex3fv(v1->v.pos);
-      glColor3fv(v2->v.color); 
+      glColor3fv(v2->v.color);
       glVertex3fv(v2->v.pos);
    }
    else {
@@ -192,7 +192,7 @@ static void subdiv( union vert *v0,
       make_midpoint(&m[0], v0, v1);
       make_midpoint(&m[1], v1, v2);
       make_midpoint(&m[2], v2, v0);
-      
+
       subdiv(&m[0], &m[2], v0, depth-1);
       subdiv(&m[1], &m[0], v1, depth-1);
       subdiv(&m[2], &m[1], v2, depth-1);
@@ -231,11 +231,11 @@ static void Display( void )
    {
       union vert v[3];
 
-      ASSIGN_3V(v[0].v.color, 0,0,1); 
+      ASSIGN_3V(v[0].v.color, 0,0,1);
       ASSIGN_3V(v[0].v.pos,  0.9, -0.9, 0.0);
-      ASSIGN_3V(v[1].v.color, 1,0,0); 
+      ASSIGN_3V(v[1].v.color, 1,0,0);
       ASSIGN_3V(v[1].v.pos, 0.9, 0.9, 0.0);
-      ASSIGN_3V(v[2].v.color, 0,1,0); 
+      ASSIGN_3V(v[2].v.color, 0,1,0);
       ASSIGN_3V(v[2].v.pos, -0.9, 0, 0.0);
 
       subdiv(&v[0], &v[1], &v[2], nr_steps);
@@ -290,9 +290,9 @@ static void Key( unsigned char key, int x, int y )
       break;
    case '+':
       nr_steps++;
-      break; 
+      break;
    case '-':
-      if (nr_steps) 
+      if (nr_steps)
          nr_steps--;
       break;
    case ' ':

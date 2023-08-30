@@ -1,16 +1,16 @@
 /*
  * Copyright (C) 1999-2001  Brian Paul   All Rights Reserved.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
  * to deal in the Software without restriction, including without limitation
  * the rights to use, copy, modify, merge, publish, distribute, sublicense,
  * and/or sell copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included
  * in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
  * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
@@ -22,7 +22,7 @@
 /*
  * This is a port of the infamous "glxgears" demo to straight EGL
  * Port by Dane Rushton 10 July 2005
- * 
+ *
  * No command line options.
  * Program runs for 5 seconds then exits, outputing framerate to console
  */
@@ -98,7 +98,7 @@ static GLfloat left, right, asp;	/* Stereo frustum params.  */
  *
  *  Draw a gear wheel.  You'll probably want to call this function when
  *  building a display list since we do a lot of trig here.
- * 
+ *
  *  Input:  inner_radius - radius of hole at center
  *          outer_radius - radius at center of teeth
  *          width - width of gear
@@ -276,12 +276,12 @@ reshape(int width, int height)
    glMatrixMode(GL_PROJECTION);
    glLoadIdentity();
    glFrustum(-1.0, 1.0, -h, h, 5.0, 60.0);
-   
+
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
    glTranslatef(0.0, 0.0, -40.0);
 }
-   
+
 
 
 static void
@@ -335,25 +335,25 @@ static void run_gears(EGLDisplay dpy, EGLSurface surf, int ttr)
 		double tt = current_time();
 		double dt = tt - ct;
 		ct = tt;
-		
+
 		/* advance rotation for next frame */
 		angle += 70.0 * dt;  /* 70 degrees per second */
 		if (angle > 3600.0)
 			angle -= 3600.0;
-		
+
 		draw();
-		
+
 		eglSwapBuffers(dpy, surf);
-	
-		
+
+
 		frames++;
 	}
-	
+
 	seconds = ct - st;
 	fps = frames / seconds;
 	printf("%d frames in %3.1f seconds = %6.3f FPS\n", frames, seconds, fps);
 	fflush(stdout);
-	
+
 }
 
 
@@ -371,7 +371,7 @@ main(int argc, char *argv[])
 	EGLint screenAttribs[10];
 	GLboolean printInfo = GL_FALSE;
 	EGLint width = 300, height = 300;
-	
+
         /* parse cmd line args */
 	for (i = 1; i < argc; i++)
 	{
@@ -382,7 +382,7 @@ main(int argc, char *argv[])
 		else
 			printf("Warning: unknown parameter: %s\n", argv[i]);
 	}
-	
+
 	/* DBR : Create EGL context/surface etc */
 	d = eglGetDisplay(EGL_DEFAULT_DISPLAY);
 	assert(d);
@@ -416,7 +416,7 @@ main(int argc, char *argv[])
 		printf("peglgears: failed to create context\n");
 		return 0;
 	}
-	
+
 	/* build up screenAttribs array */
 	i = 0;
 	screenAttribs[i++] = EGL_WIDTH;
@@ -430,13 +430,13 @@ main(int argc, char *argv[])
 		printf("peglgears: failed to create pbuffer surface\n");
 		return 0;
 	}
-	
+
 	b = eglMakeCurrent(d, surface, surface, ctx);
 	if (!b) {
 		printf("peglgears: make current failed\n");
 		return 0;
 	}
-	
+
 	if (printInfo)
 	{
 		printf("GL_RENDERER   = %s\n", (char *) glGetString(GL_RENDERER));
@@ -444,17 +444,17 @@ main(int argc, char *argv[])
 		printf("GL_VENDOR     = %s\n", (char *) glGetString(GL_VENDOR));
 		printf("GL_EXTENSIONS = %s\n", (char *) glGetString(GL_EXTENSIONS));
 	}
-	
+
 	init();
 	reshape(width, height);
 
 	glDrawBuffer( GL_BACK );
 
 	run_gears(d, surface, 5.0);
-	
+
 	eglDestroySurface(d, surface);
 	eglDestroyContext(d, ctx);
 	eglTerminate(d);
-	
+
 	return 0;
 }

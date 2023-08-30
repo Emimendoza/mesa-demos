@@ -159,16 +159,16 @@ static void Init( int argc, char *argv[] )
 
 
    glTexImage2D(GL_TEXTURE_2D, 0,
-                GL_YCBCR_MESA, 
+                GL_YCBCR_MESA,
 		ImgWidth, ImgHeight, 0,
-                GL_YCBCR_MESA, 
+                GL_YCBCR_MESA,
 		GL_UNSIGNED_SHORT_8_8_MESA, ImageYUV);
 
    glEnable(GL_TEXTURE_2D);
 
    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
-   
+
 
    /* Now load the texture as RGB.
     */
@@ -207,7 +207,7 @@ static void Init( int argc, char *argv[] )
       printf("GL_VENDOR     = %s\n", (char *) glGetString(GL_VENDOR));
       printf("GL_EXTENSIONS = %s\n", (char *) glGetString(GL_EXTENSIONS));
    }
-   
+
    printf( "Both images should appear the same.\n" );
 }
 

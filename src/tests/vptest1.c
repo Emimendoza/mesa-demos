@@ -81,7 +81,7 @@ static void Init( void )
       "DP4   o[HPOS].z, c[2], R1; \n"
       "DP4   o[HPOS].w, c[3], R1; \n"
       "END\n";
-   static const char *prog3 = 
+   static const char *prog3 =
       "!!VP1.0\n"
       "DP4   o[HPOS].x, c[0], v[OPOS];\n"
       "DP4   o[HPOS].y, c[1], v[OPOS];\n"
@@ -97,13 +97,13 @@ static void Init( void )
       "MAD   R3, c[35].x, R2.y, c[35].y;    # diffuse + emissive\n"
       "MAD   o[COL0].xyz, c[36], R2.z, R3;  # + specular\n"
       "END\n";
-   static const char *prog4 = 
+   static const char *prog4 =
       "!!VP1.0\n"
       "DP4   R2, R3, c[A0.x];\n"
       "DP4   R2, R3, c[A0.x + 5];\n"
       "DP4   o[HPOS], R3, c[A0.x - 4];\n"
       "END\n";
-   static const char *prog5 = 
+   static const char *prog5 =
       "!!VSP1.0\n"
       "DP4   R2, R3, c[A0.x];\n"
       "DP4   R2, R3, v[0];\n"

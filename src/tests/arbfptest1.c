@@ -56,9 +56,9 @@ static void Key( unsigned char key, int x, int y )
 
 static void load_program(const char *prog, GLuint prognum)
 {
-   int a;	
+   int a;
    GLint errorpos, errnum;
-   
+
    glBindProgramARB(GL_FRAGMENT_PROGRAM_ARB, prognum);
    glProgramStringARB(GL_FRAGMENT_PROGRAM_ARB, GL_PROGRAM_FORMAT_ASCII_ARB,
                         strlen(prog), (const GLubyte *) prog);
@@ -74,10 +74,10 @@ static void load_program(const char *prog, GLuint prognum)
 
       for (a=-10; a<10; a++)
       {
-         if ((errorpos+a < 0) || (errorpos+a >= strlen(prog))) continue;	      
+         if ((errorpos+a < 0) || (errorpos+a >= strlen(prog))) continue;
          printf("%c", prog[errorpos+a]);
-      }	  
-      printf("\n");      
+      }
+      printf("\n");
       exit(1);
    }
 }

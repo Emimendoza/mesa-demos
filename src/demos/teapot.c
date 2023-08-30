@@ -180,7 +180,7 @@ static void key(unsigned char k, int x, int y)
     cleanup();
     exit(0);
     break;
-    
+
   case 'a':
     v+=0.005;
     break;
@@ -212,7 +212,7 @@ static void key(unsigned char k, int x, int y)
   }
 }
 
-static void reshape(int w, int h) 
+static void reshape(int w, int h)
 {
   WIDTH=w;
   HEIGHT=h;
@@ -359,7 +359,7 @@ static void drawlight2(void)
   glCallList(lightdlist);
   if(usetex)
     glEnable(GL_TEXTURE_2D);
-  
+
   glPopMatrix();
 
   lightalpha+=1.0;
@@ -441,7 +441,7 @@ static void draw(void)
   drawteapot();
   drawlight2();
   glPopMatrix();
-  
+
   glDisable(GL_LIGHTING);
   glDisable(GL_TEXTURE_2D);
   glDisable(GL_DEPTH_TEST);
@@ -496,7 +496,7 @@ static void inittextures(void)
 
   glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
   glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
-  
+
   glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR_MIPMAP_LINEAR);
   glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
 
@@ -527,7 +527,7 @@ static void inittextures(void)
 
   glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
   glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
-  
+
   glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR_MIPMAP_LINEAR);
   glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
 
@@ -587,7 +587,7 @@ static void initdlists(void)
   lightdlist=glGenLists(1);
   glNewList(lightdlist,GL_COMPILE);
   glDisable(GL_LIGHTING);
- 
+
   lcone=gluNewQuadric();
   lbase=gluNewQuadric();
   glRotatef(45.0,0.0,1.0,0.0);

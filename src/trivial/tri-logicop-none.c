@@ -69,14 +69,14 @@ static void Key(unsigned char key, int x, int y)
 
 static void Draw(void)
 {
-   glClear(GL_COLOR_BUFFER_BIT); 
+   glClear(GL_COLOR_BUFFER_BIT);
 
    glBegin(GL_TRIANGLES);
-   glColor3f(.8,0,0); 
+   glColor3f(.8,0,0);
    glVertex3f(-0.9, -0.9, -30.0);
-   glColor3f(0,.9,0); 
+   glColor3f(0,.9,0);
    glVertex3f( 0.9, -0.9, -30.0);
-   glColor3f(0,0,.7); 
+   glColor3f(0,0,.7);
    glVertex3f( 0.0,  0.9, -30.0);
    glEnd();
 
@@ -84,15 +84,15 @@ static void Draw(void)
    glLineWidth(4.0);
 
    glBegin(GL_LINES);
-   glColor3f(.1,.7,.1); 
+   glColor3f(.1,.7,.1);
    glVertex3f( 0.5, -0.5, -30.0);
    glVertex3f( 0.5,  0.5, -30.0);
 
-   glColor3f(.1,.1,.8); 
+   glColor3f(.1,.1,.8);
    glVertex3f( 0.5,  0.5, -30.0);
    glVertex3f(-0.5,  0.5, -30.0);
 
-   glColor3f(.5,.1,.1); 
+   glColor3f(.5,.1,.1);
    glVertex3f(-0.5,  0.5, -30.0);
    glVertex3f(-0.5, -0.5, -30.0);
 
@@ -106,15 +106,15 @@ static void Draw(void)
    /* Redraw parts of the lines:
     */
    glBegin(GL_LINES);
-   glColor3f(.1,.7,.1); 
+   glColor3f(.1,.7,.1);
    glVertex3f( 0.5, -0.2, -30.0);
    glVertex3f( 0.5,  0.2, -30.0);
 
-   glColor3f(.1,.1,.8); 
+   glColor3f(.1,.1,.8);
    glVertex3f( 0.2,  0.5, -30.0);
    glVertex3f(-0.2,  0.5, -30.0);
 
-   glColor3f(.5,.1,.1); 
+   glColor3f(.5,.1,.1);
    glVertex3f(-0.5,  0.2, -30.0);
    glVertex3f(-0.5, -0.2, -30.0);
 

@@ -70,17 +70,17 @@ static void Key(unsigned char key, int x, int y)
 
 static void Draw(void)
 {
-   glClear(GL_COLOR_BUFFER_BIT); 
+   glClear(GL_COLOR_BUFFER_BIT);
 
    glPolygonMode(GL_FRONT, GL_LINE);
    glPolygonMode(GL_BACK, GL_LINE);
 
    glBegin(GL_TRIANGLES);
-   glColor3f(0,0,.7); 
+   glColor3f(0,0,.7);
    glVertex3f( 0.9, -0.9, -0.0);
-   glColor3f(.8,0,0); 
+   glColor3f(.8,0,0);
    glVertex3f( 0.9,  0.9, -0.0);
-   glColor3f(0,.9,0); 
+   glColor3f(0,.9,0);
    glVertex3f(-0.9,  0.0, -0.0);
    glEnd();
 
@@ -88,11 +88,11 @@ static void Draw(void)
    glPolygonMode(GL_BACK, GL_FILL);
 
    glBegin(GL_TRIANGLES);
-   glColor3f(0,0,.7); 
+   glColor3f(0,0,.7);
    glVertex3f( 0.8, -0.8, -0.0);
-   glColor3f(.8,0,0); 
+   glColor3f(.8,0,0);
    glVertex3f( 0.8,  0.8, -0.0);
-   glColor3f(0,.9,0); 
+   glColor3f(0,.9,0);
    glVertex3f(-0.8,  0.0, -0.0);
    glEnd();
 
@@ -100,11 +100,11 @@ static void Draw(void)
    glPolygonMode(GL_BACK, GL_LINE);
 
    glBegin(GL_TRIANGLES);
-   glColor3f(.8,0,0); 
+   glColor3f(.8,0,0);
    glVertex3f( -0.9,  0.9, -0.0);
-   glColor3f(0,0,.7); 
+   glColor3f(0,0,.7);
    glVertex3f( -0.9, -0.9, -0.0);
-   glColor3f(0,.9,0); 
+   glColor3f(0,.9,0);
    glVertex3f( 0.9,  0.0, -0.0);
    glEnd();
 
@@ -112,11 +112,11 @@ static void Draw(void)
    glPolygonMode(GL_BACK, GL_FILL);
 
    glBegin(GL_TRIANGLES);
-   glColor3f(.8,0,0); 
+   glColor3f(.8,0,0);
    glVertex3f( -0.8,  0.8, -0.0);
-   glColor3f(0,0,.7); 
+   glColor3f(0,0,.7);
    glVertex3f( -0.8, -0.8, -0.0);
-   glColor3f(0,.9,0); 
+   glColor3f(0,.9,0);
    glVertex3f( 0.8,  0.0, -0.0);
    glEnd();
 

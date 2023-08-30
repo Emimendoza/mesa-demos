@@ -993,7 +993,7 @@ main (int argc, char *argv[])
     char *file;
 
     glutInitWindowSize(640,480);
-    glutInit(&argc, argv); 
+    glutInit(&argc, argv);
     glutInitDisplayMode (GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE );
 
     if (glutCreateWindow ("Gear Train Simulation") == GL_FALSE)

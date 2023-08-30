@@ -73,7 +73,7 @@ static void Display( void )
     */
    glDrawElements( GL_LINES, NR_VERTS*2, GL_UNSIGNED_SHORT, indices );
 
-   glFlush(); 
+   glFlush();
 }
 
 

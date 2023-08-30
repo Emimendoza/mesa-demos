@@ -149,7 +149,7 @@ static void Init(void)
 
       glGenBuffersARB(1, &arrayObj);
       glGenBuffersARB(1, &elementObj);
-   
+
       glBindBufferARB(GL_ARRAY_BUFFER_ARB, arrayObj);
       glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, elementObj);
 
@@ -200,7 +200,7 @@ static void Key(unsigned char key, int x, int y)
 
 static void Draw(void)
 {
-   glClear(GL_COLOR_BUFFER_BIT); 
+   glClear(GL_COLOR_BUFFER_BIT);
 
    glDrawElements( GL_TRIANGLES, 3, GL_UNSIGNED_INT, NULL );
 

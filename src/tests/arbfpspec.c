@@ -107,19 +107,19 @@ static void Init( void )
 {
    GLint errnum;
    GLuint prognum, fprognum;
-	
-   static const char prog[] = 
+
+   static const char prog[] =
       "!!ARBvp1.0\n"
       "DP4   result.position.x, state.matrix.mvp.row[0], vertex.position ;\n"
       "DP4   result.position.y, state.matrix.mvp.row[1], vertex.position ;\n"
       "DP4   result.position.z, state.matrix.mvp.row[2], vertex.position ;\n"
       "DP4   result.position.w, state.matrix.mvp.row[3], vertex.position ;\n"
-      "MOV   result.color.front.primary,   {.5, .5, .5, 1};\n"		
+      "MOV   result.color.front.primary,   {.5, .5, .5, 1};\n"
       "MOV   result.color.front.secondary, {1, 1, 1, 1};\n"
       "END";
 
-    static const char fprog[] = 
-      "!!ARBfp1.0\n"			  
+    static const char fprog[] =
+      "!!ARBfp1.0\n"
       "MOV result.color, fragment.color.secondary;\n"
       "END";
 
@@ -132,7 +132,7 @@ static void Init( void )
       printf("Sorry, this program requires GL_ARB_fragment_program");
       exit(1);
    }
-   	
+
    glGenProgramsARB(1, &prognum);
    glGenProgramsARB(1, &fprognum);
 

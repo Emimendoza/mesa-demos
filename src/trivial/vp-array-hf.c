@@ -24,7 +24,7 @@ _mesa_float_to_half(GLfloat val)
    const int flt_s = (fi.i >> 31) & 0x1;
    int s, e, m = 0;
    GLhalf result;
-   
+
    /* sign bit */
    s = flt_s;
 
@@ -167,7 +167,7 @@ static void Display( void )
    glEnable(GL_VERTEX_PROGRAM_NV);
    glDrawElements( GL_TRIANGLES, 3, GL_UNSIGNED_INT, indices );
 
-   glFlush(); 
+   glFlush();
 }
 
 

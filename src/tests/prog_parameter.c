@@ -24,11 +24,11 @@
 
 /**
  * \file prog_parameter.c
- * 
+ *
  * Test various aspects of setting (and getting) low-level program parameters.
  * This is primarilly intended as a test for GL_EXT_gpu_program_parameters,
  * but it turns out that it hits some other functionality along the way.
- * 
+ *
  * \author Ian Romanick <idr@us.ibm.com>
  */
 
@@ -256,7 +256,7 @@ static void Init( void )
       printf("FAIL!\n");
       exit(1);
    }
-   
+
    printf("PASS!\n");
 }
 

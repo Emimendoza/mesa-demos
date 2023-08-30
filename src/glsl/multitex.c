@@ -2,17 +2,17 @@
  * Test multi-texturing with GL shading language.
  *
  * Copyright (C) 2008  Brian Paul   All Rights Reserved.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
  * to deal in the Software without restriction, including without limitation
  * the rights to use, copy, modify, merge, publish, distribute, sublicense,
  * and/or sell copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included
  * in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
  * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
@@ -38,7 +38,7 @@ static const char *Demo = "multitex";
 static const char *VertFile = DEMOS_DATA_DIR "multitex.vert";
 static const char *FragFile = DEMOS_DATA_DIR "multitex.frag";
 
-static const char *TexFiles[2] = 
+static const char *TexFiles[2] =
    {
       DEMOS_DATA_DIR "tile.rgb",
       DEMOS_DATA_DIR "tree2.rgba"
@@ -306,7 +306,7 @@ InitTextures(void)
       gluBuild2DMipmaps(GL_TEXTURE_2D, 4, imgWidth, imgHeight,
                         imgFormat, GL_UNSIGNED_BYTE, image);
       free(image);
-      
+
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filter);

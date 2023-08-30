@@ -60,7 +60,7 @@ static void Display( void )
 {
    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, min_filter );
    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, mag_filter );
-   
+
    if ( max_anisotropy > 0.0 ) {
       glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT,
 		       anisotropy );
@@ -160,7 +160,7 @@ static void menu_handler( int selection )
    case 0:
       glBindTexture( GL_TEXTURE_2D, selection );
       break;
-      
+
    case 1:
       min_filter = filter_modes[ selection & 7 ];
       break;
@@ -186,7 +186,7 @@ static void Init( void )
 
    glBindTexture( GL_TEXTURE_2D, 1 );
    generate_textures(1);
-   
+
    glBindTexture( GL_TEXTURE_2D, 2 );
    generate_textures(2);
 
@@ -196,9 +196,9 @@ static void Init( void )
    if ( glutExtensionSupported( "GL_EXT_texture_filter_anisotropic" ) ) {
       glGetFloatv( GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, & max_anisotropy );
    }
-   
+
    printf("Maximum texture anisotropy: %f\n", max_anisotropy );
-   
+
    /* Create the menus. */
 
    glutCreateMenu( menu_handler );
@@ -365,7 +365,7 @@ static void generate_textures( unsigned mode )
 	    tex[ ((i * size) + j) * 3 + 2] = checkers[ idx ][2];
 	 }
       }
-      
+
       glTexImage2D( GL_TEXTURE_2D, level, GL_RGB, size, size, 0,
 		    GL_RGB, GL_FLOAT, tex );
       level++;

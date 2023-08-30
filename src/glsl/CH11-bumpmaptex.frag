@@ -3,7 +3,7 @@
 //
 // Authors: John Kessenich, Randi Rost
 //
-// Copyright (c) 2002-2006 3Dlabs Inc. Ltd. 
+// Copyright (c) 2002-2006 3Dlabs Inc. Ltd.
 //
 // See 3Dlabs-License.txt for license information
 //
@@ -38,7 +38,7 @@ void main()
     vec3 normDelta = vec3(p.x, p.y, 1.0) * f;
     litColor = SurfaceColor * (ambient + max(dot(normDelta, LightDir), 0.0));
     vec3 reflectDir = reflect(LightDir, normDelta);
-    
+
     float spec = max(dot(EyeDir, reflectDir), 0.0);
     spec *= SpecularFactor;
     litColor = min(litColor + spec, vec3(1.0));

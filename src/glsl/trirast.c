@@ -48,7 +48,7 @@ RotateVerts(GLfloat a,
    for (i = 0; i < n; i++) {
       float x = vertsIn[i][0] - cx;
       float y = vertsIn[i][1] - cy;
-      
+
       vertsOut[i][0] =  x * cos(a) + y * sin(a)  + cx;
       vertsOut[i][1] = -x * sin(a) + y * cos(a)  + cy;
    }

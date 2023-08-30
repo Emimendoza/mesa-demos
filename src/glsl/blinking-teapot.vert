@@ -1,9 +1,9 @@
-vec3 LightPosition = vec3(0.0, 10.0, 4.0); 
- 
+vec3 LightPosition = vec3(0.0, 10.0, 4.0);
+
 varying float NdotL;
 varying vec3  ReflectVec;
 varying vec3  ViewVec;
- 
+
 void main(void)
 {
     vec3 ecPos      = vec3 (gl_ModelViewMatrix * gl_Vertex);

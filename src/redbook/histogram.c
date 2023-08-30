@@ -23,7 +23,7 @@
  * LIABILITY, ARISING OUT OF OR IN CONNECTION WITH THE POSSESSION, USE
  * OR PERFORMANCE OF THIS SOFTWARE.
  *
- * US Government Users Restricted Rights 
+ * US Government Users Restricted Rights
  * Use, duplication, or disclosure by the Government is subject to
  * restrictions set forth in FAR 52.227.19(c)(2) or subparagraph
  * (c)(1)(ii) of the Rights in Technical Data and Computer Software
@@ -111,7 +111,7 @@ readImage( const char* filename, GLsizei* width, GLsizei *height )
 
     num_read = fread( pixels, sizeof( GLubyte ), n, infile );
     assert(num_read == n);
-    
+
     fclose( infile );
 
     return pixels;
@@ -135,15 +135,15 @@ static void display(void)
 {
    int i;
    GLushort values[HISTOGRAM_SIZE][3];
-   
+
    glClear(GL_COLOR_BUFFER_BIT);
    glRasterPos2i(1, 1);
    glDrawPixels(width, height, GL_RGB, GL_UNSIGNED_BYTE, pixels);
-   
+
    glGetHistogram(GL_HISTOGRAM, GL_TRUE, GL_RGB, GL_UNSIGNED_SHORT, values);
 
    /* Plot histogram */
-   
+
    glBegin(GL_LINE_STRIP);
    glColor3f(1.0, 0.0, 0.0);
    for ( i = 0; i < HISTOGRAM_SIZE; i++ )
@@ -176,27 +176,27 @@ static void reshape(int w, int h)
 static void keyboard(unsigned char key, int x, int y)
 {
    static GLboolean sink = GL_FALSE;
-    
+
    switch (key) {
       case 's' :
 	  sink = !sink;
 	  glHistogram(GL_HISTOGRAM, HISTOGRAM_SIZE, GL_RGB, sink);
 	  break;
-	  
+
       case 27:
          exit(0);
    }
    glutPostRedisplay();
-   
+
 }
 
 /*  Main Loop
- *  Open window with initial window size, title bar, 
+ *  Open window with initial window size, title bar,
  *  RGBA display mode, and handle input events.
  */
 int main(int argc, char** argv)
 {
-   pixels = readImage("leeds.bin", &width, &height);    
+   pixels = readImage("leeds.bin", &width, &height);
 
    glutInit(&argc, argv);
    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);

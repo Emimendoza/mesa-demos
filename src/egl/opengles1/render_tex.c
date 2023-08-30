@@ -92,7 +92,7 @@ draw_torus(GLfloat r, GLfloat R, GLint nsides, GLint rings)
    glEnableClientState(GL_VERTEX_ARRAY);
    glEnableClientState(GL_NORMAL_ARRAY);
    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-   
+
    ringDelta = 2.0 * M_PI / rings;
    sideDelta = 2.0 * M_PI / nsides;
 
@@ -154,7 +154,7 @@ draw_torus_to_texture(void)
    glMatrixMode(GL_PROJECTION);
    glLoadIdentity();
    glFrustumf(-1, 1, -1, 1, 5.0, 60.0);
-   
+
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
    glTranslatef(0.0, 0.0, -15.0);
@@ -195,7 +195,7 @@ draw_textured_quad(void)
    glMatrixMode(GL_PROJECTION);
    glLoadIdentity();
    glFrustumf(-ar, ar, -1, 1, 5.0, 60.0);
-   
+
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
    glTranslatef(0.0, 0.0, -8.0);
@@ -221,7 +221,7 @@ draw_textured_quad(void)
       glTexCoordPointer(2, GL_FLOAT, 0, texcoord);
       glEnableClientState(GL_VERTEX_ARRAY);
       glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-  
+
       glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
       glDisableClientState(GL_VERTEX_ARRAY);
@@ -579,7 +579,7 @@ usage(void)
    printf("  -display <displayname>  set the display to run on\n");
    printf("  -info                   display OpenGL renderer info\n");
 }
- 
+
 
 int
 main(int argc, char *argv[])

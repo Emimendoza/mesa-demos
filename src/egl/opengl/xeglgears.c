@@ -1,16 +1,16 @@
 /*
  * Copyright (C) 1999-2001  Brian Paul   All Rights Reserved.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
  * to deal in the Software without restriction, including without limitation
  * the rights to use, copy, modify, merge, publish, distribute, sublicense,
  * and/or sell copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included
  * in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
  * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
@@ -108,7 +108,7 @@ static GLfloat angle = 0.0;
  *
  *  Draw a gear wheel.  You'll probably want to call this function when
  *  building a display list since we do a lot of trig here.
- * 
+ *
  *  Input:  inner_radius - radius of hole at center
  *          outer_radius - radius at center of teeth
  *          width - width of gear
@@ -287,12 +287,12 @@ reshape(int width, int height)
    glMatrixMode(GL_PROJECTION);
    glLoadIdentity();
    glFrustum(-ar, ar, -1, 1, 5.0, 60.0);
-   
+
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
    glTranslatef(0.0, 0.0, -40.0);
 }
-   
+
 
 
 static void
@@ -604,7 +604,7 @@ texture_gears(struct egl_manager *eman, int surface_type)
    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_REPEAT);
    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-   
+
    glEnableClientState(GL_VERTEX_ARRAY);
    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
    glVertexPointer(3, GL_INT, 0, verts);
@@ -622,7 +622,7 @@ texture_gears(struct egl_manager *eman, int surface_type)
    if (surface_type == GEARS_PBUFFER_TEXTURE)
       eglReleaseTexImage(eman->dpy, eman->pbuf, EGL_BACK_BUFFER);
 
-   eglSwapBuffers(eman->dpy, eman->win); 
+   eglSwapBuffers(eman->dpy, eman->win);
 }
 
 static void
@@ -776,7 +776,7 @@ usage(void)
    printf("  -pbuffer-texture        use pbuffer surface and eglBindTexImage\n");
    printf("  -renderbuffer           renderbuffer as EGLImage and bind as texture from\n");
 }
- 
+
 static const char *names[] = {
    "window",
    "pixmap",
@@ -917,7 +917,7 @@ main(int argc, char *argv[])
 
       glGenFramebuffers(1, &eman->fbo);
       glBindFramebuffer(GL_FRAMEBUFFER_EXT, eman->fbo);
-      
+
       glGenRenderbuffers(1, &color_rb);
       glBindRenderbuffer(GL_RENDERBUFFER_EXT, color_rb);
       glRenderbufferStorage(GL_RENDERBUFFER_EXT, GL_RGBA, winWidth, winHeight);

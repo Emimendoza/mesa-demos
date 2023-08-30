@@ -32,7 +32,7 @@ static void Init( void )
 {
    GLint errnum;
    GLuint prognum;
-   
+
    static const char *prog1 =
       "!!ARBvp1.0\n"
       "MOV  result.color, vertex.color;\n"
@@ -72,7 +72,7 @@ static void Display( void )
     */
    glDrawElements( GL_TRIANGLES, 3, GL_UNSIGNED_INT, indices );
 
-   glFlush(); 
+   glFlush();
 }
 
 

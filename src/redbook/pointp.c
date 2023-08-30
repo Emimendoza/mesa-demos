@@ -23,7 +23,7 @@
  * LIABILITY, ARISING OUT OF OR IN CONNECTION WITH THE POSSESSION, USE
  * OR PERFORMANCE OF THIS SOFTWARE.
  *
- * US Government Users Restricted Rights 
+ * US Government Users Restricted Rights
  * Use, duplication, or disclosure by the Government is subject to
  * restrictions set forth in FAR 52.227.19(c)(2) or subparagraph
  * (c)(1)(ii) of the Rights in Technical Data and Computer Software
@@ -50,8 +50,8 @@
  *
  *  Pressing the 'l', 'q', and 'c' keys switch the point
  *  parameters attenuation mode to linear, quadratic, or constant,
- *  respectively.  
- *  Pressing the 'f' and 'b' keys move the viewer forward 
+ *  respectively.
+ *  Pressing the 'f' and 'b' keys move the viewer forward
  *  and backwards.  In either linear or quadratic attenuation
  *  mode, the distance from the viewer to the point will change
  *  the size of the point primitive.
@@ -71,22 +71,22 @@ static GLfloat constant[3] = {1.0, 0.0, 0.0};
 static GLfloat linear[3] = {0.0, 0.12, 0.0};
 static GLfloat quadratic[3] = {0.0, 0.0, 0.01};
 
-static void init(void) 
+static void init(void)
 {
    int i;
 
    srand (12345);
-   
+
    glNewList(1, GL_COMPILE);
    glBegin (GL_POINTS);
       for (i = 0; i < 250; i++) {
-          glColor3f (1.0, ((rand()/(float) RAND_MAX) * 0.5) + 0.5, 
+          glColor3f (1.0, ((rand()/(float) RAND_MAX) * 0.5) + 0.5,
                           rand()/(float) RAND_MAX);
 /*  randomly generated vertices:
     -5 < x < 5;  -5 < y < 5;  -5 < z < -45  */
-          glVertex3f ( ((rand()/(float)RAND_MAX) * 10.0) - 5.0, 
-                       ((rand()/(float)RAND_MAX) * 10.0) - 5.0, 
-                       ((rand()/(float)RAND_MAX) * 40.0) - 45.0); 
+          glVertex3f ( ((rand()/(float)RAND_MAX) * 10.0) - 5.0,
+                       ((rand()/(float)RAND_MAX) * 10.0) - 5.0,
+                       ((rand()/(float)RAND_MAX) * 40.0) - 45.0);
       }
    glEnd();
    glEndList();
@@ -94,7 +94,7 @@ static void init(void)
    glEnable(GL_DEPTH_TEST);
    glEnable(GL_POINT_SMOOTH);
    glEnable(GL_BLEND);
-   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); 
+   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
    glPointSize(psize);
    glGetFloatv(GL_POINT_SIZE_MAX_EXT, pmax);
 
@@ -166,12 +166,12 @@ int main(int argc, char** argv)
 {
    glutInit(&argc, argv);
    glutInitDisplayMode (GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH | GLUT_MULTISAMPLE);
-   glutInitWindowSize (500, 500); 
+   glutInitWindowSize (500, 500);
    glutInitWindowPosition (100, 100);
    glutCreateWindow (argv[0]);
    gladLoaderLoadGL();
    init ();
-   glutDisplayFunc (display); 
+   glutDisplayFunc (display);
    glutReshapeFunc (reshape);
    glutKeyboardFunc (keyboard);
    glutMainLoop();

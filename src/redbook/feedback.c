@@ -1,13 +1,13 @@
 /*
  * Copyright (c) 1993-1997, Silicon Graphics, Inc.
- * ALL RIGHTS RESERVED 
- * Permission to use, copy, modify, and distribute this software for 
+ * ALL RIGHTS RESERVED
+ * Permission to use, copy, modify, and distribute this software for
  * any purpose and without fee is hereby granted, provided that the above
  * copyright notice appear in all copies and that both the copyright notice
- * and this permission notice appear in supporting documentation, and that 
+ * and this permission notice appear in supporting documentation, and that
  * the name of Silicon Graphics, Inc. not be used in advertising
  * or publicity pertaining to distribution of the software without specific,
- * written prior permission. 
+ * written prior permission.
  *
  * THE MATERIAL EMBODIED ON THIS SOFTWARE IS PROVIDED TO YOU "AS-IS"
  * AND WITHOUT WARRANTY OF ANY KIND, EXPRESS, IMPLIED OR OTHERWISE,
@@ -21,8 +21,8 @@
  * ADVISED OF THE POSSIBILITY OF SUCH LOSS, HOWEVER CAUSED AND ON
  * ANY THEORY OF LIABILITY, ARISING OUT OF OR IN CONNECTION WITH THE
  * POSSESSION, USE OR PERFORMANCE OF THIS SOFTWARE.
- * 
- * US Government Users Restricted Rights 
+ *
+ * US Government Users Restricted Rights
  * Use, duplication, or disclosure by the Government is subject to
  * restrictions set forth in FAR 52.227.19(c)(2) or subparagraph
  * (c)(1)(ii) of the Rights in Technical Data and Computer Software
@@ -39,7 +39,7 @@
  * feedback.c
  * This program demonstrates use of OpenGL feedback.  First,
  * a lighting environment is set up and a few lines are drawn.
- * Then feedback mode is entered, and the same lines are 
+ * Then feedback mode is entered, and the same lines are
  * drawn.  The results in the feedback buffer are printed.
  */
 #include "glut_wrap.h"
@@ -54,8 +54,8 @@ static void init(void)
    glEnable(GL_LIGHT0);
 }
 
-/* Draw a few lines and two points, one of which will 
- * be clipped.  If in feedback mode, a passthrough token 
+/* Draw a few lines and two points, one of which will
+ * be clipped.  If in feedback mode, a passthrough token
  * is issued between the each primitive.
  */
 static void drawGeometry (GLenum mode)
@@ -80,7 +80,7 @@ static void drawGeometry (GLenum mode)
 }
 
 /* Write contents of one vertex to stdout.	*/
-static void print3DcolorVertex (GLint size, GLint *count, 
+static void print3DcolorVertex (GLint size, GLint *count,
                                 GLfloat *buffer)
 {
    int i;
@@ -169,5 +169,5 @@ int main(int argc, char** argv)
    glutDisplayFunc(display);
    glutKeyboardFunc (keyboard);
    glutMainLoop();
-   return 0; 
+   return 0;
 }

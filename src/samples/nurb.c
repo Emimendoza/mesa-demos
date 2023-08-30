@@ -32,10 +32,10 @@
 #define INREAL float
 
 #define S_NUMPOINTS 13
-#define S_ORDER     3   
+#define S_ORDER     3
 #define S_NUMKNOTS  (S_NUMPOINTS + S_ORDER)
 #define T_NUMPOINTS 3
-#define T_ORDER     3 
+#define T_ORDER     3
 #define T_NUMKNOTS  (T_NUMPOINTS + T_ORDER)
 #define SQRT_TWO    1.41421356237309504880
 
@@ -97,7 +97,7 @@ Point ctlpoints[S_NUMPOINTS][T_NUMPOINTS] = {
 	},
 	{
 	    SQRT_TWO*6.0, SQRT_TWO*6.0, SQRT_TWO*3.0, SQRT_TWO
-	}  
+	}
     },
     {
 	{
@@ -116,11 +116,11 @@ Point ctlpoints[S_NUMPOINTS][T_NUMPOINTS] = {
 	},
 	{
 	    SQRT_TWO*4.0, SQRT_TWO*6.0, SQRT_TWO*2.5, SQRT_TWO
-	}, 
+	},
 	{
 	    SQRT_TWO*4.0, SQRT_TWO*6.0, SQRT_TWO*3.0, SQRT_TWO
-	}  
-    }, 
+	}
+    },
     {
 	{
 	    4.0, 5.2, 2.0, 1.0
@@ -130,7 +130,7 @@ Point ctlpoints[S_NUMPOINTS][T_NUMPOINTS] = {
 	},
 	{
 	    4.0, 5.2, 3.0, 1.0
-	}  
+	}
     },
     {
 	{
@@ -141,7 +141,7 @@ Point ctlpoints[S_NUMPOINTS][T_NUMPOINTS] = {
 	},
 	{
 	    SQRT_TWO*4.0, SQRT_TWO*6.0, SQRT_TWO*3.0, SQRT_TWO
-	}  
+	}
     },
     {
 	{
@@ -152,7 +152,7 @@ Point ctlpoints[S_NUMPOINTS][T_NUMPOINTS] = {
 	},
 	{
 	    2.8, 6.7, 3.0, 1.0
-	}   
+	}
     },
     {
 	{
@@ -163,7 +163,7 @@ Point ctlpoints[S_NUMPOINTS][T_NUMPOINTS] = {
 	},
 	{
 	    SQRT_TWO*2.0, SQRT_TWO*6.0, SQRT_TWO*3.0, SQRT_TWO
-	}  
+	}
     },
     {
 	{
@@ -174,7 +174,7 @@ Point ctlpoints[S_NUMPOINTS][T_NUMPOINTS] = {
 	},
 	{
 	    2.0, 5.0, 3.0, 1.0
-	} 
+	}
     },
     {
 	{
@@ -185,7 +185,7 @@ Point ctlpoints[S_NUMPOINTS][T_NUMPOINTS] = {
 	},
 	{
 	    3.0, 4.0, 3.0, 1.0
-	} 
+	}
     },
     {
 	{
@@ -196,7 +196,7 @@ Point ctlpoints[S_NUMPOINTS][T_NUMPOINTS] = {
 	},
 	{
 	    4.0, 2.0, 3.0, 1.0
-	}    
+	}
     }
 };
 GLUnurbsObj *theNurbs;

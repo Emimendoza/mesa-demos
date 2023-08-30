@@ -23,7 +23,7 @@
  * LIABILITY, ARISING OUT OF OR IN CONNECTION WITH THE POSSESSION, USE
  * OR PERFORMANCE OF THIS SOFTWARE.
  *
- * US Government Users Restricted Rights 
+ * US Government Users Restricted Rights
  * Use, duplication, or disclosure by the Government is subject to
  * restrictions set forth in FAR 52.227.19(c)(2) or subparagraph
  * (c)(1)(ii) of the Rights in Technical Data and Computer Software
@@ -44,14 +44,14 @@
  *  This program renders a variety of quads showing different
  *  effects of texture combiner functions.
  *
- *  The first row renders an untextured polygon (so you can 
+ *  The first row renders an untextured polygon (so you can
  *  compare the fragment colors) and then the 2 textures.
  *  The second row shows several different combiner functions
  *  on a single texture:  replace, modulate, add, add-signed,
- *  and subtract.  
+ *  and subtract.
  *  The third row shows the interpolate combiner function
  *  on a single texture with a constant color/alpha value,
- *  varying the amount of interpolation.  
+ *  varying the amount of interpolation.
  *  The fourth row uses multitexturing with two textures
  *  and different combiner functions.
  *  The fifth row are some combiner experiments:  using the
@@ -91,7 +91,7 @@ static void makeImages(void)
 }
 
 static void init(void)
-{    
+{
    glClearColor (0.0, 0.0, 0.0, 0.0);
    glShadeModel(GL_SMOOTH);
 
@@ -105,7 +105,7 @@ static void init(void)
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 
+   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight,
                 0, GL_RGBA, GL_UNSIGNED_BYTE, image0);
 
    glBindTexture(GL_TEXTURE_2D, texName[1]);
@@ -113,26 +113,26 @@ static void init(void)
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 
+   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight,
                 0, GL_RGBA, GL_UNSIGNED_BYTE, image1);
 
 /*  smooth-shaded polygon with multiple texture coordinates  */
    glNewList (1, GL_COMPILE);
    glBegin(GL_QUADS);
-   glMultiTexCoord2fARB(GL_TEXTURE0_ARB, 0.0, 0.0); 
-   glMultiTexCoord2fARB(GL_TEXTURE1_ARB, 0.0, 0.0); 
+   glMultiTexCoord2fARB(GL_TEXTURE0_ARB, 0.0, 0.0);
+   glMultiTexCoord2fARB(GL_TEXTURE1_ARB, 0.0, 0.0);
    glColor3f (0.5, 1.0, 0.25);
    glVertex3f(0.0, 0.0, 0.0);
-   glMultiTexCoord2fARB(GL_TEXTURE0_ARB, 0.0, 2.0); 
-   glMultiTexCoord2fARB(GL_TEXTURE1_ARB, 0.0, 2.0); 
+   glMultiTexCoord2fARB(GL_TEXTURE0_ARB, 0.0, 2.0);
+   glMultiTexCoord2fARB(GL_TEXTURE1_ARB, 0.0, 2.0);
    glColor3f (1.0, 1.0, 1.0);
    glVertex3f(0.0, 1.0, 0.0);
-   glMultiTexCoord2fARB(GL_TEXTURE0_ARB, 2.0, 2.0); 
-   glMultiTexCoord2fARB(GL_TEXTURE1_ARB, 2.0, 2.0); 
+   glMultiTexCoord2fARB(GL_TEXTURE0_ARB, 2.0, 2.0);
+   glMultiTexCoord2fARB(GL_TEXTURE1_ARB, 2.0, 2.0);
    glColor3f (1.0, 1.0, 1.0);
    glVertex3f(1.0, 1.0, 0.0);
-   glMultiTexCoord2fARB(GL_TEXTURE0_ARB, 2.0, 0.0); 
-   glMultiTexCoord2fARB(GL_TEXTURE1_ARB, 2.0, 0.0); 
+   glMultiTexCoord2fARB(GL_TEXTURE0_ARB, 2.0, 0.0);
+   glMultiTexCoord2fARB(GL_TEXTURE1_ARB, 2.0, 0.0);
    glColor3f (1.0, 0.5, 0.25);
    glVertex3f(1.0, 0.0, 0.0);
    glEnd();
@@ -209,7 +209,7 @@ static void display(void)
    glCallList(1);
    glPopMatrix();
 
-/*  interpolate combine with constant color; 1 texture unit 
+/*  interpolate combine with constant color; 1 texture unit
  *  use different alpha values for constant color
  *  defaults are:
  *  glTexEnvf(GL_TEXTURE_ENV, GL_SOURCE0_RGB_ARB, GL_TEXTURE);
@@ -376,5 +376,5 @@ int main(int argc, char** argv)
    glutKeyboardFunc(keyboard);
    glutMainLoop();
    gladLoaderUnloadGL();
-   return 0; 
+   return 0;
 }

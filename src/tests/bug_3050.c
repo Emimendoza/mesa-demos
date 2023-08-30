@@ -28,7 +28,7 @@
  * Simple regression test for bug #3050.  Create a texture and make a few
  * calls to \c glGetTexLevelParameteriv.  If the bug still exists, trying
  * to get \c GL_TEXTURE_WITDH will cause a protocol error.
- * 
+ *
  * This test \b only applies to indirect-rendering.  This may mean that the
  * test needs to be run with the environment variable \c LIBGL_ALWAYS_INDIRECT
  * set to a non-zero value.
@@ -85,8 +85,8 @@ static void Init( void )
       GL_TEXTURE_DEPTH,
       ~0
    };
-   
-       
+
+
    printf("GL_RENDERER = %s\n", (char *) glGetString(GL_RENDERER));
    printf("GL_VERSION = %s\n", (char *) glGetString(GL_VERSION));
 
@@ -103,7 +103,7 @@ static void Init( void )
 	      "or GL_NV_texture_rectangle be supported\n." );
       exit( 1 );
    }
-	
+
 
    glBindTexture( GL_TEXTURE_RECTANGLE_NV, 1 );
    glTexImage2D( GL_PROXY_TEXTURE_RECTANGLE_NV, 0, GL_RGBA, 8, 8, 0,

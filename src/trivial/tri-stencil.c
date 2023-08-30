@@ -79,7 +79,7 @@ static void Draw(void)
 
    /* red triangle (setting stencil to 1) */
    glColor3ub(200, 0, 0);
-   glBegin(GL_POLYGON);        
+   glBegin(GL_POLYGON);
    glVertex3i(-4, -4, 0);
    glVertex3i( 4, -4, 0);
    glVertex3i( 0,  4, 0);
@@ -141,7 +141,7 @@ int main(int argc, char **argv)
 	exit(1);
     }
 
-    glutInitWindowPosition(0, 0); 
+    glutInitWindowPosition(0, 0);
     glutInitWindowSize( 300, 300);
 
     type = GLUT_RGB | GLUT_SINGLE | GLUT_DEPTH | GLUT_STENCIL;

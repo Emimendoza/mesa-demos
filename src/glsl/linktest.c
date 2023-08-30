@@ -97,7 +97,7 @@ Redisplay(void)
    /* update light position */
    normalize(vec, lightPos);
    glLightfv(GL_LIGHT0, GL_POSITION, vec);
-   
+
    glutSolidSphere(2.0, 10, 5);
 
    glutSwapBuffers();

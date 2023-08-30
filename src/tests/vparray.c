@@ -161,7 +161,7 @@ static void init_program(void)
     * c[30] = color scale
     * c[31] = color bias
     */
-   static const char prog[] = 
+   static const char prog[] =
       "!!VP1.0\n"
 
       "# RGB is proportional to XYZ \n"

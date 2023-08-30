@@ -70,14 +70,14 @@ static void Key(unsigned char key, int x, int y)
 
 static void Draw(void)
 {
-   glClear(GL_COLOR_BUFFER_BIT); 
+   glClear(GL_COLOR_BUFFER_BIT);
 
    glBegin(GL_LINE_STRIP);
-   glColor3f(0,0,1); 
+   glColor3f(0,0,1);
    glVertex3f( -1.5, 0.5, -30.0);
-   glColor3f(1,0,0); 
+   glColor3f(1,0,0);
    glVertex3f( 0,  2.0, -30.0);
-   glColor3f(0,1,0); 
+   glColor3f(0,1,0);
    glVertex3f(-1.5, 2.0, -30.0);
    glEnd();
 

@@ -16,7 +16,7 @@ static void Init(void)
 {
    GLint errnum;
    GLuint prognum;
-   
+
    static const char *prog1 =
       "!!ARBvp1.0\n"
       "PARAM Emission = state.material.emission; \n"
@@ -122,14 +122,14 @@ static void Key(unsigned char key, int x, int y)
 
 static void Draw(void)
 {
-   glClear(GL_COLOR_BUFFER_BIT); 
+   glClear(GL_COLOR_BUFFER_BIT);
 
    glBegin(GL_TRIANGLES);
-   glTexCoord2f(1,-1); 
+   glTexCoord2f(1,-1);
    glVertex3f( 0.9, -0.9, -0.0);
-   glTexCoord2f(1,1); 
+   glTexCoord2f(1,1);
    glVertex3f( 0.9,  0.9, -0.0);
-   glTexCoord2f(-1,0); 
+   glTexCoord2f(-1,0);
    glVertex3f(-0.9,  0.0, -0.0);
    glEnd();
 

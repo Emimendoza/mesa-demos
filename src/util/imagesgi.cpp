@@ -51,7 +51,7 @@ static struct sImageSgiRaw *ImageSgiRawOpen(char const * const fileName);
 static void ImageSgiRawClose(struct sImageSgiRaw *raw);
 static void ImageSgiRawGetRow(struct sImageSgiRaw *raw, unsigned char *buf,
    int y, int z);
-static void ImageSgiRawGetData(struct sImageSgiRaw *raw, struct sImageSgi 
+static void ImageSgiRawGetData(struct sImageSgiRaw *raw, struct sImageSgi
 *final);
 static void *SwitchEndian16(void *value);
 static void *SwitchEndian32(void *value);
@@ -150,19 +150,19 @@ static struct sImageSgiRaw *ImageSgiRawOpen(char const * const fileName)
       switch(raw->header.zsize)
       {
       case 4:
-         raw->chan3 = new unsigned char[raw->header.xsize * 
+         raw->chan3 = new unsigned char[raw->header.xsize *
 raw->header.ysize];
          assert(raw->chan3);
       case 3:
-         raw->chan2 = new unsigned char[raw->header.xsize * 
+         raw->chan2 = new unsigned char[raw->header.xsize *
 raw->header.ysize];
          assert(raw->chan2);
       case 2:
-         raw->chan1 = new unsigned char[raw->header.xsize * 
+         raw->chan1 = new unsigned char[raw->header.xsize *
 raw->header.ysize];
          assert(raw->chan1);
       case 1:
-         raw->chan0 = new unsigned char[raw->header.xsize * 
+         raw->chan0 = new unsigned char[raw->header.xsize *
 raw->header.ysize];
          assert(raw->chan0);
       }
@@ -240,7 +240,7 @@ static void ImageSgiRawGetRow(struct sImageSgiRaw *raw, unsigned char *buf,
    if((raw->header.type & 0xFF00) == 0x0100)
    {
       fseek(mFp, raw->rowStart[y+z*raw->header.ysize], SEEK_SET);
-      fread(mChanTmp, 1, (unsigned int)raw->rowSize[y+z*raw->header.ysize], 
+      fread(mChanTmp, 1, (unsigned int)raw->rowSize[y+z*raw->header.ysize],
 mFp);
       iPtr = mChanTmp;
       oPtr = buf;
@@ -283,14 +283,14 @@ mFp);
 
 
 /*****************************************************************************/
-static void ImageSgiRawGetData(struct sImageSgiRaw *raw, struct sImageSgi 
+static void ImageSgiRawGetData(struct sImageSgiRaw *raw, struct sImageSgi
 *final)
 {
    unsigned char *ptr = NULL;
    int i, j;
 
    final->data =
-      new unsigned 
+      new unsigned
 char[raw->header.xsize*raw->header.ysize*raw->header.zsize];
    assert(final->data);
 

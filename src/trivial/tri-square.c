@@ -71,9 +71,9 @@ static void Key(unsigned char key, int x, int y)
 
 static void Draw(void)
 {
-   glClear(GL_COLOR_BUFFER_BIT); 
+   glClear(GL_COLOR_BUFFER_BIT);
 
-   glColor3f(1,1,1); 
+   glColor3f(1,1,1);
 
    glBegin(GL_TRIANGLES);
    glVertex3f( 10, 10, -30.0);

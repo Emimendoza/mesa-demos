@@ -2,17 +2,17 @@
  * Copyright (C) 2009  VMware, Inc.
  * Copyright (C) 1999-2006  Brian Paul
  * All Rights Reserved.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
  * to deal in the Software without restriction, including without limitation
  * the rights to use, copy, modify, merge, publish, distribute, sublicense,
  * and/or sell copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included
  * in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
  * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
@@ -163,7 +163,7 @@ print_screen_info(HDC _hdc, const struct options *opts, GLboolean coreProfile)
       const char *glVendor, *glRenderer, *glVersion, *glExtensions;
       const char *wglExtensions = NULL;
       struct ext_functions extfuncs;
-      
+
       if (GLAD_WGL_ARB_extensions_string) {
          wglExtensions = wglGetExtensionsStringARB(hdc);
       }
@@ -296,7 +296,7 @@ static void
 print_visual_attribs_verbose(int iPixelFormat, const struct format_info *info)
 {
    printf("Visual ID: %x generic=%d drawToWindow=%d drawToBitmap=%d drawToPBuffer=%d GDI=%d\n",
-          iPixelFormat, 
+          iPixelFormat,
           info->pfd.dwFlags & PFD_GENERIC_FORMAT ? 1 : 0,
           info->pfd.dwFlags & PFD_DRAW_TO_WINDOW ? 1 : 0,
           info->draw_to_bitmap,
@@ -305,7 +305,7 @@ print_visual_attribs_verbose(int iPixelFormat, const struct format_info *info)
    printf("    bufferSize=%d level=%d renderType=%s doubleBuffer=%d stereo=%d\n",
           0 /* info->pfd.bufferSize */, 0 /* info->pfd.level */,
           visual_render_type_name(info->pfd.iPixelType),
-          info->pfd.dwFlags & PFD_DOUBLEBUFFER ? 1 : 0, 
+          info->pfd.dwFlags & PFD_DOUBLEBUFFER ? 1 : 0,
           info->pfd.dwFlags & PFD_STEREO ? 1 : 0);
    printf("    rgba: cRedBits=%d cGreenBits=%d cBlueBits=%d cAlphaBits=%d float=%c sRGB=%c\n",
           info->pfd.cRedBits, info->pfd.cGreenBits,
@@ -556,7 +556,7 @@ print_visual_info(HDC hdc, InfoMode mode)
          print_visual_attribs_verbose(i, &info);
       else if (mode == Normal)
          print_visual_attribs_short(i, &info);
-      else if (mode == Wide) 
+      else if (mode == Wide)
          print_visual_attribs_long(i, &info);
    }
    printf("\n");

@@ -4,7 +4,7 @@
 
 varying vec3 normal;
 
-void main() 
+void main()
 {
    vec3 n = gl_NormalMatrix * gl_Normal;
    vec3 u = normalize(vec3(gl_ModelViewMatrix * gl_Vertex));

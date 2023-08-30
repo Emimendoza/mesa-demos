@@ -43,7 +43,7 @@ Draw(void)
 {
    static const GLdouble plane[4] = { 0, -1.0, 0, 0.5 };
 
-   glClear(GL_COLOR_BUFFER_BIT); 
+   glClear(GL_COLOR_BUFFER_BIT);
 
    glPointSize(13.0);
    glLineWidth(5.0);

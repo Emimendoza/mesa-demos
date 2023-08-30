@@ -23,7 +23,7 @@
  * LIABILITY, ARISING OUT OF OR IN CONNECTION WITH THE POSSESSION, USE
  * OR PERFORMANCE OF THIS SOFTWARE.
  *
- * US Government Users Restricted Rights 
+ * US Government Users Restricted Rights
  * Use, duplication, or disclosure by the Government is subject to
  * restrictions set forth in FAR 52.227.19(c)(2) or subparagraph
  * (c)(1)(ii) of the Rights in Technical Data and Computer Software
@@ -69,7 +69,7 @@ init( void )
 {
     GLfloat  white[] = { 1.0, 1.0, 1.0, 1.0 };
 
-    glTexImage2D( GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, 
+    glTexImage2D( GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT,
   		  SHADOW_MAP_WIDTH, SHADOW_MAP_HEIGHT, 0,
 		  GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, NULL );
 
@@ -143,7 +143,7 @@ keyboard( unsigned char key, int x, int y )
 	glDisable( GL_TEXTURE_2D );
       }
       break;
-      
+
     case 'm': {
         static GLboolean compareMode = GL_TRUE;
         compareMode = !compareMode;
@@ -190,7 +190,7 @@ drawObjects( GLboolean shadowRender )
         glColor3f( 1, 1, 1 );
         glRectf( -20.0, -20.0, 20.0, 20.0 );
     }
-    
+
     glPushMatrix();
     glTranslatef( 11, 11, 11 );
     glRotatef( 54.73, -5, 5, 0 );
@@ -211,7 +211,7 @@ drawObjects( GLboolean shadowRender )
     glutWireSphere( 0.5, 6, 6 );
     glPopMatrix();
 
-    if ( shadowRender && textureOn ) 
+    if ( shadowRender && textureOn )
         glEnable( GL_TEXTURE_2D );
 }
 
@@ -254,10 +254,10 @@ generateShadowMap( void )
 
     if ( showShadow ) {
       GLfloat depthImage[SHADOW_MAP_WIDTH][SHADOW_MAP_HEIGHT];
-      glReadPixels( 0, 0, SHADOW_MAP_WIDTH, SHADOW_MAP_HEIGHT, 
+      glReadPixels( 0, 0, SHADOW_MAP_WIDTH, SHADOW_MAP_HEIGHT,
 		    GL_DEPTH_COMPONENT, GL_FLOAT, depthImage );
       glWindowPos2f( viewport[2]/2, 0 );
-      glDrawPixels( SHADOW_MAP_WIDTH, SHADOW_MAP_HEIGHT, GL_LUMINANCE, 
+      glDrawPixels( SHADOW_MAP_WIDTH, SHADOW_MAP_HEIGHT, GL_LUMINANCE,
 		    GL_FLOAT, depthImage );
       glutSwapBuffers();
     }
@@ -303,10 +303,10 @@ display( void )
       return;
 
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-    
+
     glPushMatrix();
     gluLookAt( radius*cos(angle), radius*sin(angle), 30,
-	       lookat[0], lookat[1], lookat[2], 
+	       lookat[0], lookat[1], lookat[2],
 	       up[0], up[1], up[2] );
     drawObjects( GL_FALSE );
     glPopMatrix();

@@ -40,7 +40,7 @@ static const char *FragShaderText[ 4 ] = {
    "   gl_FragColor.a = 1.0;\n"
    "}\n"
 };
-    
+
 struct uniform_info {
    const char *name;
    GLuint size;
@@ -73,7 +73,7 @@ Redisplay(void)
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
    glMultiTexCoord1f( GL_TEXTURE1, Slice );
-   
+
    glPushMatrix();
    glRotatef(xRot, 1.0f, 0.0f, 0.0f);
    glRotatef(yRot, 0.0f, 1.0f, 0.0f);
@@ -242,7 +242,7 @@ Init(void)
       glLinkProgram(program[ i ]);
       CheckLink(program[ i ]);
    }
-   
+
    glUseProgram(program[ 0 ]);
 
    assert(glGetError() == 0);

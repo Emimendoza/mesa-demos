@@ -81,13 +81,13 @@ static void Draw(void)
    float size = 40.0;
    int i;
 
-   glClear(GL_COLOR_BUFFER_BIT); 
+   glClear(GL_COLOR_BUFFER_BIT);
 
    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
    glPointSize(size);
-   glPointParameterfvARB(GL_POINT_DISTANCE_ATTENUATION_ARB, atten); 
+   glPointParameterfvARB(GL_POINT_DISTANCE_ATTENUATION_ARB, atten);
 
-   glColor3f(1,0,0); 
+   glColor3f(1,0,0);
 
    printf("Expected point sizes:\n");
    glBegin(GL_POINTS);

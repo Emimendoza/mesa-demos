@@ -1,22 +1,22 @@
 
 /* Copyright (c) Mark J. Kilgard, 1994, 1997.  */
 
-/* This program is freely distributable without licensing fees 
-   and is provided without guarantee or warrantee expressed or 
+/* This program is freely distributable without licensing fees
+   and is provided without guarantee or warrantee expressed or
    implied. This program is -not- in the public domain. */
 
 /* Example for PC game developers to show how to *combine* texturing,
    reflections, and projected shadows all in real-time with OpenGL.
    Robust reflections use stenciling.  Robust projected shadows
    use both stenciling and polygon offset.  PC game programmers
-   should realize that neither stenciling nor polygon offset are 
+   should realize that neither stenciling nor polygon offset are
    supported by Direct3D, so these real-time rendering algorithms
-   are only really viable with OpenGL. 
-   
+   are only really viable with OpenGL.
+
    The program has modes for disabling the stenciling and polygon
    offset uses.  It is worth running this example with these features
    toggled off so you can see the sort of artifacts that result.
-   
+
    Notice that the floor texturing, reflections, and shadowing
    all co-exist properly. */
 
@@ -409,7 +409,7 @@ redraw(void)
     /* Perform scene rotations based on user mouse input. */
     glRotatef(angle2, 1.0, 0.0, 0.0);
     glRotatef(angle, 0.0, 1.0, 0.0);
-     
+
     /* Tell GL new light source position. */
     glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
 
@@ -417,7 +417,7 @@ redraw(void)
       if (stencilReflection) {
         /* We can eliminate the visual "artifact" of seeing the "flipped"
   	   dinosaur underneath the floor by using stencil.  The idea is
-	   draw the floor without color or depth update but so that 
+	   draw the floor without color or depth update but so that
 	   a stencil value of one is where the floor will be.  Later when
 	   rendering the dinosaur reflection, we will only update pixels
 	   with a stencil value of 1 to make sure the reflection only
@@ -435,7 +435,7 @@ redraw(void)
         /* Now render floor; floor pixels just get their stencil set to 1. */
         drawFloor();
 
-        /* Re-enable update of color and depth. */ 
+        /* Re-enable update of color and depth. */
         glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
         glEnable(GL_DEPTH_TEST);
 
@@ -488,7 +488,7 @@ redraw(void)
 
     if (renderShadow) {
       if (stencilShadow) {
-	/* Draw the floor with stencil value 3.  This helps us only 
+	/* Draw the floor with stencil value 3.  This helps us only
 	   draw the shadow once per floor pixel (and only on the
 	   floor pixels). */
         glEnable(GL_STENCIL_TEST);
@@ -743,7 +743,7 @@ controlLights(int value)
 }
 
 /* When not visible, stop animating.  Restart when visible again. */
-static void 
+static void
 visible(int vis)
 {
   if (vis == GLUT_VISIBLE) {

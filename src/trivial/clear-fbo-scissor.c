@@ -56,7 +56,7 @@ Init(void)
                    GL_RGBA, GL_UNSIGNED_BYTE, NULL);
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-      glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, 
+      glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT,
                                 GL_COLOR_ATTACHMENT0_EXT,
                                 GL_TEXTURE_2D, tex, 0);
    }
@@ -125,22 +125,22 @@ Draw(void)
       /* lower-left = red */
       glClearColor(1, 0, 0, 0);
       glScissor(0, 0, Width / 2, Height / 2);
-      glClear(GL_COLOR_BUFFER_BIT); 
+      glClear(GL_COLOR_BUFFER_BIT);
 
       /* lower-right = green */
       glClearColor(0, 1, 0, 0);
       glScissor(Width / 2, 0, Width - Width / 2, Height / 2);
-      glClear(GL_COLOR_BUFFER_BIT); 
+      glClear(GL_COLOR_BUFFER_BIT);
 
       /* upper-left = blue */
       glClearColor(0, 0, 1, 0);
       glScissor(0, Height / 2, Width / 2, Height - Height / 2);
-      glClear(GL_COLOR_BUFFER_BIT); 
+      glClear(GL_COLOR_BUFFER_BIT);
 
       /* upper-right = white */
       glClearColor(1, 1, 1, 0);
       glScissor(Width / 2, Height / 2, Width - Width / 2, Height - Height / 2);
-      glClear(GL_COLOR_BUFFER_BIT); 
+      glClear(GL_COLOR_BUFFER_BIT);
 
       glDisable(GL_SCISSOR_TEST);
    }
@@ -169,7 +169,7 @@ Draw(void)
    glReadBuffer(GL_COLOR_ATTACHMENT0_EXT);
    glBindFramebufferEXT(GL_DRAW_FRAMEBUFFER_EXT, 0);
    glDrawBuffer(GL_BACK);
-   
+
    if (UseCopyPix) {
       glWindowPos2i(0, 0);
       glCopyPixels(0, 0, Width, Height, GL_COLOR);

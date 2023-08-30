@@ -105,14 +105,14 @@ static void Key(unsigned char key, int x, int y)
 
 static void Draw(void)
 {
-   glClear(GL_COLOR_BUFFER_BIT); 
+   glClear(GL_COLOR_BUFFER_BIT);
 
    glBegin(GL_TRIANGLES);
-   glTexCoord3f( 0,0,.9); 
+   glTexCoord3f( 0,0,.9);
    glVertex3f( 0.9, -0.9, -30.0);
-   glTexCoord3f(.9,0,0); 
+   glTexCoord3f(.9,0,0);
    glVertex3f( 0.9,  0.9, -30.0);
-   glTexCoord3f(0,.9,0); 
+   glTexCoord3f(0,.9,0);
    glVertex3f(-0.9,  0.0, -30.0);
    glEnd();
 

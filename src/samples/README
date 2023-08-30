@@ -407,11 +407,11 @@ sphere - Spheremap test.
         0		Use nearest magification filter.
         1		Use linear magification.
         2		Use nearest minification filter.
-        3		Use linear minification filter. 
-        4		Use nearest-mipmap-nearest minification filter. 
-        5		Use nearest-mipmap-linear minification filter. 
-        6		Use linear-mipmap-nearest minification filter. 
-        7		Use linear-mipmap-linear minification filter. 
+        3		Use linear minification filter.
+        4		Use nearest-mipmap-nearest minification filter.
+        5		Use nearest-mipmap-linear minification filter.
+        6		Use linear-mipmap-nearest minification filter.
+        7		Use linear-mipmap-linear minification filter.
 
 star - Demo.
     - RGBA, SB/DB (SB default).

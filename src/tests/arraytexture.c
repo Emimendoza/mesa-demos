@@ -267,7 +267,7 @@ static void Init(void)
                 256, 256, num_layers, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
    GL_CHECK_ERROR();
 
-   glTexParameteri(GL_TEXTURE_2D_ARRAY_EXT, GL_GENERATE_MIPMAP_SGIS, 
+   glTexParameteri(GL_TEXTURE_2D_ARRAY_EXT, GL_GENERATE_MIPMAP_SGIS,
                    GL_TRUE);
 
    for (i = 0; textures[i] != NULL; i++) {

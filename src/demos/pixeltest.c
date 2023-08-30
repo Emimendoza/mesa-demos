@@ -1,6 +1,6 @@
 
 /* Pixeltest for lines.
- * Hui Qi Tay 
+ * Hui Qi Tay
  *
  * Modified from
  * glReadPixels and glCopyPixels test by Brian Paul.
@@ -22,7 +22,7 @@ static int APosX, APosY;         /* simple drawpixels */
 static int BPosX, BPosY;         /* read/draw pixels */
 int MouseButton, MouseY, MouseX; /* mouse control */
 float X0 = 0.0f;           /* for line translation */
-float Y0 = 0.0f; 
+float Y0 = 0.0f;
 float X1 = 0.0f;
 float Y1 = 0.0f;
 float width = 1.0f;
@@ -68,7 +68,7 @@ drawzoomline(int x0, int y0, int x1, int y1, GLushort color)
 {
    /* Use the Bresenham Line Algorithm here. */
    GLboolean steep = (abs(y1 - y0) > abs(x1 - x0));
-      
+
    int deltax;
    int deltay;
    float error;
@@ -92,7 +92,7 @@ drawzoomline(int x0, int y0, int x1, int y1, GLushort color)
       y0 = y1;
       y1 = tem1;
    }
-      
+
    deltax = x1 - x0;
    deltay = abs(y1 - y0);
    error = 0.0;
@@ -100,10 +100,10 @@ drawzoomline(int x0, int y0, int x1, int y1, GLushort color)
    y = y0;
 
    if (y0 < y1)
-      ystep = 1; 
+      ystep = 1;
    else
       ystep = -1;
-  
+
    for (x = x0; x < x1; x++) {
       if (y>0 && x>0) {
          if (!steep) {
@@ -121,13 +121,13 @@ drawzoomline(int x0, int y0, int x1, int y1, GLushort color)
          error = error - 1.0;
       }
    }
-} 
+}
 
 static void
 drawline(float xf0, float yf0, float xf1, float yf1, GLushort color)
 {
    /* map line endpoints on to relevant pixel grids */
-   int x0 = xf0 * ZOOM; 
+   int x0 = xf0 * ZOOM;
    int y0 = yf0 * ZOOM;
    int x1 = xf1 * ZOOM;
    int y1 = yf1 * ZOOM;
@@ -156,7 +156,7 @@ plot(int x, int y, GLushort color)
          }
          else
             myImage[x*ZOOM+i][y*ZOOM+j]= color;
-      }   
+      }
    }
 }
 
@@ -168,52 +168,52 @@ drawMagnifiedView(void)
    int i, j;
 
    /* Sets up pixel grid for each pixel
-    */      
+    */
    for (i=0; i<128; i++){
       for (j=0; j<128; j++){
          plot(i, j, TempImage[i][j]);
       }
    }
-      
+
    switch (mode) {
    case GL_POINT:
-      /* Draws bounding point area */ 
-      drawline(X0+APosX-MouseX-halfwidth, Y0+APosY-MouseY-halfwidth, 
+      /* Draws bounding point area */
+      drawline(X0+APosX-MouseX-halfwidth, Y0+APosY-MouseY-halfwidth,
 	       X0+APosX-MouseX+halfwidth, Y0+APosY-MouseY-halfwidth, 0xffff);
-      drawline(X0+APosX-MouseX+halfwidth, Y0+APosY-MouseY-halfwidth, 
+      drawline(X0+APosX-MouseX+halfwidth, Y0+APosY-MouseY-halfwidth,
 	       X0+APosX-MouseX+halfwidth, Y0+APosY-MouseY+halfwidth, 0xffff);
-      drawline(X0+APosX-MouseX+halfwidth, Y0+APosY-MouseY+halfwidth, 
+      drawline(X0+APosX-MouseX+halfwidth, Y0+APosY-MouseY+halfwidth,
 	       X0+APosX-MouseX-halfwidth, Y0+APosY-MouseY+halfwidth, 0xffff);
-      drawline(X0+APosX-MouseX-halfwidth, Y0+APosY-MouseY+halfwidth, 
+      drawline(X0+APosX-MouseX-halfwidth, Y0+APosY-MouseY+halfwidth,
 	       X0+APosX-MouseX-halfwidth, Y0+APosY-MouseY-halfwidth, 0xffff);
       break;
    case GL_LINE:
       /* Draws the actual line on zoomed version */
-      drawline(X0+APosX-MouseX, Y0+APosY-MouseY, 
+      drawline(X0+APosX-MouseX, Y0+APosY-MouseY,
 	       X1+APosX-MouseX, Y1+APosY-MouseY, 0);
-	 
-      /* Draws bounding line area */ 
-      if (fabsf(X0 - X1) >= 
+
+      /* Draws bounding line area */
+      if (fabsf(X0 - X1) >=
 	  fabsf(Y0 - Y1)) {
 	 /* X-MAJOR line */
-	 drawline(X0+APosX-MouseX, Y0+APosY-MouseY+halfwidth, 
+	 drawline(X0+APosX-MouseX, Y0+APosY-MouseY+halfwidth,
 		  X1+APosX-MouseX, Y1+APosY-MouseY+halfwidth, 0xffff);
-	 drawline(X0+APosX-MouseX, Y0+APosY-MouseY-halfwidth, 
+	 drawline(X0+APosX-MouseX, Y0+APosY-MouseY-halfwidth,
 		  X1+APosX-MouseX, Y1+APosY-MouseY-halfwidth, 0xffff);
-	 drawline(X0+APosX-MouseX, Y0+APosY-MouseY+halfwidth, 
+	 drawline(X0+APosX-MouseX, Y0+APosY-MouseY+halfwidth,
 		  X0+APosX-MouseX, Y0+APosY-MouseY-halfwidth, 0xffff);
-	 drawline(X1+APosX-MouseX, Y1+APosY-MouseY+halfwidth, 
+	 drawline(X1+APosX-MouseX, Y1+APosY-MouseY+halfwidth,
 		  X1+APosX-MouseX, Y1+APosY-MouseY-halfwidth, 0xffff);
       }
       else {
 	 /* Y-MAJOR line */
-	 drawline(X0+APosX-MouseX+halfwidth, Y0+APosY-MouseY, 
+	 drawline(X0+APosX-MouseX+halfwidth, Y0+APosY-MouseY,
 		  X1+APosX-MouseX+halfwidth, Y1+APosY-MouseY, 0xffff);
-	 drawline(X0+APosX-MouseX-halfwidth, Y0+APosY-MouseY, 
+	 drawline(X0+APosX-MouseX-halfwidth, Y0+APosY-MouseY,
 		  X1+APosX-MouseX-halfwidth, Y1+APosY-MouseY, 0xffff);
-	 drawline(X0+APosX-MouseX+halfwidth, Y0+APosY-MouseY, 
+	 drawline(X0+APosX-MouseX+halfwidth, Y0+APosY-MouseY,
 		  X0+APosX-MouseX-halfwidth, Y0+APosY-MouseY, 0xffff);
-	 drawline(X1+APosX-MouseX+halfwidth, Y1+APosY-MouseY, 
+	 drawline(X1+APosX-MouseX+halfwidth, Y1+APosY-MouseY,
 		  X1+APosX-MouseX-halfwidth, Y1+APosY-MouseY, 0xffff);
       }
       break;
@@ -227,7 +227,7 @@ Display( void )
 
    glClearColor(.3, .3, .3, 1);
    glClear( GL_COLOR_BUFFER_BIT );
-   
+
    /* draw original image */
 
    glViewport(APosX, APosY, ImgWidth, ImgHeight);
@@ -240,7 +240,7 @@ Display( void )
    /* Blue background
     */
    glBegin(GL_POLYGON);
-   glColor3f(.5,.5,1); 
+   glColor3f(.5,.5,1);
    glVertex3f(0, 0, z);
    glVertex3f(0, 150, z);
    glVertex3f(150, 150, z);
@@ -267,7 +267,7 @@ Display( void )
       glBegin(GL_LINES);
       glColor3f(.8,0,0);
       glVertex3f(X0, Y0, z);
-      glColor3f(0,.9,0); 
+      glColor3f(0,.9,0);
       glVertex3f(X1, Y1, z);
       glEnd();
       break;
@@ -278,7 +278,7 @@ Display( void )
    glMatrixMode( GL_PROJECTION );
    glLoadIdentity();
    glOrtho( 0.0, WinWidth, 0.0, WinHeight, -1.0, 1.0 );
-   
+
    /* might try alignment=4 here for testing */
    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
    glPixelStorei(GL_PACK_ALIGNMENT, 1);
@@ -289,24 +289,24 @@ Display( void )
    glVertex3f(590, 800, 0);
    glVertex3f(590, 670, 0);
    glVertex3f(990, 670, 0);
-   glVertex3f(990, 800, 0);   
-   glVertex3f(590, 800, 0);   
+   glVertex3f(990, 800, 0);
+   glVertex3f(590, 800, 0);
    glEnd();
 
    glRasterPos2i(600, 780);
    PrintString("Key:");
-   glRasterPos2i(600, 760);   
+   glRasterPos2i(600, 760);
    PrintString(" Change linewidth: v/b");
-   glRasterPos2i(600, 740);   
+   glRasterPos2i(600, 740);
    PrintString(" Move whole line: UP/DOWN/LEFT/RIGHT arrow keys");
-   glRasterPos2i(600, 720);   
+   glRasterPos2i(600, 720);
    PrintString(" Move endpoint: i/k/j/l");
-   glRasterPos2i(600, 700);   
+   glRasterPos2i(600, 700);
    PrintString(" Move startpoint: w/s/a/d");
    glRasterPos2i(600, 680);
    PrintString(" Change view: drag/click mouse");
 
-   glRasterPos2i(8, ImgHeight+30);   
+   glRasterPos2i(8, ImgHeight+30);
    PrintString("Zoom Pixel Test");
 
    glRasterPos2i(APosX, 5);
@@ -322,11 +322,11 @@ Display( void )
    /* Read pixels from the color buffer */
    glReadPixels(MouseX, MouseY, ImgWidth, ImgHeight,
                 ReadFormat, ReadType, TempImage);
-   
+
    glRasterPos2i(BPosX, BPosY);
    glDisable(GL_DITHER);
    drawMagnifiedView();
- 
+
    /* Write pixels to the frame buffer */
    glDrawPixels(ImgWidth*5, ImgHeight*5, ReadFormat, ReadType, myImage);
 
@@ -352,7 +352,7 @@ Reshape( int width, int height )
 }
 
 
-static void 
+static void
 Key( unsigned char key, int x, int y)
 {
    switch (key) {
@@ -393,9 +393,9 @@ Key( unsigned char key, int x, int y)
       return;
    }
    glutPostRedisplay();
-} 
+}
 
-static void 
+static void
 SpecialKey( int k, int x, int y)
 {
    switch (k) {
@@ -419,9 +419,9 @@ SpecialKey( int k, int x, int y)
       return;
    }
    glutPostRedisplay();
-} 
- 
-static void 
+}
+
+static void
 Mouse(int button, int state, int x, int y)
 {
    /* if left mouse button is pressed and dragged
@@ -438,7 +438,7 @@ Mouse(int button, int state, int x, int y)
    glutPostRedisplay();
 }
 
-static void 
+static void
 processMouseMotion(int x, int y)
 {
     MouseX = x;
@@ -473,7 +473,7 @@ main( int argc, char *argv[] )
 {
    glutInitWindowSize( 1000, 800 );
    glutInit( &argc, argv );
-  
+
    glutInitDisplayMode( GLUT_RGB | GLUT_DOUBLE );
    glutCreateWindow(argv[0]);
    Init();

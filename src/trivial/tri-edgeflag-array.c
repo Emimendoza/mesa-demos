@@ -82,7 +82,7 @@ Draw(void)
       { -0.9, 0.0, 0.0 }
    };
 
-   glClear(GL_COLOR_BUFFER_BIT); 
+   glClear(GL_COLOR_BUFFER_BIT);
    glPolygonMode(GL_FRONT, GL_LINE);
    glPolygonMode(GL_BACK, GL_POINT);
 

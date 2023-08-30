@@ -28,7 +28,7 @@ static void Init( void )
 {
    GLint errnum;
    GLuint prognum;
-   
+
    static const char *prog1 =
       "!!ARBvp1.0\n"
       "MOV  result.color, vertex.color;\n"
@@ -71,7 +71,7 @@ static void Display( void )
 
    glDrawRangeElements( GL_TRIANGLES, 1, 3, 3, GL_UNSIGNED_INT, indices );
 
-   glFlush(); 
+   glFlush();
 }
 
 

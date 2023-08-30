@@ -80,7 +80,7 @@ GLubyte checkImage[3*CHECKIMAGEWIDTH*CHECKIMAGEHEIGHT] = {
     WH, BL, BL, BL, WH, WH, WH, BL, BL, BL, WH, WH, WH, BL, BL, BL,
     BL, BL, BL, WH, WH, WH, BL, BL, BL, WH, WH, WH, BL, BL, BL, WH,
     WH, WH, BL, BL, BL, WH, WH, WH, WH, WH, WH, BL, BL, BL, WH, WH,
-    WH, BL, BL, BL, WH, WH, WH, BL, BL, BL, WH, WH, WH, BL, BL, BL, 
+    WH, BL, BL, BL, WH, WH, WH, BL, BL, BL, WH, WH, WH, BL, BL, BL,
 };
 GLubyte brickImage[4*BRICKIMAGEWIDTH*BRICKIMAGEHEIGHT] = {
     RD, RD, RD, RD, RD, RD, RD, RD, RD, WT, RD, RD, RD, RD, RD, RD,
@@ -1291,7 +1291,7 @@ static void Init(void)
     glLightfv(GL_LIGHT0, GL_POSITION, position);
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
-    
+
     glMaterialfv(GL_FRONT, GL_SHININESS, front_mat_shininess);
     glMaterialfv(GL_FRONT, GL_SPECULAR, front_mat_specular);
     glMaterialfv(GL_FRONT, GL_DIFFUSE, front_mat_diffuse);
@@ -1471,7 +1471,7 @@ static void Key(unsigned char key, int x, int y)
       case 'r':
 	glFrontFace(GL_CW);
 	break;
-      case 't': 
+      case 't':
 	glFrontFace(GL_CCW);
 	break;
       case 'y':

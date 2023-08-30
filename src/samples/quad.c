@@ -120,7 +120,7 @@ static void Init(void)
 	SetGreyRamp();
     }
     glClearColor(0.0, 0.0, 0.0, 0.0);
-    
+
     glEnable(GL_DEPTH_TEST);
 
     glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
@@ -249,7 +249,7 @@ static void Key(unsigned char key, int x, int y)
       case 'a':
 	stacks--;
 	break;
-    
+
       case 'S':
 	slices++;
 	break;
@@ -335,7 +335,7 @@ static void Key(unsigned char key, int x, int y)
       case 'r':
 	glFrontFace(GL_CW);
 	break;
-      case 't': 
+      case 't':
 	glFrontFace(GL_CCW);
 	break;
 
@@ -364,14 +364,14 @@ static void Draw(void)
     switch (whichQuadric) {
       case 0:
 	glTranslatef(0, 0, -height/20.0);
-	gluCylinder(quadObj, radius1/10.0, radius2/10.0, height/10.0, 
+	gluCylinder(quadObj, radius1/10.0, radius2/10.0, height/10.0,
 		    slices, stacks);
 	break;
       case 1:
 	gluSphere(quadObj, radius1/10.0, slices, stacks);
 	break;
       case 2:
-	gluPartialDisk(quadObj, radius2/10.0, radius1/10.0, slices, 
+	gluPartialDisk(quadObj, radius2/10.0, radius1/10.0, slices,
 		       stacks, angle1, angle2);
 	break;
       case 3:

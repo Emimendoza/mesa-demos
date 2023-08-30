@@ -68,7 +68,7 @@ static void Draw(void)
     glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 
     glColor3ub(200, 0, 0);
-    glBegin(GL_POLYGON);        
+    glBegin(GL_POLYGON);
 	glVertex3i(-4, -4, 0);
 	glVertex3i( 4, -4, 0);
 	glVertex3i( 0,  4, 0);

@@ -24,7 +24,7 @@ static void RunTest(void)
    glGetIntegerv(GL_STENCIL_BITS, &bits);
    max = (1 << bits) - 1;
 
-   
+
    glEnable(GL_STENCIL_TEST);
    glStencilFunc(GL_ALWAYS, 0, ~0);
 
@@ -109,7 +109,7 @@ static void RunTest(void)
 	 printf( "Failed GL_INCR test on iteration #%u "
 		 "(got %u, expected %u)\n", i, val, expected );
 	 failed = GL_TRUE;
-      }	   
+      }
    }
    if ( !failed )
       printf("OK!\n");
@@ -131,7 +131,7 @@ static void RunTest(void)
 	 printf( "Failed GL_DECR test on iteration #%u "
 		 "(got %u, expected %u)\n", max - i, val, expected );
 	 failed = GL_TRUE;
-      }	   
+      }
    }
    if ( !failed )
       printf("OK!\n");
@@ -176,7 +176,7 @@ static void RunTest(void)
 	    printf( "Failed GL_INCR_WRAP test on iteration #%u "
 		 "(got %u, expected %u)\n", i, val, expected );
 	    failed = GL_TRUE;
-         }	   
+         }
       }
       if ( !failed )
          printf("OK!\n");
@@ -198,7 +198,7 @@ static void RunTest(void)
             printf( "Failed GL_DECR_WRAP test on iteration #%u "
                "(got %u, expected %u)\n", max - i, val, expected );
             failed = GL_TRUE;
-         }	   
+         }
       }
       if ( !failed )
          printf("OK!\n");

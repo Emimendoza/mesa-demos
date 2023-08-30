@@ -14,10 +14,10 @@
 struct {
    GLfloat pos[4];
    GLfloat color[4];
-} verts[] =  
+} verts[] =
 {
    { {  -0.9, -0.9, 0.0, 1.0 },
-     {.8,0,0, 1}, 
+     {.8,0,0, 1},
    },
 
    { {  0.9,  -0.9, 0.0, 1.0 },
@@ -25,7 +25,7 @@ struct {
    },
 
    { { 0,  0.9, 0.0, 1.0 },
-     {0,0,.7, 1}, 
+     {0,0,.7, 1},
    },
 };
 
@@ -35,7 +35,7 @@ static void Init( void )
 {
    GLint errnum;
    GLuint prognum;
-   
+
    static const char *prog1 =
       "!!ARBvp1.0\n"
       "MOV  result.color, vertex.color;\n"

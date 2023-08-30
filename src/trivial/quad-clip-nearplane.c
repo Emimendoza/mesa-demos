@@ -77,19 +77,19 @@ static void Key(unsigned char key, int x, int y)
 
 static void Draw(void)
 {
-   glClear(GL_COLOR_BUFFER_BIT); 
+   glClear(GL_COLOR_BUFFER_BIT);
 
    glPushMatrix();
    glTranslatef(0, -0.5, Z);
 
    glBegin(GL_QUADS);
-   glColor3f(1,0,0); 
+   glColor3f(1,0,0);
    glVertex3f( -0.8, 0, -4.0);
-   glColor3f(1,1,0); 
+   glColor3f(1,1,0);
    glVertex3f(  0.8, 0, -4.0);
-   glColor3f(1,0,1); 
+   glColor3f(1,0,1);
    glVertex3f(  0.8, 0,  4.0);
-   glColor3f(0,1,1); 
+   glColor3f(0,1,1);
    glVertex3f( -0.8, 0,  4.0);
    glEnd();
 

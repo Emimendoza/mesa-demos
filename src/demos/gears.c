@@ -33,7 +33,7 @@ static GLfloat viewDist = 40.0;
 
   Draw a gear wheel.  You'll probably want to call this function when
   building a display list since we do a lot of trig here.
- 
+
   Input:  inner_radius - radius of hole at center
           outer_radius - radius at center of teeth
           width - width of gear
@@ -378,7 +378,7 @@ init(int argc, char *argv[])
 }
 
 
-static void 
+static void
 visible(int vis)
 {
    Visible = vis;

@@ -145,7 +145,7 @@ MakeTexture(void)
          int p1 = i - j, p2 = TEX_SIZE - 1 - i - j;
          p1 = (p1 >= -2 && p1 <= 2);
          p2 = (p2 >= -2 && p2 <= 2);
-         if (p1 || p2) {             
+         if (p1 || p2) {
             image[i][j][0] = 255;
             image[i][j][1] = 255;
             image[i][j][2] = 255;

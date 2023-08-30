@@ -12,11 +12,11 @@
 struct {
    GLfloat pos[4][4];
    GLfloat col[4][4];
-} verts =  
+} verts =
 {
    /* Position: a quad
     */
-   { 
+   {
       {  0.9, -0.9, 0.0, 1.0 },
       {  0.9,  0.9, 0.0, 1.0 },
       { -0.9,  0.9, 0.0, 1.0 },
@@ -25,7 +25,7 @@ struct {
 
    /* Color: all red
     */
-   { 
+   {
       { 1.0, 0.0, 0.0, 1.0 },
       { 1.0, 0.0, 0.0, 1.0 },
       { 1.0, 0.0, 0.0, 1.0 },
@@ -41,7 +41,7 @@ static void Init( void )
 {
    GLint errnum;
    GLuint prognum;
-   
+
    static const char *prog1 =
       "!!ARBvp1.0\n"
       "MOV  result.color, vertex.color;\n"
@@ -91,7 +91,7 @@ static void Display( void )
    /* glDrawArrays( GL_TRIANGLES, 1, 3 ); */
    glDrawArrays( GL_QUADS, 0, 4 );
 
-   glFlush(); 
+   glFlush();
 }
 
 

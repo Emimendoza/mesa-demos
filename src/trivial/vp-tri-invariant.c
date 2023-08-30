@@ -18,7 +18,7 @@ static void Init(void)
 {
    GLint errnum;
    GLuint prognum;
-   
+
    static const char *prog1 =
       "!!ARBvp1.0\n"
       "OPTION ARB_position_invariant ;"
@@ -77,16 +77,16 @@ static void Key(unsigned char key, int x, int y)
 
 static void Draw(void)
 {
-   glClear(GL_COLOR_BUFFER_BIT); 
+   glClear(GL_COLOR_BUFFER_BIT);
 
    glEnable(GL_VERTEX_PROGRAM_ARB);
 
    glBegin(GL_TRIANGLES);
-   glColor3f(0,0,.7); 
+   glColor3f(0,0,.7);
    glVertex3f( 0.9, -0.9, -0.0);
-   glColor3f(.8,0,0); 
+   glColor3f(.8,0,0);
    glVertex3f( 0.9,  0.9, -0.0);
-   glColor3f(0,.9,0); 
+   glColor3f(0,.9,0);
    glVertex3f(-0.9,  0.0, -0.0);
    glEnd();
 

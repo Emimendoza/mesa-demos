@@ -552,7 +552,7 @@ doOneDisplay(EGLDisplay d, const char *name, struct options opts)
 #endif
 
    const char *display_exts = eglQueryString(d, EGL_EXTENSIONS);
-   
+
    if (opts.mode != Brief)
       PrintDisplayExtensions(d, opts.single_line);
 
@@ -576,7 +576,7 @@ doOneDisplay(EGLDisplay d, const char *name, struct options opts)
 
    int version;
 
-   if (has_opengl && (do_opengl_core || do_opengl_compat)) 
+   if (has_opengl && (do_opengl_core || do_opengl_compat))
    {
       EGLBoolean api_result = eglBindAPI(EGL_OPENGL_API);
       if (api_result) {
@@ -694,7 +694,7 @@ doDevices(const char *name, struct options opts)
 static void
 usage(void)
 {
-   /* 
+   /*
     * Usage portion of the help message
     */
 
@@ -707,7 +707,7 @@ usage(void)
 
    printf(" [-p <platform>]\n");
 
-   /* 
+   /*
     * Detailed portion of the help message
     */
 
@@ -835,7 +835,7 @@ doExtExplicitDevice(struct options opts, const char *clientext)
      eglGetProcAddress("eglQueryDevicesEXT");
    EGLDeviceEXT *devices;
    EGLint max_devices, num_devices;
-   
+
    if (opts.platform != ALL)
       return 0;
 

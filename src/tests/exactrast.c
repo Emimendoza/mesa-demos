@@ -12,7 +12,7 @@
  * - Use cursor keys to translate coordinates (z to reset)
  * - Resize window to check for proper rasterization
  * - Make sure your LCD is running in its native resolution
- *   
+ *
  * If translation is (0,0):
  *  a point will be drawn where x%2==0 and y%2==0,
  *  a horizontal line will be drawn where x%2==0,

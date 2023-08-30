@@ -96,11 +96,11 @@ static void Draw( void )
    CheckError();
 
    glBegin(GL_TRIANGLES);
-   glColor3f(0,0,.7); 
+   glColor3f(0,0,.7);
    glVertex3f( 0.9, -0.9, -30.0);
-   glColor3f(.8,0,0); 
+   glColor3f(.8,0,0);
    glVertex3f( 0.9,  0.9, -30.0);
-   glColor3f(0,.9,0); 
+   glColor3f(0,.9,0);
    glVertex3f(-0.9,  0.0, -30.0);
    glEnd();
 
@@ -121,21 +121,21 @@ static void Draw( void )
 
       glWindowPos2iARB(30, 30);
       glDrawPixels(Width-60, Height-60, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
-      
-      
+
+
       free(buffer);
    }
-   
+
    /* Bind normal framebuffer */
    glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
 
    if (1) {
       glBegin(GL_TRIANGLES);
-      glColor3f(0,.7,0); 
+      glColor3f(0,.7,0);
       glVertex3f( 0.5, -0.5, -30.0);
-      glColor3f(0,0,.8); 
+      glColor3f(0,0,.8);
       glVertex3f( 0.5,  0.5, -30.0);
-      glColor3f(.9,0,0); 
+      glColor3f(.9,0,0);
       glVertex3f(-0.5,  0.0, -30.0);
       glEnd();
    }

@@ -2,6 +2,6 @@
 TEMP R0;
 ADD R0, vertex.color, vertex.color;
 ADD R0, R0, R0;
-LOG result.color, R0.x; 
+LOG result.color, R0.x;
 MOV result.position, vertex.position;
 END

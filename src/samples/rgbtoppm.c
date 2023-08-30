@@ -5,7 +5,7 @@
 
 #include <assert.h>
 #include <stdio.h>
-#include <stdlib.h> 
+#include <stdlib.h>
 #include <string.h>
 
 #include "glut_wrap.h"
@@ -219,7 +219,7 @@ read_rgb_texture(char *name, int *width, int *height)
     int y;
 
     image = ImageOpen(name);
-    
+
     if(!image)
         return NULL;
     (*width)=image->xsize;
@@ -240,7 +240,7 @@ read_rgb_texture(char *name, int *width, int *height)
       if (gbuf) free(gbuf);
       if (bbuf) free(bbuf);
       if (abuf) free(abuf);
-      ImageClose(image); 
+      ImageClose(image);
       return NULL;
     }
     ptr = base;

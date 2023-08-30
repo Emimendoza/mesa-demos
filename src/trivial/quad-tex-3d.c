@@ -108,18 +108,18 @@ static void Key(unsigned char key, int x, int y)
 
 static void Draw(void)
 {
-   glClear(GL_COLOR_BUFFER_BIT); 
+   glClear(GL_COLOR_BUFFER_BIT);
 
    fprintf(stderr, "z: %f\n", z);
 
    glBegin(GL_QUADS);
-   glTexCoord3f(1,0,z); 
+   glTexCoord3f(1,0,z);
    glVertex3f( 0.9, -0.9, -30.0);
-   glTexCoord3f(1,1,z); 
+   glTexCoord3f(1,1,z);
    glVertex3f( 0.9,  0.9, -30.0);
-   glTexCoord3f(0,1,z); 
+   glTexCoord3f(0,1,z);
    glVertex3f(-0.9,  0.9, -30.0);
-   glTexCoord3f(0,0,z); 
+   glTexCoord3f(0,0,z);
    glVertex3f(-0.9,  -0.9, -30.0);
    glEnd();
 

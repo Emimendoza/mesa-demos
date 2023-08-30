@@ -89,7 +89,7 @@ static unsigned iconv(int x, int y, int z, int w)
 
 static void Draw(void)
 {
-   glClear(GL_COLOR_BUFFER_BIT); 
+   glClear(GL_COLOR_BUFFER_BIT);
 
    glBegin(GL_TRIANGLES);
    glColorP3ui(GL_UNSIGNED_INT_2_10_10_10_REV, conv(820, 0, 0, 0));

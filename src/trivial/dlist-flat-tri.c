@@ -45,7 +45,7 @@ static void Init(void)
    glClearColor(0.0, 0.0, 1.0, 0.0);
 
    list = glGenLists(1);
-   glNewList(list, GL_COMPILE); 
+   glNewList(list, GL_COMPILE);
 
    /* XXX: this state-change will only be executed if list is called
     * from outside a begin/end pair:
@@ -104,7 +104,7 @@ static void Key(unsigned char key, int x, int y)
 
 static void Draw(void)
 {
-   glClear(GL_COLOR_BUFFER_BIT); 
+   glClear(GL_COLOR_BUFFER_BIT);
 
    glShadeModel( GL_SMOOTH );
 

@@ -21,7 +21,7 @@
   THE SOFTWARE.
 */
 
-// Simplified version of the algorithm described in 
+// Simplified version of the algorithm described in
 // K. Ralovich, M. Magdics: Recursive Ray Tracing in Geometry Shader,
 // Proceedings of the Fifth Hungarian Conference on Computer Graphics and
 // Geometry, Budapest, Hungary, 26 Jan 2010.
@@ -252,7 +252,7 @@ static const char* vsSource =
 "}\n";
 
 
-static const char* gsSource = 
+static const char* gsSource =
 "#version 150 core                                                        \n"
 "#line " S__LINE__ "\n"
 "layout(points) in;                                                       \n"
@@ -392,7 +392,7 @@ static const char* gsSource =
 "#endif\n"
 "}\n";
 
-static const char* fsSource = 
+static const char* fsSource =
 "#version 150 core                                                        \n"
 "#line " S__LINE__ "\n"
 "                                                                         \n"

@@ -43,7 +43,7 @@ static void Init(void)
    fprintf(stderr, "GL_VENDOR     = %s\n", (char *) glGetString(GL_VENDOR));
    fflush(stderr);
 
-   glClearColor(0.0, 0.0, 1.0, 0.0);	
+   glClearColor(0.0, 0.0, 1.0, 0.0);
    glClipPlane(GL_CLIP_PLANE0, plane);
    glEnable(GL_CLIP_PLANE0);
 }
@@ -74,16 +74,16 @@ static void Key(unsigned char key, int x, int y)
 
 static void Draw(void)
 {
-   glClear(GL_COLOR_BUFFER_BIT); 
+   glClear(GL_COLOR_BUFFER_BIT);
 
    glBegin(GL_LINE_STRIP);
-   glColor3f(0,0,.7); 
+   glColor3f(0,0,.7);
    glVertex3f( 0.9, -0.9, 0.0);
-   glColor3f(.8,0,0); 
+   glColor3f(.8,0,0);
    glVertex3f( 0.9,  0.9, 0.0);
-   glColor3f(0,.9,0); 
+   glColor3f(0,.9,0);
    glVertex3f(-0.9,  0.0, 0.0);
-   glColor3f(0,0,.7); 
+   glColor3f(0,0,.7);
    glVertex3f( 0.9, -0.9, 0.0);
    glEnd();
 

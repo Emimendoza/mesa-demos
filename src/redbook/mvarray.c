@@ -23,7 +23,7 @@
  * LIABILITY, ARISING OUT OF OR IN CONNECTION WITH THE POSSESSION, USE
  * OR PERFORMANCE OF THIS SOFTWARE.
  *
- * US Government Users Restricted Rights 
+ * US Government Users Restricted Rights
  * Use, duplication, or disclosure by the Government is subject to
  * restrictions set forth in FAR 52.227.19(c)(2) or subparagraph
  * (c)(1)(ii) of the Rights in Technical Data and Computer Software
@@ -70,7 +70,7 @@ static void setupPointer(void)
    glVertexPointer (2, GL_INT, 0, vertices);
 }
 
-static void init(void) 
+static void init(void)
 {
    glClearColor (0.0, 0.0, 0.0, 0.0);
    glShadeModel (GL_SMOOTH);
@@ -83,7 +83,7 @@ static void display(void)
    static GLubyte twoIndices[] = {1, 7, 8, 9, 10, 11};
    static GLsizei count[] = {7, 6};
    static GLvoid * indices[2] = {oneIndices, twoIndices};
-   
+
    glClear (GL_COLOR_BUFFER_BIT);
    glColor3f (1.0, 1.0, 1.0);
    glMultiDrawElementsEXT (GL_LINE_STRIP, count, GL_UNSIGNED_BYTE,
@@ -112,12 +112,12 @@ int main(int argc, char** argv)
 {
    glutInit(&argc, argv);
    glutInitDisplayMode (GLUT_SINGLE | GLUT_RGB);
-   glutInitWindowSize (350, 350); 
+   glutInitWindowSize (350, 350);
    glutInitWindowPosition (100, 100);
    glutCreateWindow (argv[0]);
    gladLoaderLoadGL();
    init ();
-   glutDisplayFunc(display); 
+   glutDisplayFunc(display);
    glutReshapeFunc(reshape);
    glutKeyboardFunc (keyboard);
    glutMainLoop();

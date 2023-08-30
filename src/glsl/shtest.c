@@ -252,7 +252,7 @@ static void
 Redisplay(void)
 {
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-   
+
    glPushMatrix();
    glRotatef(xRot, 1.0f, 0.0f, 0.0f);
    glRotatef(yRot, 0.0f, 1.0f, 0.0f);
@@ -435,7 +435,7 @@ LoadTexture(GLint unit, GLenum target, const char *texFileName)
    }
 
    free(image);
-      
+
    glTexParameteri(objTarget, GL_TEXTURE_WRAP_S, GL_REPEAT);
    glTexParameteri(objTarget, GL_TEXTURE_WRAP_T, GL_REPEAT);
    glTexParameteri(objTarget, GL_TEXTURE_MIN_FILTER, filter);

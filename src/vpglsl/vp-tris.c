@@ -327,9 +327,9 @@ static void Key( unsigned char key, int x, int y )
       break;
    case '+':
       nr_steps++;
-      break; 
+      break;
    case '-':
-      if (nr_steps) 
+      if (nr_steps)
          nr_steps--;
       break;
    case ' ':

@@ -101,7 +101,7 @@ float simplexNoise3(vec3 v)
 // First corner
   vec3 i = floor(v + dot(v, C.yyy) );
   vec3 x0 = v - i + dot(i, C.xxx) ;
-  
+
 // Other corners
 #ifdef COLLAPSE_SORTNET
   vec3 g = vec3( greaterThan( x0.xyz, x0.yzx) );
@@ -218,7 +218,7 @@ float simplexNoise4(vec4 v)
   vec4 q2;
   q2.xz = max(q1.xz,q1.yw); // x:y z:w
   q2.yw = min(q1.xz,q1.yw);
-  
+
   vec4 q3;
   q3.y = max(q2.y,q2.z); // y:z
   q3.z = min(q2.y,q2.z);

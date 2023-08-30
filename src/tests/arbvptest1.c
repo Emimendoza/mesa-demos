@@ -52,9 +52,9 @@ static void Key( unsigned char key, int x, int y )
 
 static void load_program(const char *prog, GLuint prognum)
 {
-   int a;	
+   int a;
    GLint errorpos, errnum;
-   
+
    glBindProgramARB(GL_VERTEX_PROGRAM_ARB, prognum);
    glProgramStringARB(GL_VERTEX_PROGRAM_ARB, GL_PROGRAM_FORMAT_ASCII_ARB,
                         strlen(prog), (const GLubyte *) prog);
@@ -70,10 +70,10 @@ static void load_program(const char *prog, GLuint prognum)
 
       for (a=-10; a<10; a++)
       {
-         if ((errorpos+a < 0) || (errorpos+a >= strlen(prog))) continue;	      
+         if ((errorpos+a < 0) || (errorpos+a >= strlen(prog))) continue;
          printf("%c", prog[errorpos+a]);
-      }	  
-      printf("\n");      
+      }
+      printf("\n");
       exit(1);
    }
 }
@@ -81,10 +81,10 @@ static void load_program(const char *prog, GLuint prognum)
 static void Init( void )
 {
    GLuint prognum[4];
-   
+
    static const char *prog1 =
       "!!ARBvp1.0\n"
-      "TEMP R0;\n"      
+      "TEMP R0;\n"
       "MUL   result.color.primary.xyz, R0, program.local[35]; \n"
       "END\n";
    static const char *prog2 =
@@ -95,7 +95,7 @@ static void Init( void )
       "# c[35]   = yellow diffuse material, (1.0, 1.0, 0.0, 1.0)\n"
       "# c[64].x = 0.0\n"
       "# c[64].z = 0.125, a scaling factor\n"
-      "TEMP R0, R1;\n"      
+      "TEMP R0, R1;\n"
       "#\n"
       "# outputs diffuse illumination for color and perturbed position\n"
       "#\n"
@@ -110,16 +110,16 @@ static void Init( void )
       "DP4   result.position.z, state.matrix.mvp.row[2], R1; \n"
       "DP4   result.position.w, state.matrix.mvp.row[3], R1; \n"
       "END\n";
-   static const char *prog3 = 
+   static const char *prog3 =
       "!!ARBvp1.0\n"
-      "TEMP R0, R1, R2, R3;\n"      
+      "TEMP R0, R1, R2, R3;\n"
       "DP4   result.position.x, state.matrix.mvp.row[0], vertex.position;\n"
       "DP4   result.position.y, state.matrix.mvp.row[1], vertex.position;\n"
       "DP4   result.position.z, state.matrix.mvp.row[2], vertex.position;\n"
       "DP4   result.position.w, state.matrix.mvp.row[3], vertex.position;\n"
       "DP3   R0.x, state.matrix.modelview.inverse.row[0], vertex.normal;\n"
       "DP3   R0.y, state.matrix.modelview.inverse.row[1], vertex.normal;\n"
-      "DP3   R0.z, state.matrix.modelview.inverse.row[2], vertex.normal;\n" 
+      "DP3   R0.z, state.matrix.modelview.inverse.row[2], vertex.normal;\n"
       "DP3   R1.x, program.env[32], R0;               # R1.x = Lpos DOT n'\n"
       "DP3   R1.y, program.env[33], R0;               # R1.y = hHat DOT n'\n"
       "MOV   R1.w, program.local[38].x;               # R1.w = specular power\n"
@@ -127,13 +127,13 @@ static void Init( void )
       "MAD   R3, program.env[35].x, R2.y, program.env[35].y;       # diffuse + emissive\n"
       "MAD   result.color.primary.xyz, program.env[36], R2.z, R3;  # + specular\n"
       "END\n";
-   static const char *prog4 = 
+   static const char *prog4 =
       "!!ARBvp1.0\n"
       "TEMP R2, R3;\n"
       "PARAM foo = {0., 0., 0., 1.};\n"
       "PARAM blah[] = { program.local[0..8] };\n"
-      "ADDRESS A0;\n"		
-      "ARL   A0.x, foo.x;\n"   
+      "ADDRESS A0;\n"
+      "ARL   A0.x, foo.x;\n"
       "DP4   R2, R3, blah[A0.x].x;\n"
       "DP4   R2, R3, blah[A0.x + 5];\n"
       "DP4   result.position, R3, blah[A0.x - 4];\n"
@@ -141,10 +141,10 @@ static void Init( void )
 
    glGenProgramsARB(4, prognum);
 
-   load_program(prog1, prognum[0]);   
-   load_program(prog2, prognum[1]);   
-   load_program(prog3, prognum[2]);   
-   load_program(prog4, prognum[3]);   
+   load_program(prog1, prognum[0]);
+   load_program(prog2, prognum[1]);
+   load_program(prog3, prognum[2]);
+   load_program(prog4, prognum[3]);
 }
 
 

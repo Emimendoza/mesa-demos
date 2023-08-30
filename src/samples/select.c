@@ -153,8 +153,8 @@ static GLint DoSelect(GLint x, GLint y)
     Render(GL_SELECT);
 
     glPopMatrix();
-    
-    hits = glRenderMode(GL_RENDER); 
+
+    hits = glRenderMode(GL_RENDER);
     if (hits <= 0) {
 	return -1;
     }
@@ -350,7 +350,7 @@ static void DrawFeedback(GLint n)
     printf("\n");
 }
 
-static void DoFeedback(void) 
+static void DoFeedback(void)
 {
     GLint x;
 
@@ -376,8 +376,8 @@ static void DoFeedback(void)
     Render(GL_FEEDBACK);
 
     glPopMatrix();
-    
-    x = glRenderMode(GL_RENDER); 
+
+    x = glRenderMode(GL_RENDER);
     if (x == -1) {
 	x = MAXFEED;
     }

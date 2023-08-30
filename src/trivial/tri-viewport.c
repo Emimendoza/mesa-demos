@@ -130,7 +130,7 @@ static void Draw(void)
    glLoadIdentity();
 
 
-   glClear(GL_COLOR_BUFFER_BIT); 
+   glClear(GL_COLOR_BUFFER_BIT);
 
 
    /***********************************************************************
@@ -139,7 +139,7 @@ static void Draw(void)
    glViewport(tx, ty, w, h);
 
    glBegin(GL_POLYGON);
-   glColor3f(1,1,0); 
+   glColor3f(1,1,0);
    glVertex3f(-100, -100, z);
    glVertex3f(-100, 100, z);
    glVertex3f(100, 100, z);
@@ -147,7 +147,7 @@ static void Draw(void)
    glEnd();
 
    glBegin(GL_POLYGON);
-   glColor3f(0,1,1); 
+   glColor3f(0,1,1);
    glVertex3f(-10, -10, z);
    glVertex3f(-10, 10, z);
    glVertex3f(10, 10, z);
@@ -155,7 +155,7 @@ static void Draw(void)
    glEnd();
 
    glBegin(GL_POLYGON);
-   glColor3f(1,0,0); 
+   glColor3f(1,0,0);
    glVertex3f(-2, -2, z);
    glVertex3f(-2, 2, z);
    glVertex3f(2, 2, z);
@@ -164,7 +164,7 @@ static void Draw(void)
 
 
    glBegin(GL_POLYGON);
-   glColor3f(.5,.5,1); 
+   glColor3f(.5,.5,1);
    glVertex3f(-1, -1, z);
    glVertex3f(-1, 1, z);
    glVertex3f(1, 1, z);
@@ -175,7 +175,7 @@ static void Draw(void)
     */
    glViewport(0, 0, win_width, win_height);
    glBegin(GL_LINES);
-   glColor3f(1,1,0); 
+   glColor3f(1,1,0);
    glVertex3f(-1, 0, z);
    glVertex3f(1, 0, z);
 
@@ -188,7 +188,7 @@ static void Draw(void)
     */
    glViewport(tx, ty, w, h);
    glBegin(GL_TRIANGLES);
-   glColor3f(1,0,0); 
+   glColor3f(1,0,0);
    glVertex3f(-1, -1, z);
    glVertex3f(0, -1, z);
    glVertex3f(-.5,  -.5, z);
@@ -203,7 +203,7 @@ static void Draw(void)
    glVertex3f(0,  0, z);
 
 
-   glColor3f(0,1,0); 
+   glColor3f(0,1,0);
    glVertex3f(1, 1, z);
    glVertex3f(0, 1, z);
    glVertex3f(.5,  .5, z);
@@ -223,7 +223,7 @@ static void Draw(void)
    glViewport(0, 0, win_width, win_height);
 
    glBegin(GL_LINES);
-   glColor3f(.5,.5,0); 
+   glColor3f(.5,.5,0);
    for (i = -10; i < 10; i++) {
       float f = i / 10.0;
 
@@ -319,7 +319,7 @@ int main(int argc, char **argv)
    Init();
 
    glutReshapeFunc(Reshape);
-   glutKeyboardFunc(Key); 
+   glutKeyboardFunc(Key);
    glutSpecialFunc(special);
    glutDisplayFunc(Draw);
    glutMainLoop();

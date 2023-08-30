@@ -193,7 +193,7 @@ int main(int argc, char *argv[])
       ret = -1;
       goto destroy_gbm_device;
    }
-	
+
    if (!eglInitialize(dpy, &major, &minor)) {
       printf("eglInitialize() failed\n");
       ret = -1;
@@ -215,7 +215,7 @@ int main(int argc, char *argv[])
       ret = -1;
       goto egl_terminate;
    }
-   
+
    ctx = eglCreateContext(dpy, config, EGL_NO_CONTEXT, NULL);
    if (ctx == NULL) {
       fprintf(stderr, "failed to create context\n");

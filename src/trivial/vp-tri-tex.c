@@ -12,7 +12,7 @@ static void Init( void )
 {
    GLint errnum;
    GLuint prognum;
-   
+
    static const char *prog1 =
       "!!ARBvp1.0\n"
       "MOV  result.texcoord[0], vertex.texcoord[0];\n"
@@ -81,16 +81,16 @@ static void Display( void )
    glEnable(GL_VERTEX_PROGRAM_NV);
 
    glBegin(GL_TRIANGLES);
-   glTexCoord2f(1,-1); 
+   glTexCoord2f(1,-1);
    glVertex3f( 0.9, -0.9, -0.0);
-   glTexCoord2f(1,1); 
+   glTexCoord2f(1,1);
    glVertex3f( 0.9,  0.9, -0.0);
-   glTexCoord2f(-1,0); 
+   glTexCoord2f(-1,0);
    glVertex3f(-0.9,  0.0, -0.0);
    glEnd();
 
 
-   glFlush(); 
+   glFlush();
 }
 
 

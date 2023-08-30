@@ -983,9 +983,9 @@ Draw(void)
       static GLint T0 = 0;
       static GLint Frames = 0;
       GLint t = glutGet(GLUT_ELAPSED_TIME);
-      
+
       Frames++;
-         
+
       if (t - T0 >= 5000) {
          GLfloat seconds = (t - T0) / 1000.0;
          GLfloat fps = Frames / seconds;

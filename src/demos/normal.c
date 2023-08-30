@@ -74,7 +74,7 @@ Redisplay(void)
    /* update light position */
    normalize(vec, lightPos);
    glLightfv(GL_LIGHT0, GL_POSITION, vec);
-   
+
    if (pixelLight) {
       glUseProgram(program);
       glDisable(GL_LIGHTING);
@@ -286,13 +286,13 @@ MakeTexture(void)
       for (j = 0; j < SZ0; j++) {
          for (k = 0; k < SZ0; k++) {
             if ((i/8 + j/8 + k/8) & 1) {
-               image0[i][j][k][0] = 
-               image0[i][j][k][1] = 
+               image0[i][j][k][0] =
+               image0[i][j][k][1] =
                image0[i][j][k][2] = 200;
             }
             else {
-               image0[i][j][k][0] = 
-               image0[i][j][k][1] = 
+               image0[i][j][k][0] =
+               image0[i][j][k][1] =
                image0[i][j][k][2] = 100;
             }
             image0[i][j][k][3] = 255;

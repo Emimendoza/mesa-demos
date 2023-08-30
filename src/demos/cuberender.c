@@ -80,7 +80,7 @@ GenerateCylinders(void)
    for (i = 0; i < NUM_CYLINDERS; i++) {
       float r = RandomFloat(5.0, 9.0);
       float a = RandomFloat(0, 2 * M_PI);
-      
+
       Cylinders[i].PosX = r * cos(a);
       Cylinders[i].PosY = r * sin(a);
       Cylinders[i].Radius = RandomFloat(0.25, 1.0);

@@ -5,7 +5,7 @@
 uniform mat4 mat0, mat1;
 attribute float weight;
 
-void main() 
+void main()
 {
    // simple diffuse shading
    // Note that we should really transform the normal vector along with

@@ -24,7 +24,7 @@
 
 /**
  * \file invert.c
- * 
+ *
  * Simple test of GL_MESA_pack_invert functionality.  Three squares are
  * drawn.  The first two should look the same, and the third one should
  * look inverted.
@@ -145,7 +145,7 @@ static void Init( void )
 
    printf("\nThe left 2 squares should be the same color, and the right\n"
 	  "square should look upside-down.\n");
-   
+
 
    image = LoadRGBImage( IMAGE_FILE, (GLint *) & img_width, (GLint *) & img_height,
 			 & img_format );

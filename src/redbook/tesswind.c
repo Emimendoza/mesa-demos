@@ -1,13 +1,13 @@
 /*
  * Copyright (c) 1993-1997, Silicon Graphics, Inc.
- * ALL RIGHTS RESERVED 
- * Permission to use, copy, modify, and distribute this software for 
+ * ALL RIGHTS RESERVED
+ * Permission to use, copy, modify, and distribute this software for
  * any purpose and without fee is hereby granted, provided that the above
  * copyright notice appear in all copies and that both the copyright notice
- * and this permission notice appear in supporting documentation, and that 
+ * and this permission notice appear in supporting documentation, and that
  * the name of Silicon Graphics, Inc. not be used in advertising
  * or publicity pertaining to distribution of the software without specific,
- * written prior permission. 
+ * written prior permission.
  *
  * THE MATERIAL EMBODIED ON THIS SOFTWARE IS PROVIDED TO YOU "AS-IS"
  * AND WITHOUT WARRANTY OF ANY KIND, EXPRESS, IMPLIED OR OTHERWISE,
@@ -21,8 +21,8 @@
  * ADVISED OF THE POSSIBILITY OF SUCH LOSS, HOWEVER CAUSED AND ON
  * ANY THEORY OF LIABILITY, ARISING OUT OF OR IN CONNECTION WITH THE
  * POSSESSION, USE OR PERFORMANCE OF THIS SOFTWARE.
- * 
- * US Government Users Restricted Rights 
+ *
+ * US Government Users Restricted Rights
  * Use, duplication, or disclosure by the Government is subject to
  * restrictions set forth in FAR 52.227.19(c)(2) or subparagraph
  * (c)(1)(ii) of the Rights in Technical Data and Computer Software
@@ -37,9 +37,9 @@
 
 /*
  *  tesswind.c
- *  This program demonstrates the winding rule polygon 
- *  tessellation property.  Four tessellated objects are drawn, 
- *  each with very different contours.  When the w key is pressed, 
+ *  This program demonstrates the winding rule polygon
+ *  tessellation property.  Four tessellated objects are drawn,
+ *  each with very different contours.  When the w key is pressed,
  *  the objects are drawn with a different winding rule.
  */
 #include "glut_wrap.h"
@@ -53,38 +53,38 @@ int currentShape = 0;
 GLUtesselator *tobj;
 GLuint list;
 
-/*  Make four display lists, 
- *  each with a different tessellated object. 
+/*  Make four display lists,
+ *  each with a different tessellated object.
  */
 static void makeNewLists (void) {
    int i;
-   static GLdouble rects[12][3] = 
-      {{ 50.0,  50.0, 0.0}, {300.0,  50.0, 0.0}, 
+   static GLdouble rects[12][3] =
+      {{ 50.0,  50.0, 0.0}, {300.0,  50.0, 0.0},
        {300.0, 300.0, 0.0}, { 50.0, 300.0, 0.0},
-       {100.0, 100.0, 0.0}, {250.0, 100.0, 0.0}, 
+       {100.0, 100.0, 0.0}, {250.0, 100.0, 0.0},
        {250.0, 250.0, 0.0}, {100.0, 250.0, 0.0},
-       {150.0, 150.0, 0.0}, {200.0, 150.0, 0.0}, 
+       {150.0, 150.0, 0.0}, {200.0, 150.0, 0.0},
        {200.0, 200.0, 0.0}, {150.0, 200.0, 0.0}};
-   static GLdouble spiral[16][3] = 
-      {{400.0, 250.0, 0.0}, {400.0,  50.0, 0.0}, 
-       { 50.0,  50.0, 0.0}, { 50.0, 400.0, 0.0}, 
-       {350.0, 400.0, 0.0}, {350.0, 100.0, 0.0}, 
-       {100.0, 100.0, 0.0}, {100.0, 350.0, 0.0}, 
-       {300.0, 350.0, 0.0}, {300.0, 150.0, 0.0}, 
-       {150.0, 150.0, 0.0}, {150.0, 300.0, 0.0}, 
-       {250.0, 300.0, 0.0}, {250.0, 200.0, 0.0}, 
+   static GLdouble spiral[16][3] =
+      {{400.0, 250.0, 0.0}, {400.0,  50.0, 0.0},
+       { 50.0,  50.0, 0.0}, { 50.0, 400.0, 0.0},
+       {350.0, 400.0, 0.0}, {350.0, 100.0, 0.0},
+       {100.0, 100.0, 0.0}, {100.0, 350.0, 0.0},
+       {300.0, 350.0, 0.0}, {300.0, 150.0, 0.0},
+       {150.0, 150.0, 0.0}, {150.0, 300.0, 0.0},
+       {250.0, 300.0, 0.0}, {250.0, 200.0, 0.0},
        {200.0, 200.0, 0.0}, {200.0, 250.0, 0.0}};
-   static GLdouble quad1[4][3] = 
-      {{ 50.0, 150.0, 0.0}, {350.0, 150.0, 0.0}, 
+   static GLdouble quad1[4][3] =
+      {{ 50.0, 150.0, 0.0}, {350.0, 150.0, 0.0},
        {350.0, 200.0, 0.0}, { 50.0, 200.0, 0.0}};
    static GLdouble quad2[4][3] =
-      {{100.0, 100.0, 0.0}, {300.0, 100.0, 0.0}, 
+      {{100.0, 100.0, 0.0}, {300.0, 100.0, 0.0},
        {300.0, 350.0, 0.0}, {100.0, 350.0, 0.0}};
    static GLdouble tri[3][3] =
       {{200.0, 50.0, 0.0}, {250.0, 300.0, 0.0},
        {150.0, 300.0, 0.0}};
- 
-   gluTessProperty(tobj, GLU_TESS_WINDING_RULE, 
+
+   gluTessProperty(tobj, GLU_TESS_WINDING_RULE,
                    currentWinding);
 
    glNewList(list, GL_COMPILE);
@@ -151,7 +151,7 @@ static void makeNewLists (void) {
 static void display (void) {
    glClear(GL_COLOR_BUFFER_BIT);
    glColor3f(1.0, 1.0, 1.0);
-   glPushMatrix(); 
+   glPushMatrix();
    glCallList(list);
    glTranslatef(0.0, 500.0, 0.0);
    glCallList(list+1);
@@ -159,7 +159,7 @@ static void display (void) {
    glCallList(list+2);
    glTranslatef(0.0, 500.0, 0.0);
    glCallList(list+3);
-   glPopMatrix(); 
+   glPopMatrix();
    glFlush();
 }
 
@@ -184,7 +184,7 @@ static void GLAPIENTRY endCallback(void)
 
 /*  combineCallback is used to create a new vertex when edges
  *  intersect.  coordinate location is trivial to calculate,
- *  but weight[4] may be used to average color, normal, or texture 
+ *  but weight[4] may be used to average color, normal, or texture
  *  coordinate data.
  */
 /* ARGSUSED */
@@ -202,10 +202,10 @@ static void GLAPIENTRY combineCallback(GLdouble coords[3], GLdouble *data[4],
 
 typedef void (GLAPIENTRY *tess_fn)(void);
 
-static void init(void) 
+static void init(void)
 {
    glClearColor(0.0, 0.0, 0.0, 0.0);
-   glShadeModel(GL_FLAT);    
+   glShadeModel(GL_FLAT);
 
    tobj = gluNewTess();
    gluTessCallback(tobj, GLU_TESS_VERTEX, (tess_fn)glVertex3dv);
@@ -269,7 +269,7 @@ int main(int argc, char** argv)
    glutReshapeFunc(reshape);
    glutKeyboardFunc(keyboard);
    glutMainLoop();
-   return 0;  
+   return 0;
 }
 
 #else

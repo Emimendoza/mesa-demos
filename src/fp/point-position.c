@@ -63,23 +63,23 @@ static void Key(unsigned char key, int x, int y)
 
 static void Draw(void)
 {
-   glClear(GL_COLOR_BUFFER_BIT); 
+   glClear(GL_COLOR_BUFFER_BIT);
 
 #if 0
    glBegin(GL_QUADS);
-   glTexCoord2f(1,0); 
+   glTexCoord2f(1,0);
    glVertex3f( 0.9, -0.9, -30.0);
-   glTexCoord2f(1,1); 
+   glTexCoord2f(1,1);
    glVertex3f( 0.9,  0.9, -30.0);
-   glTexCoord2f(0,1); 
+   glTexCoord2f(0,1);
    glVertex3f(-0.9,  0.9, -30.0);
-   glTexCoord2f(0,0); 
+   glTexCoord2f(0,0);
    glVertex3f(-0.9,  -0.9, -30.0);
    glEnd();
 #else
    glPointSize(100);
    glBegin(GL_POINTS);
-   glColor3f(0,0,1); 
+   glColor3f(0,0,1);
    glVertex3f( 0, 0, -30.0);
    glEnd();
 #endif

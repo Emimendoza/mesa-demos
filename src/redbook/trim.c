@@ -1,13 +1,13 @@
 /*
  * Copyright (c) 1993-1997, Silicon Graphics, Inc.
- * ALL RIGHTS RESERVED 
- * Permission to use, copy, modify, and distribute this software for 
+ * ALL RIGHTS RESERVED
+ * Permission to use, copy, modify, and distribute this software for
  * any purpose and without fee is hereby granted, provided that the above
  * copyright notice appear in all copies and that both the copyright notice
- * and this permission notice appear in supporting documentation, and that 
+ * and this permission notice appear in supporting documentation, and that
  * the name of Silicon Graphics, Inc. not be used in advertising
  * or publicity pertaining to distribution of the software without specific,
- * written prior permission. 
+ * written prior permission.
  *
  * THE MATERIAL EMBODIED ON THIS SOFTWARE IS PROVIDED TO YOU "AS-IS"
  * AND WITHOUT WARRANTY OF ANY KIND, EXPRESS, IMPLIED OR OTHERWISE,
@@ -21,8 +21,8 @@
  * ADVISED OF THE POSSIBILITY OF SUCH LOSS, HOWEVER CAUSED AND ON
  * ANY THEORY OF LIABILITY, ARISING OUT OF OR IN CONNECTION WITH THE
  * POSSESSION, USE OR PERFORMANCE OF THIS SOFTWARE.
- * 
- * US Government Users Restricted Rights 
+ *
+ * US Government Users Restricted Rights
  * Use, duplication, or disclosure by the Government is subject to
  * restrictions set forth in FAR 52.227.19(c)(2) or subparagraph
  * (c)(1)(ii) of the Rights in Technical Data and Computer Software
@@ -37,7 +37,7 @@
 
 /*
  *  trim.c
- *  This program draws a NURBS surface in the shape of a 
+ *  This program draws a NURBS surface in the shape of a
  *  symmetrical hill, using both a NURBS curve and pwl
  *  (piecewise linear) curve to trim part of the surface.
  */
@@ -78,7 +78,7 @@ static void GLAPIENTRY nurbsError(GLenum errorCode)
    fprintf (stderr, "Nurbs Error: %s\n", (char *) estring);
    exit (0);
 }
-			
+
 /*  Initialize material property and depth buffer.
  */
 static void init(void)
@@ -112,11 +112,11 @@ static void display(void)
    GLfloat knots[8] = {0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0};
    GLfloat edgePt[5][2] = /* counter clockwise */
       {{0.0, 0.0}, {1.0, 0.0}, {1.0, 1.0}, {0.0, 1.0}, {0.0, 0.0}};
-   GLfloat curvePt[4][2] = /* clockwise */ 
+   GLfloat curvePt[4][2] = /* clockwise */
       {{0.25, 0.5}, {0.25, 0.75}, {0.75, 0.75}, {0.75, 0.5}};
-   GLfloat curveKnots[8] = 
+   GLfloat curveKnots[8] =
       {0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0};
-   GLfloat pwlPt[4][2] = /* clockwise */ 
+   GLfloat pwlPt[4][2] = /* clockwise */
       {{0.75, 0.5}, {0.5, 0.25}, {0.25, 0.5}};
 
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -126,18 +126,18 @@ static void display(void)
 
    gluBeginSurface(theNurb);
    gluNurbsSurface(theNurb, 8, knots, 8, knots,
-                   4 * 3, 3, &ctlpoints[0][0][0], 
+                   4 * 3, 3, &ctlpoints[0][0][0],
                    4, 4, GL_MAP2_VERTEX_3);
    gluBeginTrim (theNurb);
       gluPwlCurve (theNurb, 5, &edgePt[0][0], 2, GLU_MAP1_TRIM_2);
    gluEndTrim (theNurb);
    gluBeginTrim (theNurb);
-      gluNurbsCurve (theNurb, 8, curveKnots, 2, 
+      gluNurbsCurve (theNurb, 8, curveKnots, 2,
                      &curvePt[0][0], 4, GLU_MAP1_TRIM_2);
       gluPwlCurve (theNurb, 3, &pwlPt[0][0], 2, GLU_MAP1_TRIM_2);
    gluEndTrim (theNurb);
    gluEndSurface(theNurb);
-        
+
    glPopMatrix();
    glFlush();
 }
@@ -164,7 +164,7 @@ static void keyboard(unsigned char key, int x, int y)
    }
 }
 
-/*  Main Loop 
+/*  Main Loop
  */
 int main(int argc, char** argv)
 {
@@ -178,5 +178,5 @@ int main(int argc, char** argv)
    glutDisplayFunc(display);
    glutKeyboardFunc (keyboard);
    glutMainLoop();
-   return 0; 
+   return 0;
 }

@@ -24,7 +24,7 @@
 
 /**
  * \file interleave.c
- * 
+ *
  * Simple test of glInterleavedArrays functionality.  For each mode, two
  * meshes are drawn.  One is drawn using interleaved arrays and the othe is
  * drawn using immediate mode.  Both should look identical.
@@ -97,7 +97,7 @@ static const GLfloat v[][4] = {
    {  0.0, -1.0, 0.0, 1.0, },
    {  1.0, -1.0, 0.0, 1.0, },
 };
-   
+
 static const unsigned indicies[12] = {
    0, 1, 2,
    1, 3, 4,
@@ -243,12 +243,12 @@ static void Display( void )
 	    glColor4ubv( DEREF(1, index) );
 	 }
 
-	 (void) memcpy( & data[ offset ], DEREF(1, index), 
+	 (void) memcpy( & data[ offset ], DEREF(1, index),
 			curr_info[1].size );
 	 offset += curr_info[1].size;
       }
 
-      
+
       /* Handle the vertex normal.
        */
       if ( curr_info[2].data != NULL ) {
@@ -355,10 +355,10 @@ static void Init( void )
    const char * const ver_string = (const char *)
        glGetString( GL_VERSION );
    const GLubyte tex[16] = {
-      0xff, 0x00, 0xff, 0x00, 
-      0x00, 0xff, 0x00, 0xff, 
-      0xff, 0x00, 0xff, 0x00, 
-      0x00, 0xff, 0x00, 0xff, 
+      0xff, 0x00, 0xff, 0x00,
+      0x00, 0xff, 0x00, 0xff,
+      0xff, 0x00, 0xff, 0x00,
+      0x00, 0xff, 0x00, 0xff,
    };
 
    printf("GL_RENDERER = %s\n", (char *) glGetString(GL_RENDERER));

@@ -1,6 +1,6 @@
 /*
  * Test glRead/DrawPixels for GL_STENCIL_INDEX, with pixelzoom.
- * 
+ *
  * Brian Paul
  * 8 April 2010
  */

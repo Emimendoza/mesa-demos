@@ -12,7 +12,7 @@ static void Init( void )
 {
    GLint errnum;
    GLuint prognum;
-   
+
    static const char *prog1 =
       "!!ARBvp1.0\n"
       "MOV  result.color, vertex.color;\n"
@@ -47,29 +47,29 @@ static void Display( void )
 
 #if 0
    glBegin(GL_LINES);
-   glColor3f(0,0,1); 
+   glColor3f(0,0,1);
    glVertex3f( 0.75, -0.75, 0.0);
-   glColor3f(0,1,0); 
+   glColor3f(0,1,0);
    glVertex3f( 0.75,  0.75, 0.0);
 
-   glColor3f(0,1,0); 
+   glColor3f(0,1,0);
    glVertex3f( 0.75,  0.75, 0.0);
-   glColor3f(1,0,0); 
+   glColor3f(1,0,0);
    glVertex3f(-1.75,  0.0, 0.0);
    glEnd();
 #else
    glBegin(GL_LINE_STRIP);
-   glColor3f(0,0,1); 
+   glColor3f(0,0,1);
    glVertex3f( 0.75, -0.75, 0.0);
-   glColor3f(0,1,0); 
+   glColor3f(0,1,0);
    glVertex3f( 0.75,  0.75, 0.0);
-   glColor3f(1,0,0); 
+   glColor3f(1,0,0);
    glVertex3f(-1.75,  0.0, 0.0);
    glEnd();
 #endif
 
 
-   glFlush(); 
+   glFlush();
 }
 
 

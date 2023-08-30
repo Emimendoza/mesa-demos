@@ -103,7 +103,7 @@ draw_torus(GLfloat r, GLfloat R, GLint nsides, GLint rings)
    glEnableClientState(GL_VERTEX_ARRAY);
    glEnableClientState(GL_NORMAL_ARRAY);
    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-   
+
    ringDelta = 2.0 * M_PI / rings;
    sideDelta = 2.0 * M_PI / nsides;
 
@@ -190,7 +190,7 @@ reshape(int width, int height)
 #else
    glFrustum(-ar, ar, -1, 1, 5.0, 60.0);
 #endif
-   
+
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
    glTranslatef(0.0, 0.0, -15.0);

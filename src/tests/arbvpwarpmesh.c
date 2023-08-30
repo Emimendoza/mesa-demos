@@ -159,7 +159,7 @@ static void Init( void )
 {
    GLuint prognum;
    GLint errnum;
-	
+
    /*
     * c[0..3] = modelview matrix
     * c[4..7] = inverse modelview matrix
@@ -168,10 +168,10 @@ static void Init( void )
     * c[32] = light pos
     * c[35] = diffuse color
     */
-   static const char prog[] = 
+   static const char prog[] =
       "!!ARBvp1.0\n"
       "TEMP R1, R2, R3; "
-	
+
       "# Compute distance from vertex to gravity source\n"
       "ADD   R1, program.local[30], -vertex.position; # vector from vertex to gravity\n"
       "DP3   R2, R1, R1;                              # dot product\n"
@@ -200,10 +200,10 @@ static void Init( void )
    glBindProgramARB(GL_VERTEX_PROGRAM_ARB, prognum);
    glProgramStringARB(GL_VERTEX_PROGRAM_ARB, GL_PROGRAM_FORMAT_ASCII_ARB,
             strlen(prog), (const GLubyte *)prog);
-   errnum = glGetError();	
+   errnum = glGetError();
    printf("glGetError = %d\n", errnum);
 
-	if (errnum != GL_NO_ERROR) 
+	if (errnum != GL_NO_ERROR)
 	{
 		GLint errorpos;
 
@@ -211,7 +211,7 @@ static void Init( void )
 		printf("errorpos: %d\n", errorpos);
 		printf("%s\n", glGetString(GL_PROGRAM_ERROR_STRING_ARB));
 	}
-			  
+
    /* Light position */
    glProgramLocalParameter4fARB(GL_VERTEX_PROGRAM_ARB, 32, 2, 2, 4, 1);
    /* Diffuse material color */

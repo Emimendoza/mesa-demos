@@ -111,19 +111,19 @@ static void Draw(void)
    glTexParameterf(Target, GL_TEXTURE_MIN_FILTER, Filter);
    glTexParameterf(Target, GL_TEXTURE_MAG_FILTER, Filter);
 
-   glClear(GL_COLOR_BUFFER_BIT); 
+   glClear(GL_COLOR_BUFFER_BIT);
 
    glPushMatrix();
    glRotatef(Rot, 0, 1, 0);
 
    glBegin(GL_QUADS);
-   glTexCoord2f(1,0); 
+   glTexCoord2f(1,0);
    glVertex3f( 0.9, -0.9, 0.0);
-   glTexCoord2f(1,1); 
+   glTexCoord2f(1,1);
    glVertex3f( 0.9,  0.9, 0.0);
-   glTexCoord2f(0,1); 
+   glTexCoord2f(0,1);
    glVertex3f(-0.9,  0.9, 0.0);
-   glTexCoord2f(0,0); 
+   glTexCoord2f(0,0);
    glVertex3f(-0.9,  -0.9, 0.0);
    glEnd();
 

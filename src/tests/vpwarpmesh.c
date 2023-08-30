@@ -165,7 +165,7 @@ static void Init( void )
     * c[32] = light pos
     * c[35] = diffuse color
     */
-   static const char prog[] = 
+   static const char prog[] =
       "!!VP1.0\n"
 
       "# Compute distance from vertex to gravity source\n"

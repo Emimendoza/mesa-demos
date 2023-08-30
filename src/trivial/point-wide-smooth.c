@@ -71,7 +71,7 @@ static void Key(unsigned char key, int x, int y)
 
 static void Draw(void)
 {
-   glClear(GL_COLOR_BUFFER_BIT); 
+   glClear(GL_COLOR_BUFFER_BIT);
 
    glPointSize(8.0);
 
@@ -80,13 +80,13 @@ static void Draw(void)
    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
    glBegin(GL_POINTS);
-   glColor3f(1,0,0); 
+   glColor3f(1,0,0);
    glVertex3f( 0.9, -0.9, -30.0);
-   glColor3f(1,1,0); 
+   glColor3f(1,1,0);
    glVertex3f( 0.9,  0.9, -30.0);
-   glColor3f(1,0,1); 
+   glColor3f(1,0,1);
    glVertex3f(-0.9,  0.9, -30.0);
-   glColor3f(0,1,1); 
+   glColor3f(0,1,1);
    glVertex3f(-0.9,  -0.9, -30.0);
    glEnd();
 

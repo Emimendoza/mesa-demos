@@ -400,7 +400,7 @@ int main( int argc, char *argv[] )
 
    gladLoaderLoadGL();
    gl_version = atof( (const char *) glGetString( GL_VERSION ) );
-   if ( (gl_version < 1.3) 
+   if ( (gl_version < 1.3)
 	&& !glutExtensionSupported("GL_ARB_texture_compression") ) {
       printf("Sorry, GL_ARB_texture_compression not supported\n");
       exit(0);
@@ -416,7 +416,7 @@ int main( int argc, char *argv[] )
    }
 
    glGetIntegerv( GL_NUM_COMPRESSED_TEXTURE_FORMATS_ARB, & num_formats );
-   
+
    (void) memset( formats, 0, sizeof( formats ) );
    glGetIntegerv( GL_COMPRESSED_TEXTURE_FORMATS_ARB, formats );
 
@@ -424,7 +424,7 @@ int main( int argc, char *argv[] )
    for ( i = 0 ; i < num_formats ; i++ ) {
       printf( "\t%s\n", TextureName( formats[i] ) );
    }
-	
+
    Init();
 
    glutReshapeFunc( Reshape );

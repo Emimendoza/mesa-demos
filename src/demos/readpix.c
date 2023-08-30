@@ -1,7 +1,7 @@
 
 /*
  * glReadPixels and glCopyPixels test
- * 
+ *
  * Brian Paul   March 1, 2000  This file is in the public domain.
  */
 
@@ -171,7 +171,7 @@ Display( void )
       /* Red should never be seen
        */
       glBegin(GL_POLYGON);
-      glColor3f(1,0,0); 
+      glColor3f(1,0,0);
       glVertex3f(-2, -2, z);
       glVertex3f(-2, 2, z);
       glVertex3f(2, 2, z);
@@ -181,7 +181,7 @@ Display( void )
       /* Blue background
        */
       glBegin(GL_POLYGON);
-      glColor3f(.5,.5,1); 
+      glColor3f(.5,.5,1);
       glVertex3f(-1, -1, z);
       glVertex3f(-1, 1, z);
       glVertex3f(1, 1, z);
@@ -191,14 +191,14 @@ Display( void )
       /* Triangle
        */
       glBegin(GL_TRIANGLES);
-      glColor3f(.8,0,0); 
+      glColor3f(.8,0,0);
       glVertex3f(-0.9, -0.9, z);
-      glColor3f(0,.9,0); 
+      glColor3f(0,.9,0);
       glVertex3f( 0.9, -0.9, z);
-      glColor3f(0,0,.7); 
+      glColor3f(0,0,.7);
       glVertex3f( 0.0,  0.9, z);
       glEnd();
-      
+
       glColor3f(1,1,1);
 
       glViewport( 0, 0, WinWidth, WinHeight );

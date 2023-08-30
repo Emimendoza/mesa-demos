@@ -70,7 +70,7 @@ static void Key(unsigned char key, int x, int y)
 
 static void Draw(void)
 {
-   glClear(GL_COLOR_BUFFER_BIT); 
+   glClear(GL_COLOR_BUFFER_BIT);
 
    glDisable(GL_DEPTH_TEST);
    glDisable(GL_STENCIL_TEST);
@@ -78,11 +78,11 @@ static void Draw(void)
    glAlphaFunc(GL_GEQUAL, 0.5);
 
    glBegin(GL_TRIANGLES);
-   glColor4f(0,0,.7,1); 
+   glColor4f(0,0,.7,1);
    glVertex3f( 0.9, -0.9, -30.0);
-   glColor4f(.8,0,0,.5); 
+   glColor4f(.8,0,0,.5);
    glVertex3f( 0.9,  0.9, -30.0);
-   glColor4f(0,.9,0,0); 
+   glColor4f(0,.9,0,0);
    glVertex3f(-0.9,  0.0, -30.0);
    glEnd();
 

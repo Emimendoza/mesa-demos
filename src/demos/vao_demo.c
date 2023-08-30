@@ -270,7 +270,7 @@ static void Init( void )
    }
 
    glEnable( GL_DEPTH_TEST );
-   
+
    glGenVertexArraysAPPLE( 1, & cube_array_obj );
    glBindVertexArrayAPPLE( cube_array_obj );
    glVertexPointer( 4, GL_FLOAT, sizeof(GLfloat) * 4, cube_vert);

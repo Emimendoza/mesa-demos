@@ -60,7 +60,7 @@ static void Clear(void)
    fprintf(stderr, "::clearing\n");
    fflush(stderr);
 
-   glClear(GL_COLOR_BUFFER_BIT); 
+   glClear(GL_COLOR_BUFFER_BIT);
 }
 
 static void DrawTri(void)
@@ -69,11 +69,11 @@ static void DrawTri(void)
    fflush(stderr);
 
    glBegin(GL_TRIANGLES);
-   glColor3f(.8,0,0); 
+   glColor3f(.8,0,0);
    glVertex3f(-0.9, -0.9, -30.0);
-   glColor3f(0,.9,0); 
+   glColor3f(0,.9,0);
    glVertex3f( 0.9, -0.9, -30.0);
-   glColor3f(0,0,.7); 
+   glColor3f(0,0,.7);
    glVertex3f( 0.0,  0.9, -30.0);
    glEnd();
 }
@@ -84,11 +84,11 @@ static void DrawClipTri(void)
    fflush(stderr);
 
    glBegin(GL_TRIANGLES);
-   glColor3f(.8,0,0); 
+   glColor3f(.8,0,0);
    glVertex3f(-0.9,  0.9, -30.0);
-   glColor3f(0,.9,0); 
+   glColor3f(0,.9,0);
    glVertex3f( 0.9,  0.9, -30.0);
-   glColor3f(0,0,.7); 
+   glColor3f(0,0,.7);
    glVertex3f( 0.0, -1.9, -30.0);
    glEnd();
 }

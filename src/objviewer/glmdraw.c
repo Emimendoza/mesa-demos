@@ -27,8 +27,8 @@
  *            GLM_TEXTURE  -  render with texture coords
  *            GLM_COLOR    -  render with colors (color material)
  *            GLM_MATERIAL -  render with materials
- *            GLM_COLOR and GLM_MATERIAL should not both be specified.  
- *            GLM_FLAT and GLM_SMOOTH should not both be specified.  
+ *            GLM_COLOR and GLM_MATERIAL should not both be specified.
+ *            GLM_FLAT and GLM_SMOOTH should not both be specified.
  */
 GLvoid
 glmDraw(GLMmodel* model, GLuint mode)
@@ -87,13 +87,13 @@ glmDraw(GLMmodel* model, GLuint mode)
   group = model->groups;
   while (group) {
     if (mode & GLM_MATERIAL) {
-      glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, 
+      glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT,
 		   model->materials[group->material].ambient);
-      glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, 
+      glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,
 		   model->materials[group->material].diffuse);
-      glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, 
+      glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR,
 		   model->materials[group->material].specular);
-       glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, 
+       glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS,
   		  model->materials[group->material].shininess);
     }
 
@@ -104,45 +104,45 @@ glmDraw(GLMmodel* model, GLuint mode)
     for (i = 0; i < group->numtriangles; i++) {
       if (mode & GLM_FLAT)
 	glNormal3fv(&model->facetnorms[3 * T(group->triangles[i]).findex]);
-      
+
       if (mode & GLM_SMOOTH)
 	glNormal3fv(&model->normals[3 * T(group->triangles[i]).nindices[0]]);
       if (mode & GLM_TEXTURE)
 	glTexCoord2fv(&model->texcoords[2*T(group->triangles[i]).tindices[0]]);
       glVertex3fv(&model->vertices[3 * T(group->triangles[i]).vindices[0]]);
 #if 0
-      printf("%f %f %f\n", 
+      printf("%f %f %f\n",
 	     model->vertices[3 * T(group->triangles[i]).vindices[0] + X],
 	     model->vertices[3 * T(group->triangles[i]).vindices[0] + Y],
 	     model->vertices[3 * T(group->triangles[i]).vindices[0] + Z]);
 #endif
-      
+
       if (mode & GLM_SMOOTH)
 	glNormal3fv(&model->normals[3 * T(group->triangles[i]).nindices[1]]);
       if (mode & GLM_TEXTURE)
 	glTexCoord2fv(&model->texcoords[2*T(group->triangles[i]).tindices[1]]);
       glVertex3fv(&model->vertices[3 * T(group->triangles[i]).vindices[1]]);
 #if 0
-      printf("%f %f %f\n", 
+      printf("%f %f %f\n",
 	     model->vertices[3 * T(group->triangles[i]).vindices[1] + X],
 	     model->vertices[3 * T(group->triangles[i]).vindices[1] + Y],
 	     model->vertices[3 * T(group->triangles[i]).vindices[1] + Z]);
 #endif
-      
+
       if (mode & GLM_SMOOTH)
 	glNormal3fv(&model->normals[3 * T(group->triangles[i]).nindices[2]]);
       if (mode & GLM_TEXTURE)
 	glTexCoord2fv(&model->texcoords[2*T(group->triangles[i]).tindices[2]]);
       glVertex3fv(&model->vertices[3 * T(group->triangles[i]).vindices[2]]);
 #if 0
-      printf("%f %f %f\n", 
+      printf("%f %f %f\n",
 	     model->vertices[3 * T(group->triangles[i]).vindices[2] + X],
 	     model->vertices[3 * T(group->triangles[i]).vindices[2] + Y],
 	     model->vertices[3 * T(group->triangles[i]).vindices[2] + Z]);
 #endif
-      
+
     }
-    
+
     group = group->next;
   }
   glEnd();
@@ -170,7 +170,7 @@ glmMakeVBOs(GLMmodel *model)
       assert(model->numnormals == model->numvertices);
       model->normOffset = vertexFloats * sizeof(GLfloat);
       vertexFloats += 3;
-   }      
+   }
 
    if (model->numtexcoords > 0) {
       assert(model->numtexcoords == model->numvertices);
@@ -248,7 +248,7 @@ _glmLoadTexture(GLMmaterial *mat)
      GLint imgWidth, imgHeight;
      GLenum imgFormat;
      GLubyte *image = NULL;
-     
+
      glGenTextures(1, &mat->texture_kd);
 
      image = LoadRGBImage( mat->map_kd, &imgWidth, &imgHeight, &imgFormat );
@@ -356,8 +356,8 @@ glmDrawVBO(GLMmodel *model)
  *            GLM_TEXTURE  -  render with texture coords
  *            GLM_COLOR    -  render with colors (color material)
  *            GLM_MATERIAL -  render with materials
- *            GLM_COLOR and GLM_MATERIAL should not both be specified.  
- *            GLM_FLAT and GLM_SMOOTH should not both be specified.  
+ *            GLM_COLOR and GLM_MATERIAL should not both be specified.
+ *            GLM_FLAT and GLM_SMOOTH should not both be specified.
  */
 GLuint
 glmList(GLMmodel* model, GLuint mode)

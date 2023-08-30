@@ -78,7 +78,7 @@ static void Init( const char *vertProgFile,
       printf("Sorry, this demo requires GL_ARB_fragment_program\n");
       exit(1);
    }
-         
+
    printf("GL_RENDERER = %s\n", (char *) glGetString(GL_RENDERER));
 
    /*

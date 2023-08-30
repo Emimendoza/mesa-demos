@@ -101,11 +101,11 @@ double tpoint1[11*4] = {
     0.0, 0.9, 0.0, 1.0,
 };
 double point2[2*3*4] = {
-    -0.5, -0.5,  0.5, 1.0, 
-     0.0,  1.0,  0.5, 1.0, 
+    -0.5, -0.5,  0.5, 1.0,
+     0.0,  1.0,  0.5, 1.0,
      0.5, -0.5,  0.5, 1.0,
-    -0.5,  0.5, -0.5, 1.0, 
-     0.0, -1.0, -0.5, 1.0, 
+    -0.5,  0.5, -0.5, 1.0,
+     0.0, -1.0, -0.5, 1.0,
      0.5,  0.5, -0.5, 1.0,
 };
 double cpoint2[2*2*4] = {
@@ -116,17 +116,17 @@ double cpoint2[2*2*4] = {
 };
 double tpoint2[2*2*2] = {
     0.0, 0.0, 0.0, 1.0,
-    1.0, 0.0, 1.0, 1.0, 
+    1.0, 0.0, 1.0, 1.0,
 };
 float textureImage[4*2*4] =  {
     1.0, 1.0, 1.0, 1.0,
     1.0, 0.0, 0.0, 1.0,
     1.0, 0.0, 0.0, 1.0,
-    1.0, 1.0, 1.0, 1.0, 
+    1.0, 1.0, 1.0, 1.0,
     1.0, 1.0, 1.0, 1.0,
     1.0, 0.0, 0.0, 1.0,
     1.0, 0.0, 0.0, 1.0,
-    1.0, 1.0, 1.0, 1.0, 
+    1.0, 1.0, 1.0, 1.0,
 };
 
 
@@ -160,7 +160,7 @@ static void Init(void)
     glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
     glLightfv(GL_LIGHT0, GL_POSITION, position);
-    
+
     glMaterialfv(GL_FRONT, GL_DIFFUSE, front_mat_diffuse);
     glMaterialfv(GL_BACK, GL_DIFFUSE, back_mat_diffuse);
 

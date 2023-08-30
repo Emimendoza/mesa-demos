@@ -11,10 +11,10 @@
 struct {
    GLfloat pos[3];
    GLubyte color[4];
-} verts[] =  
+} verts[] =
 {
    { {  0.9, -0.9, 0.0 },
-     { 0x00, 0x00, 0xff, 0x00 } 
+     { 0x00, 0x00, 0xff, 0x00 }
    },
 
    { {  0.9,  0.9, 0.0 },
@@ -22,7 +22,7 @@ struct {
    },
 
    { { -0.9,  0.9, 0.0 },
-     { 0xff, 0x00, 0x00, 0x00 } 
+     { 0xff, 0x00, 0x00, 0x00 }
    },
 
    { { -0.9, -0.9, 0.0 },
@@ -38,7 +38,7 @@ static void Init( void )
 {
    GLint errnum;
    GLuint prognum;
-   
+
    static const char *prog1 =
       "!!ARBvp1.0\n"
       "MOV  result.color, vertex.color;\n"
@@ -90,7 +90,7 @@ static void Display( void )
    glEnable(GL_VERTEX_PROGRAM_ARB);
    glDrawElements( GL_TRIANGLES, 3, GL_UNSIGNED_INT, NULL );
 
-   glFlush(); 
+   glFlush();
 }
 
 

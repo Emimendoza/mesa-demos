@@ -115,19 +115,19 @@ static void Key(unsigned char key, int x, int y)
 
 static void Draw(void)
 {
-   glClear(GL_COLOR_BUFFER_BIT); 
+   glClear(GL_COLOR_BUFFER_BIT);
 
    glPushMatrix();
    glRotatef(Rot, 0, 1, 0);
 
    glBegin(GL_QUADS);
-   glTexCoord2f(1,0); 
+   glTexCoord2f(1,0);
    glVertex3f( 0.9, -0.9, 0.0);
-   glTexCoord2f(1,1); 
+   glTexCoord2f(1,1);
    glVertex3f( 0.9,  0.9, 0.0);
-   glTexCoord2f(0,1); 
+   glTexCoord2f(0,1);
    glVertex3f(-0.9,  0.9, 0.0);
-   glTexCoord2f(0,0); 
+   glTexCoord2f(0,0);
    glVertex3f(-0.9,  -0.9, 0.0);
    glEnd();
 

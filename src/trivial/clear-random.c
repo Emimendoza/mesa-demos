@@ -75,7 +75,7 @@ static void Draw(void)
        rand() / (float)RAND_MAX,
        0.0);
 
-   glClear(GL_COLOR_BUFFER_BIT); 
+   glClear(GL_COLOR_BUFFER_BIT);
    glFlush();
 
    if (doubleBuffer) {

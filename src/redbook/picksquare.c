@@ -1,13 +1,13 @@
 /*
  * Copyright (c) 1993-1997, Silicon Graphics, Inc.
- * ALL RIGHTS RESERVED 
- * Permission to use, copy, modify, and distribute this software for 
+ * ALL RIGHTS RESERVED
+ * Permission to use, copy, modify, and distribute this software for
  * any purpose and without fee is hereby granted, provided that the above
  * copyright notice appear in all copies and that both the copyright notice
- * and this permission notice appear in supporting documentation, and that 
+ * and this permission notice appear in supporting documentation, and that
  * the name of Silicon Graphics, Inc. not be used in advertising
  * or publicity pertaining to distribution of the software without specific,
- * written prior permission. 
+ * written prior permission.
  *
  * THE MATERIAL EMBODIED ON THIS SOFTWARE IS PROVIDED TO YOU "AS-IS"
  * AND WITHOUT WARRANTY OF ANY KIND, EXPRESS, IMPLIED OR OTHERWISE,
@@ -21,8 +21,8 @@
  * ADVISED OF THE POSSIBILITY OF SUCH LOSS, HOWEVER CAUSED AND ON
  * ANY THEORY OF LIABILITY, ARISING OUT OF OR IN CONNECTION WITH THE
  * POSSESSION, USE OR PERFORMANCE OF THIS SOFTWARE.
- * 
- * US Government Users Restricted Rights 
+ *
+ * US Government Users Restricted Rights
  * Use, duplication, or disclosure by the Government is subject to
  * restrictions set forth in FAR 52.227.19(c)(2) or subparagraph
  * (c)(1)(ii) of the Rights in Technical Data and Computer Software
@@ -37,9 +37,9 @@
 
 /*
  * picksquare.c
- * Use of multiple names and picking are demonstrated.  
- * A 3x3 grid of squares is drawn.  When the left mouse 
- * button is pressed, all squares under the cursor position 
+ * Use of multiple names and picking are demonstrated.
+ * A 3x3 grid of squares is drawn.  When the left mouse
+ * button is pressed, all squares under the cursor position
  * have their color changed.
  */
 #include <stdlib.h>
@@ -52,16 +52,16 @@ int board[3][3];   /*  amount of color for each square	*/
 static void init(void)
 {
    int i, j;
-   for (i = 0; i < 3; i++) 
+   for (i = 0; i < 3; i++)
       for (j = 0; j < 3; j ++)
          board[i][j] = 0;
    glClearColor (0.0, 0.0, 0.0, 0.0);
 }
 
-/*  The nine squares are drawn.  In selection mode, each 
- *  square is given two names:  one for the row and the 
- *  other for the column on the grid.  The color of each 
- *  square is determined by its position on the grid, and 
+/*  The nine squares are drawn.  In selection mode, each
+ *  square is given two names:  one for the row and the
+ *  other for the column on the grid.  The color of each
+ *  square is determined by its position on the grid, and
  *  the value in the board[][] array.
  */
 static void drawSquares(GLenum mode)
@@ -73,7 +73,7 @@ static void drawSquares(GLenum mode)
       for (j = 0; j < 3; j ++) {
          if (mode == GL_SELECT)
             glPushName (j);
-         glColor3f ((GLfloat) i/3.0, (GLfloat) j/3.0, 
+         glColor3f ((GLfloat) i/3.0, (GLfloat) j/3.0,
                     (GLfloat) board[i][j]/3.0);
          glRecti (i, j, i+1, j+1);
          if (mode == GL_SELECT)
@@ -82,7 +82,7 @@ static void drawSquares(GLenum mode)
    }
 }
 
-/*  processHits prints out the contents of the 
+/*  processHits prints out the contents of the
  *  selection array.
  */
 static void processHits (GLint hits, GLuint buffer[])
@@ -111,8 +111,8 @@ static void processHits (GLint hits, GLuint buffer[])
    }
 }
 
-/*  pickSquares() sets up selection mode, name stack, 
- *  and projection matrix for picking.  Then the 
+/*  pickSquares() sets up selection mode, name stack,
+ *  and projection matrix for picking.  Then the
  *  objects are drawn.
  */
 #define BUFSIZE 512
@@ -138,7 +138,7 @@ static void pickSquares(int button, int state, int x, int y)
    glPushMatrix ();
    glLoadIdentity ();
 /*  create 5x5 pixel picking region near cursor location	*/
-   gluPickMatrix ((GLdouble) x, (GLdouble) (viewport[3] - y), 
+   gluPickMatrix ((GLdouble) x, (GLdouble) (viewport[3] - y),
                   5.0, 5.0, viewport);
    gluOrtho2D (0.0, 3.0, 0.0, 3.0);
    drawSquares (GL_SELECT);
@@ -150,7 +150,7 @@ static void pickSquares(int button, int state, int x, int y)
    hits = glRenderMode (GL_RENDER);
    processHits (hits, selectBuf);
    glutPostRedisplay();
-} 
+}
 
 static void display(void)
 {
@@ -189,9 +189,9 @@ int main(int argc, char** argv)
    glutCreateWindow (argv[0]);
    init ();
    glutReshapeFunc (reshape);
-   glutDisplayFunc(display); 
+   glutDisplayFunc(display);
    glutMouseFunc (pickSquares);
    glutKeyboardFunc (keyboard);
    glutMainLoop();
-   return 0; 
+   return 0;
 }

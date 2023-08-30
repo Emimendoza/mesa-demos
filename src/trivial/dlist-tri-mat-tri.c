@@ -46,7 +46,7 @@ static void Init(void)
    fprintf(stderr, "GL_VENDOR     = %s\n", (char *) glGetString(GL_VENDOR));
    fflush(stderr);
 
-   glClear(GL_COLOR_BUFFER_BIT); 
+   glClear(GL_COLOR_BUFFER_BIT);
 
    glEnable(GL_LIGHTING);
    glEnable(GL_LIGHT0);
@@ -54,7 +54,7 @@ static void Init(void)
    glClearColor(0.0, 0.0, 1.0, 0.0);
 
    list = glGenLists(1);
-   glNewList(list, GL_COMPILE); 
+   glNewList(list, GL_COMPILE);
 
    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, green);
 
@@ -113,7 +113,7 @@ static void Key(unsigned char key, int x, int y)
 
 static void Draw(void)
 {
-   glClear(GL_COLOR_BUFFER_BIT); 
+   glClear(GL_COLOR_BUFFER_BIT);
 
    glShadeModel( GL_SMOOTH );
    glCallList(list);

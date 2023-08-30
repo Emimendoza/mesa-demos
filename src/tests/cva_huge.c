@@ -48,7 +48,7 @@ GLuint *indices;
 #define rows 1000 /* Create 1000x1000 vertex grid */
 #define row_width 5000.0
 #define grid_depth -50.0
-GLuint nr_verts_in_row = rows; 
+GLuint nr_verts_in_row = rows;
 GLuint nr_indices_in_strip = rows * 2;
 
 GLboolean double_buffer;
@@ -57,7 +57,7 @@ GLboolean compiled = GL_TRUE;
 static void generate_verts( void )
 {
 	unsigned x, y;
-	GLfloat step = row_width /(GLfloat)(nr_verts_in_row - 1); 
+	GLfloat step = row_width /(GLfloat)(nr_verts_in_row - 1);
 	verts = malloc(sizeof(verts[0]) * 4 * nr_verts_in_row * nr_verts_in_row);
 
 	for (y = 0; y < nr_verts_in_row; ++y) {

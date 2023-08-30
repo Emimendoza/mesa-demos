@@ -67,7 +67,7 @@ MipGenTexture( void )
    /* resize to TexWidth x TexHeight */
    if (width != TexWidth || height != TexHeight) {
       GLubyte *newImage = malloc(TexWidth * TexHeight * 4);
-      
+
       fprintf(stderr, "rescale %d %d to %d %d\n", width, height,
               TexWidth, TexHeight);
       fflush(stderr);
@@ -107,12 +107,12 @@ static void
 ResetTextureLevel( int i )
 {
    GLubyte tex2d[SIZE*SIZE][4];
-      
+
    {
       GLint Width = TexWidth / (1 << i);
       GLint Height = TexHeight / (1 << i);
       GLint s, t;
-         
+
       for (s = 0; s < Width; s++) {
          for (t = 0; t < Height; t++) {
             tex2d[t*Width+s][0] = ((s / 16) % 2) ? 0 : 255;
@@ -121,9 +121,9 @@ ResetTextureLevel( int i )
             tex2d[t*Width+s][3] = 255;
          }
       }
-         
+
       glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-         
+
       glTexImage2D(GL_TEXTURE_2D, i, GL_RGB, Width, Height, 0,
                    GL_RGBA, GL_UNSIGNED_BYTE, tex2d);
    }
@@ -140,7 +140,7 @@ ResetTexture( void )
 #else
    {
       int i;
-      
+
       for (i = 0; i <= LEVELS; i++)
       {
          ResetTextureLevel(i);
@@ -172,9 +172,9 @@ RenderTexture( void )
    CheckError(__LINE__);
 
    /* Render color to texture */
-   glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, 
+   glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT,
                              GL_COLOR_ATTACHMENT0_EXT,
-                             GL_TEXTURE_2D, TexObj, 
+                             GL_TEXTURE_2D, TexObj,
                              RenderTextureLevel);
 
 
@@ -200,7 +200,7 @@ RenderTexture( void )
 
    glClearColor(0.5, 0.5, 1.0, 0.0);
    glClear(GL_COLOR_BUFFER_BIT);
-      
+
    CheckError(__LINE__);
 
    glBegin(GL_POLYGON);
@@ -239,7 +239,7 @@ Display(void)
    glOrtho(0, WinWidth, 0, WinHeight, -1, 1);
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
-   
+
    glColor3f(1,1,1);
 
    if (Linear) {
@@ -369,7 +369,7 @@ Key(unsigned char key, int x, int y)
          RenderTextureLevel = 0;
          ScaleQuads = 0;
          break;
-         
+
       case 27:
          glutDestroyWindow(Win);
          exit(0);
@@ -399,7 +399,7 @@ Init(void)
    glGenTextures(1, &TexObj);
    glBindTexture(GL_TEXTURE_2D, TexObj);
 
-   if (1) 
+   if (1)
       MipGenTexture();
    else
       ResetTexture();

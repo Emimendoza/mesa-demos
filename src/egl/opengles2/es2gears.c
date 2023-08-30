@@ -1,16 +1,16 @@
 /*
  * Copyright (C) 1999-2001  Brian Paul   All Rights Reserved.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
  * to deal in the Software without restriction, including without limitation
  * the rights to use, copy, modify, merge, publish, distribute, sublicense,
  * and/or sell copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included
  * in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
  * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
@@ -23,7 +23,7 @@
  * Ported to GLES2.
  * Kristian Høgsberg <krh@bitplanet.net>
  * May 3, 2010
- * 
+ *
  * Improve GLES2 port:
  *   * Refactor gear drawing.
  *   * Use correct normals for surfaces.
@@ -86,15 +86,15 @@ static GLfloat ProjectionMatrix[16];
 /** The direction of the directional light for the scene */
 static const GLfloat LightSourcePosition[4] = { 5.0, 5.0, 10.0, 1.0};
 
-/** 
+/**
  * Fills a gear vertex.
- * 
+ *
  * @param v the vertex to fill
  * @param x the x coordinate
  * @param y the y coordinate
  * @param z the z coortinate
- * @param n pointer to the normal table 
- * 
+ * @param n pointer to the normal table
+ *
  * @return the operation error code
  */
 static GearVertex *
@@ -112,13 +112,13 @@ vert(GearVertex *v, GLfloat x, GLfloat y, GLfloat z, GLfloat n[3])
 
 /**
  *  Create a gear wheel.
- * 
+ *
  *  @param inner_radius radius of hole at center
  *  @param outer_radius radius at center of teeth
  *  @param width width of gear
  *  @param teeth number of teeth
  *  @param tooth_depth depth of tooth
- *  
+ *
  *  @return pointer to the constructed struct gear
  */
 static struct gear *
@@ -305,7 +305,7 @@ draw_gear(struct gear *gear, GLfloat *transform,
    glUniformMatrix4fv(ModelViewProjectionMatrix_location, 1, GL_FALSE,
                       model_view_projection);
 
-   /* 
+   /*
     * Create and set the NormalMatrix. It's the inverse transpose of the
     * ModelView matrix.
     */
@@ -338,7 +338,7 @@ draw_gear(struct gear *gear, GLfloat *transform,
    glDisableVertexAttribArray(0);
 }
 
-/** 
+/**
  * Draws the gears.
  */
 static void
@@ -365,9 +365,9 @@ gears_draw(void)
    draw_gear(gear3, transform, -3.1, 4.2, -2 * angle - 25.0, blue);
 }
 
-/** 
+/**
  * Handles a new window size or exposure.
- * 
+ *
  * @param width the window width
  * @param height the window height
  */
@@ -382,9 +382,9 @@ gears_reshape(int width, int height)
    glViewport(0, 0, (GLint) width, (GLint) height);
 }
 
-/** 
+/**
  * Handles special eglut events.
- * 
+ *
  * @param special the event to handle.
  */
 static void

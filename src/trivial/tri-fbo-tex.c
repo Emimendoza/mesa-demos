@@ -67,7 +67,7 @@ RenderTexture(void)
 
       glClearColor(0.5, 0.5, 1.0, 0.0);
       glClear(GL_COLOR_BUFFER_BIT);
-      
+
       CheckError(__LINE__);
 
       glBegin(GL_POLYGON);
@@ -96,7 +96,7 @@ Display(void)
    float ar = (float) Width / (float) Height;
 
    RenderTexture();
-   
+
    /* draw textured quad in the window */
    glMatrixMode(GL_PROJECTION);
    glLoadIdentity();

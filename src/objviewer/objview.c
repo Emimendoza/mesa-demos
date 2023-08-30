@@ -1,4 +1,4 @@
-/*  
+/*
  * .obj file viewer based on "smooth" by Nate Robins, 1997
  *
  * Brian Paul
@@ -65,14 +65,14 @@ InitViewInfo(ViewInfo *view)
 
 /* text: general purpose text routine.  draws a string according to
  * format in a stroke font at x, y after scaling it by the scale
- * specified (scale is in window-space (lower-left origin) pixels).  
+ * specified (scale is in window-space (lower-left origin) pixels).
  *
  * x      - position in x (in window-space)
  * y      - position in y (in window-space)
  * scale  - scale in pixels
  * format - as in printf()
  */
-static void 
+static void
 text(GLuint x, GLuint y, GLfloat scale, char* format, ...)
 {
   va_list args;
@@ -102,7 +102,7 @@ text(GLuint x, GLuint y, GLfloat scale, char* format, ...)
 
   for(p = buffer; *p; p++)
     glutStrokeCharacter(GLUT_STROKE_ROMAN, *p);
-  
+
   glPopAttrib();
 
   glPopMatrix();
@@ -263,19 +263,19 @@ display(void)
 
    if (Stats) {
       glColor3f(1.0, 1.0, 1.0);
-      text(5, glutGet(GLUT_WINDOW_HEIGHT) - (5+20*1), 20, "%s", 
+      text(5, glutGet(GLUT_WINDOW_HEIGHT) - (5+20*1), 20, "%s",
            Model->pathname);
-      text(5, glutGet(GLUT_WINDOW_HEIGHT) - (5+20*2), 20, "%d vertices", 
+      text(5, glutGet(GLUT_WINDOW_HEIGHT) - (5+20*2), 20, "%d vertices",
            Model->numvertices);
-      text(5, glutGet(GLUT_WINDOW_HEIGHT) - (5+20*3), 20, "%d triangles", 
+      text(5, glutGet(GLUT_WINDOW_HEIGHT) - (5+20*3), 20, "%d triangles",
            Model->numtriangles);
-      text(5, glutGet(GLUT_WINDOW_HEIGHT) - (5+20*4), 20, "%d normals", 
+      text(5, glutGet(GLUT_WINDOW_HEIGHT) - (5+20*4), 20, "%d normals",
            Model->numnormals);
-      text(5, glutGet(GLUT_WINDOW_HEIGHT) - (5+20*5), 20, "%d texcoords", 
+      text(5, glutGet(GLUT_WINDOW_HEIGHT) - (5+20*5), 20, "%d texcoords",
            Model->numtexcoords);
-      text(5, glutGet(GLUT_WINDOW_HEIGHT) - (5+20*6), 20, "%d groups", 
+      text(5, glutGet(GLUT_WINDOW_HEIGHT) - (5+20*6), 20, "%d groups",
            Model->numgroups);
-      text(5, glutGet(GLUT_WINDOW_HEIGHT) - (5+20*7), 20, "%d materials", 
+      text(5, glutGet(GLUT_WINDOW_HEIGHT) - (5+20*7), 20, "%d materials",
            Model->nummaterials);
    }
 

@@ -37,7 +37,7 @@ static void render_image( void )
    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
    glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-    
+
    glEnable(GL_LIGHTING);
    glEnable(GL_LIGHT0);
    glEnable(GL_DEPTH_TEST);
@@ -54,7 +54,7 @@ static void render_image( void )
 
    /* red square */
    glPushMatrix();
-   glTranslatef(0.0, -0.5, 0.0); 
+   glTranslatef(0.0, -0.5, 0.0);
    glRotatef(90, 1, 0.5, 0);
    glScalef(3, 3, 3);
    glDisable(GL_LIGHTING);
@@ -69,7 +69,7 @@ static void render_image( void )
    glPopMatrix();
 
    glPushMatrix();
-   glTranslatef(-0.75, -0.5, 0.0); 
+   glTranslatef(-0.75, -0.5, 0.0);
    glRotatef(270.0, 1.0, 0.0, 0.0);
    glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, green_mat );
    glColor4f(0,1,0,0.5);
@@ -80,7 +80,7 @@ static void render_image( void )
    glPopMatrix();
 
    glPushMatrix();
-   glTranslatef(0.75, 1.0, 1.0); 
+   glTranslatef(0.75, 1.0, 1.0);
    glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, blue_mat );
    gluSphere(qobj, 1.0, 20, 20);
    glPopMatrix();
@@ -227,7 +227,7 @@ int main( int argc, char *argv[] )
       printf("OSMesaMakeCurrent failed!\n");
       return 0;
    }
-     
+
    render_image();
 
    if (argc>1) {

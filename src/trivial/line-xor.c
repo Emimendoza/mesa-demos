@@ -29,7 +29,7 @@ Reshape(int width, int height)
 }
 
 
-static void 
+static void
 Key(unsigned char key, int x, int y)
 {
    if (key == 'x') {
@@ -45,7 +45,7 @@ Key(unsigned char key, int x, int y)
 static void
 Draw(void)
 {
-   glClear(GL_COLOR_BUFFER_BIT); 
+   glClear(GL_COLOR_BUFFER_BIT);
 
    glLogicOp(GL_XOR);
    if (xor)

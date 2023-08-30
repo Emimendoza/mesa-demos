@@ -70,8 +70,8 @@ static void Draw(void)
    static float f = 0;
    while (1) {
       f += .1;
-      glClearColor((sin(f)+1)/2.0,(cos(f)+1)/2.0,0.5,1); 
-      glClear(GL_COLOR_BUFFER_BIT); 
+      glClearColor((sin(f)+1)/2.0,(cos(f)+1)/2.0,0.5,1);
+      glClear(GL_COLOR_BUFFER_BIT);
       glutSwapBuffers();
 
       {

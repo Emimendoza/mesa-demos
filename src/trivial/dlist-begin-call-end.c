@@ -48,7 +48,7 @@ static void Init(void)
     * short-circuited in calling list:
     */
    first_list = glGenLists(1);
-   glNewList(first_list, GL_COMPILE); 
+   glNewList(first_list, GL_COMPILE);
    /* glColor3f(0,1,0); */
    glEndList();
 
@@ -56,7 +56,7 @@ static void Init(void)
    /* List that looks like it might have redundant state:
     */
    list = glGenLists(1);
-   glNewList(list, GL_COMPILE); 
+   glNewList(list, GL_COMPILE);
 
    glShadeModel(GL_FLAT);
    glBegin(GL_TRIANGLES);
@@ -98,7 +98,7 @@ static void Key(unsigned char key, int x, int y)
 
 static void Draw(void)
 {
-   glClear(GL_COLOR_BUFFER_BIT); 
+   glClear(GL_COLOR_BUFFER_BIT);
 
    glShadeModel( GL_SMOOTH );
    glCallList(list);

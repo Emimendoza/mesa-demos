@@ -45,7 +45,7 @@ static void Init(void)
    glClearColor(0.0, 0.0, 1.0, 0.0);
 
    list = glGenLists(1);
-   glNewList(list, GL_COMPILE); 
+   glNewList(list, GL_COMPILE);
    glBegin(GL_TRIANGLES);
 /*    glColor3f(0,0,.7);  */
    glVertex3f( 0.9, -0.9, -30.0);
@@ -86,13 +86,13 @@ static void Key(unsigned char key, int x, int y)
 
 static void Draw(void)
 {
-   glClear(GL_COLOR_BUFFER_BIT); 
+   glClear(GL_COLOR_BUFFER_BIT);
 
-   glColor3f(0,.9,0); 
+   glColor3f(0,.9,0);
    glCallList(list);
 
    glRotatef(45,0,0,1);
-   glColor3f(1,0,1); 
+   glColor3f(1,0,1);
    glCallList(list);
 
    glFlush();

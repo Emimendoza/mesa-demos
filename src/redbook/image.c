@@ -1,13 +1,13 @@
 /*
  * Copyright (c) 1993-1997, Silicon Graphics, Inc.
- * ALL RIGHTS RESERVED 
- * Permission to use, copy, modify, and distribute this software for 
+ * ALL RIGHTS RESERVED
+ * Permission to use, copy, modify, and distribute this software for
  * any purpose and without fee is hereby granted, provided that the above
  * copyright notice appear in all copies and that both the copyright notice
- * and this permission notice appear in supporting documentation, and that 
+ * and this permission notice appear in supporting documentation, and that
  * the name of Silicon Graphics, Inc. not be used in advertising
  * or publicity pertaining to distribution of the software without specific,
- * written prior permission. 
+ * written prior permission.
  *
  * THE MATERIAL EMBODIED ON THIS SOFTWARE IS PROVIDED TO YOU "AS-IS"
  * AND WITHOUT WARRANTY OF ANY KIND, EXPRESS, IMPLIED OR OTHERWISE,
@@ -21,8 +21,8 @@
  * ADVISED OF THE POSSIBILITY OF SUCH LOSS, HOWEVER CAUSED AND ON
  * ANY THEORY OF LIABILITY, ARISING OUT OF OR IN CONNECTION WITH THE
  * POSSESSION, USE OR PERFORMANCE OF THIS SOFTWARE.
- * 
- * US Government Users Restricted Rights 
+ *
+ * US Government Users Restricted Rights
  * Use, duplication, or disclosure by the Government is subject to
  * restrictions set forth in FAR 52.227.19(c)(2) or subparagraph
  * (c)(1)(ii) of the Rights in Technical Data and Computer Software
@@ -61,7 +61,7 @@ static GLint height;
 static void makeCheckImage(void)
 {
    int i, j, c;
-    
+
    for (i = 0; i < checkImageHeight; i++) {
       for (j = 0; j < checkImageWidth; j++) {
          c = (((i&0x8)==0)^((j&0x8)==0))*255;
@@ -73,7 +73,7 @@ static void makeCheckImage(void)
 }
 
 static void init(void)
-{    
+{
    glClearColor (0.0, 0.0, 0.0, 0.0);
    glShadeModel(GL_FLAT);
    makeCheckImage();
@@ -84,7 +84,7 @@ static void display(void)
 {
    glClear(GL_COLOR_BUFFER_BIT);
    glRasterPos2i(0, 0);
-   glDrawPixels(checkImageWidth, checkImageHeight, GL_RGB, 
+   glDrawPixels(checkImageWidth, checkImageHeight, GL_RGB,
                 GL_UNSIGNED_BYTE, checkImage);
    glFlush();
 }
@@ -103,7 +103,7 @@ static void reshape(int w, int h)
 static void motion(int x, int y)
 {
    static GLint screeny;
-   
+
    screeny = height - (GLint) y;
    glRasterPos2i (x, screeny);
    glPixelZoom (zoomFactor, zoomFactor);
@@ -124,13 +124,13 @@ static void keyboard(unsigned char key, int x, int y)
          break;
       case 'z':
          zoomFactor += 0.5;
-         if (zoomFactor >= 3.0) 
+         if (zoomFactor >= 3.0)
             zoomFactor = 3.0;
          printf ("zoomFactor is now %4.1f\n", zoomFactor);
          break;
       case 'Z':
          zoomFactor -= 0.5;
-         if (zoomFactor <= 0.5) 
+         if (zoomFactor <= 0.5)
             zoomFactor = 0.5;
          printf ("zoomFactor is now %4.1f\n", zoomFactor);
          break;
@@ -155,5 +155,5 @@ int main(int argc, char** argv)
    glutKeyboardFunc(keyboard);
    glutMotionFunc(motion);
    glutMainLoop();
-   return 0; 
+   return 0;
 }

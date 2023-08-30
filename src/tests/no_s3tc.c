@@ -29,7 +29,7 @@
  * valid) compression format.  The most common example is calling it with
  * \c GL_COMPRESSED_RGBA_S3TC_DXT1_EXT when GL_EXT_texture_compression_s3tc
  * is not supported.
- * 
+ *
  * This tests Mesa bug #1028405.
  *
  * \author Ian Romanick <idr@us.ibm.com>
@@ -69,7 +69,7 @@ main( int argc, char ** argv )
       return( EXIT_SUCCESS );
    }
 
-   
+
    if ( ! glutExtensionSupported( "GL_EXT_texture_compression_s3tc" ) ) {
       format = GL_COMPRESSED_RGBA_S3TC_DXT1_EXT;
       width = 4;
@@ -85,7 +85,7 @@ main( int argc, char ** argv )
 	       "GL_3DFX_texture_compression_FXT1 must NOT be supported.\n" );
       return( EXIT_SUCCESS );
    }
-	
+
    glCompressedTexImage2D( GL_TEXTURE_2D, 0, format, width, 4, 0,
 			   size, data );
    err = glGetError();
@@ -93,7 +93,7 @@ main( int argc, char ** argv )
       fprintf( stderr, "GL error 0x%04x should have been generated, but "
 	       "0x%04x was generated instead.\n", GL_INVALID_ENUM, err );
    }
-	
+
    gladLoaderUnloadGL();
    return (err == GL_INVALID_ENUM) ? EXIT_SUCCESS : EXIT_FAILURE;
 }

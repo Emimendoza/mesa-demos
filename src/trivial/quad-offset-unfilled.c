@@ -70,7 +70,7 @@ static void Key(unsigned char key, int x, int y)
 
 static void Draw(void)
 {
-   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
+   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
    glEnable(GL_DEPTH_TEST);
 
    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -81,7 +81,7 @@ static void Draw(void)
    glPolygonOffset(1, 0);
 
    glBegin(GL_QUADS);
-   glColor3f(1,0,0); 
+   glColor3f(1,0,0);
    glVertex3f( 0.9, -0.9, -10.0);
    glVertex3f( 0.9,  0.9, -10.0);
    glVertex3f(-0.9,  0.9, -40.0);
@@ -91,7 +91,7 @@ static void Draw(void)
    glDisable(GL_POLYGON_OFFSET_FILL);
 
    glBegin(GL_QUADS);
-   glColor3f(0,1,0); 
+   glColor3f(0,1,0);
    glVertex3f( 0.6, -0.6, -15.0);
    glVertex3f( 0.6,  0.6, -15.0);
    glVertex3f(-0.6,  0.6, -35.0);
@@ -104,7 +104,7 @@ static void Draw(void)
    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
    glBegin(GL_QUADS);
-   glColor3f(0,0,1); 
+   glColor3f(0,0,1);
    glVertex3f( 0.3, -0.3, -20.0);
    glVertex3f( 0.3,  0.3, -20.0);
    glVertex3f(-0.3,  0.3, -30.0);

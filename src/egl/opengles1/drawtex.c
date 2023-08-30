@@ -72,7 +72,7 @@ reshape(int width, int height)
 #else
    glFrustum(-ar, ar, -1, 1, 5.0, 60.0);
 #endif
-   
+
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
    glTranslatef(0.0, 0.0, -15.0);

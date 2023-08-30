@@ -1,6 +1,6 @@
 /*
  * Test glRead/DrawPixels for GL_DEPTH_COMPONENT, with pixelzoom.
- * 
+ *
  * Brian Paul
  * 23 August 2003
  */

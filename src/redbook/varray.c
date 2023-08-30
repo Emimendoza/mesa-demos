@@ -1,13 +1,13 @@
 /*
  * Copyright (c) 1993-1997, Silicon Graphics, Inc.
- * ALL RIGHTS RESERVED 
- * Permission to use, copy, modify, and distribute this software for 
+ * ALL RIGHTS RESERVED
+ * Permission to use, copy, modify, and distribute this software for
  * any purpose and without fee is hereby granted, provided that the above
  * copyright notice appear in all copies and that both the copyright notice
- * and this permission notice appear in supporting documentation, and that 
+ * and this permission notice appear in supporting documentation, and that
  * the name of Silicon Graphics, Inc. not be used in advertising
  * or publicity pertaining to distribution of the software without specific,
- * written prior permission. 
+ * written prior permission.
  *
  * THE MATERIAL EMBODIED ON THIS SOFTWARE IS PROVIDED TO YOU "AS-IS"
  * AND WITHOUT WARRANTY OF ANY KIND, EXPRESS, IMPLIED OR OTHERWISE,
@@ -21,8 +21,8 @@
  * ADVISED OF THE POSSIBILITY OF SUCH LOSS, HOWEVER CAUSED AND ON
  * ANY THEORY OF LIABILITY, ARISING OUT OF OR IN CONNECTION WITH THE
  * POSSESSION, USE OR PERFORMANCE OF THIS SOFTWARE.
- * 
- * US Government Users Restricted Rights 
+ *
+ * US Government Users Restricted Rights
  * Use, duplication, or disclosure by the Government is subject to
  * restrictions set forth in FAR 52.227.19(c)(2) or subparagraph
  * (c)(1)(ii) of the Rights in Technical Data and Computer Software
@@ -84,11 +84,11 @@ static void setupInterleave(void)
        0.2, 1.0, 0.2, 200.0, 300.0, 0.0,
        0.2, 1.0, 1.0, 300.0, 200.0, 0.0,
        0.2, 0.2, 1.0, 200.0, 100.0, 0.0};
-   
+
    glInterleavedArrays (GL_C3F_V3F, 0, intertwined);
 }
 
-static void init(void) 
+static void init(void)
 {
    glClearColor (0.0, 0.0, 0.0, 0.0);
    glShadeModel (GL_SMOOTH);
@@ -99,7 +99,7 @@ static void display(void)
 {
    glClear (GL_COLOR_BUFFER_BIT);
 
-   if (derefMethod == DRAWARRAY) 
+   if (derefMethod == DRAWARRAY)
       glDrawArrays (GL_TRIANGLES, 0, 6);
    else if (derefMethod == ARRAYELEMENT) {
       glBegin (GL_TRIANGLES);
@@ -144,11 +144,11 @@ static void mouse (int button, int state, int x, int y)
       case GLUT_MIDDLE_BUTTON:
       case GLUT_RIGHT_BUTTON:
          if (state == GLUT_DOWN) {
-            if (derefMethod == DRAWARRAY) 
+            if (derefMethod == DRAWARRAY)
                derefMethod = ARRAYELEMENT;
-            else if (derefMethod == ARRAYELEMENT) 
+            else if (derefMethod == ARRAYELEMENT)
                derefMethod = DRAWELEMENTS;
-            else if (derefMethod == DRAWELEMENTS) 
+            else if (derefMethod == DRAWELEMENTS)
                derefMethod = DRAWARRAY;
             glutPostRedisplay();
          }
@@ -172,11 +172,11 @@ int main(int argc, char** argv)
 {
    glutInit(&argc, argv);
    glutInitDisplayMode (GLUT_SINGLE | GLUT_RGB);
-   glutInitWindowSize (350, 350); 
+   glutInitWindowSize (350, 350);
    glutInitWindowPosition (100, 100);
    glutCreateWindow (argv[0]);
    init ();
-   glutDisplayFunc(display); 
+   glutDisplayFunc(display);
    glutReshapeFunc(reshape);
    glutMouseFunc(mouse);
    glutKeyboardFunc (keyboard);

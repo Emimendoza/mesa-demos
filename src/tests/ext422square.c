@@ -60,7 +60,7 @@ static void Display( void )
    glBindTexture(GL_TEXTURE_2D, yuvObj);
 
    glPushMatrix();
-      glEnable(GL_FRAGMENT_PROGRAM_ARB); 
+      glEnable(GL_FRAGMENT_PROGRAM_ARB);
       glTranslatef( -1.1, 0.0, -15.0 );
       glRotatef(Xrot, 1.0, 0.0, 0.0);
       glRotatef(Yrot, 0.0, 1.0, 0.0);
@@ -143,7 +143,7 @@ static void Init( int argc, char *argv[] )
       1.164,   1.164,    1.164,      0,
       0,       -.391,    2.018,      0,
       1.596,   -.813,    0.0,        0,
-      (-.0625*1.164 + -.5*1.596),     (-.0625*1.164 + -.5*-.813 + -.5*-.391),     (-.0625*1.164 + -.5*2.018),      1  
+      (-.0625*1.164 + -.5*1.596),     (-.0625*1.164 + -.5*-.813 + -.5*-.391),     (-.0625*1.164 + -.5*2.018),      1
    };
 
    if (!glutExtensionSupported("GL_ARB_fragment_program")) {
@@ -176,7 +176,7 @@ static void Init( int argc, char *argv[] )
 		GL_RGB,
 		ImgWidth, ImgHeight, 0,
 		GL_422_EXT,
-		GL_UNSIGNED_BYTE, ImageYUV); 
+		GL_UNSIGNED_BYTE, ImageYUV);
 
    glEnable(GL_TEXTURE_2D);
 
@@ -222,7 +222,7 @@ static void Init( int argc, char *argv[] )
 
    glMatrixMode( GL_COLOR_MATRIX );
    glLoadMatrixf( yuvtorgb );
-   
+
    glTexImage2D(GL_TEXTURE_2D, 0,
                 GL_RGB,
 		ImgWidth, ImgHeight, 0,

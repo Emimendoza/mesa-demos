@@ -23,7 +23,7 @@
  * LIABILITY, ARISING OUT OF OR IN CONNECTION WITH THE POSSESSION, USE
  * OR PERFORMANCE OF THIS SOFTWARE.
  *
- * US Government Users Restricted Rights 
+ * US Government Users Restricted Rights
  * Use, duplication, or disclosure by the Government is subject to
  * restrictions set forth in FAR 52.227.19(c)(2) or subparagraph
  * (c)(1)(ii) of the Rights in Technical Data and Computer Software
@@ -65,7 +65,7 @@ static GLuint texName;
 static void makeImage(void)
 {
    int s, t, r;
-    
+
    for (s = 0; s < 16; s++)
       for (t = 0; t < 16; t++)
          for (r = 0; r < 16; r++) {
@@ -76,7 +76,7 @@ static void makeImage(void)
 }
 
 static void init(void)
-{    
+{
    glClearColor (0.0, 0.0, 0.0, 0.0);
    glShadeModel(GL_FLAT);
    glEnable(GL_DEPTH_TEST);
@@ -89,9 +89,9 @@ static void init(void)
    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_CLAMP);
    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_CLAMP);
    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_CLAMP);
-   glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, 
+   glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER,
                    GL_NEAREST);
-   glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, 
+   glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER,
                    GL_NEAREST);
    glTexImage3D(GL_TEXTURE_3D, 0, GL_RGB, iWidth, iHeight,
                 iDepth, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
@@ -149,5 +149,5 @@ int main(int argc, char** argv)
    glutKeyboardFunc (keyboard);
    glutMainLoop();
    gladLoaderUnloadGL();
-   return 0; 
+   return 0;
 }

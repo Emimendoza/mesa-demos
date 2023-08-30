@@ -69,14 +69,14 @@ static void Draw(void)
 {
    static float f = 0;
    f += .1;
-   glClear(GL_COLOR_BUFFER_BIT); 
+   glClear(GL_COLOR_BUFFER_BIT);
 
    glBegin(GL_TRIANGLES);
-   glColor3f((sin(f)+1)/2.0,0,0); 
+   glColor3f((sin(f)+1)/2.0,0,0);
    glVertex3f(-0.9, -0.9, -30.0);
-   glColor3f(0,(cos(f)+1)/2.0,0); 
+   glColor3f(0,(cos(f)+1)/2.0,0);
    glVertex3f( 0.9, -0.9, -30.0);
-   glColor3f(0,0,.7); 
+   glColor3f(0,0,.7);
    glVertex3f( 0.0,  0.9, -30.0);
    glEnd();
 

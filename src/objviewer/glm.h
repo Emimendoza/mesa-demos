@@ -1,4 +1,4 @@
-/*    
+/*
  *  GLM library.  Wavefront .obj file format reader/writer/manipulator.
  *
  *  Written by Nate Robins, 1997.
@@ -24,7 +24,7 @@ typedef unsigned int uint;
 
 /* structs */
 
-/* GLMmaterial: Structure that defines a material in a model. 
+/* GLMmaterial: Structure that defines a material in a model.
  */
 typedef struct _GLMmaterial
 {
@@ -108,7 +108,7 @@ typedef struct {
  * scaling it to fit in a unit cube around the origin.  Returns the
  * scalefactor used.
  *
- * model - properly initialized GLMmodel structure 
+ * model - properly initialized GLMmodel structure
  */
 float
 glmUnitize(GLMmodel* model);
@@ -123,7 +123,7 @@ void
 glmDimensions(GLMmodel* model, float* dimensions);
 
 /* glmScale: Scales a model by a given amount.
- * 
+ *
  * model - properly initialized GLMmodel structure
  * scale - scalefactor (0.5 = half as large, 2.0 = twice as large)
  */
@@ -133,8 +133,8 @@ glmScale(GLMmodel* model, float scale);
 /* glmReverseWinding: Reverse the polygon winding for all polygons in
  * this model.  Default winding is counter-clockwise.  Also changes
  * the direction of the normals.
- * 
- * model - properly initialized GLMmodel structure 
+ *
+ * model - properly initialized GLMmodel structure
  */
 void
 glmReverseWinding(GLMmodel* model);
@@ -201,9 +201,9 @@ glmDelete(GLMmodel* model);
  * Returns a pointer to the created object which should be free'd with
  * glmDelete().
  *
- * filename - name of the file containing the Wavefront .OBJ format data.  
+ * filename - name of the file containing the Wavefront .OBJ format data.
  */
-GLMmodel* 
+GLMmodel*
 glmReadOBJ(char* filename);
 
 /* glmWriteOBJ: Writes a model description in Wavefront .OBJ format to
@@ -244,7 +244,7 @@ glmDraw(GLMmodel* model, uint mode);
  *            GLM_FLAT    -  render with facet normals
  *            GLM_SMOOTH  -  render with vertex normals
  *            GLM_TEXTURE -  render with texture coords
- *            GLM_FLAT and GLM_SMOOTH should not both be specified.  
+ *            GLM_FLAT and GLM_SMOOTH should not both be specified.
  */
 uint
 glmList(GLMmodel* model, uint mode);

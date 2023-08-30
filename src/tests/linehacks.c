@@ -147,7 +147,7 @@ Draw(void)
       else {
          passes = 1;
       }
-      if (Anti) 
+      if (Anti)
          s = 2.0 * LineWidth / MaxLineWidth;
       else
          s = 1.5 * LineWidth / MaxLineWidth;

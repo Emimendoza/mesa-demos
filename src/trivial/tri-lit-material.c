@@ -77,19 +77,19 @@ static void Draw(void)
    static GLfloat green[4] = {0.0, 0.8, 0.2, 1.0};
    static GLfloat blue[4] = {0.2, 0.2, .9, 1.0};
 
-   glClear(GL_COLOR_BUFFER_BIT); 
+   glClear(GL_COLOR_BUFFER_BIT);
 
    glBegin(GL_TRIANGLES);
    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, blue);
-   glNormal3f(0,0,.7); 
+   glNormal3f(0,0,.7);
    glVertex3f( 0.9, -0.9, -0.0);
 
    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, green);
-   glNormal3f(0,0,.8); 
+   glNormal3f(0,0,.8);
    glVertex3f( 0.9,  0.9, -0.0);
 
    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, red);
-   glNormal3f(0,0,.9); 
+   glNormal3f(0,0,.9);
    glVertex3f(-0.9,  0.0, -0.0);
    glEnd();
 

@@ -58,7 +58,7 @@ static void Init(void)
    glBindProgramARB(GL_FRAGMENT_PROGRAM_ARB, prognum);
    glProgramStringARB(GL_FRAGMENT_PROGRAM_ARB, GL_PROGRAM_FORMAT_ASCII_ARB,
                       strlen(prog1), (const GLubyte *)prog1);
-   
+
    errnum = glGetError();
    printf("glGetError = 0x%x\n", errnum);
    if (errnum != GL_NO_ERROR) {
@@ -100,17 +100,17 @@ static void Key(unsigned char key, int x, int y)
 
 static void Draw(void)
 {
-   glClear(GL_COLOR_BUFFER_BIT); 
+   glClear(GL_COLOR_BUFFER_BIT);
 
    glBegin(GL_TRIANGLES);
-   glColor3f(0,0,.7); 
-   glTexCoord3f(0,0,.7); 
+   glColor3f(0,0,.7);
+   glTexCoord3f(0,0,.7);
    glVertex3f( 0.9, -0.9, -0.0);
-   glColor3f(.8,0,0); 
-   glTexCoord3f(.8,0,0); 
+   glColor3f(.8,0,0);
+   glTexCoord3f(.8,0,0);
    glVertex3f( 0.9,  0.9, -0.0);
-   glColor3f(0,.9,0); 
-   glTexCoord3f(0,.9,0); 
+   glColor3f(0,.9,0);
+   glTexCoord3f(0,.9,0);
    glVertex3f(-0.9,  0.0, -0.0);
    glEnd();
 

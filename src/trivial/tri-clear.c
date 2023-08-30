@@ -71,21 +71,21 @@ static void Key(unsigned char key, int x, int y)
 static void Draw(void)
 {
    glClearColor(0.0, 0.0, 1.0, 1.0);
-   glClear(GL_COLOR_BUFFER_BIT); 
+   glClear(GL_COLOR_BUFFER_BIT);
 
    glBegin(GL_TRIANGLES);
-   glColor3f(0,0,.7); 
+   glColor3f(0,0,.7);
    glVertex3f( 0.9, -0.9, -30.0);
-   glColor3f(.8,0,0); 
+   glColor3f(.8,0,0);
    glVertex3f( 0.9,  0.9, -30.0);
-   glColor3f(0,.9,0); 
+   glColor3f(0,.9,0);
    glVertex3f(-0.9,  0.0, -30.0);
    glEnd();
 
    glEnable(GL_SCISSOR_TEST);
    glClearColor(1, 0, 1, 0);
    glScissor(Width / 2, Height / 2, Width - Width / 2, Height - Height / 2);
-   glClear(GL_COLOR_BUFFER_BIT); 
+   glClear(GL_COLOR_BUFFER_BIT);
    glDisable(GL_SCISSOR_TEST);
 
    glFlush();

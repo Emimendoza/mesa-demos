@@ -78,11 +78,11 @@ static void Draw(void)
    printf("ColorMask = %d, %d, %d\n", Rmask, Gmask, Bmask);
    glColorMask(1,1,1,1);
 
-   glClear(GL_COLOR_BUFFER_BIT); 
+   glClear(GL_COLOR_BUFFER_BIT);
 
    /* right triangle: green */
    glBegin(GL_TRIANGLES);
-   glColor3f(0,1,0); 
+   glColor3f(0,1,0);
    glVertex3f( 0.9, -0.9, -30.0);
    glVertex3f( 0.9,  0.9, -30.0);
    glVertex3f(-0.9,  0.0, -30.0);
@@ -92,7 +92,7 @@ static void Draw(void)
 
    /* left triangle: white&mask: purple   middle region: white */
    glBegin(GL_TRIANGLES);
-   glColor3f(1,1,1); 
+   glColor3f(1,1,1);
    glVertex3f(-0.9, -0.9, -30.0);
    glVertex3f(-0.9,  0.9, -30.0);
    glVertex3f( 0.9,  0.0, -30.0);

@@ -70,22 +70,22 @@ static void Key(unsigned char key, int x, int y)
 
 static void Draw(void)
 {
-   glClear(GL_COLOR_BUFFER_BIT); 
+   glClear(GL_COLOR_BUFFER_BIT);
    glShadeModel(GL_FLAT);
 
    glPolygonMode(GL_FRONT, GL_LINE);
    glPolygonMode(GL_BACK, GL_LINE);
    glLineWidth(4.0);
-   
+
 
    glBegin(GL_POLYGON);
-   glColor3f(1,0,0); 
+   glColor3f(1,0,0);
    glVertex3f( 0, 0, -30.0);
-   glColor3f(1,1,0); 
+   glColor3f(1,1,0);
    glVertex3f( 1.3,  1.1, -30.0);
-   glColor3f(1,0,1); 
+   glColor3f(1,0,1);
    glVertex3f(-.9,  .9, -30.0);
-   glColor3f(0,1,1); 
+   glColor3f(0,1,1);
    glVertex3f(-1.1,  -1.3, -30.0);
    glEnd();
 

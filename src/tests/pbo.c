@@ -1,6 +1,6 @@
 /*
  * GL_EXT_pixel_buffer_object test
- * 
+ *
  * Brian Paul
  * 11 March 2004
  */

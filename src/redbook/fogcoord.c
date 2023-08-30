@@ -23,7 +23,7 @@
  * LIABILITY, ARISING OUT OF OR IN CONNECTION WITH THE POSSESSION, USE
  * OR PERFORMANCE OF THIS SOFTWARE.
  *
- * US Government Users Restricted Rights 
+ * US Government Users Restricted Rights
  * Use, duplication, or disclosure by the Government is subject to
  * restrictions set forth in FAR 52.227.19(c)(2) or subparagraph
  * (c)(1)(ii) of the Rights in Technical Data and Computer Software
@@ -43,19 +43,19 @@
 /*
  *  fogcoord.c
  *
- *  This program demonstrates the use of explicit fog 
- *  coordinates.  You can press the keyboard and change 
+ *  This program demonstrates the use of explicit fog
+ *  coordinates.  You can press the keyboard and change
  *  the fog coordinate value at any vertex.  You can
- *  also switch between using explicit fog coordinates 
+ *  also switch between using explicit fog coordinates
  *  and the default fog generation mode.
- * 
+ *
  *  Pressing the 'f' and 'b' keys move the viewer forward
- *  and backwards. 
+ *  and backwards.
  *  Pressing 'c' initiates the default fog generation.
  *  Pressing capital 'C' restores explicit fog coordinates.
  *  Pressing '1', '2', '3', '8', '9', and '0' add or
  *  subtract from the fog coordinate values at one of the
- *  three vertices of the triangle. 
+ *  three vertices of the triangle.
  */
 
 #include "glad/gl.h"
@@ -92,11 +92,11 @@ static void display(void)
 
    glColor3f (1.0f, 0.75f, 0.0f);
    glBegin (GL_TRIANGLES);
-   glFogCoordfEXT (f1); 
+   glFogCoordfEXT (f1);
    glVertex3f (2.0f, -2.0f, 0.0f);
-   glFogCoordfEXT (f2); 
+   glFogCoordfEXT (f2);
    glVertex3f (-2.0f, 0.0f, -5.0f);
-   glFogCoordfEXT (f3); 
+   glFogCoordfEXT (f3);
    glVertex3f (0.0f, 2.0f, -10.0f);
    glEnd();
 
@@ -126,32 +126,32 @@ static void keyboard(unsigned char key, int x, int y)
          glutPostRedisplay();
          break;
       case '1':
-         f1 = f1 + 0.25; 
+         f1 = f1 + 0.25;
          glutPostRedisplay();
          break;
       case '2':
-         f2 = f2 + 0.25; 
+         f2 = f2 + 0.25;
          glutPostRedisplay();
          break;
       case '3':
-         f3 = f3 + 0.25; 
+         f3 = f3 + 0.25;
          glutPostRedisplay();
          break;
       case '8':
          if (f1 > 0.25) {
-            f1 = f1 - 0.25; 
+            f1 = f1 - 0.25;
             glutPostRedisplay();
          }
          break;
       case '9':
          if (f2 > 0.25) {
-            f2 = f2 - 0.25; 
+            f2 = f2 - 0.25;
             glutPostRedisplay();
          }
          break;
       case '0':
          if (f3 > 0.25) {
-            f3 = f3 - 0.25; 
+            f3 = f3 - 0.25;
             glutPostRedisplay();
          }
          break;
@@ -175,7 +175,7 @@ static void keyboard(unsigned char key, int x, int y)
 
 
 /*  Main Loop
- *  Open window with initial window size, title bar, 
+ *  Open window with initial window size, title bar,
  *  RGBA display mode, depth buffer, and handle input events.
  */
 int main(int argc, char** argv)

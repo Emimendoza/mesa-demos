@@ -97,7 +97,7 @@ static void Draw(void)
 {
    float a;
 
-   glClear(GL_COLOR_BUFFER_BIT); 
+   glClear(GL_COLOR_BUFFER_BIT);
 
    glLineWidth(width);
 
