@@ -1,4 +1,4 @@
-option('with-glut',              type : 'string')
+option('with-glut',              type : 'string', deprecated: true)
 option('egl',                    type : 'feature')
 option('gles1',                  type : 'feature')
 option('gles2',                  type : 'feature')

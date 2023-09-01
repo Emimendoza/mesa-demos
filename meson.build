@@ -20,7 +20,7 @@
 
 project('mesa-demos', 'c', 'cpp',
   version : '9.0.0',
-  meson_version : '>= 0.59',
+  meson_version : '>= 0.60',
   default_options: ['c_std=c11', 'cpp_std=c++17'])
 
 cc = meson.get_compiler('c')
@@ -118,7 +118,6 @@ endif
 
 with_glut = get_option('with-glut')
 if with_glut != ''
-  warning('with-glut is deprecated, and will be removed in a future release')
   glut_libdir = with_glut / 'lib'
   glut_incdir = include_directories(with_glut / 'include', is_system: true)
 
