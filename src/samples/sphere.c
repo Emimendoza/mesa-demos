@@ -32,11 +32,6 @@
 #include "readtex.h"
 
 
-#ifndef PI
-#define PI    3.14159265358979323846
-#endif
-
-
 GLenum doubleBuffer;
 int W = 400, H = 400;
 
@@ -443,7 +438,7 @@ static void BuildCylinder(int numEdges)
     float x[100], y[100], angle;
 
     for (i = 0; i <= numEdges; i++) {
-	angle = i * 2.0 * PI / numEdges;
+	angle = i * 2.0 * M_PI / numEdges;
 	x[i] = cos(angle);   /* was cosf() */
 	y[i] = sin(angle);   /* was sinf() */
     }

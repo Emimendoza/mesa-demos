@@ -26,10 +26,6 @@
 #include <X11/extensions/shape.h>
 #include <GL/glx.h>
 
-#ifndef PI
-#define PI 3.1415926
-#endif
-
 
 static int Width=500, Height=500;
 
@@ -182,7 +178,7 @@ static void make_shape_mask(Display *dpy, Window win, int width, int height,
       int cx = width / 2;
       int cy = height / 2;
       float angle = 0.0;
-      float step = 2.0 * PI / sides;
+      float step = 2.0 * M_PI / sides;
       float radius = width / 2;
       int i;
       XPoint points[100];

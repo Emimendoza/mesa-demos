@@ -51,8 +51,6 @@
 #include "glut_wrap.h"
 #include "jitter.h"
 
-#define PI_ 3.14159265358979323846
-
 /*	accFrustum()
  *  The first 6 arguments are identical to the glFrustum() call.
  *
@@ -111,7 +109,7 @@ static void accPerspective(GLdouble fovy, GLdouble aspect,
 {
     GLdouble fov2,left,right,bottom,top;
 
-    fov2 = ((fovy*PI_) / 180.0) / 2.0;
+    fov2 = ((fovy * M_PI) / 180.0) / 2.0;
 
     top = nnear / (cos(fov2) / sin(fov2));
     bottom = -top;

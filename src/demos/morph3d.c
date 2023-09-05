@@ -157,9 +157,6 @@ So the angle is:
 #define dodecaangle                63.434948822922009981
 #define icoangle                   41.810314895778596167
 
-#ifndef Pi
-#define Pi                         3.1415926535897932385
-#endif
 #define SQRT2                      1.4142135623730951455
 #define SQRT3                      1.7320508075688771932
 #define SQRT5                      2.2360679774997898051
@@ -314,8 +311,8 @@ static float MaterialGray[]    =   { 0.2, 0.2, 0.2, 1.0 };
   GLfloat   AmpVr2=(Amp)/sqr((Edge)*cossec36_2);                                                                 \
                                                                                                                  \
   for(Fi=0;Fi<6;Fi++) {                                                                                          \
-    x[Fi]=-cos( Fi*2*Pi/5 + Pi/10 )/(Divisions)*cossec36_2*(Edge);                                                \
-    y[Fi]=sin( Fi*2*Pi/5 + Pi/10 )/(Divisions)*cossec36_2*(Edge);                                                \
+    x[Fi]=-cos(Fi * 2 * M_PI / 5 + M_PI / 10) / (Divisions) * cossec36_2 * (Edge);                               \
+    y[Fi]=sin(Fi * 2 * M_PI / 5 + M_PI / 10) / (Divisions) * cossec36_2 * (Edge);                                \
   }                                                                                                              \
                                                                                                                  \
   for (Ri=1; Ri<=(Divisions); Ri++) {                                                                            \

@@ -51,8 +51,6 @@
 #define SHADOW_MAP_WIDTH      256
 #define SHADOW_MAP_HEIGHT     256
 
-#define PI       3.14159265359
-
 GLdouble    fovy      = 60.0;
 GLdouble    nearPlane = 10.0;
 GLdouble    farPlane  = 100.0;
@@ -123,7 +121,7 @@ reshape( int width, int height )
 static void
 idle( void )
 {
-    angle += PI / 10000;
+    angle += M_PI / 10000;
     torusAngle += .1;
     glutPostRedisplay();
 }
