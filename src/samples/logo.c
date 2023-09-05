@@ -29,8 +29,6 @@
 #include "glut_wrap.h"
 
 
-#define PI 3.141592654
-
 #define	BLACK 0
 #define	GRAY 128
 #define	WHITE 255
