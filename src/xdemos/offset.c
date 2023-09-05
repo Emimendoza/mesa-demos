@@ -52,8 +52,6 @@ PERFORMANCE OF THIS SOFTWARE.
 #include <stdio.h>
 #include <string.h>
 
-#undef GL_EXT_polygon_offset  /* use GL 1.1 version instead of extension */
-
 
 #ifndef EXIT_FAILURE
 #  define EXIT_FAILURE    1
@@ -167,18 +165,10 @@ draw_scene(int mx, int my) {
 
     glPushMatrix();
     glTranslatef(1.7, 0.0, 0.0);
-#ifdef GL_EXT_polygon_offset
-    glEnable(GL_POLYGON_OFFSET_EXT);
-#else
     glEnable(GL_POLYGON_OFFSET_FILL);
-#endif
     glScalef(Scale, Scale, Scale);
     cubes(mx, my, HIDDEN_LINE);
-#ifdef GL_EXT_polygon_offset
-    glDisable(GL_POLYGON_OFFSET_EXT);
-#else
     glDisable(GL_POLYGON_OFFSET_FILL);
-#endif
     glPopMatrix();
 }
 
