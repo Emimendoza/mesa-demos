@@ -30,10 +30,6 @@
 #define M_PI 3.14159265
 #endif
 
-#if 0  /* For debugging. */
-#undef GL_EXT_point_parameters
-#endif
-
 static GLfloat angle = -150;   /* in degrees */
 static int spin = 0;
 static int moving, begin;
