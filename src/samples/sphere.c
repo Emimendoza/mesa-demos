@@ -478,10 +478,7 @@ static void BuildTorus(float rc, int numc, float rt, int numt)
     int i, j, k;
     double s, t;
     double x, y, z;
-    double pi, twopi;
-
-    pi = 3.14159265358979323846;
-    twopi = 2.0 * pi;
+    double twopi = 2.0 * M_PI;
 
     glNewList(torus, GL_COMPILE);
     for (i = 0; i < numc; i++) {

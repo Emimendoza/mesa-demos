@@ -100,7 +100,7 @@ static void init( void )
       GLfloat f;
 
       /* map 0..255 to -PI .. PI */
-      f = ((i / 255.0) - .5) * (3.141592 * 2);
+      f = ((i / 255.0) - .5) * (M_PI * 2);
 
       f = sin(f);
 

@@ -110,7 +110,7 @@ static void Draw(void)
    glShadeModel(flat ? GL_FLAT : GL_SMOOTH);
 
    glBegin(GL_LINES);
-   for (a = 0; a < 3.14159; a += 0.2) {
+   for (a = 0; a < M_PI; a += 0.2) {
       float x = .9 * cos(a);
       float y = .9 * sin(a);
 

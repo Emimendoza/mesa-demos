@@ -39,7 +39,7 @@
 #include "glad/gl.h"
 #include "glut_wrap.h"
 
-#define DEG_TO_RAD (3.14159 / 180.0)
+#define DEG_TO_RAD (M_PI / 180.0)
 
 static GLint WindowWidth = 450, WindowHeight = 300;
 static GLfloat Xrot = 15, Yrot = 0, Zrot = 0;

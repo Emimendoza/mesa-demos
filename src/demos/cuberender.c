@@ -15,7 +15,7 @@
 #include "shaderutil.h"
 
 
-#define DEG_TO_RAD (3.14159 / 180.0)
+#define DEG_TO_RAD (M_PI / 180.0)
 
 #define ELEMENTS(array) (sizeof(array) / sizeof(array[0]))
 

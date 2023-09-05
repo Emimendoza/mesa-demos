@@ -261,7 +261,7 @@ setnewpart(part * p)
 
    p->age = 0;
 
-   a = vrnd() * 3.14159265359 * 2.0;
+   a = vrnd() * M_PI * 2.0;
 
    vinit(v, sin(a) * eject_r * vrnd(), 0.15, cos(a) * eject_r * vrnd());
    vinit(p->p[0], v[0] + vrnd() * ridtri, v[1] + vrnd() * ridtri,

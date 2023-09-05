@@ -15,8 +15,8 @@
 #include <string.h>
 #include "glut_wrap.h"
 
-#define COS(X)   cos( (X) * 3.14159/180.0 )
-#define SIN(X)   sin( (X) * 3.14159/180.0 )
+#define COS(X)   cos( (X) * M_PI/180.0 )
+#define SIN(X)   sin( (X) * M_PI/180.0 )
 
 #define RED 1
 #define WHITE 2

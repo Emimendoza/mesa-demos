@@ -152,7 +152,7 @@ static void Init( void )
 
    for (j = 0; j < 16; j++) {
       for (i = 0; i < 16; i++) {
-         temp[j][i][0] = cos((float)(i) * 3.1415 / 16.0);
+         temp[j][i][0] = cos((float)(i) * M_PI / 16.0);
          temp[j][i][1] = -0.5;
       }
    }

@@ -36,7 +36,7 @@
 #include "readtex.h"
 
 
-#define DEG2RAD (3.14159/180.0)
+#define DEG2RAD (M_PI / 180.0)
 #define TABLE_TEXTURE DEMOS_DATA_DIR "tile.rgb"
 #define MAX_OBJECTS 2
 #define INIT_WIDTH 400

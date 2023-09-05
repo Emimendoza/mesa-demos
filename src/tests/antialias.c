@@ -35,7 +35,7 @@ doPolygon( GLenum mode, GLint verts, GLfloat radius, GLfloat z )
    int i;
    glBegin(mode);
    for (i = 0; i < verts; i++) {
-      float a = (i * 2.0 * 3.14159) / verts;
+      float a = (i * 2.0 * M_PI) / verts;
       float x = radius * cos(a);
       float y = radius * sin(a);
       glVertex3f(x, y, z);

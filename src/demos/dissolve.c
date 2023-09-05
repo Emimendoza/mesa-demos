@@ -121,7 +121,7 @@ FillWaves(GLubyte *b)
    for (iy = 0; iy < WinHeight; iy++) {
       for (ix = 0; ix < WinWidth; ix++) {
          int p = iy * WinWidth + ix;
-         float x = 8.0 * 3.1415 * ix / (float) WinWidth;
+         float x = 8.0 * M_PI * ix / (float) WinWidth;
          b[p] = (int) (25.0 * sin(x) ) - iy*2;
       }
    }

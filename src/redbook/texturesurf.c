@@ -78,9 +78,9 @@ static void makeImage(void)
     float ti, tj;
 
     for (i = 0; i < imageWidth; i++) {
-	ti = 2.0*3.14159265*i/imageWidth;
+	ti = 2.0 * M_PI * i / imageWidth;
 	for (j = 0; j < imageHeight; j++) {
-	    tj = 2.0*3.14159265*j/imageHeight;
+	    tj = 2.0 * M_PI * j / imageHeight;
 
 	    image[3*(imageHeight*i+j)] = (GLubyte) 127*(1.0+sin(ti));
 	    image[3*(imageHeight*i+j)+1] = (GLubyte) 127*(1.0+cos(2*tj));

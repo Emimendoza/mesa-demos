@@ -50,8 +50,8 @@ static void Init( void )
 
 
    for (i = 0; i < NR_VERTS; i++) {
-      verts[i][0] = cos(i / (float)NR_VERTS * 2.0 * 3.141592);
-      verts[i][1] = sin(i / (float)NR_VERTS * 2.0 * 3.141592);
+      verts[i][0] = cos(i / (float)NR_VERTS * 2.0 * M_PI);
+      verts[i][1] = sin(i / (float)NR_VERTS * 2.0 * M_PI);
       verts[i][2] = 0.0;
       verts[i][3] = 1.0;
 
