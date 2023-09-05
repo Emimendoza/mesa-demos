@@ -86,12 +86,6 @@ current_time(void)
 #endif /*BENCHMARK*/
 
 
-
-#ifndef M_PI
-#define M_PI 3.14159265
-#endif
-
-
 /** Event handler results: */
 #define NOP 0
 #define EXIT 1

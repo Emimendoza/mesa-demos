@@ -41,12 +41,6 @@
 #include <GL/glx.h>
 
 
-
-#ifndef M_PI
-#define M_PI 3.14159265
-#endif
-
-
 /** Event handler results: */
 #define NOP 0
 #define EXIT 1

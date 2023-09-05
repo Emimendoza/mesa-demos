@@ -30,10 +30,6 @@ static GLint Frames = 0;
 #define BASERES 12
 #define TEAPOTRES 3
 
-#ifndef M_PI
-#define M_PI 3.1415926535
-#endif
-
 extern void shadowmatrix(GLfloat [4][4], GLfloat [4], GLfloat [4]);
 extern void findplane(GLfloat [4], GLfloat [3], GLfloat [3], GLfloat [3]);
 

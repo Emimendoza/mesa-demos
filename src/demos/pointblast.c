@@ -21,11 +21,6 @@
 #include "glad/gl.h"
 #include "glut_wrap.h"
 
-/* Some <math.h> files do not define M_PI... */
-#ifndef M_PI
-#define M_PI 3.14159265
-#endif
-
 #if 0  /* For debugging. */
 #undef GL_EXT_point_parameters
 #endif

@@ -25,11 +25,6 @@
 #include "matrix.h"
 
 
-/* Some <math.h> files do not define M_PI... */
-#ifndef M_PI
-#define M_PI 3.14159265358979323846
-#endif
-
 #define MAX_TEX 4
 int NumTextures = 1;
 

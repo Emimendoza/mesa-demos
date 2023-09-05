@@ -52,12 +52,6 @@ current_time(void)
 }
 
 
-
-
-#ifndef M_PI
-#define M_PI 3.14159265
-#endif
-
 static int WinWidth = 300, WinHeight = 300;
 static GLfloat view_rotx = 20.0, view_roty = 30.0, view_rotz = 0.0;
 static GLint gear1, gear2, gear3;

@@ -46,11 +46,6 @@
 #include "glad/gl.h"      /* OpenGL Utility Toolkit header */
 #include "glut_wrap.h"    /* OpenGL Utility Toolkit header */
 
-/* Some <math.h> files do not define M_PI... */
-#ifndef M_PI
-#define M_PI 3.14159265358979323846
-#endif
-
 /* Variable controlling various rendering modes. */
 static int stencilReflection = 1, stencilShadow = 1, offsetShadow = 1;
 static int renderShadow = 1, renderDinosaur = 1, renderReflection = 1;

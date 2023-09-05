@@ -32,10 +32,6 @@ static GLint Frames;
 #define TEX_SKY_WIDTH 256
 #define TEX_SKY_HEIGHT TEX_SKY_WIDTH
 
-#ifndef M_PI
-#define M_PI 3.1415926535
-#endif
-
 #define FROM_NONE   0
 #define FROM_DOWN   1
 #define FROM_UP     2

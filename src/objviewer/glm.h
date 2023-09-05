@@ -13,11 +13,6 @@
 typedef unsigned int uint;
 
 
-#ifndef M_PI
-#define M_PI 3.14159265
-#endif
-
-
 /* defines */
 #define GLM_NONE     (0)		/* render with only vertices */
 #define GLM_FLAT     (1 << 0)		/* render with facet normals */

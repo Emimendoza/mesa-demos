@@ -21,10 +21,6 @@
 #include "glut_wrap.h"
 #include "readtex.h"
 
-#ifndef M_PI
-#define M_PI 3.1415926535
-#endif
-
 #define vinit(a,i,j,k) {\
   (a)[0]=i;\
   (a)[1]=j;\

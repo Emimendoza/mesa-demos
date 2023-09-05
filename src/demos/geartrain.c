@@ -36,9 +36,6 @@
 #define min(x, y) ( x < y ? x : y )
 #endif
 
-#ifndef M_PI
-#define M_PI 3.14159265
-#endif	/*  */
 typedef GLfloat TDA[4];
 
 TDA background;

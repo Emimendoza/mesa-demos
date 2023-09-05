@@ -16,10 +16,6 @@
 #include "glut_wrap.h"
 #include "shaderutil.h"
 
-#ifndef M_PI
-#define M_PI 3.1415926535
-#endif
-
 static GLint WinWidth = 300, WinHeight = 300;
 static char *FragProgFile = NULL;
 static char *VertProgFile = NULL;

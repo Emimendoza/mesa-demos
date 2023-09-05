@@ -20,10 +20,6 @@
 #include <string.h>
 #include "glut_wrap.h"
 
-#ifndef M_PI
-#define M_PI 3.14159265
-#endif
-
 static GLint T0 = 0;
 static GLint Frames = 0;
 static GLint autoexit = 0;

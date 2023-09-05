@@ -11,10 +11,6 @@
 #include <string.h>
 #include "glut_wrap.h"
 
-#ifndef M_PI
-#define M_PI 3.14159265
-#endif
-
 static GLint WinWidth = 800, WinHeight = 500;
 static GLint TexWidth, TexHeight;
 static GLuint TexObj = 1;

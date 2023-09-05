@@ -36,10 +36,6 @@ static GLint Frames = 0;
 #define TEX_REFLECT_SLOT_SIZE (TEX_REFLECT_HEIGHT/16)
 #define TEX_REFLECT_NUMSLOT (TEX_REFLECT_HEIGHT/TEX_REFLECT_SLOT_SIZE)
 
-#ifndef M_PI
-#define M_PI 3.1415926535
-#endif
-
 #define EPSILON 0.0001
 
 #define clamp255(a)  ( (a)<(0.0f) ? (0.0f) : ((a)>(255.0f) ? (255.0f) : (a)) )

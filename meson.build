@@ -185,11 +185,11 @@ if cc.has_function('sincos', prefix: '#define _GNU_SOURCE\n#include <math.h>',
 endif
 
 if ['linux', 'cygwin', 'gnu', 'freebsd', 'gnu/kfreebsd', 'haiku', 'android'].contains(host_machine.system())
-  add_project_arguments('-D_GNU_SOURCE', language: ['c', 'cpp'])
+  add_project_arguments(['-D_GNU_SOURCE', '-D_XOPEN_SOURCE=500'], language: ['c', 'cpp'])
 elif host_machine.system() == 'windows'
   add_project_arguments(['-D_USE_MATH_DEFINES'], language: ['c', 'cpp'])
 elif host_machine.system() == 'openbsd'
-  add_project_arguments('-D_ISOC11_SOURCE', language: ['c', 'cpp'])
+  add_project_arguments(['-D_ISOC11_SOURCE', '-D_XOPEN_SOURCE=500'], language: ['c', 'cpp'])
 endif
 
 c_args = []

@@ -33,10 +33,6 @@ static GLint Frames = 0;
 
 #define NUMBLOC 5
 
-#ifndef M_PI
-#define M_PI 3.1415926535
-#endif
-
 static float obs[3] = { 1000.0, 0.0, 2.0 };
 static float dir[3];
 static float v = 30.;

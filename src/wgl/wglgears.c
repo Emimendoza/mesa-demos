@@ -41,10 +41,6 @@
 #include <ctype.h>
 #include <math.h>
 
-#ifndef M_PI
-#define M_PI 3.14159265
-#endif /* !M_PI */
-
 
 /* Global vars */
 static HDC hDC;

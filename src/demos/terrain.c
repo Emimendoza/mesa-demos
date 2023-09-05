@@ -21,10 +21,6 @@
 
 #include "glut_wrap.h"
 
-#ifndef M_PI
-#define M_PI 3.14159265
-#endif
-
 #define heightMnt	450
 #define	lenghtXmnt	62
 #define lenghtYmnt	62

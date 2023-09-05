@@ -28,10 +28,6 @@ static GLint NiceFog = 1;
 
 #define NUMBLOC 5
 
-#ifndef M_PI
-#define M_PI 3.1415926535
-#endif
-
 /*
 extern int striplength_skin_13[];
 extern float stripdata_skin_13[];

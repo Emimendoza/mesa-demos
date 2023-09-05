@@ -19,12 +19,6 @@
 #define IMAGE_FILE DEMOS_DATA_DIR "girl.rgb"
 
 
-#ifndef M_PI
-#  define M_PI 3.14159265
-#endif
-
-
-
 static GLubyte *Image;
 static int ImgWidth, ImgHeight;
 static GLenum ImgFormat;
