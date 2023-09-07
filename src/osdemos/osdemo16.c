@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "GL/osmesa.h"
-#include "glut_wrap.h"
+#include "gl_wrap.h"
 
 
 #define SAVE_TARGA
