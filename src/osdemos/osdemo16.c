@@ -29,15 +29,8 @@ static void render_image( void )
    GLfloat light_diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
    GLfloat light_specular[] = { 1.0, 1.0, 1.0, 1.0 };
    GLfloat light_position[] = { 1.0, 1.0, 1.0, 0.0 };
-#if 0
-   GLfloat red_mat[]   = { 1.0, 0.2, 0.2, 1.0 };
-#endif
    GLfloat green_mat[] = { 0.2, 1.0, 0.2, 0.5 };
    GLfloat blue_mat[]  = { 0.2, 0.2, 1.0, 1.0 };
-#if 0
-   GLfloat white_mat[]  = { 1.0, 1.0, 1.0, 1.0 };
-   GLfloat purple_mat[] = { 1.0, 0.2, 1.0, 1.0 };
-#endif
    GLUquadricObj *qobj = gluNewQuadric();
 
    glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
@@ -59,15 +52,6 @@ static void render_image( void )
    glPushMatrix();
    glRotatef(20.0, 1.0, 0.0, 0.0);
 
-#if 0
-   glPushMatrix();
-   glTranslatef(-0.75, 0.5, 0.0); 
-   glRotatef(90.0, 1.0, 0.0, 0.0);
-   glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, red_mat );
-   glutSolidTorus(0.275, 0.85, 20, 20);
-   glPopMatrix();
-#endif
-
    /* red square */
    glPushMatrix();
    glTranslatef(0.0, -0.5, 0.0); 
@@ -84,35 +68,6 @@ static void render_image( void )
    glEnable(GL_LIGHTING);
    glPopMatrix();
 
-#if 0
-   /* green square */
-   glPushMatrix();
-   glTranslatef(0.0, 0.5, 0.1); 
-   glDisable(GL_LIGHTING);
-   glColor3f(0, 1, 0);
-   glBegin(GL_POLYGON);
-   glVertex2f(-1, -1);
-   glVertex2f( 1, -1);
-   glVertex2f( 1,  1);
-   glVertex2f(-1,  1);
-   glEnd();
-   glEnable(GL_LIGHTING);
-   glPopMatrix();
-
-   /* blue square */
-   glPushMatrix();
-   glTranslatef(0.75, 0.5, 0.3); 
-   glDisable(GL_LIGHTING);
-   glColor3f(0, 0, 0.5);
-   glBegin(GL_POLYGON);
-   glVertex2f(-1, -1);
-   glVertex2f( 1, -1);
-   glVertex2f( 1,  1);
-   glVertex2f(-1,  1);
-   glEnd();
-   glEnable(GL_LIGHTING);
-   glPopMatrix();
-#endif
    glPushMatrix();
    glTranslatef(-0.75, -0.5, 0.0); 
    glRotatef(270.0, 1.0, 0.0, 0.0);

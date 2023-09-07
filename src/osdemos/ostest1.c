@@ -180,9 +180,6 @@ render_image(void)
    static const GLfloat red_mat[4]   = { 1.0, 0.2, 0.2, 1.0 };
    static const GLfloat green_mat[4] = { 0.2, 1.0, 0.2, 1.0 };
    static const GLfloat blue_mat[4]  = { 0.2, 0.2, 1.0, 1.0 };
-#if 0
-   static const GLfloat yellow_mat[4]  = { 0.8, 0.8, 0.0, 1.0 };
-#endif
    static const GLfloat purple_mat[4]  = { 0.8, 0.4, 0.8, 0.6 };
 
    glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
@@ -240,14 +237,6 @@ render_image(void)
    Sphere(1.2, 20, 20);
    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
    glPopMatrix();
-
-#if 0
-   glPushMatrix();
-   glTranslatef(0.75, 0.0, 1.3); 
-   glMaterialfv( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, yellow_mat );
-   glutWireTeapot(1.0);
-   glPopMatrix();
-#endif
 
    glPushMatrix();
    glTranslatef(-0.25, 0.0, 2.5);
