@@ -141,24 +141,7 @@ elif not get_option('glut').disabled()
     )
   endif
   if not dep_glut.found()
-    cmake = import('cmake')
-    opts = cmake.subproject_options()
-    opts.add_cmake_defines({
-      'FREEGLUT_BUILD_DEMOS': false,
-      'FREEGLUT_BUILD_STATIC_LIBS': false
-    })
-    sub_proj = cmake.subproject('freeglut', options: opts,
-                                required: get_option('glut'))
-    if sub_proj.found()
-      dep_glut = sub_proj.dependency('freeglut')
-      if host_machine.system() == 'windows'
-        add_project_arguments(['-DFREEGLUT_LIB_PRAGMAS=0'],
-                              language: ['c', 'cpp'])
-      endif
-    endif
-  endif
-  if not dep_glut.found() and get_option('glut').enabled()
-    error('glut was requested, but not found')
+    dep_glut = dependency('glut')
   endif
 else
   dep_glut = dependency('', required : false)
