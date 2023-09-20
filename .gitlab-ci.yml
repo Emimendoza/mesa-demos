@@ -39,11 +39,10 @@ x86_build:
     # No need to pull the whole repo to build the container image
     GIT_STRATEGY: none
     # /!\ Bump the TAG when modifying the DEBS
-    FDO_DISTRIBUTION_TAG: &x86_build "2023-09-01-meson-0.60"
+    FDO_DISTRIBUTION_TAG: &x86_build "2023-09-20-no-cmake"
     FDO_DISTRIBUTION_PACKAGES: >-
       build-essential
       clang
-      cmake
       python3-pip
       pkg-config
       ninja-build
