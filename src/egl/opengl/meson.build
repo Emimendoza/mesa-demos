@@ -20,6 +20,13 @@
 
 _deps = [dep_gl, dep_m, idep_util]
 
+if target_machine.system() == 'linux'
+  executable(
+    'dmabufshare', files('dmabufshare.c'),
+    dependencies: [_deps, idep_glad, idep_eglut],
+    install: true
+  )
+endif
 executable(
   'eglgears', files('eglgears.c'),
   dependencies: [_deps, dep_glu, idep_eglut],
