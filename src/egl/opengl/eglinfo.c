@@ -321,10 +321,7 @@ PrintDisplayExtensions(EGLDisplay d, EGLBoolean single_line)
 
 #ifdef EGL_MESA_query_driver
    if (strstr(extensions, "EGL_MESA_query_driver")) {
-      PFNEGLGETDISPLAYDRIVERNAMEPROC getDisplayDriverName =
-         (PFNEGLGETDISPLAYDRIVERNAMEPROC)
-            eglGetProcAddress("eglGetDisplayDriverName");
-      printf("EGL driver name: %s\n", getDisplayDriverName(d));
+      printf("EGL driver name: %s\n", eglGetDisplayDriverName(d));
    }
 #endif
 
@@ -339,14 +336,11 @@ PrintDisplayExtensions(EGLDisplay d, EGLBoolean single_line)
 static const char *
 PrintDeviceExtensions(EGLDeviceEXT d, EGLBoolean single_line)
 {
-   PFNEGLQUERYDEVICESTRINGEXTPROC queryDeviceString =
-     (PFNEGLQUERYDEVICESTRINGEXTPROC)
-     eglGetProcAddress("eglQueryDeviceStringEXT");
    const char *extensions;
 
    puts("EGL device extensions string:");
 
-   extensions = queryDeviceString(d, EGL_EXTENSIONS);
+   extensions = eglQueryDeviceStringEXT(d, EGL_EXTENSIONS);
    if (!extensions)
       return NULL;
 
@@ -647,16 +641,13 @@ doOneDisplay(EGLDisplay d, const char *name, struct options opts)
 static int
 doOneDevice(EGLDeviceEXT d, int i, struct options opts)
 {
-   PFNEGLGETPLATFORMDISPLAYEXTPROC getPlatformDisplay =
-     (PFNEGLGETPLATFORMDISPLAYEXTPROC)
-     eglGetProcAddress("eglGetPlatformDisplayEXT");
 
    printf("Device #%d:\n\n", i);
 
    if (opts.mode != Brief)
       PrintDeviceExtensions(d, opts.single_line);
 
-   return doOneDisplay(getPlatformDisplay(EGL_PLATFORM_DEVICE_EXT, d, NULL),
+   return doOneDisplay(eglGetPlatformDisplayEXT(EGL_PLATFORM_DEVICE_EXT, d, NULL),
                        "Platform Device", opts);
 }
 
@@ -664,8 +655,6 @@ doOneDevice(EGLDeviceEXT d, int i, struct options opts)
 static int
 doDevices(const char *name, struct options opts)
 {
-   PFNEGLQUERYDEVICESEXTPROC queryDevices =
-     (PFNEGLQUERYDEVICESEXTPROC) eglGetProcAddress("eglQueryDevicesEXT");
    EGLDeviceEXT *devices;
    EGLint max_devices, num_devices;
    EGLint i;
@@ -673,12 +662,12 @@ doDevices(const char *name, struct options opts)
 
    printf("%s:\n", name);
 
-   if (!queryDevices(0, NULL, &max_devices))
+   if (!eglQueryDevicesEXT(0, NULL, &max_devices))
       return 1;
    devices = calloc(sizeof(EGLDeviceEXT), max_devices);
    if (!devices)
       return 1;
-   if (!queryDevices(max_devices, devices, &num_devices))
+   if (!eglQueryDevicesEXT(max_devices, devices, &num_devices))
      num_devices = 0;
 
    for (i = 0; i < num_devices; ++i) {
@@ -827,19 +816,13 @@ static int
 doExtExplicitDevice(struct options opts, const char *clientext)
 {
    int ret = 0;
-   PFNEGLGETPLATFORMDISPLAYPROC getPlatformDisplay =
-     (PFNEGLGETPLATFORMDISPLAYPROC)
-     eglGetProcAddress("eglGetPlatformDisplay");
-   PFNEGLQUERYDEVICESEXTPROC queryDevices =
-     (PFNEGLQUERYDEVICESEXTPROC)
-     eglGetProcAddress("eglQueryDevicesEXT");
    EGLDeviceEXT *devices;
    EGLint max_devices, num_devices;
 
    if (opts.platform != ALL)
       return 0;
 
-   if (!queryDevices(0, NULL, &max_devices)) {
+   if (!eglQueryDevicesEXT(0, NULL, &max_devices)) {
       printf("eglinfo: queryDevices failed\n");
       return 1;
    }
@@ -850,7 +833,7 @@ doExtExplicitDevice(struct options opts, const char *clientext)
       return 1;
    }
 
-   if (!queryDevices(max_devices, devices, &num_devices))
+   if (!eglQueryDevicesEXT(max_devices, devices, &num_devices))
       num_devices = 0;
 
    for (int i = 0; i < ELEMENTS(platforms); i++) {
@@ -873,9 +856,9 @@ doExtExplicitDevice(struct options opts, const char *clientext)
             snprintf(description, 64, "Device %d on %s",
                      k, platforms[i].human_name);
 
-            EGLDisplay d = getPlatformDisplay(platforms[i].platform_enum,
-                                              EGL_DEFAULT_DISPLAY,
-                                              attrib_list);
+            EGLDisplay d = eglGetPlatformDisplay(platforms[i].platform_enum,
+                                                 EGL_DEFAULT_DISPLAY,
+                                                 attrib_list);
             if (!d)
                break;
 
@@ -893,9 +876,6 @@ static int
 doExtPlatformBase(struct options opts, const char *clientext)
 {
    int ret = 0;
-   PFNEGLGETPLATFORMDISPLAYEXTPROC getPlatformDisplay =
-     (PFNEGLGETPLATFORMDISPLAYEXTPROC)
-     eglGetProcAddress("eglGetPlatformDisplayEXT");
 
    for (int i = 0; i < ELEMENTS(platforms); i++) {
       if (opts.platform != ALL && i != opts.platform)
@@ -908,9 +888,9 @@ doExtPlatformBase(struct options opts, const char *clientext)
             break;
 
          if (strstr(clientext, name)) {
-            EGLDisplay d = getPlatformDisplay(platforms[i].platform_enum,
-                                              EGL_DEFAULT_DISPLAY,
-                                              NULL);
+            EGLDisplay d = eglGetPlatformDisplayEXT(platforms[i].platform_enum,
+                                                    EGL_DEFAULT_DISPLAY,
+                                                    NULL);
             ret += doOneDisplay(d, platforms[i].human_name, opts);
             break;
          }
