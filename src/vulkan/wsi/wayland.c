@@ -233,10 +233,12 @@ static void init_display()
    wl_display_roundtrip(display);
    wl_registry_destroy(registry);
 
-   keyboard_data.keyboard = wl_seat_get_keyboard(keyboard_data.seat);
+   if (keyboard_data.seat)
+      keyboard_data.keyboard = wl_seat_get_keyboard(keyboard_data.seat);
    keyboard_data.keyboard_timer_fd = timerfd_create(CLOCK_MONOTONIC, TFD_CLOEXEC | TFD_NONBLOCK);
 
-   wl_keyboard_add_listener(keyboard_data.keyboard, &keyboard_listener, NULL);
+   if (keyboard_data.keyboard)
+      wl_keyboard_add_listener(keyboard_data.keyboard, &keyboard_listener, NULL);
 
    if (!compositor) {
       fprintf(stderr, "failed to bind compositor");
