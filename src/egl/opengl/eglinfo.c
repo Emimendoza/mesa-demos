@@ -80,19 +80,19 @@ static const struct platform platforms[] = {
       .names = { "EGL_MESA_platform_gbm", "EGL_KHR_platform_gbm" },
       .short_name = "gbm",
       .human_name = "GBM",
-      .platform_enum = EGL_PLATFORM_GBM_MESA,
+      .platform_enum = EGL_PLATFORM_GBM_KHR,
    },
    {
       .names = { "EGL_EXT_platform_wayland", "EGL_KHR_platform_wayland" },
       .short_name = "wayland",
       .human_name = "Wayland",
-      .platform_enum = EGL_PLATFORM_WAYLAND_EXT,
+      .platform_enum = EGL_PLATFORM_WAYLAND_KHR,
    },
    {
       .names = { "EGL_EXT_platform_x11", "EGL_KHR_platform_x11" },
       .short_name = "x11",
       .human_name = "X11",
-      .platform_enum = EGL_PLATFORM_X11_EXT,
+      .platform_enum = EGL_PLATFORM_X11_KHR,
    },
    {
       .names = { "EGL_MESA_platform_surfaceless" },
@@ -566,8 +566,7 @@ doOneDisplay(EGLDisplay d, const char *name, struct options opts)
 
    int version;
 
-   if (has_opengl && (do_opengl_core || do_opengl_compat))
-   {
+   if (has_opengl && (do_opengl_core || do_opengl_compat)) {
       EGLBoolean api_result = eglBindAPI(EGL_OPENGL_API);
       if (api_result) {
          EGLConfig config = chooseEGLConfig(d, EGL_OPENGL_BIT);
