@@ -319,11 +319,9 @@ PrintDisplayExtensions(EGLDisplay d, EGLBoolean single_line)
    if (!extensions)
       return NULL;
 
-#ifdef EGL_MESA_query_driver
    if (strstr(extensions, "EGL_MESA_query_driver")) {
       printf("EGL driver name: %s\n", eglGetDisplayDriverName(d));
    }
-#endif
 
    puts(d == EGL_NO_DISPLAY ? "EGL client extensions string:" :
                               "EGL extensions string:");
@@ -540,17 +538,15 @@ doOneDisplay(EGLDisplay d, const char *name, struct options opts)
    printf("EGL API version: %d.%d\n", maj, min);
    printf("EGL vendor string: %s\n", eglQueryString(d, EGL_VENDOR));
    printf("EGL version string: %s\n", eglQueryString(d, EGL_VERSION));
-#ifdef EGL_VERSION_1_2
+
    const char *client_apis = eglQueryString(d, EGL_CLIENT_APIS);
    printf("EGL client APIs: %s\n", client_apis);
-#endif
 
    const char *display_exts = eglQueryString(d, EGL_EXTENSIONS);
 
    if (opts.mode != Brief)
       PrintDisplayExtensions(d, opts.single_line);
 
-#ifdef EGL_VERSION_1_4
    int khr_create_context = (maj == 1 && min >= 4) &&
       strstr(display_exts, "EGL_KHR_create_context") != 0;
 
@@ -627,7 +623,6 @@ doOneDisplay(EGLDisplay d, const char *name, struct options opts)
    if (has_openvg) {
       /* TODO: support OpenVG? */
    }
-#endif
 
    if (opts.mode != Brief)
       PrintConfigs(d, opts.mode);
@@ -688,12 +683,8 @@ usage(void)
     */
 
    printf("Usage: eglinfo [-h] [-B] [-s] [-v]");
-
-#ifdef EGL_VERSION_1_2
    printf(" [-l]");
    printf(" [-a <api>]");
-#endif
-
    printf(" [-p <platform>]\n");
 
    /*
@@ -704,16 +695,14 @@ usage(void)
    printf("\t -B \t Brief output, print only the basics.\n");
    printf("\t -s \t Print a single extension per line.\n");
    printf("\t -v \t Print visuals info in verbose form.\n");
-
-#ifdef EGL_VERSION_1_2
    printf("\t -l \t Print interesting OpenGL limits.\n");
+
    printf("\t -a \t Print information for a specific API, if supported.\n");
    printf("\t\t (");
    for (int i = 0; i < ELEMENTS(apis) - 1; i++) {
       printf("%s, ", apis[i]);
    }
    printf("%s)\n", apis[ELEMENTS(apis) - 1]);
-#endif
 
    printf("\t -p \t Print information for a specific platform, if supported.\n");
    printf("\t\t (");
@@ -742,7 +731,6 @@ parse_args(int argc, char *argv[], struct options *opts)
       }
    }
 
-#ifdef EGL_VERSION_1_2
    for (int i = 1; i < argc; i++) {
       /* parse -l */
       if (strcmp(argv[i], "-l") == 0) {
@@ -765,7 +753,6 @@ parse_args(int argc, char *argv[], struct options *opts)
             goto fail;
          }
       }
-#endif
 
       /* parse -p */
       else if (strcmp(argv[i], "-p") == 0 && i + 1 < argc) {
