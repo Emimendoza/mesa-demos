@@ -1311,15 +1311,15 @@ print_info()
 {
    VkPhysicalDeviceProperties properties;
    vkGetPhysicalDeviceProperties(physical_device, &properties);
-   printf("apiVersion    = %d.%d.%d\n",
+   printf("apiVersion       = %d.%d.%d\n",
             VK_API_VERSION_MAJOR(properties.apiVersion),
             VK_API_VERSION_MINOR(properties.apiVersion),
             VK_API_VERSION_PATCH(properties.apiVersion));
-   printf("driverVersion = %04x\n", properties.driverVersion);
-   printf("vendorID      = %04x\n", properties.vendorID);
-   printf("deviceID      = %04x\n", properties.deviceID);
-   printf("deviceType    = %s\n", get_devtype_str(properties.deviceType));
-   printf("deviceName    = %s\n", properties.deviceName);
+   printf("driverVersion    = %04x\n", properties.driverVersion);
+   printf("vendorID         = %04x\n", properties.vendorID);
+   printf("deviceID         = %04x\n", properties.deviceID);
+   printf("deviceType       = %s\n", get_devtype_str(properties.deviceType));
+   printf("deviceName       = %s\n", properties.deviceName);
 
    uint32_t num_extensions = 0;
    VkExtensionProperties *extensions;
@@ -1330,7 +1330,7 @@ print_info()
          error("Failed to allocate memory");
 
       vkEnumerateDeviceExtensionProperties(physical_device, NULL, &num_extensions, extensions);
-      printf("deviceExtensions:\n");
+      printf("deviceExtensions =\n");
       for (int i = 0; i < num_extensions; ++i)
          printf("\t%s\n", extensions[i].extensionName);
    }
