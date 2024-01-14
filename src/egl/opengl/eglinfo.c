@@ -833,7 +833,7 @@ doExtExplicitDevice(struct options opts, const char *clientext)
             break;
 
          for (int k = 0; k < num_devices; k++) {
-            const EGLAttrib attrib_list[] = {
+            const EGLint attrib_list[] = {
                EGL_DEVICE_EXT, (EGLAttrib) devices[k],
                EGL_NONE
             };
@@ -842,9 +842,9 @@ doExtExplicitDevice(struct options opts, const char *clientext)
             snprintf(description, 64, "Device %d on %s",
                      k, platforms[i].human_name);
 
-            EGLDisplay d = eglGetPlatformDisplay(platforms[i].platform_enum,
-                                                 EGL_DEFAULT_DISPLAY,
-                                                 attrib_list);
+            EGLDisplay d = eglGetPlatformDisplayEXT(platforms[i].platform_enum,
+                                                    EGL_DEFAULT_DISPLAY,
+                                                    attrib_list);
             if (!d)
                break;
 
