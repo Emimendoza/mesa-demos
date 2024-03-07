@@ -40,6 +40,9 @@
 #define MAX_SCREENS 10
 #define MAX_COLUMN 70
 
+#define ISALPHANUM(A) ((A>='0' && A<='9') || (A>='A' && A<='Z'))
+
+
 /* These are X visual types, so if you're running eglinfo under
  * something not X, they probably don't make sense. */
 static const char *vnames[] = { "SG", "GS", "SC", "PC", "TC", "DC" };
@@ -184,11 +187,20 @@ PrintConfigsNormal(unsigned num_configs, struct eglconfig_info *info)
       if (strlen(surface) > 0)
          surface[strlen(surface) - 1] = 0;
 
-      printf("0x%02x %2d %2d %2d %2d %2d %2d %2d %2d %2d%2d 0x%02x%s ",
+      EGLint vid = info[i].vid;
+      char vidstr[5] = {0,0,0,0,0};
+      vidstr[0] = (vid>> 0) & 0xff;
+      vidstr[1] = (vid>> 8) & 0xff;
+      vidstr[2] = (vid>>16) & 0xff;
+      vidstr[3] = (vid>>24) & 0xff;
+      if (!ISALPHANUM(vidstr[0]) || !ISALPHANUM(vidstr[1]) || !ISALPHANUM(vidstr[2]) || !ISALPHANUM(vidstr[3]))
+         snprintf(vidstr, sizeof(vidstr), "%04x", vid);
+
+      printf("0x%02x %2d %2d %2d %2d %2d %2d %2d %2d %2d%2d  %s%s ",
              info[i].id, info[i].size, info[i].level,
              info[i].red, info[i].green, info[i].blue, info[i].alpha,
              info[i].depth, info[i].stencil,
-             info[i].samples, info[i].sample_buffers, info[i].vid,
+             info[i].samples, info[i].sample_buffers, vidstr,
              info[i].vtype < 6 ? vnames[info[i].vtype] : "--");
       printf("  %c  %c  %c  %c  %c   %c %s\n",
              (info[i].caveat != EGL_NONE) ? 'y' : ' ',
