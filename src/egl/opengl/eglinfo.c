@@ -28,6 +28,7 @@
 #define EGL_PLATFORM_ANGLE_ANGLE 0x3202
 
 #include <assert.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -873,6 +874,7 @@ doExtExplicitDevice(struct options opts, const char *clientext)
 static int
 doExtPlatformBase(struct options opts, const char *clientext)
 {
+   bool found_platform_ext = false;
    int ret = 0;
 
    for (int i = 0; i < ELEMENTS(platforms); i++) {
@@ -890,10 +892,14 @@ doExtPlatformBase(struct options opts, const char *clientext)
                                                     EGL_DEFAULT_DISPLAY,
                                                     NULL);
             ret += doOneDisplay(d, platforms[i].human_name, opts);
+            found_platform_ext = true;
             break;
          }
       }
    }
+
+   if (!found_platform_ext)
+      return -1;
 
    if (strstr(clientext, "EGL_EXT_device_enumeration") &&
        strstr(clientext, "EGL_EXT_platform_device") &&
@@ -925,8 +931,10 @@ main(int argc, char *argv[])
       ret += doExtExplicitDevice(opts, clientext);
    }
 
-   if (strstr(clientext, "EGL_EXT_platform_base")) {
-      ret += doExtPlatformBase(opts, clientext);
+   int platform_base_ret;
+   if (strstr(clientext, "EGL_EXT_platform_base") &&
+       (platform_base_ret = doExtPlatformBase(opts, clientext)) >= 0) {
+      ret += platform_base_ret;
    } else {
       ret = doOneDisplay(eglGetDisplay(EGL_DEFAULT_DISPLAY), "Default display", opts);
    }
