@@ -32,7 +32,6 @@
  */
 
 
-#define GL_GLEXT_PROTOTYPES
 #define GLX_GLXEXT_PROTOTYPES
 #include <GL/gl.h>
 #include <GL/glx.h>
@@ -57,6 +56,8 @@ static GLfloat Angle = 0.0;
 static GLboolean DrawFront = GL_FALSE;
 
 PFNGLXMAKECURRENTREADSGIPROC make_context_current = NULL;
+
+PFNGLWINDOWPOS2IARBPROC glWindowPos2iARB = NULL;
 
 static Window
 CreateWindow(Display *dpy, int scrnum, XVisualInfo *visinfo,
@@ -297,6 +298,9 @@ Init(void)
 
    Win[1] = CreateWindow(Dpy, ScrNum, visinfo,
                          350, 0, 300, 300, "dest window");
+
+   glWindowPos2iARB = (PFNGLWINDOWPOS2IARBPROC)
+      glXGetProcAddressARB((GLubyte *) "glWindowPos2iARB");
 
    printf("Press Esc to exit\n");
    printf("Press 'f' to toggle front/back buffer drawing\n");

@@ -8,8 +8,6 @@
  * 11 Oct 2007
  */
 
-#define GL_GLEXT_PROTOTYPES
-
 #include <GL/gl.h>
 #include <GL/glx.h>
 #include <stdio.h>
@@ -23,6 +21,7 @@
 #define BACK_BUFFER    3
 #define FRONT_BUFFER   4
 
+PFNGLWINDOWPOS2IARBPROC glWindowPos2iARB = NULL;
 
 static int Buffer = BACK_BUFFER;
 static int WindowID = 0;
@@ -371,6 +370,9 @@ main(int argc, char *argv[])
    win = make_gl_window(dpy, visinfo, Width, Height);
    XMapWindow(dpy, win);
    update_window_title(dpy, win);
+
+   glWindowPos2iARB = (PFNGLWINDOWPOS2IARBPROC)
+      glXGetProcAddressARB((GLubyte *) "glWindowPos2iARB");
 
    event_loop(dpy, win);
 
