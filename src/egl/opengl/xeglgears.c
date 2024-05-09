@@ -56,6 +56,10 @@ static PFNGLEGLIMAGETARGETTEXTURE2DOESPROC glEGLImageTargetTexture2DOES_func;
 static PFNEGLCREATEIMAGEKHRPROC eglCreateImageKHR_func;
 #endif
 
+#ifdef GL_EXT_framebuffer_object
+static PFNGLCHECKFRAMEBUFFERSTATUSPROC glCheckFramebufferStatusEXT_func;
+static PFNGLFRAMEBUFFERRENDERBUFFEREXTPROC glFramebufferRenderbufferEXT_func;
+#endif
 
 #define BENCHMARK
 
@@ -414,6 +418,15 @@ egl_manager_new(EGLNativeDisplayType xdpy, const EGLint *attrib_list,
       free(eman);
       return NULL;
    }
+#endif
+
+#ifdef GL_EXT_framebuffer_object
+   glCheckFramebufferStatusEXT_func = (PFNGLCHECKFRAMEBUFFERSTATUSPROC)
+      eglGetProcAddress("glCheckFramebufferStatusEXT");
+   glFramebufferRenderbufferEXT_func = (PFNGLFRAMEBUFFERRENDERBUFFEREXTPROC)
+      eglGetProcAddress("glFramebufferRenderbufferEXT");
+#else
+#error GL_EXT_framebuffer_object not defined
 #endif
 
    return eman;
@@ -921,10 +934,12 @@ main(int argc, char *argv[])
       glGenRenderbuffers(1, &color_rb);
       glBindRenderbuffer(GL_RENDERBUFFER_EXT, color_rb);
       glRenderbufferStorage(GL_RENDERBUFFER_EXT, GL_RGBA, winWidth, winHeight);
-      glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT,
-				   GL_COLOR_ATTACHMENT0_EXT,
-				   GL_RENDERBUFFER_EXT,
-				   color_rb);
+#ifdef GL_EXT_framebuffer_object
+      glFramebufferRenderbufferEXT_func(GL_FRAMEBUFFER_EXT,
+					GL_COLOR_ATTACHMENT0_EXT,
+					GL_RENDERBUFFER_EXT,
+					color_rb);
+#endif
 
 #ifdef EGL_KHR_image
       eman->image = eglCreateImageKHR_func(eman->dpy, eman->ctx,
@@ -938,15 +953,17 @@ main(int argc, char *argv[])
       glBindRenderbuffer(GL_RENDERBUFFER_EXT, depth_rb);
       glRenderbufferStorage(GL_RENDERBUFFER_EXT,
 			    GL_DEPTH_COMPONENT, winWidth, winHeight);
-      glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT,
-				   GL_DEPTH_ATTACHMENT_EXT,
-				   GL_RENDERBUFFER_EXT,
-				   depth_rb);
+#ifdef GL_EXT_framebuffer_object
+      glFramebufferRenderbufferEXT_func(GL_FRAMEBUFFER_EXT,
+					GL_DEPTH_ATTACHMENT_EXT,
+					GL_RENDERBUFFER_EXT,
+					depth_rb);
 
-      if (glCheckFramebufferStatusEXT(GL_FRAMEBUFFER_EXT) != GL_FRAMEBUFFER_COMPLETE) {
+      if (glCheckFramebufferStatusEXT_func(GL_FRAMEBUFFER_EXT) != GL_FRAMEBUFFER_COMPLETE) {
 	 printf("framebuffer not complete\n");
 	 exit(1);
       }
+#endif
 
       break;
 
