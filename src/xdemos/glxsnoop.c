@@ -21,7 +21,11 @@
 #define BACK_BUFFER    3
 #define FRONT_BUFFER   4
 
+#ifdef GL_ARB_window_pos
 PFNGLWINDOWPOS2IARBPROC glWindowPos2iARB = NULL;
+#else
+#error GL_ARB_window_pos not defined
+#endif
 
 static int Buffer = BACK_BUFFER;
 static int WindowID = 0;
@@ -370,6 +374,16 @@ main(int argc, char *argv[])
    win = make_gl_window(dpy, visinfo, Width, Height);
    XMapWindow(dpy, win);
    update_window_title(dpy, win);
+
+   glXMakeCurrent(dpy, win, Context);
+   {
+      const char *ext = (const char *) glGetString(GL_EXTENSIONS);
+
+      if (!strstr(ext, "GL_ARB_window_pos")) {
+         printf("Sorry, this demo requires the GL_ARB_window_pos extension\n");
+         exit(1);
+      }
+   }
 
    glWindowPos2iARB = (PFNGLWINDOWPOS2IARBPROC)
       glXGetProcAddressARB((GLubyte *) "glWindowPos2iARB");

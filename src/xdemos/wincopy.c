@@ -57,7 +57,11 @@ static GLboolean DrawFront = GL_FALSE;
 
 PFNGLXMAKECURRENTREADSGIPROC make_context_current = NULL;
 
+#ifdef GL_ARB_window_pos
 PFNGLWINDOWPOS2IARBPROC glWindowPos2iARB = NULL;
+#else
+#error GL_ARB_window_pos not defined
+#endif
 
 static Window
 CreateWindow(Display *dpy, int scrnum, XVisualInfo *visinfo,
@@ -298,6 +302,18 @@ Init(void)
 
    Win[1] = CreateWindow(Dpy, ScrNum, visinfo,
                          350, 0, 300, 300, "dest window");
+
+   if ((*make_context_current)(Dpy, Win[0], Win[0], Context)) {
+      const char *ext = (const char *) glGetString(GL_EXTENSIONS);
+
+      if (!strstr(ext, "GL_ARB_window_pos")) {
+         printf("Sorry, this demo requires the GL_ARB_window_pos extension\n");
+         exit(1);
+      }
+   } else {
+      printf("glXMakeContextCurrent failed in Init()\n");
+      return;
+   }
 
    glWindowPos2iARB = (PFNGLWINDOWPOS2IARBPROC)
       glXGetProcAddressARB((GLubyte *) "glWindowPos2iARB");
