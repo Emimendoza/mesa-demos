@@ -39,7 +39,10 @@ add_project_arguments(
 dep_m = cc.find_library('m', required : false)
 dep_winmm = cc.find_library('winmm', required : false)
 
-dep_gl = dependency('gl')
+dep_gl = dependency('opengl', required : false)
+if not dep_gl.found()
+  dep_gl = dependency('gl')
+endif
 
 dep_epoll = dependency('epoll-shim', required : false)
 dep_gles1 = dependency('glesv1_cm', required : get_option('gles1'))
