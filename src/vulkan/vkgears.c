@@ -96,7 +96,7 @@ struct {
    uint32_t vertex_count;
 } gears[3];
 
-static float view_rot[3] = { 20.0, 30.0, 0.0 };
+static float view_rot[3] = { 20.0f, 30.0f, 0.0f };
 static bool animate = true;
 
 static void
@@ -116,12 +116,11 @@ error(const char *format, ...)
    va_end(args);
 }
 
-static double
-current_time(void)
+/* Returns the time passed between tv0 and tv1 in seconds */
+static float
+delta_time(struct timeval *tv0, struct timeval *tv1)
 {
-   struct timeval tv;
-   (void) gettimeofday(&tv, NULL );
-   return (double) tv.tv_sec + tv.tv_usec / 1000000.0;
+   return (float) (tv1->tv_sec - tv0->tv_sec) + (float) (tv1->tv_usec - tv0->tv_usec) / 1000000.0f;
 }
 
 static void
@@ -629,7 +628,7 @@ create_swapchain()
       vkCreateFence(device,
          &(VkFenceCreateInfo) {
             .sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO,
-            .flags = VK_FENCE_CREATE_SIGNALED_BIT
+            .flags = 0
          },
          NULL,
          &swap_chain_data[i].fence);
@@ -779,12 +778,12 @@ create_gear(float verts[],
    } while (0)
 
    // strip restart-logic
-   int cur_strip_start = 0;
+   int cur_strip_start;
 #define START_STRIP() do { \
    cur_strip_start = num_verts; \
    if (cur_strip_start) \
       num_verts += 2; \
-} while(0);
+} while(0)
 
 #define END_STRIP() do { \
    if (cur_strip_start) { \
@@ -798,132 +797,132 @@ create_gear(float verts[],
 } while (0)
 
    float r0 = inner_radius;
-   float r1 = outer_radius - tooth_depth / 2.0;
-   float r2 = outer_radius + tooth_depth / 2.0;
+   float r1 = outer_radius - tooth_depth / 2.0f;
+   float r2 = outer_radius + tooth_depth / 2.0f;
 
-   float da = 2.0 * M_PI / teeth / 4.0;
+   float da = 2.0f * M_PIf / teeth / 4.0f;
 
-   SET_NORMAL(0.0, 0.0, 1.0);
+   SET_NORMAL(0.0f, 0.0f, 1.0f);
 
    /* draw front face */
    START_STRIP();
    for (int i = 0; i <= teeth; i++) {
-      float angle = i * 2.0 * M_PI / teeth;
-      EMIT_VERTEX(r0 * cos(angle), r0 * sin(angle), width * 0.5);
-      EMIT_VERTEX(r1 * cos(angle), r1 * sin(angle), width * 0.5);
+      float angle = i * 2.0f * M_PIf / teeth;
+      EMIT_VERTEX(r0 * cosf(angle), r0 * sinf(angle), width * 0.5f);
+      EMIT_VERTEX(r1 * cosf(angle), r1 * sinf(angle), width * 0.5f);
       if (i < teeth) {
-         EMIT_VERTEX(r0 * cos(angle), r0 * sin(angle), width * 0.5);
-         EMIT_VERTEX(r1 * cos(angle + 3 * da),
-                     r1 * sin(angle + 3 * da), width * 0.5);
+         EMIT_VERTEX(r0 * cosf(angle), r0 * sinf(angle), width * 0.5f);
+         EMIT_VERTEX(r1 * cosf(angle + 3.0f * da),
+                     r1 * sinf(angle + 3.0f * da), width * 0.5f);
       }
    }
    END_STRIP();
 
    /* draw front sides of teeth */
    for (int i = 0; i < teeth; i++) {
-      float angle = i * 2.0 * M_PI / teeth;
+      float angle = i * 2.0f * M_PIf / teeth;
       START_STRIP();
-      EMIT_VERTEX(r1 * cos(angle), r1 * sin(angle), width * 0.5);
-      EMIT_VERTEX(r2 * cos(angle + da), r2 * sin(angle + da), width * 0.5);
-      EMIT_VERTEX(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da),
-		 width * 0.5);
-      EMIT_VERTEX(r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da),
-		 width * 0.5);
+      EMIT_VERTEX(r1 * cosf(angle), r1 * sinf(angle), width * 0.5f);
+      EMIT_VERTEX(r2 * cosf(angle + da), r2 * sinf(angle + da), width * 0.5f);
+      EMIT_VERTEX(r1 * cosf(angle + 3.0f * da), r1 * sinf(angle + 3.0f * da),
+		 width * 0.5f);
+      EMIT_VERTEX(r2 * cosf(angle + 2.0f * da), r2 * sinf(angle + 2.0f * da),
+		 width * 0.5f);
       END_STRIP();
    }
 
-   SET_NORMAL(0.0, 0.0, -1.0);
+   SET_NORMAL(0.0f, 0.0f, -1.0f);
 
    /* draw back face */
    START_STRIP();
    for (int i = 0; i <= teeth; i++) {
-      float angle = i * 2.0 * M_PI / teeth;
-      EMIT_VERTEX(r1 * cos(angle), r1 * sin(angle), -width * 0.5);
-      EMIT_VERTEX(r0 * cos(angle), r0 * sin(angle), -width * 0.5);
+      float angle = i * 2.0f * M_PIf / teeth;
+      EMIT_VERTEX(r1 * cosf(angle), r1 * sinf(angle), -width * 0.5f);
+      EMIT_VERTEX(r0 * cosf(angle), r0 * sinf(angle), -width * 0.5f);
       if (i < teeth) {
-         EMIT_VERTEX(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da),
-               -width * 0.5);
-         EMIT_VERTEX(r0 * cos(angle), r0 * sin(angle), -width * 0.5);
+         EMIT_VERTEX(r1 * cosf(angle + 3.0f * da), r1 * sinf(angle + 3.0f * da),
+               -width * 0.5f);
+         EMIT_VERTEX(r0 * cosf(angle), r0 * sinf(angle), -width * 0.5f);
       }
    }
    END_STRIP();
 
    /* draw back sides of teeth */
    for (int i = 0; i < teeth; i++) {
-      float angle = i * 2.0 * M_PI / teeth;
+      float angle = i * 2.0f * M_PIf / teeth;
       START_STRIP();
-      EMIT_VERTEX(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da),
-		 -width * 0.5);
-      EMIT_VERTEX(r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da),
-		 -width * 0.5);
-      EMIT_VERTEX(r1 * cos(angle), r1 * sin(angle), -width * 0.5);
-      EMIT_VERTEX(r2 * cos(angle + da), r2 * sin(angle + da), -width * 0.5);
+      EMIT_VERTEX(r1 * cosf(angle + 3.0f * da), r1 * sinf(angle + 3.0f * da),
+		 -width * 0.5f);
+      EMIT_VERTEX(r2 * cosf(angle + 2.0f * da), r2 * sinf(angle + 2.0f * da),
+		 -width * 0.5f);
+      EMIT_VERTEX(r1 * cosf(angle), r1 * sinf(angle), -width * 0.5f);
+      EMIT_VERTEX(r2 * cosf(angle + da), r2 * sinf(angle + da), -width * 0.5f);
       END_STRIP();
    }
 
    /* draw outward faces of teeth */
    for (int i = 0; i < teeth; i++) {
-      float angle = i * 2.0 * M_PI / teeth;
-      float u = r2 * cos(angle + da) - r1 * cos(angle);
-      float v = r2 * sin(angle + da) - r1 * sin(angle);
-      float len = sqrt(u * u + v * v);
+      float angle = i * 2.0f * M_PIf / teeth;
+      float u = r2 * cosf(angle + da) - r1 * cosf(angle);
+      float v = r2 * sinf(angle + da) - r1 * sinf(angle);
+      float len = sqrtf(u * u + v * v);
       u /= len;
       v /= len;
-      SET_NORMAL(v, -u, 0.0);
+      SET_NORMAL(v, -u, 0.0f);
       START_STRIP();
-      EMIT_VERTEX(r1 * cos(angle), r1 * sin(angle), width * 0.5);
-      EMIT_VERTEX(r1 * cos(angle), r1 * sin(angle), -width * 0.5);
+      EMIT_VERTEX(r1 * cosf(angle), r1 * sinf(angle), width * 0.5f);
+      EMIT_VERTEX(r1 * cosf(angle), r1 * sinf(angle), -width * 0.5f);
 
-      EMIT_VERTEX(r2 * cos(angle + da), r2 * sin(angle + da), width * 0.5);
-      EMIT_VERTEX(r2 * cos(angle + da), r2 * sin(angle + da), -width * 0.5);
+      EMIT_VERTEX(r2 * cosf(angle + da), r2 * sinf(angle + da), width * 0.5f);
+      EMIT_VERTEX(r2 * cosf(angle + da), r2 * sinf(angle + da), -width * 0.5f);
       END_STRIP();
 
-      SET_NORMAL(cos(angle), sin(angle), 0.0);
+      SET_NORMAL(cosf(angle), sinf(angle), 0.0f);
       START_STRIP();
-      EMIT_VERTEX(r2 * cos(angle + da), r2 * sin(angle + da),
-		 width * 0.5);
-      EMIT_VERTEX(r2 * cos(angle + da), r2 * sin(angle + da),
-		 -width * 0.5);
-      EMIT_VERTEX(r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da),
-      width * 0.5);
-      EMIT_VERTEX(r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da),
-      -width * 0.5);
+      EMIT_VERTEX(r2 * cosf(angle + da), r2 * sinf(angle + da),
+		 width * 0.5f);
+      EMIT_VERTEX(r2 * cosf(angle + da), r2 * sinf(angle + da),
+		 -width * 0.5f);
+      EMIT_VERTEX(r2 * cosf(angle + 2.0f * da), r2 * sinf(angle + 2.0f * da),
+      width * 0.5f);
+      EMIT_VERTEX(r2 * cosf(angle + 2.0f * da), r2 * sinf(angle + 2.0f * da),
+      -width * 0.5f);
       END_STRIP();
 
-      u = r1 * cos(angle + 3 * da) - r2 * cos(angle + 2 * da);
-      v = r1 * sin(angle + 3 * da) - r2 * sin(angle + 2 * da);
-      SET_NORMAL(v, -u, 0.0);
+      u = r1 * cosf(angle + 3.0f * da) - r2 * cosf(angle + 2.0f * da);
+      v = r1 * sinf(angle + 3.0f * da) - r2 * sinf(angle + 2.0f * da);
+      SET_NORMAL(v, -u, 0.0f);
       START_STRIP();
-      EMIT_VERTEX(r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da),
-		 width * 0.5);
-      EMIT_VERTEX(r2 * cos(angle + 2 * da), r2 * sin(angle + 2 * da),
-		 -width * 0.5);
-      EMIT_VERTEX(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da),
-		 width * 0.5);
-      EMIT_VERTEX(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da),
-		 -width * 0.5);
+      EMIT_VERTEX(r2 * cosf(angle + 2.0f * da), r2 * sinf(angle + 2.0f * da),
+		 width * 0.5f);
+      EMIT_VERTEX(r2 * cosf(angle + 2.0f * da), r2 * sinf(angle + 2.0f * da),
+		 -width * 0.5f);
+      EMIT_VERTEX(r1 * cosf(angle + 3.0f * da), r1 * sinf(angle + 3.0f * da),
+		 width * 0.5f);
+      EMIT_VERTEX(r1 * cosf(angle + 3.0f * da), r1 * sinf(angle + 3.0f * da),
+		 -width * 0.5f);
       END_STRIP();
 
-      SET_NORMAL(cos(angle), sin(angle), 0.0);
+      SET_NORMAL(cosf(angle), sinf(angle), 0.0f);
       START_STRIP();
-      EMIT_VERTEX(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da),
-		 width * 0.5);
-      EMIT_VERTEX(r1 * cos(angle + 3 * da), r1 * sin(angle + 3 * da),
-		 -width * 0.5);
-      EMIT_VERTEX(r1 * cos(angle + 4 * da), r1 * sin(angle + 4 * da),
-      width * 0.5);
-      EMIT_VERTEX(r1 * cos(angle + 4 * da), r1 * sin(angle + 4 * da),
-      -width * 0.5);
+      EMIT_VERTEX(r1 * cosf(angle + 3.0f * da), r1 * sinf(angle + 3.0f * da),
+		 width * 0.5f);
+      EMIT_VERTEX(r1 * cosf(angle + 3.0f * da), r1 * sinf(angle + 3.0f * da),
+		 -width * 0.5f);
+      EMIT_VERTEX(r1 * cosf(angle + 4.0f * da), r1 * sinf(angle + 4.0f * da),
+      width * 0.5f);
+      EMIT_VERTEX(r1 * cosf(angle + 4.0f * da), r1 * sinf(angle + 4.0f * da),
+      -width * 0.5f);
       END_STRIP();
    }
 
    /* draw inside radius cylinder */
    START_STRIP();
    for (int i = 0; i <= teeth; i++) {
-      float angle = i * 2.0 * M_PI / teeth;
-      SET_NORMAL(-cos(angle), -sin(angle), 0.0);
-      EMIT_VERTEX(r0 * cos(angle), r0 * sin(angle), -width * 0.5);
-      EMIT_VERTEX(r0 * cos(angle), r0 * sin(angle), width * 0.5);
+      float angle = i * 2.0f * M_PIf / teeth;
+      SET_NORMAL(-cosf(angle), -sinf(angle), 0.0f);
+      EMIT_VERTEX(r0 * cosf(angle), r0 * sinf(angle), -width * 0.5f);
+      EMIT_VERTEX(r0 * cosf(angle), r0 * sinf(angle), width * 0.5f);
    }
    END_STRIP();
 
@@ -1108,13 +1107,13 @@ init_gears()
 
    gears[0].first_vertex = 0;
    gears[0].vertex_count = create_gear(verts + gears[0].first_vertex * GEAR_VERTEX_STRIDE,
-                                       1.0, 4.0, 1.0, 20, 0.7);
+                                       1.0f, 4.0f, 1.0f, 20, 0.7f);
    gears[1].first_vertex = gears[0].first_vertex + gears[0].vertex_count;
    gears[1].vertex_count = create_gear(verts + gears[1].first_vertex * GEAR_VERTEX_STRIDE,
-                                       0.5, 2.0, 2.0, 10, 0.7);
+                                       0.5f, 2.0f, 2.0f, 10, 0.7f);
    gears[2].first_vertex = gears[1].first_vertex + gears[1].vertex_count;
    gears[2].vertex_count = create_gear(verts + gears[2].first_vertex * GEAR_VERTEX_STRIDE,
-                                       1.3, 2.0, 0.5, 10, 0.7);
+                                       1.3f, 2.0f, 0.5f, 10, 0.7f);
 
    unsigned num_verts = gears[2].first_vertex + gears[2].vertex_count;
    unsigned mem_size = sizeof(float) * GEAR_VERTEX_STRIDE * num_verts;
@@ -1192,12 +1191,12 @@ draw_gear(VkCommandBuffer cmdbuf, const float view[16],
    mat4_identity(modelview);
    mat4_multiply(modelview, view);
    mat4_translate(modelview, position[0], position[1], 0);
-   mat4_rotate(modelview, 2 * M_PI * angle / 360.0, 0, 0, 1);
+   mat4_rotate(modelview, 2.0f * M_PIf * angle / 360.0f, 0, 0, 1);
 
    float h = (float)height / width;
    float projection[16];
    mat4_identity(projection);
-   mat4_frustum_vk(projection, -1.0, 1.0, -h, +h, 5.0f, 60.0f);
+   mat4_frustum_vk(projection, -1.0f, 1.0f, -h, +h, 5.0f, 60.0f);
 
    struct push_constants push_constants;
    mat4_identity(push_constants.modelview);
@@ -1209,7 +1208,7 @@ draw_gear(VkCommandBuffer cmdbuf, const float view[16],
    vkCmdDraw(cmdbuf, vertex_count, 1, first_vertex, 0);
 }
 
-float angle = 0.0;
+float angle = 0.0f;
 
 #define G2L(x) ((x) < 0.04045 ? (x) / 12.92 : powf(((x) + 0.055) / 1.055, 2.4))
 
@@ -1251,21 +1250,21 @@ draw_gears(VkCommandBuffer cmdbuf, const float view[16])
       });
 
    float positions[3][2] = {
-      {-3.0, -2.0},
-      { 3.1, -2.0},
-      {-3.1,  4.2},
+      {-3.0f, -2.0f},
+      { 3.1f, -2.0f},
+      {-3.1f,  4.2f},
    };
 
    float angles[3] = {
       angle,
-      -2.0 * angle - 9.0,
-      -2.0 * angle - 25.0,
+      -2.0f * angle - 9.0f,
+      -2.0f * angle - 25.0f,
    };
 
    const float material_colors[3][3] = {
       { G2L(0.8), G2L(0.1), G2L(0.0) },
       { G2L(0.0), G2L(0.8), G2L(0.2) },
-      { G2L(0.2), G2L(0.2), G2L(1.0) },
+      { G2L(0.2), G2L(0.2), G2L(1.0f) },
    };
 
    for (int i = 0; i < 3; ++i) {
@@ -1323,16 +1322,28 @@ print_info()
 
    uint32_t num_extensions = 0;
    VkExtensionProperties *extensions;
+   VkResult result =
    vkEnumerateDeviceExtensionProperties(physical_device, NULL, &num_extensions, NULL);
+   if (result != VK_SUCCESS)
+      error("Failed to enumerate device extensions");
+
    if (num_extensions > 0) {
       extensions = calloc(num_extensions, sizeof(VkExtensionProperties));
       if (!extensions)
          error("Failed to allocate memory");
 
+      result =
       vkEnumerateDeviceExtensionProperties(physical_device, NULL, &num_extensions, extensions);
+      if (result != VK_SUCCESS) {
+         free(extensions);
+         error("Failed to enumerate device extensions");
+      }
+
       printf("deviceExtensions =\n");
       for (int i = 0; i < num_extensions; ++i)
          printf("\t%s\n", extensions[i].extensionName);
+
+      free(extensions);
    }
 }
 
@@ -1385,16 +1396,16 @@ wsi_key_press(bool down, enum wsi_key key) {
       case WSI_KEY_ESC:
          exit(0);
       case WSI_KEY_UP:
-         view_rot[0] += 5.0;
+         view_rot[0] += 5.0f;
          break;
       case WSI_KEY_DOWN:
-         view_rot[0] -= 5.0;
+         view_rot[0] -= 5.0f;
          break;
       case WSI_KEY_LEFT:
-         view_rot[1] += 5.0;
+         view_rot[1] += 5.0f;
          break;
       case WSI_KEY_RIGHT:
-         view_rot[1] -= 5.0;
+         view_rot[1] -= 5.0f;
          break;
       case WSI_KEY_A:
          animate = !animate;
@@ -1443,6 +1454,23 @@ buffer_barrier(VkCommandBuffer cmd_buffer,
       0, NULL);
 }
 
+/**
+ * Drop in replacement for atoi in arg parsing with error checking.
+ * Will call exit in case of error.
+ * \param str string to convert to integer
+ * \return integer value of the string
+ */
+static int
+gearsAtoi(const char *str)
+{
+   int value = (int) strtol(str, NULL, 10);
+   /* Since none of the calls to atoi expect a value that is 0, this is fine */
+   if (value == 0)
+      error("Invalid argument: %s", str);
+
+   return value;
+}
+
 int
 main(int argc, char *argv[])
 {
@@ -1453,13 +1481,16 @@ main(int argc, char *argv[])
    height = 300;
    fullscreen = false;
 
+   /* To avoid calling fflush() after each printf */
+   assert(setvbuf(stdout, NULL, _IOLBF, 0) == 0);
+
    for (int i = 1; i < argc; i++) {
       if (strcmp(argv[i], "-info") == 0) {
          printInfo = true;
       }
       else if (strcmp(argv[i], "-samples") == 0 && i + 1 < argc) {
          i++;
-         sample_count = sample_count_flag(atoi(argv[i]));
+         sample_count = sample_count_flag(gearsAtoi(argv[i]));
       }
       else if (strcmp(argv[i], "-present-mailbox") == 0) {
          desidered_present_mode = VK_PRESENT_MODE_MAILBOX_KHR;
@@ -1470,9 +1501,9 @@ main(int argc, char *argv[])
          token = strtok(argv[i], "x");
          if (!token)
             continue;
-         width = atoi(token);
+         width = gearsAtoi(token);
          if((token = strtok(NULL, "x"))) {
-            height = atoi(token);
+            height = gearsAtoi(token);
          }
       }
       else if (strcmp(argv[i], "-fullscreen") == 0) {
@@ -1510,46 +1541,51 @@ main(int argc, char *argv[])
    create_swapchain();
    init_gears();
 
-   while (1) {
-      static int frames = 0;
-      static double tRot0 = -1.0, tRate0 = -1.0;
-      double dt, t = current_time();
+   int frames = 0;
+   float dt, dt0;
+   struct timeval tv0, tvPrev, tvNow;
+   gettimeofday(&tv0, NULL);
+   gettimeofday(&tvPrev, NULL);
+   while (true) {
+      gettimeofday(&tvNow, NULL);
 
-      if (tRot0 < 0.0)
-         tRot0 = t;
-      dt = t - tRot0;
-      tRot0 = t;
-
-      if (animate) {
-         /* advance rotation for next frame */
-         angle += 70.0 * dt;  /* 70 degrees per second */
-         if (angle > 3600.0)
-            angle -= 3600.0;
-      }
+      dt = delta_time(&tvPrev, &tvNow);
+      dt0 = delta_time(&tv0, &tvNow);
 
       if (wsi.update_window()) {
          printf("update window failed\n");
          break;
       }
 
-      uint32_t index;
+      static uint32_t index = -1;
+
+      /* back_buffer_semaphore must be unsignaled when we call vkAcquireNextImageKHR */
+      if (index != -1){
+         vkWaitForFences(device, 1, &swap_chain_data[index].fence, VK_TRUE, UINT64_MAX);
+         vkResetFences(device, 1, &swap_chain_data[index].fence);
+      }
+
       VkResult result =
          vkAcquireNextImageKHR(device, swap_chain, UINT64_MAX,
                                back_buffer_semaphore, VK_NULL_HANDLE,
                                &index);
       if (result == VK_SUBOPTIMAL_KHR ||
           width != new_width || height != new_height) {
-         for (uint32_t i = 0; i < image_count; i++)
-            vkWaitForFences(device, 1, &swap_chain_data[i].fence, VK_TRUE, UINT64_MAX);
          recreate_swapchain();
+         index = -1; /* reset index to avoid waiting on the fence */
          continue;
       }
+
       assert(result == VK_SUCCESS);
 
       assert(index < ARRAY_SIZE(swap_chain_data));
 
-      vkWaitForFences(device, 1, &swap_chain_data[index].fence, VK_TRUE, UINT64_MAX);
-      vkResetFences(device, 1, &swap_chain_data[index].fence);
+      if (animate) {
+         /* advance rotation for next frame */
+         angle += 70.0f * dt;  /* 70 degrees per second */
+         if (angle > 3600.0f)
+            angle = fmodf(angle, 3600.0f);
+      }
 
       vkBeginCommandBuffer(swap_chain_data[index].cmd_buffer,
          &(VkCommandBufferBeginInfo) {
@@ -1558,10 +1594,10 @@ main(int argc, char *argv[])
          });
 
       /* projection matrix */
-      float h = (float)height / width;
+      float h = (float) height / width;
       struct ubo ubo;
       mat4_identity(ubo.projection);
-      mat4_frustum_vk(ubo.projection, -1.0, 1.0, -h, +h, 5.0f, 60.0f);
+      mat4_frustum_vk(ubo.projection, -1.0f, 1.0f, -h, +h, 5.0f, 60.0f);
 
       buffer_barrier(swap_chain_data[index].cmd_buffer,
          VK_PIPELINE_STAGE_VERTEX_SHADER_BIT,
@@ -1582,9 +1618,9 @@ main(int argc, char *argv[])
       float view[16];
       mat4_identity(view);
       mat4_translate(view, 0, 0, -40);
-      mat4_rotate(view, 2 * M_PI * view_rot[0] / 360.0, 1, 0, 0);
-      mat4_rotate(view, 2 * M_PI * view_rot[1] / 360.0, 0, 1, 0);
-      mat4_rotate(view, 2 * M_PI * view_rot[2] / 360.0, 0, 0, 1);
+      mat4_rotate(view, 2.0f * M_PIf * view_rot[0] / 360.0f, 1, 0, 0);
+      mat4_rotate(view, 2.0f * M_PIf * view_rot[1] / 360.0f, 0, 1, 0);
+      mat4_rotate(view, 2.0f * M_PIf * view_rot[2] / 360.0f, 0, 0, 1);
 
       vkCmdBeginRenderPass(swap_chain_data[index].cmd_buffer,
          &(VkRenderPassBeginInfo) {
@@ -1632,16 +1668,14 @@ main(int argc, char *argv[])
          });
 
       frames++;
+      tvPrev = tvNow;
 
-      if (tRate0 < 0.0)
-         tRate0 = t;
-      if (t - tRate0 >= 5.0) {
-         float seconds = t - tRate0;
-         float fps = frames / seconds;
-         printf("%d frames in %3.1f seconds = %6.3f FPS\n", frames, seconds,
+      /* Calculate FPS every 5 seconds */
+      if (dt0 >= 5.0f) {
+         float fps = (float) frames / dt0;
+         printf("%d frames in %3.1f seconds = %6.3f FPS\n", frames, dt0,
                fps);
-         fflush(stdout);
-         tRate0 = t;
+         tv0 = tvNow;
          frames = 0;
       }
    }
