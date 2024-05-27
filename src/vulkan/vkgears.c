@@ -43,6 +43,13 @@
 #define VK_API_VERSION_PATCH VK_VERSION_PATCH
 #endif
 
+
+#ifndef M_PIf
+/* Retain compatibility with old math.h headers */
+
+static const float M_PIf = (float) M_PI;
+#endif
+
 static struct wsi_interface wsi;
 
 static VkInstance instance;
